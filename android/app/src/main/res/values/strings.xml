@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TERA Store</string>
+    <string name="facebook_app_id">1269896256502416</string>
+    <string name="fb_login_protocol_scheme">fb1269896256502416</string>
+</resources>

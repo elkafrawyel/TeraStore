@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "60249999140",
+    "project_id": "ecommerce-43b02",
+    "storage_bucket": "ecommerce-43b02.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60249999140:android:0ba4c7f0f8e213c31695b1",
+        "android_client_info": {
+          "package_name": "com.elkafrawyel.ecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60249999140-4jni9jett0narlp65s6cg84b8f2g4p0e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elkafrawyel.ecommerce",
+            "certificate_hash": "2ce10d3d962e2359b0f8655b7fe2d5370c4b244c"
+          }
+        },
+        {
+          "client_id": "60249999140-u8k8m0btl7jt46hb4j3b19a4h5tv8m7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK1JixaSZN-UhdzcEEZmqzMXcrv4r6drA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60249999140-u8k8m0btl7jt46hb4j3b19a4h5tv8m7g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

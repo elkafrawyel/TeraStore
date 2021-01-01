@@ -1,5 +1,7 @@
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/services/user_service.dart';
 import 'package:flutter_app/model/user_model.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_app/view/home/cart_screen.dart';
 import 'package:flutter_app/view/home/explore_screen.dart';
 import 'package:flutter_app/view/home/profile_screen.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class MainViewModel extends GetxController {
   ValueNotifier<bool> loading = ValueNotifier(false);
@@ -25,6 +28,7 @@ class MainViewModel extends GetxController {
   UserModel _user;
 
   UserModel get user => _user;
+  PickedFile selectedImage;
 
   loadUserData() async {
     String userId = _auth.currentUser?.uid;
@@ -42,6 +46,42 @@ class MainViewModel extends GetxController {
     }).catchError((onError) {
       loading.value = false;
     });
+  }
+
+  setUserImage(PickedFile image) {
+    selectedImage = image;
+    update();
+  }
+
+  editProfile(
+      {String name, String email, String phone, String location}) async {
+    loading.value = true;
+    update();
+    if (selectedImage != null) {
+      Reference reference =
+          FirebaseStorage.instance.ref().child('Users/${user.id}');
+      reference.putFile(File(selectedImage.path)).then((value) {
+        reference.getDownloadURL().then((url) async {
+          print(url);
+          user.photo = url;
+          _addRemainData(name, email, phone, location);
+        });
+      });
+    } else {
+      _addRemainData(name, email, phone, location);
+    }
+  }
+
+  _addRemainData(
+      String name, String email, String phone, String location) async {
+    user.name = name;
+    user.email = email;
+    user.phone = phone;
+    user.location = location;
+    await UserService().addUserToFireStore(user);
+    loading.value = false;
+    update();
+    Get.find<MainViewModel>().setScreen(ProfileScreen());
   }
 
   logOut() async {

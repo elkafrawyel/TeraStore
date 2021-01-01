@@ -49,5 +49,6 @@ Map<String, String> ar = {
   'myProducts': 'منتجاتي',
   'gallery':'المعرض',
   'camera':'الكاميرا',
-  'addProduct':'أضافة منتج'
+  'addProduct':'أضافة منتج',
+  'noProducts':'لا توجد لديك منتجات',
 };

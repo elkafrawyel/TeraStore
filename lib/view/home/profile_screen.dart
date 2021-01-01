@@ -4,15 +4,15 @@ import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/view/custom_widgets/menus/custom_language_menu.dart';
 import 'package:flutter_app/view/custom_widgets/text/custom_text.dart';
-import '../cards_screen.dart';
-import '../edit_profile_screen.dart';
-import '../favourites_screen.dart';
-import '../order_history_screen.dart';
-import '../shipping_address_screen.dart';
+import 'package:flutter_app/view/user_screens/my_product_screen.dart';
+import 'package:flutter_app/view/user_screens/notifications_screen.dart';
+import '../user_screens/cards_screen.dart';
+import '../user_screens/edit_profile_screen.dart';
+import '../user_screens/favourites_screen.dart';
+import '../user_screens/order_history_screen.dart';
+import '../user_screens/shipping_address_screen.dart';
 import 'package:flutter_app/view/custom_widgets/data_state_views/loading_view.dart';
 import 'package:flutter_app/view/custom_widgets/directional_widget.dart';
-import 'package:flutter_app/view/my_product_screen.dart';
-import 'package:flutter_app/view/notifications_screen.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -68,14 +68,25 @@ class ProfileScreen extends StatelessWidget {
                                     fontSize: 20,
                                   ),
                                   SizedBox(
-                                    height: 10,
+                                    height: 15,
+                                  ),
+                                  CustomText(
+                                    alignment: AlignmentDirectional.center,
+                                    text: controller.user != null
+                                        ? controller.user.phone
+                                        : '',
+                                    fontSize: 16,
+                                    color: Colors.grey.shade700,
+                                  ),
+                                  SizedBox(
+                                    height: 15,
                                   ),
                                   CustomText(
                                     alignment: AlignmentDirectional.center,
                                     text: controller.user != null
                                         ? controller.user.email
                                         : '',
-                                    fontSize: 12,
+                                    fontSize: 14,
                                     color: Colors.grey.shade700,
                                   ),
                                   SizedBox(
@@ -93,9 +104,8 @@ class ProfileScreen extends StatelessWidget {
                                 padding: const EdgeInsets.all(12),
                                 child: Column(
                                   children: [
-                                    _buildRow(
-                                        'editProfile'.tr, Icons.edit, () {
-                                      Get.find<MainViewModel>().setScreen(EditProfileScreen());
+                                    _buildRow('editProfile'.tr, Icons.edit, () {
+                                      controller.setScreen(EditProfileScreen());
                                     }),
                                     SizedBox(
                                       height: 20,
@@ -103,43 +113,45 @@ class ProfileScreen extends StatelessWidget {
                                     _buildRow(
                                         'myProducts'.tr, Icons.shopping_bag,
                                         () {
-                                      Get.find<MainViewModel>().setScreen(MyProductScreen());
+                                      controller.setScreen(MyProductScreen());
                                     }),
                                     SizedBox(
                                       height: 20,
                                     ),
-                                    _buildRow(
-                                        'favorite'.tr, Icons.favorite, () {
-                                      Get.find<MainViewModel>().setScreen(FavouritesScreen());
+                                    _buildRow('favorite'.tr, Icons.favorite,
+                                        () {
+                                      controller.setScreen(FavouritesScreen());
                                     }),
                                     SizedBox(
                                       height: 20,
                                     ),
                                     _buildRow('shippingAddresses'.tr,
                                         Icons.location_on, () {
-                                          Get.find<MainViewModel>().setScreen(ShippingAddresses());
-                                        }),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    _buildRow(
-                                        'orderHistory'.tr, Icons.timer, () {
-                                      Get.find<MainViewModel>().setScreen(OrderHistoryScreen());
+                                      controller.setScreen(ShippingAddresses());
                                     }),
                                     SizedBox(
                                       height: 20,
                                     ),
-                                    _buildRow(
-                                        'cards'.tr, Icons.credit_card, () {
-                                      Get.find<MainViewModel>().setScreen(CardsScreen());
+                                    _buildRow('orderHistory'.tr, Icons.timer,
+                                        () {
+                                      controller
+                                          .setScreen(OrderHistoryScreen());
+                                    }),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    _buildRow('cards'.tr, Icons.credit_card,
+                                        () {
+                                      controller.setScreen(CardsScreen());
                                     }),
                                     SizedBox(
                                       height: 20,
                                     ),
                                     _buildRow('notifications'.tr,
                                         Icons.notifications_active, () {
-                                          Get.find<MainViewModel>().setScreen(NotificationsScreen());
-                                        }),
+                                      controller
+                                          .setScreen(NotificationsScreen());
+                                    }),
                                     SizedBox(
                                       height: 20,
                                     ),

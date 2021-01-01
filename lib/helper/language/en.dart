@@ -50,5 +50,6 @@ Map<String, String> en = {
   'myProducts': 'My Products',
   'gallery': 'Galley',
   'camera': 'Camera',
-  'addProduct': 'Add Product'
+  'addProduct': 'Add Product',
+  'noProducts': 'You Have No Products.',
 };

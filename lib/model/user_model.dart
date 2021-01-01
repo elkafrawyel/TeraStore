@@ -1,7 +1,8 @@
 class UserModel {
-  String id, email, name, photo;
+  String id, email, name, photo, phone, location;
 
-  UserModel({this.id, this.email, this.name, this.photo});
+  UserModel(
+      {this.id, this.email, this.name, this.photo, this.phone, this.location});
 
   UserModel.fromJson(Map<dynamic, dynamic> map) {
     if (map == null) return;
@@ -10,6 +11,8 @@ class UserModel {
     email = map['email'];
     name = map['name'];
     photo = map['photo'];
+    phone = map['phone'];
+    location = map['location'];
   }
 
   toJson() {
@@ -17,6 +20,8 @@ class UserModel {
       'id': id,
       'email': email,
       'name': name,
+      'phone': phone,
+      'location': location,
       'photo': photo,
     };
   }

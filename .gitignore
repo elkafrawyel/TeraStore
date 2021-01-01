@@ -30,8 +30,6 @@
 .pub-cache/
 .pub/
 /build/
-/build/ios/
-/build\ios/Runner.build/Release-iphoneos/Runner.build/
 
 # Web related
 lib/generated_plugin_registrant.dart

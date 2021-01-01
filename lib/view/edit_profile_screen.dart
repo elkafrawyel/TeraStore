@@ -32,7 +32,7 @@ class EditProfileScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              //image
+              //image f
             ],
           ),
         ));

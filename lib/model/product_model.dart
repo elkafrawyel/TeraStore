@@ -1,8 +1,13 @@
+import 'user_model.dart';
+
 class ProductModel {
   String id, name, description, image, userId, subCategoryId, timeStamp;
   int discountPrice, price;
 
+  //run time attributes
   bool isNew = false;
+  bool isFav = false;
+  UserModel owner;
 
   ProductModel(
       {this.id,
@@ -22,6 +27,7 @@ class ProductModel {
     subCategoryId = map['subCategoryId'];
     timeStamp = map['timeStamp'];
     price = map['price'];
+    userId = map['userId'];
     discountPrice = map['discountPrice'];
     name = map['name'];
     description = map['description'];

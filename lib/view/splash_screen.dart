@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/view_model/main_view_model.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/local_storage.dart';
 import 'package:flutter_app/view/control_view.dart';
 import 'package:get/get.dart';
@@ -10,7 +10,7 @@ import 'language_screen.dart';
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MainViewModel>(
+    return GetBuilder<MainController>(
       builder: (controller) => Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,

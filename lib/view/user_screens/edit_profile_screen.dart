@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/view_model/main_view_model.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/view/custom_widgets/button/custom_button.dart';
 import 'package:flutter_app/view/custom_widgets/text/custom_outline_text_form_field.dart';
@@ -21,16 +21,16 @@ class EditProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.find<MainViewModel>().selectedImage = null;
-    nameController.text = Get.find<MainViewModel>().user.name;
-    emailController.text = Get.find<MainViewModel>().user.email;
-    phoneController.text = Get.find<MainViewModel>().user.phone;
-    locationController.text = Get.find<MainViewModel>().user.location;
+    Get.find<MainController>().selectedImage = null;
+    nameController.text = Get.find<MainController>().user.name;
+    emailController.text = Get.find<MainController>().user.email;
+    phoneController.text = Get.find<MainController>().user.phone;
+    locationController.text = Get.find<MainController>().user.location;
     return Scaffold(
         appBar: AppBar(
           toolbarHeight: 0.0,
         ),
-        body: GetBuilder<MainViewModel>(
+        body: GetBuilder<MainController>(
           builder: (controller) => SingleChildScrollView(
             child: Stack(
               children: [
@@ -42,7 +42,7 @@ class EditProfileScreen extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Get.find<MainViewModel>()
+                              Get.find<MainController>()
                                   .setScreen(ProfileScreen());
                             },
                             child: Padding(
@@ -212,19 +212,19 @@ class EditProfileScreen extends StatelessWidget {
 
   imgFromCamera() async {
     PickedFile image = await ImagePicker().getImage(source: ImageSource.camera);
-    Get.find<MainViewModel>().setUserImage(image);
+    Get.find<MainController>().setUserImage(image);
   }
 
   imgFromGallery() async {
     PickedFile image =
         await ImagePicker().getImage(source: ImageSource.gallery);
-    Get.find<MainViewModel>().setUserImage(image);
+    Get.find<MainController>().setUserImage(image);
   }
 
   void _save() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      Get.find<MainViewModel>().editProfile(
+      Get.find<MainController>().editProfile(
           name: nameController.text,
           email: emailController.text,
           phone: phoneController.text,

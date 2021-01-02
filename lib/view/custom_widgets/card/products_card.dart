@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/controllers/product_details_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ class ProductsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(ProductDetailsScreen(product));
+        Get.to(ProductDetailsScreen(product.id));
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.6,
@@ -69,28 +70,32 @@ class ProductsCard extends StatelessWidget {
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    product.price.toString(),
-                    style: TextStyle(
-                      fontSize: 16,
-                      decoration: TextDecoration.lineThrough,
-                      color: Colors.grey.shade500,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  CustomText(
-                    text: product.discountPrice.toString(),
-                    alignment: AlignmentDirectional.topStart,
-                    color: primaryColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        product.price.toString(),
+                        style: TextStyle(
+                          fontSize: 18,
+                          decoration: TextDecoration.lineThrough,
+                          color: Colors.grey.shade500,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      CustomText(
+                        text: product.discountPrice.toString(),
+                        alignment: AlignmentDirectional.topStart,
+                        color: primaryColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ],
                   ),
                 ],
               ),

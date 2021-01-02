@@ -1,5 +1,4 @@
-// add user to product details screen
-// favourites
+// favourites to rest of the app !!
 // cart
 //similar products
 //search

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/view_model/main_view_model.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/view/custom_widgets/menus/custom_language_menu.dart';
@@ -17,7 +17,7 @@ import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen() {
-    Get.find<MainViewModel>().loadUserData();
+    Get.find<MainController>().loadUserData();
   }
 
   @override
@@ -28,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
           toolbarHeight: 0.0,
         ),
         body: SingleChildScrollView(
-          child: GetBuilder<MainViewModel>(
+          child: GetBuilder<MainController>(
               builder: (controller) => controller.loading.value
                   ? LoadingView()
                   : Container(
@@ -179,7 +179,7 @@ class ProfileScreen extends StatelessWidget {
                                         CommonMethods().customExitAlert(
                                             context: context,
                                             action: () {
-                                              Get.find<MainViewModel>()
+                                              Get.find<MainController>()
                                                   .logOut();
                                             });
                                       },

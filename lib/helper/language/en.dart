@@ -52,4 +52,9 @@ Map<String, String> en = {
   'camera': 'Camera',
   'addProduct': 'Add Product',
   'noProducts': 'You Have No Products.',
+  'noFavProducts': 'You Have No Favourite Products.',
+  'message': 'Message',
+  'call': 'Call',
+  'close': 'Close App',
+  'closeMessage': 'Are you sure to close the app?',
 };

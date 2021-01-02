@@ -47,6 +47,7 @@ dependencies:
   get_storage:
   image_picker:
   getwidget:
+  url_launcher:
 
 
 dev_dependencies:

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/view_model/main_view_model.dart';
-import 'package:flutter_app/core/view_model/my_products_controller.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/core/controllers/my_products_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/view/custom_widgets/text/custom_text.dart';
 import 'package:flutter_app/view/home/profile_screen.dart';
 import 'package:get/get.dart';
-
 import '../custom_widgets/card/products_card.dart';
-import '../custom_widgets/custom_appbar.dart';
 import '../custom_widgets/data_state_views/empty_view.dart';
 import '../custom_widgets/data_state_views/loading_view.dart';
 
@@ -45,7 +43,7 @@ class MyProductScreen extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    Get.find<MainViewModel>()
+                                    Get.find<MainController>()
                                         .setScreen(ProfileScreen());
                                   },
                                   child: Padding(

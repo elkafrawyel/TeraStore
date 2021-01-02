@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/view_model/explore_view_model.dart';
+import 'package:flutter_app/core/controllers/explore_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/view/add_product_screen.dart';
 import 'package:flutter_app/view/custom_widgets/card/products_card.dart';
@@ -13,18 +13,19 @@ import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class ExploreScreen extends StatelessWidget {
-  ExploreViewModel _exploreViewModel;
+  ExploreController _exploreController;
+
   @override
   Widget build(BuildContext context) {
-    _exploreViewModel = Get.put(ExploreViewModel());
+    _exploreController = Get.put(ExploreController());
     return DirectionalWidget(
-      pageUi: GetBuilder<ExploreViewModel>(
+      pageUi: GetBuilder<ExploreController>(
         builder: (controller) => Scaffold(
           appBar: CustomAppBar(
             text: 'home'.tr,
             actions: [
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.to(AddProductScreen());
                 },
                 child: Padding(
@@ -60,7 +61,7 @@ class ExploreScreen extends StatelessWidget {
                             height: 10,
                           ),
                           ImagesSliders(
-                            images: Get.find<ExploreViewModel>().images,
+                            images: Get.find<ExploreController>().images,
                           ),
                           SizedBox(
                             height: 10,
@@ -119,12 +120,12 @@ class ExploreScreen extends StatelessWidget {
       height: 180,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: Get.find<ExploreViewModel>().categories.length,
+        itemCount: Get.find<ExploreController>().categories.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
               Get.to(SubCategoryScreen(
-                categoryModel: Get.find<ExploreViewModel>().categories[index],
+                categoryModel: Get.find<ExploreController>().categories[index],
               ));
             },
             child: Container(
@@ -142,7 +143,7 @@ class ExploreScreen extends StatelessWidget {
                           width: MediaQuery.of(context).size.height * 0.5,
                           height: 150,
                           placeholder: placeholder,
-                          image: Get.find<ExploreViewModel>()
+                          image: Get.find<ExploreController>()
                               .categories[index]
                               .image,
                         ),
@@ -150,7 +151,7 @@ class ExploreScreen extends StatelessWidget {
                     ),
                     Expanded(
                       child: CustomText(
-                        text: Get.find<ExploreViewModel>()
+                        text: Get.find<ExploreController>()
                             .categories[index]
                             .displayName,
                         fontSize: 14,
@@ -168,7 +169,7 @@ class ExploreScreen extends StatelessWidget {
   }
 
   Widget _listViewProducts() {
-    return GetBuilder<ExploreViewModel>(
+    return GetBuilder<ExploreController>(
       builder: (controller) => Container(
         height: 300,
         child: ListView.separated(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/view/custom_widgets/button/custom_button.dart';
+import 'package:flutter_app/view/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
 
 class CommonMethods {
@@ -47,7 +49,9 @@ class CommonMethods {
 
   showMessage(String title, String body) {
     Get.snackbar(title, body,
-        colorText: Colors.black, snackPosition: SnackPosition.BOTTOM);
+        backgroundColor: primaryColor,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM);
   }
 
   hideKeyboard() {
@@ -62,30 +66,93 @@ class CommonMethods {
       context: context,
       builder: (ctx) => AlertDialog(
         scrollable: true,
-        title: Text(
-          'logOutMessage'.tr,
-          textAlign: TextAlign.start,
-          style: Theme.of(context).textTheme.bodyText1,
-        ),
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            CustomButton(
-              text: 'ok'.tr,
-              colorText: primaryColor,
-              onPressed: () {
-                Get.back();
-                action();
-              },
+        backgroundColor: primaryColor.shade500,
+        actions: [
+          CustomButton(
+            text: 'ok'.tr,
+            colorText: Colors.white,
+            onPressed: () {
+              Get.back();
+              action();
+            },
+          ),
+          CustomButton(
+            text: 'cancel'.tr,
+            colorText: Colors.white,
+            onPressed: () {
+              Get.back();
+            },
+          ),
+        ],
+        title: Row(
+          children: [
+            Image.asset(
+              logo,
+              width: 50,
+              height: 50,
             ),
-            CustomButton(
-              text: 'cancel'.tr,
-              colorText: Colors.red,
-              onPressed: () {
-                Get.back();
-              },
+            CustomText(
+              text: 'logOut'.tr,
+              fontSize: 20,
+              color: Colors.white,
             ),
           ],
+        ),
+        content: CustomText(
+          text: 'logOutMessage'.tr,
+          color: Colors.white,
+          fontSize: 18,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+    );
+  }
+
+  Future<bool> customCloseAlert({
+    BuildContext context,
+  }) async {
+    return showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        scrollable: true,
+        backgroundColor: primaryColor.shade500,
+        actions: [
+          CustomButton(
+            text: 'ok'.tr,
+            colorText: Colors.white,
+            onPressed: () {
+              Get.back();
+              SystemNavigator.pop(animated: true);
+            },
+          ),
+          CustomButton(
+            text: 'cancel'.tr,
+            colorText: Colors.white,
+            onPressed: () {
+              Get.back();
+            },
+          ),
+        ],
+        title: Row(
+          children: [
+            Image.asset(
+              logo,
+              width: 50,
+              height: 50,
+            ),
+            CustomText(
+              text: 'close'.tr,
+              fontSize: 20,
+              color: Colors.white,
+            ),
+          ],
+        ),
+        content: CustomText(
+          text: 'closeMessage'.tr,
+          color: Colors.white,
+          fontSize: 18,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),

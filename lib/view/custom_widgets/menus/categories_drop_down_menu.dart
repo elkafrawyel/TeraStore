@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/view_model/add_product_view_model.dart';
+import 'package:flutter_app/core/controllers/add_product_controller.dart';
 import 'package:flutter_app/model/category_model.dart';
 import 'package:flutter_app/model/sub_category_model.dart';
 import 'package:flutter_app/view/custom_widgets/text/custom_text.dart';
@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 class CategoriesDropDownMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AddProductViewModel>(
+    return GetBuilder<AddProductController>(
       builder: (controller) => Column(
         children: [
           Container(

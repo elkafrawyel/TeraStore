@@ -1,8 +1,8 @@
 import 'package:flutter_app/core/services/product_service.dart';
-import 'package:flutter_app/core/view_model/main_view_model.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/model/product_model.dart';
 
-class MyProductsController extends MainViewModel {
+class MyProductsController extends MainController {
   List<ProductModel> _products = [];
 
   List<ProductModel> get products => _products;

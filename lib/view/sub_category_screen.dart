@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/view_model/sub_category_view_model.dart';
+import 'package:flutter_app/core/controllers/sub_category_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/category_model.dart';
 import 'package:flutter_app/view/custom_widgets/custom_appbar.dart';
@@ -13,16 +13,16 @@ import 'custom_widgets/text/custom_text.dart';
 
 class SubCategoryScreen extends StatelessWidget {
   final CategoryModel categoryModel;
-  final SubCategoryViewModel _subCategoryViewModel = Get.find();
+  final SubCategoryController _subCategoryController = Get.find();
 
   SubCategoryScreen({this.categoryModel}) {
-    _subCategoryViewModel.getSubCategories(categoryModel.id);
+    _subCategoryController.getSubCategories(categoryModel.id);
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<SubCategoryViewModel>(
-        init: _subCategoryViewModel,
+    return GetBuilder<SubCategoryController>(
+        init: _subCategoryController,
         builder: (controller) => DirectionalWidget(
               pageUi: Scaffold(
                 appBar: CustomAppBar(

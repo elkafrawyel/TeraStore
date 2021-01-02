@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/view_model/products_view_model.dart';
+import 'package:flutter_app/core/controllers/products_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/sub_category_model.dart';
 import 'package:flutter_app/view/custom_widgets/card/products_card.dart';
@@ -11,16 +11,16 @@ import 'custom_widgets/data_state_views/loading_view.dart';
 
 class ProductsScreen extends StatelessWidget {
   final SubCategoryModel subCategoryModel;
-  final ProductsViewModel _productsViewModel = Get.put(ProductsViewModel());
+  final ProductsController _productsController = Get.put(ProductsController());
 
   ProductsScreen({this.subCategoryModel}) {
-    _productsViewModel.getProducts(subCategoryModel.id);
+    _productsController.getProducts(subCategoryModel.id);
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ProductsViewModel>(
-      init: _productsViewModel,
+    return GetBuilder<ProductsController>(
+      init: _productsController,
       builder: (controller) =>DirectionalWidget(
         pageUi: Scaffold(
             appBar: CustomAppBar(

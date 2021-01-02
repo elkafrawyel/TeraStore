@@ -31,11 +31,12 @@ class EmptyView extends StatelessWidget {
   Widget _emptyImage() {
     switch (emptyViews) {
       case EmptyViews.Box:
-        return Lottie.asset(emptyImageBox,width: 300,height: 300);
+        return Lottie.asset(emptyImageBox,
+            width: 300, height: 300, repeat: false);
       case EmptyViews.Face:
-        return Lottie.asset(emptyImageFace);
+        return Lottie.asset(emptyImageFace, repeat: false);
     }
-    return Lottie.asset(emptyImageBox,width: 300,height: 300);
+    return Lottie.asset(emptyImageBox, width: 300, height: 300, repeat: false);
   }
 }
 

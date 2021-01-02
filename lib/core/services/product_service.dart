@@ -2,14 +2,19 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_app/model/favourite_model.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProductService {
   final CollectionReference _productsRef =
       FirebaseFirestore.instance.collection('Products');
+
+  final CollectionReference _favouritesRef =
+      FirebaseFirestore.instance.collection('Favourites');
+
+  final String userId = FirebaseAuth.instance.currentUser.uid;
 
   Future<List<QueryDocumentSnapshot>> getProducts(String subCategoryId) async {
     Query query = _productsRef.where('subCategoryId', isEqualTo: subCategoryId);
@@ -39,9 +44,75 @@ class ProductService {
   }
 
   Future<List<QueryDocumentSnapshot>> getMyProducts() async {
-    Query query = _productsRef.where('userId',
-        isEqualTo: FirebaseAuth.instance.currentUser.uid);
+    Query query = _productsRef.where('userId', isEqualTo: userId);
     var value = await query.get();
     return value.docs;
+  }
+
+  Future<DocumentSnapshot> getProductById(String productId) async {
+    var value = await _productsRef.doc(productId).get();
+    return value;
+  }
+
+  Future<void> checkIfFavourite(
+      String productId, Function(bool isFave) check) async {
+    FavouriteModel favouriteModel = await getMyFavouriteList();
+    if (favouriteModel != null) {
+      favouriteModel.myProducts.forEach((element) {
+        if (element.id == productId) {
+          check(true);
+          return;
+        }
+      });
+    } else {
+      check(false);
+    }
+  }
+
+  Future<FavouriteModel> getMyFavouriteList() async {
+    DocumentSnapshot snapshot = await _favouritesRef.doc(userId).get();
+    if (snapshot.exists) {
+      FavouriteModel favouriteModel = FavouriteModel.fromJson(snapshot.data());
+      if (favouriteModel != null) {
+        print('fav list => ${favouriteModel.myProducts.length}');
+        return favouriteModel;
+      } else {
+        return FavouriteModel(myProducts: []);
+      }
+    } else {
+      return FavouriteModel(myProducts: []);
+    }
+  }
+
+  addToFavourites(String productId) async {
+    bool isExists = false;
+    FavouriteModel favouriteModel = await getMyFavouriteList();
+    favouriteModel.myProducts.forEach((element) {
+      if (element.id == productId) {
+        isExists = true;
+        return;
+      }
+    });
+    if (!isExists) {
+      favouriteModel.myProducts.add(FavouriteProduct(id: productId));
+      await _favouritesRef.doc(userId).set(favouriteModel.toJson());
+    }
+  }
+
+  removeFromFavourites(String productId) async {
+    bool isExists = false;
+    FavouriteProduct product;
+    FavouriteModel favouriteModel = await getMyFavouriteList();
+    favouriteModel.myProducts.forEach((element) {
+      if (element.id == productId) {
+        isExists = true;
+        product = element;
+        return;
+      }
+    });
+    if (isExists) {
+      favouriteModel.myProducts.remove(product);
+      await _favouritesRef.doc(userId).set(favouriteModel.toJson());
+    }
   }
 }

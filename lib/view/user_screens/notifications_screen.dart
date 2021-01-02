@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/view_model/main_view_model.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 
 import 'package:get/get.dart';
 
@@ -20,7 +20,7 @@ class NotificationsScreen extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.find<MainViewModel>().setScreen(ProfileScreen());
+                      Get.find<MainController>().setScreen(ProfileScreen());
                     },
                     child: Padding(
                       padding:

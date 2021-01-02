@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/view_model/auth_view_model.dart';
+import 'package:flutter_app/core/controllers/auth_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/helper/validator.dart';
 import 'package:flutter_app/view/auth/register_screen.dart';
@@ -10,17 +10,17 @@ import 'package:flutter_app/view/custom_widgets/text/custom_text.dart';
 import 'package:flutter_app/view/custom_widgets/text/custom_text_form_field.dart';
 import 'package:get/get.dart';
 
-class LoginScreen extends GetWidget<AuthViewModel> {
+class LoginScreen extends GetWidget<AuthController> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  AuthViewModel _authViewModel = Get.put(AuthViewModel());
+  AuthController _authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AuthViewModel>(
-      init: _authViewModel,
+    return GetBuilder<AuthController>(
+      init: _authController,
       builder: (controller) => DirectionalWidget(
         pageUi: Scaffold(
           appBar: AppBar(

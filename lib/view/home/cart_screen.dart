@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/view_model/cart_view_model.dart';
+import 'package:flutter_app/core/controllers/cart_controller.dart';
 import 'package:flutter_app/view/custom_widgets/text/custom_text.dart';
 import '../product_details_screen.dart';
 import 'package:flutter_app/helper/Constant.dart';
@@ -15,7 +15,7 @@ class CartScreen extends StatelessWidget {
         toolbarHeight: 0.0,
       ),
       body: DirectionalWidget(
-        pageUi: GetBuilder<CartViewModel>(
+        pageUi: GetBuilder<CartController>(
           builder: (controller) => Container(
             child: Column(
               children: [
@@ -112,7 +112,7 @@ class CartScreen extends StatelessWidget {
   Widget _cartItem(BuildContext context, ProductModel productModel) {
     return GestureDetector(
       onTap: () {
-        Get.to(ProductDetailsScreen(productModel));
+        Get.to(ProductDetailsScreen(productModel.id));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,

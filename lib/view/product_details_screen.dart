@@ -1,134 +1,156 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/view_model/cart_view_model.dart';
+import 'package:flutter_app/core/controllers/cart_controller.dart';
+import 'package:flutter_app/core/controllers/product_details_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
+import 'package:flutter_app/view/custom_widgets/data_state_views/default_loading.dart';
+import 'package:flutter_app/view/custom_widgets/data_state_views/loading_view.dart';
 import 'package:flutter_app/view/custom_widgets/directional_widget.dart';
 import 'package:get/get.dart';
 import 'package:rating_bar/rating_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'custom_widgets/button/custom_card_button.dart';
-import 'custom_widgets/text/custom_decription_text.dart';
+import 'custom_widgets/text/custom_description_text.dart';
 import 'custom_widgets/text/custom_text.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  final ProductModel productModel;
+  final String productId;
+  final ProductDetailsController _productDetailsController =
+      Get.put(ProductDetailsController());
 
-  ProductDetailsScreen(this.productModel);
+  ProductDetailsScreen(this.productId) {
+    _productDetailsController.getProductById(productId);
+  }
 
   @override
   Widget build(BuildContext context) {
     return DirectionalWidget(
       pageUi: Scaffold(
         body: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: [
-                _header(context),
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: GetBuilder<ProductDetailsController>(
+            builder: (controller) => controller.loading.value
+                ? LoadingView()
+                : Container(
+                    child: Column(
+                      children: [
+                        _header(context),
+                        Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Container(
-                                child: CustomText(
-                                  text: productModel.name,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                width: MediaQuery.of(context).size.width * 0.7,
-                              ),
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                productModel.price.toString(),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  decoration: TextDecoration.lineThrough,
-                                  color: Colors.grey.shade500,
-                                ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        child: CustomText(
+                                          text: controller.productModel.name,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.7,
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        controller.productModel.price
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                          color: Colors.grey.shade800,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      CustomText(
+                                        fontSize: 22,
+                                        text: controller
+                                            .productModel.discountPrice
+                                            .toString(),
+                                        fontWeight: FontWeight.bold,
+                                        color: primaryColor,
+                                      )
+                                    ],
+                                  ),
+                                ],
                               ),
                               SizedBox(
-                                height: 5,
+                                height: 20,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    children: [
+                                      RatingBar.readOnly(
+                                        initialRating: 3.5,
+                                        isHalfAllowed: true,
+                                        size: 30,
+                                        filledColor: Colors.amber,
+                                        halfFilledIcon: Icons.star_half,
+                                        filledIcon: Icons.star,
+                                        emptyIcon: Icons.star_border,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      CustomText(
+                                        text: '1253 Reviews',
+                                        fontSize: 14,
+                                        color: Colors.grey.shade600,
+                                      )
+                                    ],
+                                  ),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                    child: CustomCardButton(
+                                      onPressed: () {
+                                        CommonMethods().showMessage(
+                                            controller.productModel.name,
+                                            'is Added to your cart');
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              _ownerView(),
+                              SizedBox(
+                                height: 20,
                               ),
                               CustomText(
-                                fontSize: 20,
-                                text: productModel.discountPrice.toString(),
+                                text: 'description'.tr,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: primaryColor,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CustomDescription(
+                                  text: controller.productModel.description,
+                                ),
                               )
                             ],
                           ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            children: [
-                              RatingBar.readOnly(
-                                initialRating: 3.5,
-                                isHalfAllowed: true,
-                                size: 20,
-                                filledColor: Colors.amber,
-                                halfFilledIcon: Icons.star_half,
-                                filledIcon: Icons.star,
-                                emptyIcon: Icons.star_border,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              CustomText(
-                                text: '13 Reviews',
-                                fontSize: 12,
-                                color: Colors.grey.shade600,
-                              )
-                            ],
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            child: CustomCardButton(
-                              onPressed: () {
-                                Get.find<CartViewModel>()
-                                    .addToCart(productModel);
-                                CommonMethods().showMessage(
-                                    productModel.name, 'is Added to your cart');
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CustomText(
-                        text: 'description'.tr,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CustomDescription(
-                          text: productModel.description,
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
-                )
-              ],
-            ),
           ),
         ),
       ),
@@ -143,7 +165,7 @@ class ProductDetailsScreen extends StatelessWidget {
           height: 320,
           color: Colors.grey.shade300,
           child: Image.network(
-            productModel.image,
+            _productDetailsController.productModel.image,
             fit: BoxFit.contain,
           ),
         ),
@@ -168,15 +190,119 @@ class ProductDetailsScreen extends StatelessWidget {
             Center(
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(end: 20),
-                child: Icon(
-                  Icons.favorite_outline,
-                  color: Colors.white,
-                ),
+                child: _productDetailsController.productModel.isFav
+                    ? GestureDetector(
+                        onTap: () {
+                          //remove
+                          _productDetailsController
+                              .removeFromFavourites(productId);
+                        },
+                        child: Icon(
+                          Icons.favorite_outlined,
+                          color: Colors.red,
+                        ),
+                      )
+                    : GestureDetector(
+                        onTap: () {
+                          //add
+                          _productDetailsController.addToFavourites(productId);
+                        },
+                        child: Icon(
+                          Icons.favorite_outline,
+                          color: Colors.white,
+                        ),
+                      ),
               ),
             ),
           ],
         ))
       ],
     );
+  }
+
+  Widget _ownerView() {
+    return Padding(
+      padding: EdgeInsetsDirectional.only(start: 10, top: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Stack(
+            children: [
+              Container(
+                width: 100,
+                height: 100,
+                child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: NetworkImage(
+                      _productDetailsController.productModel.owner.photo),
+                  radius: 50,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsetsDirectional.only(top: 10),
+              child: Column(
+                children: [
+                  CustomText(
+                    text: _productDetailsController.productModel.owner.name,
+                    fontSize: 18,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.message,
+                            color: primaryColor,
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _launchCaller();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.call,
+                            color: primaryColor,
+                            size: 30,
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  _launchCaller() async {
+    var phone = _productDetailsController.productModel.owner.phone;
+    phone == null
+        ? CommonMethods()
+            .showMessage('Message', 'This user didn\'t add his phone number.')
+        : await canLaunch("tel:$phone")
+            ? await launch("tel:$phone")
+            : throw 'Could not launch ${"tel:$phone"}';
   }
 }

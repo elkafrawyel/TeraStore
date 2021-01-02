@@ -1,4 +1,5 @@
 // favourites to rest of the app !!
-// cart
+// checkOut
 //similar products
 //search
+//take heavy work to background

@@ -57,4 +57,11 @@ Map<String, String> en = {
   'call': 'Call',
   'close': 'Close App',
   'closeMessage': 'Are you sure to close the app?',
+  'addedToCart': 'is Added to your cart',
+  'userHaveNoPhone': 'This user didn\'t add his phone number.',
+  'noPhone': 'No Phone Number',
+  'removedFromFavourite': 'Removed from your favourite list',
+  'addedToFavourite': 'Added to your favourite list',
+  'reviews': 'Reviews',
+  'addToCart': 'Add to Cart',
 };

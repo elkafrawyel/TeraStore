@@ -111,7 +111,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                         height: 5,
                                       ),
                                       CustomText(
-                                        text: '1253 Reviews',
+                                        text: '1253 ${'reviews'.tr}',
                                         fontSize: 14,
                                         color: Colors.grey.shade600,
                                       )
@@ -122,9 +122,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                         MediaQuery.of(context).size.width * 0.5,
                                     child: CustomCardButton(
                                       onPressed: () {
-                                        CommonMethods().showMessage(
-                                            controller.productModel.name,
-                                            'is Added to your cart');
+                                        _addToCart(controller.productModel);
                                       },
                                     ),
                                   ),
@@ -299,10 +297,17 @@ class ProductDetailsScreen extends StatelessWidget {
   _launchCaller() async {
     var phone = _productDetailsController.productModel.owner.phone;
     phone == null
-        ? CommonMethods()
-            .showMessage('Message', 'This user didn\'t add his phone number.')
+        ? CommonMethods().showMessage('message'.tr, 'userHaveNoPhone'.tr)
         : await canLaunch("tel:$phone")
             ? await launch("tel:$phone")
             : throw 'Could not launch ${"tel:$phone"}';
+  }
+
+  void _addToCart(ProductModel productModel) async {
+    Get.put(CartController())
+        .addToCart(productModel, shouldUpdate: true)
+        .then((value) {
+      CommonMethods().showMessage(productModel.name, 'addedToCart'.tr);
+    });
   }
 }

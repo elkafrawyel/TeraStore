@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/controllers/cart_controller.dart';
 import 'package:flutter_app/core/services/user_service.dart';
 import 'package:flutter_app/model/user_model.dart';
 import 'package:flutter_app/view/auth/login_screen.dart';
@@ -114,5 +115,7 @@ class MainController extends GetxController {
   resetData() {
     _currentScreen = ExploreScreen();
     _navigatorSelectedIndex = 0;
+    Get.find<CartController>().products.clear();
+    update();
   }
 }

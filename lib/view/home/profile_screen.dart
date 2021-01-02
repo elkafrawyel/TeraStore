@@ -73,7 +73,9 @@ class ProfileScreen extends StatelessWidget {
                                   CustomText(
                                     alignment: AlignmentDirectional.center,
                                     text: controller.user != null
-                                        ? controller.user.phone
+                                        ? controller.user.phone == null
+                                            ? 'noPhone'.tr
+                                            : controller.user.phone
                                         : '',
                                     fontSize: 16,
                                     color: Colors.grey.shade700,

@@ -11,13 +11,10 @@ import 'package:flutter_app/view/custom_widgets/text/custom_text.dart';
 import 'package:flutter_app/view/sub_category_screen.dart';
 import 'package:get/get.dart';
 
-// ignore: must_be_immutable
 class ExploreScreen extends StatelessWidget {
-  ExploreController _exploreController;
 
   @override
   Widget build(BuildContext context) {
-    _exploreController = Get.put(ExploreController());
     return DirectionalWidget(
       pageUi: GetBuilder<ExploreController>(
         builder: (controller) => Scaffold(

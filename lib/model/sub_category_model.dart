@@ -26,6 +26,6 @@ class SubCategoryModel {
 
   @override
   String toString() {
-    return '\nid : $id \nname : $nameAr \nimage : $image';
+    return '\nid : $id \nname : $displayName';
   }
 }

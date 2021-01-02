@@ -5,6 +5,7 @@ import 'package:flutter_app/core/services/user_service.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/model/user_model.dart';
+import 'package:get/get.dart';
 
 class ProductDetailsController extends MainController {
   ProductModel productModel;
@@ -40,7 +41,7 @@ class ProductDetailsController extends MainController {
     await ProductService().addToFavourites(productId);
     productModel.isFav = true;
     CommonMethods()
-        .showMessage(productModel.name, 'Added to your favourite list');
+        .showMessage(productModel.name, 'addedToFavourite'.tr);
     update();
   }
 
@@ -48,7 +49,7 @@ class ProductDetailsController extends MainController {
     await ProductService().removeFromFavourites(productId);
     productModel.isFav = false;
     CommonMethods()
-        .showMessage(productModel.name, 'Removed from your favourite list');
+        .showMessage(productModel.name, 'removedFromFavourite'.tr);
     update();
   }
 }

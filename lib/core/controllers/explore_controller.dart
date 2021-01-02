@@ -22,18 +22,24 @@ class ExploreController extends MainController {
   }
 
   getSliders() async {
+    if (_images.length > 0) {
+      return;
+    }
     loading.value = true;
     ExploreService().getSliders().then((docs) {
       docs.forEach((element) {
         _images.add(ImageModel.fromJson(element.data()));
       });
-      print('Images List => ${_images.length}');
+      print('Slider Images => ${_images.length} items');
       loading.value = false;
       update();
     });
   }
 
   getCategories() async {
+    if (_categories.length > 0) {
+      return;
+    }
     loading.value = true;
     ExploreService().getCategories().then((docs) {
       docs.forEach((element) {
@@ -41,19 +47,22 @@ class ExploreController extends MainController {
         categoryModel.id = element.id;
         _categories.add(categoryModel);
       });
-      print('Categories List => ${_categories.length}');
+      print('Categories => ${_categories.length} items');
       loading.value = false;
       update();
     });
   }
 
   getBestSellingProducts() async {
+    if (_products.length > 0) {
+      return;
+    }
     loading.value = true;
     ExploreService().getBestSellingProducts().then((docs) {
       docs.forEach((element) {
         _products.add(ProductModel.fromJson(element.data()));
       });
-      print('Best Selling List => ${_products.length}');
+      print('Best Selling  => ${_products.length} items');
       loading.value = false;
       update();
     });

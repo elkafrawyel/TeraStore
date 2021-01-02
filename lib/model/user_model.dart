@@ -28,6 +28,6 @@ class UserModel {
 
   @override
   String toString() {
-    return 'userId : $id - name : $name - email : $email - image : $photo ';
+    return 'userId : $id - name : $name';
   }
 }

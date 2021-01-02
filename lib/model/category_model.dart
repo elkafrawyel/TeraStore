@@ -24,6 +24,6 @@ class CategoryModel {
 
   @override
   String toString() {
-    return 'id : $id - name : $nameAr - image : $image ';
+    return 'id : $id - name : $displayName';
   }
 }

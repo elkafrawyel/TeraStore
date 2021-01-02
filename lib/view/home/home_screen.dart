@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/controllers/cart_controller.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
+import 'package:flutter_app/view/custom_widgets/budget_icon.dart';
+import 'package:flutter_app/view/custom_widgets/budget_text.dart';
 import 'package:flutter_app/view/custom_widgets/button/custom_button.dart';
 import 'package:flutter_app/view/custom_widgets/directional_widget.dart';
 import 'package:flutter_app/view/custom_widgets/text/custom_text.dart';
@@ -30,16 +33,8 @@ class HomeScreen extends StatelessWidget {
                         icon: Icon(Icons.home),
                         label: ''),
                     BottomNavigationBarItem(
-                        activeIcon: Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: CustomText(
-                            text: 'cart'.tr,
-                            color: primaryColor,
-                            fontSize: 18,
-                            alignment: AlignmentDirectional.center,
-                          ),
-                        ),
-                        icon: Icon(Icons.shopping_cart),
+                        activeIcon: BudgetTextView(),
+                        icon: BudgetIconView(),
                         label: ''),
                     BottomNavigationBarItem(
                         activeIcon: Padding(

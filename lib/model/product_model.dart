@@ -50,6 +50,6 @@ class ProductModel {
 
   @override
   String toString() {
-    return 'id : $id - name : $name - image : $image ';
+    return 'id : $id - name : $name';
   }
 }

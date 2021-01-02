@@ -56,4 +56,11 @@ Map<String, String> ar = {
   'call': 'اتصال',
   'close': 'غلق التطبيق',
   'closeMessage': 'هل انت متأكد من غلق التطبيق؟',
+  'addedToCart': 'تمت اضافته الي السلة',
+  'userHaveNoPhone': 'لم يقم هذا الشخص باضافة رقم الهاتف',
+  'noPhone': 'لا يوجد رقم هاتف',
+  'removedFromFavourite': 'تمت ازالته من المفضلة',
+  'addedToFavourite': 'تمت اضافته الي المفضلة',
+  'reviews': 'تعليقات',
+  'addToCart': 'أضف الي السلة',
 };

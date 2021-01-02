@@ -49,6 +49,18 @@ class CommonMethods {
 
   showMessage(String title, String body) {
     Get.snackbar(title, body,
+        messageText: CustomText(
+          text: body,
+          color: Colors.white,
+          fontSize: 16,
+        ),
+        titleText: CustomText(
+          text: title,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+        snackStyle: SnackStyle.FLOATING,
         backgroundColor: primaryColor,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM);

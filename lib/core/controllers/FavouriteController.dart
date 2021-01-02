@@ -20,7 +20,6 @@ class FavouriteController extends MainController {
       _products.add(model);
       print('element id${element.id}');
     }
-    print('passed');
     loading.value = false;
     if (_products.isEmpty) {
       empty.value = true;

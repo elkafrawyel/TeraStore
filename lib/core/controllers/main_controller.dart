@@ -5,12 +5,21 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/cart_controller.dart';
 import 'package:flutter_app/core/services/user_service.dart';
+import 'package:flutter_app/helper/local_storage.dart';
 import 'package:flutter_app/model/user_model.dart';
 import 'package:flutter_app/screens/auth/login_screen.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MainController extends GetxController {
+  Color primaryColor = LocalStorage().primaryColor();
+
+  changeAppColor(Color pickedColor) {
+    LocalStorage().setInt(LocalStorage.selectedColorValue, pickedColor.value);
+    primaryColor = pickedColor;
+    update();
+  }
+
   ValueNotifier<bool> loading = ValueNotifier(false);
   ValueNotifier<bool> empty = ValueNotifier(false);
 
@@ -74,6 +83,7 @@ class MainController extends GetxController {
     user.location = location;
     await UserService().addUserToFireStore(user);
     loading.value = false;
+    Get.back();
     update();
   }
 

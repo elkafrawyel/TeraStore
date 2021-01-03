@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/language/Translation.dart';
 import 'package:flutter_app/screens/splash_screen.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'helper/Constant.dart';
 import 'helper/get_binding.dart';
+import 'helper/local_storage.dart';
 
 class MyApp extends StatefulWidget {
   @override
@@ -11,19 +14,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          primaryColor: primaryColor,
-          primarySwatch: primarySwatch,
-          accentColor: accentColor),
       initialBinding: GetBinding(),
       home: SplashScreen(),
       translations: Translation(),
       locale: Locale('en'),
       fallbackLocale: Locale('en'),
+      theme: ThemeData(
+        primaryColor: Get.put(MainController(),permanent: true).primaryColor,
+        accentColor: Get.find<MainController>().primaryColor,
+      ),
     );
   }
 }

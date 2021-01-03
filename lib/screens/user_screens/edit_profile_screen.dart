@@ -139,7 +139,7 @@ class EditProfileScreen extends StatelessWidget {
                                 hintText: 'your address',
                                 controller: locationController,
                                 validateEmptyText: 'Address Empty',
-                                keyboardType: TextInputType.phone,
+                                keyboardType: TextInputType.text,
                                 labelText: 'Address',
                               ),
                               SizedBox(
@@ -150,7 +150,7 @@ class EditProfileScreen extends StatelessWidget {
                                     MediaQuery.of(Get.context).size.width * 0.6,
                                 child: CustomButton(
                                   text: 'Save',
-                                  colorBackground: primaryColor,
+                                  colorBackground: Get.find<MainController>().primaryColor,
                                   colorText: Colors.white,
                                   onPressed: () {
                                     _save();

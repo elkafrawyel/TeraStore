@@ -24,7 +24,7 @@ class CategoriesDropDownMenu extends StatelessWidget {
                 value: controller.categoryModel,
                 hint: Center(
                   child: CustomText(
-                    text: 'choose Category',
+                    text: 'category'.tr,
                     color: Colors.grey.shade500,
                     fontSize: 18,
                     alignment: AlignmentDirectional.center,
@@ -62,7 +62,7 @@ class CategoriesDropDownMenu extends StatelessWidget {
                 value: controller.subCategoryModel,
                 hint: Center(
                   child: CustomText(
-                    text: 'choose sub category',
+                    text: 'subCategory'.tr,
                     color: Colors.grey.shade500,
                     fontSize: 18,
                     alignment: AlignmentDirectional.center,

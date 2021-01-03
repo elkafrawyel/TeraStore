@@ -49,6 +49,7 @@ dependencies:
   getwidget:
   url_launcher:
   flutter_svg:
+  flutter_colorpicker:
 
 
 dev_dependencies:

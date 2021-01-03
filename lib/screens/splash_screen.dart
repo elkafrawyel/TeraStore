@@ -11,25 +11,19 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MainController>(
-      builder: (controller) => Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-          ),
-          body: SplashScreenView(
-            home: LocalStorage().getBool(LocalStorage.isLanguageChecked)
-                ? ControlView()
-                : LanguageScreen(),
-            duration: 3000,
-            imageSize: 250,
-            imageSrc: 'src/images/logo.png',
-            text: 'labelWelcome'.tr,
-            textType: TextType.TyperAnimatedText,
-            textStyle: TextStyle(
-              fontSize: 20.0,
-            ),
-            backgroundColor: Colors.white,
-          )),
-    );
+        builder: (controller) => SplashScreenView(
+              home: LocalStorage().getBool(LocalStorage.isLanguageChecked)
+                  ? ControlView()
+                  : LanguageScreen(),
+              duration: 3000,
+              imageSize: 250,
+              imageSrc: 'src/images/logo.png',
+              text: 'labelWelcome'.tr,
+              textType: TextType.TyperAnimatedText,
+              textStyle: TextStyle(
+                fontSize: 18,
+              ),
+              backgroundColor: Colors.white,
+            ));
   }
 }

@@ -24,12 +24,12 @@ class BudgetCartIconView extends StatelessWidget {
           height: 50,
           child: Center(
             child: Badge(
-              badgeColor: Colors.red,
+              badgeColor: Colors.black,
               animationType: BadgeAnimationType.slide,
               badgeContent: Obx(
                 () => Text(
                   controller.cartCount.value.toString(),
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  style: TextStyle(fontSize: 14, color: Colors.white),
                 ),
               ),
               child: Padding(
@@ -37,6 +37,7 @@ class BudgetCartIconView extends StatelessWidget {
                 child: Icon(
                   Icons.shopping_cart,
                   color: Colors.white,
+                  size: 25,
                 ),
               ),
             ),

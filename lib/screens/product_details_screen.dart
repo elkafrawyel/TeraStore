@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/cart_controller.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/core/controllers/product_details_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
@@ -84,7 +85,8 @@ class ProductDetailsScreen extends StatelessWidget {
                                             .productModel.discountPrice
                                             .toString(),
                                         fontWeight: FontWeight.bold,
-                                        color: primaryColor,
+                                        color: Get.find<MainController>()
+                                            .primaryColor,
                                       )
                                     ],
                                   ),
@@ -262,7 +264,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.message,
-                            color: primaryColor,
+                            color: Get.find<MainController>().primaryColor,
                             size: 30,
                           ),
                         ),
@@ -279,7 +281,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.call,
-                            color: primaryColor,
+                            color: Get.find<MainController>().primaryColor,
                             size: 30,
                           ),
                         ),

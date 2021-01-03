@@ -5,18 +5,18 @@ import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/model/category_model.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/model/sub_category_model.dart';
-import 'package:flutter_app/screens/main_screen/main_screen.dart';
+import 'package:flutter_app/screens/main_screen/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'explore_controller.dart';
+import 'home_controller.dart';
 import 'main_controller.dart';
 
 class AddProductController extends MainController {
   PickedFile selectedImage;
   CategoryModel categoryModel;
   SubCategoryModel subCategoryModel;
-  List<CategoryModel> categories = Get.find<ExploreController>().categories;
+  List<CategoryModel> categories = Get.find<HomeController>().categories;
 
   List<SubCategoryModel> subCategories = [];
 
@@ -38,17 +38,17 @@ class AddProductController extends MainController {
 
   addProduct(String name, String desc, int price, int discountPrice) {
     if (selectedImage == null) {
-      CommonMethods().showMessage('Add Product', 'Select Image');
+      CommonMethods().showMessage('addProduct'.tr, 'selectImage'.tr);
       return;
     }
 
     if (categoryModel == null) {
-      CommonMethods().showMessage('Add Product', 'Select Category');
+      CommonMethods().showMessage('addProduct'.tr, 'selectCategory'.tr);
       return;
     }
 
     if (subCategoryModel == null) {
-      CommonMethods().showMessage('Add Product', 'Select Sub Category');
+      CommonMethods().showMessage('addProduct'.tr,'selectSubCategory'.tr);
       return;
     }
     //price validation
@@ -71,8 +71,8 @@ class AddProductController extends MainController {
         selectedImage, (bool) {
       loading.value = false;
       update();
-      Get.offAll(MainScreen());
-      CommonMethods().showMessage(name, 'created Successfully!');
+      Get.offAll(HomeScreen());
+      CommonMethods().showMessage(name, 'created'.tr);
     });
   }
 

@@ -20,28 +20,30 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // It  will provide us total height and width of our screen
+    Size size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.symmetric(
         horizontal: kDefaultPadding,
         vertical: kDefaultPadding / 2,
       ),
       // color: Colors.blueAccent,
-      height: 200,
+      height: 160,
       child: GestureDetector(
         onTap: press,
         child: Stack(
-          alignment: Alignment.bottomLeft,
+          alignment: AlignmentDirectional.bottomCenter,
           children: <Widget>[
             // Those are our background
             Container(
-              height: 180,
+              height: 136,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(22),
-                color: itemIndex.isEven ? kBlueColor : primaryColor,
+                color: itemIndex.isEven ? kBlueColor : kSecondaryColor,
                 boxShadow: [kDefaultShadow],
               ),
               child: Container(
-                margin: EdgeInsets.only(right: kDefaultPadding / 2),
+                margin: EdgeInsetsDirectional.only(start: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(22),
@@ -49,55 +51,77 @@ class ProductCard extends StatelessWidget {
               ),
             ),
             // our product image
-            Positioned.fill(
-              child: Align(
-                alignment: AlignmentDirectional.topStart,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 150,
-                      width: 200,
-                      child: Image.network(
-                        product.image,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.only(
-                            end: kDefaultPadding / 2, top: kDefaultPadding * 2),
-                        child: CustomText(
-                          text: product.name,
-                          fontSize: 18,
-                          alignment: AlignmentDirectional.topStart,
-                        ),
-                      ),
-                    ),
-                  ],
+            PositionedDirectional(
+              top: 0,
+              start: 0,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                height: 160,
+                // image is square but we add extra 20 + 20 padding thats why width is 200
+                width: 200,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    product.image,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-            Positioned.fill(
-              child: Align(
-                alignment: AlignmentDirectional.bottomEnd,
-                child: Container(
-                  padding: EdgeInsetsDirectional.only(
-                      start: kDefaultPadding,
-                      end: kDefaultPadding,
-                      top: kDefaultPadding / 2,
-                      bottom: kDefaultPadding / 2),
-                  decoration: BoxDecoration(
-                    color: kSecondaryColor,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(22),
-                      topRight: Radius.circular(22),
+            // Product title and price
+            PositionedDirectional(
+              bottom: 0,
+              end: 0,
+              child: SizedBox(
+                height: 136,
+                // our image take 200 width, thats why we set out total width - 200
+                width: size.width - 200,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Spacer(),
+                    Align(
+                      alignment: AlignmentDirectional.topEnd,
+                      child: Container(
+                        width: size.width - 230,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: kDefaultPadding / 4),
+                          child: CustomText(
+                            text:
+                                'our image take 200 width, thats why we set out total width - 200',
+                            fontSize: 14,
+                            maxLines: 4,
+                            alignment: AlignmentDirectional.center,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    "\$${product.price}",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
+                    // it use the available space
+                    Spacer(),
+                    Align(
+                      alignment: AlignmentDirectional.bottomEnd,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: kDefaultPadding * 1.5, // 30 padding
+                          vertical: kDefaultPadding / 4, // 5 top and bottom
+                        ),
+                        decoration: BoxDecoration(
+                          color: kSecondaryColor,
+                          borderRadius: BorderRadiusDirectional.only(
+                            bottomEnd: Radius.circular(22),
+                            topStart: Radius.circular(22),
+                          ),
+                        ),
+                        child: Text(
+                          "\$${product.price}",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),

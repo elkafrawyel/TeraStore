@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/explore_controller.dart';
+import 'package:flutter_app/core/controllers/home_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
-import 'package:flutter_app/screens/sub_category_screen.dart';
+import 'package:flutter_app/screens/products_screen/products_screen.dart';
 import 'package:get/get.dart';
 
 class CategoryList extends StatefulWidget {
@@ -17,7 +17,7 @@ class _CategoryListState extends State<CategoryList> {
     return Container(
       margin: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
       height: 45,
-      child: GetBuilder<ExploreController>(
+      child: GetBuilder<HomeController>(
         builder: (controller) => controller.loading.value
             ? LoadingView()
             : ListView.builder(
@@ -28,7 +28,7 @@ class _CategoryListState extends State<CategoryList> {
                     controller.selectedCategoryIndex = index;
                     //go to sub category screen
                     Get.to(
-                      SubCategoryScreen(
+                      ProductsScreen(
                         categoryModel: controller.categories[index],
                       ),
                     );
@@ -50,7 +50,7 @@ class _CategoryListState extends State<CategoryList> {
                       text: controller.categories[index].displayName,
                       alignment: AlignmentDirectional.center,
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                 ),

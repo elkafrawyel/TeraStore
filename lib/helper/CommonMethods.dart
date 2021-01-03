@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/helper/Constant.dart';
+import 'package:flutter_app/helper/local_storage.dart';
 import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
@@ -58,10 +59,10 @@ class CommonMethods {
           text: title,
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: 18,
         ),
         snackStyle: SnackStyle.FLOATING,
-        backgroundColor: primaryColor,
+        backgroundColor: Color(LocalStorage().getInt(LocalStorage.selectedColorValue)),
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM);
   }
@@ -78,7 +79,7 @@ class CommonMethods {
       context: context,
       builder: (ctx) => AlertDialog(
         scrollable: true,
-        backgroundColor: primaryColor.shade500,
+        backgroundColor: Color(LocalStorage().getInt(LocalStorage.selectedColorValue)),
         actions: [
           CustomButton(
             text: 'ok'.tr,
@@ -105,7 +106,7 @@ class CommonMethods {
             ),
             CustomText(
               text: 'logOut'.tr,
-              fontSize: 20,
+              fontSize: 16,
               color: Colors.white,
             ),
           ],
@@ -113,7 +114,7 @@ class CommonMethods {
         content: CustomText(
           text: 'logOutMessage'.tr,
           color: Colors.white,
-          fontSize: 18,
+          fontSize: 16,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -129,7 +130,7 @@ class CommonMethods {
       context: context,
       builder: (ctx) => AlertDialog(
         scrollable: true,
-        backgroundColor: primaryColor.shade500,
+        backgroundColor: LocalStorage().primaryColor(),
         actions: [
           CustomButton(
             text: 'ok'.tr,
@@ -156,7 +157,7 @@ class CommonMethods {
             ),
             CustomText(
               text: 'close'.tr,
-              fontSize: 20,
+              fontSize: 18,
               color: Colors.white,
             ),
           ],
@@ -164,7 +165,7 @@ class CommonMethods {
         content: CustomText(
           text: 'closeMessage'.tr,
           color: Colors.white,
-          fontSize: 18,
+          fontSize: 16,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),

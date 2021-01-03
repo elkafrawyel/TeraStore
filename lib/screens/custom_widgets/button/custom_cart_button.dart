@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
+import 'package:flutter_app/helper/local_storage.dart';
 
 import '../text/custom_text.dart';
 import 'package:get/get.dart';
@@ -27,8 +29,8 @@ class CustomCartButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.shopping_bag,
-                color: primaryColor,
+                Icons.add_shopping_cart_rounded,
+                color: Get.find<MainController>().primaryColor,
                 size: 40,
               ),
               SizedBox(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/core/controllers/product_details_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
@@ -17,7 +18,7 @@ class ProductsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(DetailsScreen(productId:product.id));
+        Get.to(DetailsScreen(productId: product.id));
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.6,
@@ -90,11 +91,12 @@ class ProductsCard extends StatelessWidget {
                         width: 10,
                       ),
                       CustomText(
-                        text: product.discountPrice.toString(),
-                        alignment: AlignmentDirectional.topStart,
-                        color: primaryColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                          text: product.discountPrice.toString(),
+                          alignment: AlignmentDirectional.topStart,
+                          color: Get.find<MainController>().primaryColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+
                       ),
                     ],
                   ),

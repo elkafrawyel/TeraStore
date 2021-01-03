@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-
-// ================ Colors ========================
-const primaryColor = Colors.blue;
-const accentColor = Colors.blueAccent;
-const primarySwatch = Colors.blue;
+import 'package:flutter_app/helper/local_storage.dart';
 
 // ================ values =========================
 const kDefaultPadding = 20.0;
@@ -15,7 +11,6 @@ const kSecondaryColor = Color(0xFFFFA41B);
 const kTextColor = Color(0xFF000839);
 const kTextLightColor = Color(0xFF747474);
 const kBlueColor = Color(0xFF40BAD5);
-
 
 // our default Shadow
 const kDefaultShadow = BoxShadow(
@@ -51,6 +46,5 @@ const defaultImageUrl =
 class Constants {
   static final Color backgroundColor = Colors.grey.shade200;
   static final Color appBarTextColor = Colors.white;
-  static final Color appBarBackgroundColor = primaryColor;
   static final double appBarHeight = 50;
 }

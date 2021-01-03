@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/auth_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/validator.dart';
 import 'package:flutter_app/screens/auth/login_screen.dart';
 import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
@@ -63,7 +63,7 @@ class RegisterScreen extends GetWidget<AuthController> {
                                   CustomTextFormField(
                                     text: 'name'.tr,
                                     controller: nameController,
-                                    hintText: 'Jane Alex',
+                                    hintText: 'name'.tr,
                                     keyboardType: TextInputType.text,
                                     validatorText: 'nameIsEmpty'.tr,
                                   ),
@@ -73,7 +73,7 @@ class RegisterScreen extends GetWidget<AuthController> {
                                   CustomTextFormField(
                                     text: 'email'.tr,
                                     controller: emailController,
-                                    hintText: 'iamdavid@gmail.com',
+                                    hintText: 'someone@something.com',
                                     keyboardType: TextInputType.emailAddress,
                                     validatorText: 'emailIsEmpty'.tr,
                                   ),
@@ -94,7 +94,9 @@ class RegisterScreen extends GetWidget<AuthController> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.7,
                                     child: CustomButton(
-                                      colorBackground: primaryColor,
+                                      colorBackground:
+                                          Get.find<MainController>()
+                                              .primaryColor,
                                       colorText: Colors.white,
                                       text: 'signUp'.tr,
                                       onPressed: () {

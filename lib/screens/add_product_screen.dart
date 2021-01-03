@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/add_product_controller.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
 import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
@@ -143,22 +145,22 @@ class AddProductScreen extends StatelessWidget {
         child: Column(
           children: [
             CustomOutlinedTextFormField(
-              text: 'Name',
-              hintText: 'Type Product Name Here',
+              text: 'name'.tr,
+              hintText: 'name'.tr,
               controller: nameController,
-              validateEmptyText: 'Name Empty',
+              validateEmptyText: 'nameIsEmpty'.tr,
               keyboardType: TextInputType.text,
-              labelText: 'ProductName',
+              labelText: 'name'.tr,
             ),
             SizedBox(
               height: 20,
             ),
             CustomOutlinedTextFormField(
-              text: 'ProductDescription',
-              hintText: 'Type Product Description Here',
+              text: 'description'.tr,
+              hintText: 'emptyDescription'.tr,
               controller: descController,
               maxLines: 6,
-              validateEmptyText: 'Description Empty',
+              validateEmptyText: 'emptyDesc'.tr,
               keyboardType: TextInputType.text,
               labelText: 'Description',
             ),
@@ -171,25 +173,25 @@ class AddProductScreen extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(Get.context).size.width * 0.4,
                   child: CustomOutlinedTextFormField(
-                    text: 'Price',
+                    text: 'price'.tr,
                     suffixText: '\$',
                     hintText: '0',
-                    validateEmptyText: 'Price Empty',
+                    validateEmptyText: 'emptyPrice'.tr,
                     controller: priceController,
-                    keyboardType: TextInputType.number,
-                    labelText: 'Price',
+                    keyboardType: TextInputType.numberWithOptions(signed: true),
+                    labelText: 'price'.tr,
                   ),
                 ),
                 Container(
                   width: MediaQuery.of(Get.context).size.width * 0.4,
                   child: CustomOutlinedTextFormField(
-                    text: 'Discount Price',
+                    text: 'discountPrice'.tr,
                     hintText: '0',
-                    validateEmptyText: 'DiscountPrice Empty',
+                    validateEmptyText: 'emptyPrice'.tr,
                     suffixText: '\$',
                     controller: discountPriceController,
-                    keyboardType: TextInputType.number,
-                    labelText: 'Discount Price',
+                    keyboardType: TextInputType.numberWithOptions(signed: true),
+                    labelText: 'discountPrice'.tr,
                   ),
                 ),
               ],
@@ -204,8 +206,8 @@ class AddProductScreen extends StatelessWidget {
             Container(
               width: MediaQuery.of(Get.context).size.width * 0.6,
               child: CustomButton(
-                text: 'Add Product',
-                colorBackground: primaryColor,
+                text: 'addProduct'.tr,
+                colorBackground: Get.find<MainController>().primaryColor,
                 colorText: Colors.white,
                 onPressed: () {
                   _addProduct();
@@ -221,11 +223,15 @@ class AddProductScreen extends StatelessWidget {
   void _addProduct() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      _addProductController.addProduct(
-          nameController.text,
-          descController.text,
-          int.parse(priceController.text),
-          int.parse(discountPriceController.text));
+
+      try {
+        int price = int.parse(priceController.text);
+        int discountPrice = int.parse(discountPriceController.text);
+        _addProductController.addProduct(
+            nameController.text, descController.text, price, discountPrice);
+      } catch (_) {
+        CommonMethods().showMessage('addProduct'.tr, 'invalidPrice'.tr);
+      }
     }
   }
 }

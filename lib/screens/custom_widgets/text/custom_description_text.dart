@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
+import 'package:get/get.dart';
 
 class CustomDescription extends StatefulWidget {
   final String text;
@@ -32,16 +34,20 @@ class _CustomDescriptionState extends State<CustomDescription> {
             child: Padding(
               padding: const EdgeInsetsDirectional.only(top: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  isSeeMore
-                      ? Text(
-                          "Show Less",
-                          style: TextStyle(color: primaryColor, fontSize: 14,),
-                        )
-                      : Text("Show More",
-                          style: TextStyle(color: primaryColor, fontSize: 14))
-                ],
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    isSeeMore
+                        ? Text(
+                            "Show Less",
+                            style: TextStyle(
+                              color: Get.find<MainController>().primaryColor,
+                              fontSize: 14,
+                            ),
+                          )
+                        : Text("Show More",
+                            style: TextStyle(
+                                color: Get.find<MainController>().primaryColor, fontSize: 14))
+                  ],
               ),
             ),
           )

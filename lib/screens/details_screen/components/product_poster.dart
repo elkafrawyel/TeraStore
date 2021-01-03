@@ -10,18 +10,18 @@ class ProductPoster extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height/3,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: FadeInImage.assetNetwork(
-        height: MediaQuery.of(context).size.height/3,
-        width: MediaQuery.of(context).size.width,
+    return ClipRRect(
+      // height: MediaQuery.of(context).size.height / 3,
+      // width: MediaQuery.of(context).size.width,
+      // decoration: BoxDecoration(
+      //   color: Colors.black,
+      // ),
+      borderRadius: BorderRadius.circular(20),
+      child: Image.network(
+        image,
+        // height: MediaQuery.of(context).size.height / 3,
+        // width: MediaQuery.of(context).size.width,
         fit: BoxFit.contain,
-        placeholder: placeholder,
-        image: image,
       ),
     );
   }

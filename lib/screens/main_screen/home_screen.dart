@@ -18,14 +18,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'components/body.dart';
 
-class MainScreen extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
       drawer: buildDrawer(),
       floatingActionButton: buildFloatingButton(),
-      backgroundColor: primaryColor,
+      backgroundColor: Get.find<MainController>().primaryColor,
       body: Body(),
     );
   }
@@ -34,7 +34,12 @@ class MainScreen extends StatelessWidget {
     return AppBar(
       elevation: 0,
       centerTitle: false,
-      title: Text('home'.tr),
+      iconTheme: IconThemeData(color: Colors.white),
+      title: Text(
+        'home'.tr,
+        style: TextStyle(color: Colors.white),
+      ),
+      backgroundColor: Get.find<MainController>().primaryColor,
       actions: <Widget>[
         IconButton(
           icon: Icon(
@@ -69,49 +74,51 @@ class MainScreen extends StatelessWidget {
           child: Column(
             children: <Widget>[
               //Header
-              Container(
-                color: primaryColor,
-                child: GetBuilder<MainController>(
-                  builder: (controller) => GestureDetector(
-                    onTap: () {
-                      Get.back();
-                      Get.to(ProfileScreen());
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 60,
-                        ),
-                        CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: NetworkImage(
-                            controller.user.photo,
+              GetBuilder<MainController>(
+                builder: (controller) => Container(
+                  color: controller.primaryColor,
+                  child: GetBuilder<MainController>(
+                    builder: (controller) => GestureDetector(
+                      onTap: () {
+                        Get.back();
+                        Get.to(ProfileScreen());
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 60,
                           ),
-                          radius: 60,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomText(
-                          text: controller.user.name,
-                          fontSize: 18,
-                          alignment: AlignmentDirectional.center,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomText(
-                          text: controller.user.email,
-                          fontSize: 16,
-                          alignment: AlignmentDirectional.center,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
+                          CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: NetworkImage(
+                              controller.user.photo,
+                            ),
+                            radius: 60,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomText(
+                            text: controller.user.name,
+                            fontSize: 16,
+                            alignment: AlignmentDirectional.center,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomText(
+                            text: controller.user.email,
+                            fontSize: 12,
+                            alignment: AlignmentDirectional.center,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -166,10 +173,12 @@ class MainScreen extends StatelessWidget {
                   SizedBox(
                     width: 20,
                   ),
-                  Icon(
-                    Icons.language,
-                    size: 25,
-                    color: primaryColor,
+                  GetBuilder<MainController>(
+                    builder: (controller) => Icon(
+                      Icons.language,
+                      size: 25,
+                      color: controller.primaryColor,
+                    ),
                   ),
                   SizedBox(
                     width: 20,
@@ -194,10 +203,12 @@ class MainScreen extends StatelessWidget {
                       SizedBox(
                         width: 20,
                       ),
-                      Icon(
-                        Icons.logout,
-                        size: 25,
-                        color: primaryColor,
+                      GetBuilder<MainController>(
+                        builder: (controller) => Icon(
+                          Icons.logout,
+                          size: 25,
+                          color: controller.primaryColor,
+                        ),
                       ),
                       SizedBox(
                         width: 20,
@@ -228,30 +239,32 @@ class MainScreen extends StatelessWidget {
             top: kDefaultPadding / 2,
             start: kDefaultPadding,
             end: kDefaultPadding),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  icon,
-                  size: 25,
-                  color: primaryColor,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                CustomText(
-                  text: text,
-                  fontSize: 18,
-                ),
-              ],
-            ),
-            Icon(
-              Icons.arrow_forward_ios,
-              color: primaryColor.shade500,
-            ),
-          ],
+        child: GetBuilder<MainController>(
+          builder: (controller) => Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    icon,
+                    size: 25,
+                    color: controller.primaryColor,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  CustomText(
+                    text: text,
+                    fontSize: 16,
+                  ),
+                ],
+              ),
+              Icon(
+                Icons.arrow_forward_ios,
+                color: controller.primaryColor,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -259,6 +272,7 @@ class MainScreen extends StatelessWidget {
 
   buildFloatingButton() {
     return FloatingActionButton(
+      backgroundColor: Colors.amber,
       onPressed: () {
         Get.to(AddProductScreen());
       },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/auth_controller.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/helper/validator.dart';
 import 'package:flutter_app/screens/auth/register_screen.dart';
@@ -61,7 +62,8 @@ class LoginScreen extends GetWidget<AuthController> {
                                         child: CustomText(
                                           text: 'signUp'.tr,
                                           fontSize: 18,
-                                          color: primaryColor,
+                                          color: Get.find<MainController>()
+                                              .primaryColor,
                                         ),
                                       ),
                                     ],
@@ -80,7 +82,7 @@ class LoginScreen extends GetWidget<AuthController> {
                                   CustomTextFormField(
                                     text: 'email'.tr,
                                     controller: emailController,
-                                    hintText: 'iamdavid@gmail.com',
+                                    hintText: 'someone@something.com',
                                     keyboardType: TextInputType.emailAddress,
                                     validatorText: 'emailIsEmpty'.tr,
                                   ),
@@ -109,7 +111,7 @@ class LoginScreen extends GetWidget<AuthController> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.6,
                                     child: CustomButton(
-                                      colorBackground: primaryColor,
+                                      colorBackground: Get.find<MainController>().primaryColor,
                                       colorText: Colors.white,
                                       text: 'signIn'.tr,
                                       onPressed: () {

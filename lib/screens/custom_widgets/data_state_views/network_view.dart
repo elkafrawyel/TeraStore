@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/helper/Constant.dart';
+import 'package:flutter_app/helper/local_storage.dart';
 import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
 import 'package:lottie/lottie.dart';
 import 'package:get/get.dart';
@@ -33,7 +34,7 @@ class NetworkView extends StatelessWidget {
           CustomButton(
             text: 'retry'.tr,
             colorText: Colors.white,
-            colorBackground: primaryColor,
+            colorBackground: LocalStorage().primaryColor(),
             onPressed: onPress,
           )
         ],

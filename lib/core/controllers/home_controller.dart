@@ -4,7 +4,7 @@ import 'package:flutter_app/model/category_model.dart';
 import 'package:flutter_app/model/image_model.dart';
 import 'package:flutter_app/model/product_model.dart';
 
-class ExploreController extends MainController {
+class HomeController extends MainController {
   int selectedCategoryIndex = 0;
   List<CategoryModel> _categories = [];
   List<ProductModel> _products = [];
@@ -16,8 +16,8 @@ class ExploreController extends MainController {
 
   List<ImageModel> get images => _images;
 
-  ExploreController() {
-    getSliders();
+  HomeController() {
+    // getSliders();
     getCategories();
     getBestSellingProducts();
   }

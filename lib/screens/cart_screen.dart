@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/cart_controller.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/model/cart_model.dart';
 import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/please_wait_loading.dart';
@@ -25,7 +26,7 @@ class CartScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 20,
+                  height: kDefaultPadding / 2,
                 ),
                 Expanded(
                   child: Padding(
@@ -49,7 +50,7 @@ class CartScreen extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: primaryColor,
+                    color: Get.find<MainController>().primaryColor,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20)),
@@ -70,7 +71,7 @@ class CartScreen extends StatelessWidget {
                               padding: EdgeInsets.all(1),
                               child: RaisedButton(
                                 child: Text('CheckOut'.tr),
-                                color: primaryColor,
+                                color: Get.find<MainController>().primaryColor,
                                 elevation: 1,
                                 disabledTextColor: Colors.black,
                                 disabledColor: Colors.grey,
@@ -121,7 +122,7 @@ class CartScreen extends StatelessWidget {
   Widget _cartItem(BuildContext context, Cart cart, int index) {
     return GestureDetector(
       onTap: () {
-        Get.to(DetailsScreen(productId:cart.id));
+        Get.to(DetailsScreen(productId: cart.id));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -133,10 +134,12 @@ class CartScreen extends StatelessWidget {
               height: 140,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: FadeInImage.assetNetwork(
-                  fit: BoxFit.cover,
-                  placeholder: placeholder,
-                  image: cart.productModel.image,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    cart.productModel.image,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),
@@ -149,7 +152,7 @@ class CartScreen extends StatelessWidget {
                   CustomText(
                     text: cart.productModel.name,
                     maxLines: 2,
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                   SizedBox(
                     height: 10,
@@ -159,84 +162,77 @@ class CartScreen extends StatelessWidget {
                     child: CustomText(
                       text: cart.productModel.discountPrice.toString() + '\$',
                       fontSize: 18,
-                      color: primaryColor,
+                      color: Get.find<MainController>().primaryColor,
                     ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 50,
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              side: BorderSide(color: primaryColor)),
-                          child: CustomText(
-                            text: '+',
-                            alignment: AlignmentDirectional.center,
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            Get.find<CartController>().addToCart(
-                                cart.productModel,
-                                index: index,
-                                showLoading: true);
-                          },
-                          color: primaryColor,
+                  Align(
+                    alignment: AlignmentDirectional.bottomEnd,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        width: 120,
+                        color: Get.find<MainController>().primaryColor,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                add(cart, index);
+                              },
+                              child: Padding(
+                                  padding:
+                                      const EdgeInsets.all(kDefaultPadding / 2),
+                                  child: Icon(
+                                    Icons.add,
+                                    size: 25,
+                                    color: Colors.white,
+                                  )),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.all(kDefaultPadding / 4),
+                              child: CustomText(
+                                text: cart.quantity.toString(),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                remove(cart, index);
+                              },
+                              child: Padding(
+                                  padding:
+                                      const EdgeInsets.all(kDefaultPadding / 2),
+                                  child: Icon(
+                                    Icons.remove,
+                                    size: 25,
+                                    color: Colors.white,
+                                  )),
+                            ),
+                          ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.only(
-                            end: 10, start: 10),
-                        child: CustomText(
-                          text: cart.quantity.toString(),
-                          fontSize: 22,
-                        ),
-                      ),
-                      Container(
-                        width: 50,
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                              side: BorderSide(color: primaryColor)),
-                          onPressed: () {
-                            if (cart.quantity == 1) {
-                              Get.find<CartController>().removeItem(cart.id,
-                                  index: index, showLoading: true);
-                            } else {
-                              Get.find<CartController>().deleteFromCart(cart.id,
-                                  index: index, showLoading: true);
-                            }
-                          },
-                          child: CustomText(
-                            text: '-',
-                            alignment: AlignmentDirectional.center,
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                          color: primaryColor,
-                        ),
-                      ),
-                    ],
+                    ),
                   )
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                Get.find<CartController>()
-                    .removeItem(cart.id, index: index, showLoading: true);
-              },
-              child: Icon(
-                Icons.delete,
-                color: Colors.red,
-                size: 40,
-              ),
-            ),
+            // GestureDetector(
+            //   onTap: () {
+            //     Get.find<CartController>()
+            //         .removeItem(cart.id, index: index, showLoading: true);
+            //   },
+            //   child: Icon(
+            //     Icons.delete,
+            //     color: Colors.red,
+            //     size: 30,
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -249,5 +245,20 @@ class CartScreen extends StatelessWidget {
       total = total + (cart.quantity * cart.productModel.discountPrice);
     }
     return total;
+  }
+
+  void remove(Cart cart, int index) {
+    if (cart.quantity == 1) {
+      Get.find<CartController>()
+          .removeItem(cart.id, index: index, showLoading: true);
+    } else {
+      Get.find<CartController>()
+          .deleteFromCart(cart.id, index: index, showLoading: true);
+    }
+  }
+
+  void add(Cart cart, int index) {
+    Get.find<CartController>()
+        .addToCart(cart.productModel, index: index, showLoading: true);
   }
 }

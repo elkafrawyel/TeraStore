@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/helper/language/language_model.dart';
 import 'package:flutter_app/helper/local_storage.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,6 @@ class AppLanguageController extends GetxController {
 
   var languageList = LanguageData.languageList();
 
-
   @override
   void onInit() async {
     super.onInit();
@@ -17,6 +17,10 @@ class AppLanguageController extends GetxController {
         ? Get.deviceLocale.languageCode
         : await localStorage.getLanguage();
     Get.updateLocale(Locale(appLocaleCode));
+
+    if (localStorage.getInt(LocalStorage.selectedColorValue) == 0)
+      localStorage.setInt(LocalStorage.selectedColorValue, Colors.blue.value);
+
     update();
   }
 

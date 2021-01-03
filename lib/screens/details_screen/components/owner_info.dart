@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/user_model.dart';
@@ -46,7 +47,7 @@ class OwnerInfo extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  Row(
+                 Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       GestureDetector(
@@ -55,7 +56,7 @@ class OwnerInfo extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.message,
-                            color: primaryColor,
+                            color: Get.find<MainController>().primaryColor,
                             size: 30,
                           ),
                         ),
@@ -72,13 +73,13 @@ class OwnerInfo extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.call,
-                            color: primaryColor,
+                            color: Get.find<MainController>().primaryColor,
                             size: 30,
                           ),
                         ),
                       )
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

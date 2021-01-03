@@ -6,7 +6,7 @@ class CartService {
   final CollectionReference _cartRef =
       FirebaseFirestore.instance.collection('Cart');
 
-  final String userId = FirebaseAuth.instance.currentUser.uid;
+  final String userId = FirebaseAuth.instance.currentUser?.uid;
 
   Future<CartModel> getMyCartList() async {
     DocumentSnapshot snapshot = await _cartRef.doc(userId).get();

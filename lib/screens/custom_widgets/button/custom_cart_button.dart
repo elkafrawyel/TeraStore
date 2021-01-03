@@ -4,10 +4,10 @@ import 'package:flutter_app/helper/Constant.dart';
 import '../text/custom_text.dart';
 import 'package:get/get.dart';
 
-class CustomCardButton extends StatelessWidget {
+class CustomCartButton extends StatelessWidget {
   final Function onPressed;
 
-  CustomCardButton({this.onPressed});
+  CustomCartButton({this.onPressed});
 
   @override
   Widget build(BuildContext context) {

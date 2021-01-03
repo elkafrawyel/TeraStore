@@ -26,8 +26,13 @@ class ProductDetailsController extends MainController {
       await checkIfFavourite(productId);
       print('product : $productModel');
       print('owner : $owner');
-      loading.value = false;
-      update();
+      if(productModel!=null && productModel.owner!=null){
+        loading.value = false;
+        update();
+      }else{
+        loading.value = true;
+        update();
+      }
     }
   }
 

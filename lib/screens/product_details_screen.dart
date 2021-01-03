@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'custom_widgets/button/custom_card_button.dart';
+import 'custom_widgets/button/custom_cart_button.dart';
 import 'custom_widgets/text/custom_description_text.dart';
 import 'custom_widgets/text/custom_text.dart';
 
@@ -121,7 +121,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                   Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.5,
-                                    child: CustomCardButton(
+                                    child: CustomCartButton(
                                       onPressed: () {
                                         _addToCart(controller.productModel);
                                       },
@@ -304,9 +304,7 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   void _addToCart(ProductModel productModel) async {
-    Get.put(CartController())
-        .addToCart(productModel, shouldUpdate: true)
-        .then((value) {
+    Get.put(CartController()).addToCart(productModel).then((value) {
       CommonMethods().showMessage(productModel.name, 'addedToCart'.tr);
     });
   }

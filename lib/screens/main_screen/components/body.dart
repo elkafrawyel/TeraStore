@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/explore_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/model/product_model.dart';
+import 'file:///F:/Apps/My%20Flutter%20Apps/E-commerce/lib/screens/main_screen/components/carousel_with_indicator.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
 import 'package:flutter_app/screens/custom_widgets/search_box.dart';
-import 'package:flutter_app/screens/product_details_screen.dart';
+import 'package:flutter_app/screens/details_screen/details_screen.dart';
 import 'package:get/get.dart';
 
 import 'category_list.dart';
@@ -19,7 +19,12 @@ class Body extends StatelessWidget {
         children: <Widget>[
           SearchBox(onChanged: (value) {}),
           CategoryList(),
-          SizedBox(height: kDefaultPadding / 2),
+          SizedBox(height: kDefaultPadding / 4),
+          GetBuilder<ExploreController>(
+            builder: (controller) => CarouselWithIndicator(
+              products: controller.products,
+            ),
+          ),
           Expanded(
             child: Stack(
               children: <Widget>[
@@ -44,8 +49,8 @@ class Body extends StatelessWidget {
                             itemIndex: index,
                             product: controller.products[index],
                             press: () {
-                              Get.to(ProductDetailsScreen(
-                                  controller.products[index].id));
+                              Get.to(DetailsScreen(
+                                  productId: controller.products[index].id));
                             },
                           ),
                         ),

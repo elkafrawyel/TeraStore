@@ -3,19 +3,18 @@ import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/core/services/cart_service.dart';
 import 'package:flutter_app/core/services/product_service.dart';
 import 'package:flutter_app/core/services/user_service.dart';
-import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/model/cart_model.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/model/user_model.dart';
 import 'package:get/get.dart';
 
 class CartController extends MainController {
+  //if a current call is running
   bool opRunning = false;
   List<Cart> _products = [];
 
   List<Cart> get products => _products;
-
-  int cartCount = 0;
+  var cartCount = 0.obs;
 
   @override
   onInit() {
@@ -23,26 +22,30 @@ class CartController extends MainController {
     getCartItems();
   }
 
-  getCartItems() async {
-    if (opRunning) return;
-    opRunning = true;
-    loading.value = true;
+  getCartItems({bool showLoading = false}) async {
+    loading.value = showLoading;
+    update();
     _products.clear();
+
     CartModel cartModel = await CartService().getMyCartList();
+
     for (Cart cart in cartModel.cart) {
       ProductModel model = await getProductById(cart.id);
       cart.productModel = model;
       _products.add(cart);
     }
-    print('cart Size => ${_products.length}');
+
     loading.value = false;
+
     if (_products.isEmpty) {
       empty.value = true;
     } else {
       empty.value = false;
     }
-    cartCount = _products.length;
-    opRunning = false;
+
+    cartCount.value = _products.length;
+    print('cart count => ${cartCount.value}');
+
     update();
   }
 
@@ -56,55 +59,52 @@ class CartController extends MainController {
       DocumentSnapshot userSnapShot =
           await UserService().getUser(productModel.userId);
       UserModel owner = UserModel.fromJson(userSnapShot.data());
+
       productModel.owner = owner;
 
-      productModel.isFav = true;
+      await ProductService().checkIfFavourite(productId, (value) {
+        productModel.isFav = value;
+      });
     }
-    print('cart product : $productModel');
     return productModel;
   }
 
   Future<void> addToCart(ProductModel product,
-      {int index = -1, bool shouldUpdate = false}) async {
+      {int index = -1, bool showLoading = false}) async {
     if (opRunning) return;
+
     opRunning = true;
+
     await CartService().addToCart(product.id);
-    if (index != -1) {
-      _products[index].quantity++;
-    }
-    if (shouldUpdate) {
-      getCartItems();
-    }
+
+    getCartItems(showLoading: showLoading);
+
     opRunning = false;
-    update();
+
   }
 
-  Future<void> deleteFromCart(String productId, {int index}) async {
+  Future<void> deleteFromCart(String productId,
+      {int index, bool showLoading}) async {
     if (opRunning) return;
+
     opRunning = true;
+
     await CartService().removeFromCart(productId);
-    _products[index].quantity--;
-    if (_products[index].quantity == 0) {
-      _products.removeAt(index);
-    }
-    if (_products.length == 0) {
-      empty.value = true;
-    }
-    cartCount = _products.length;
+
+    getCartItems(showLoading: showLoading);
+
     opRunning = false;
-    update();
   }
 
-  void removeItem(String productId, int index) async {
+  void removeItem(String productId, {int index, bool showLoading}) async {
     if (opRunning) return;
+
     opRunning = true;
+
     await CartService().removeProductFromCart(productId);
-    _products.removeAt(index);
-    if (_products.length == 0) {
-      empty.value = true;
-    }
-    cartCount = _products.length;
+
+    getCartItems(showLoading: showLoading);
+
     opRunning = false;
-    update();
   }
 }

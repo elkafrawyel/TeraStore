@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/cart_controller.dart';
 import 'package:flutter_app/model/cart_model.dart';
 import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
+import 'package:flutter_app/screens/custom_widgets/data_state_views/please_wait_loading.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
+import 'details_screen/details_screen.dart';
 import 'product_details_screen.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/screens/custom_widgets/directional_widget.dart';
 import 'package:get/get.dart';
 
 class CartScreen extends StatelessWidget {
-  CartScreen() {
-    Get.find<CartController>().getCartItems();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,10 +31,10 @@ class CartScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: controller.loading.value
-                        ? LoadingView()
+                        ? PleaseWaitView()
                         : controller.empty.value
                             ? EmptyView(
-                                message: 'Cart is Empty',
+                                message: 'emptyCart'.tr,
                                 emptyViews: EmptyViews.Box,
                               )
                             : ListView.builder(
@@ -74,6 +72,8 @@ class CartScreen extends StatelessWidget {
                                 child: Text('CheckOut'.tr),
                                 color: primaryColor,
                                 elevation: 1,
+                                disabledTextColor: Colors.black,
+                                disabledColor: Colors.grey,
                                 textColor: Colors.white,
                                 onPressed: controller.products.length == 0
                                     ? null
@@ -121,7 +121,7 @@ class CartScreen extends StatelessWidget {
   Widget _cartItem(BuildContext context, Cart cart, int index) {
     return GestureDetector(
       onTap: () {
-        Get.to(ProductDetailsScreen(cart.id));
+        Get.to(DetailsScreen(productId:cart.id));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -181,8 +181,10 @@ class CartScreen extends StatelessWidget {
                             color: Colors.white,
                           ),
                           onPressed: () {
-                            Get.find<CartController>()
-                                .addToCart(cart.productModel, index: index);
+                            Get.find<CartController>().addToCart(
+                                cart.productModel,
+                                index: index,
+                                showLoading: true);
                           },
                           color: primaryColor,
                         ),
@@ -203,11 +205,11 @@ class CartScreen extends StatelessWidget {
                               side: BorderSide(color: primaryColor)),
                           onPressed: () {
                             if (cart.quantity == 1) {
-                              Get.find<CartController>()
-                                  .deleteFromCart(cart.id, index: index);
+                              Get.find<CartController>().removeItem(cart.id,
+                                  index: index, showLoading: true);
                             } else {
-                              Get.find<CartController>()
-                                  .deleteFromCart(cart.id, index: index);
+                              Get.find<CartController>().deleteFromCart(cart.id,
+                                  index: index, showLoading: true);
                             }
                           },
                           child: CustomText(
@@ -226,7 +228,8 @@ class CartScreen extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Get.find<CartController>().removeItem(cart.id, index);
+                Get.find<CartController>()
+                    .removeItem(cart.id, index: index, showLoading: true);
               },
               child: Icon(
                 Icons.delete,

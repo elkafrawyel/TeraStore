@@ -6,6 +6,7 @@ import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:flutter_app/screens/custom_widgets/directional_widget.dart';
+import 'package:flutter_app/screens/details_screen/details_screen.dart';
 import 'package:flutter_app/screens/main_screen/components/product_card.dart';
 import 'package:flutter_app/screens/user_screens/edit_profile_screen.dart';
 import 'package:get/get.dart';
@@ -26,7 +27,7 @@ class ProfileScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsetsDirectional.only(end: 20),
               child: GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.to(EditProfileScreen());
                 },
                 child: Icon(
@@ -161,8 +162,8 @@ class ProfileScreen extends StatelessWidget {
                       product: controller.products[index],
                       showActions: true,
                       press: () {
-                        Get.to(ProductDetailsScreen(
-                            controller.products[index].id));
+                        Get.to(DetailsScreen(
+                            productId: controller.products[index].id));
                       },
                     ),
                   ),

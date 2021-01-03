@@ -68,4 +68,5 @@ Map<String, String> ar = {
   'checkOut': 'الدفع',
   'total': 'المجموع',
   'settings': 'الاعدادات',
+  'emptyCart': 'السلة فارغة',
 };

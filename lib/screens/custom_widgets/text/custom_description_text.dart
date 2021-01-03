@@ -20,7 +20,7 @@ class _CustomDescriptionState extends State<CustomDescription> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(widget.text,
-              style: TextStyle(fontSize: 14),
+              style: TextStyle(fontSize: 16),
               maxLines: isSeeMore ? 20 : 4,
               textAlign: TextAlign.start),
           GestureDetector(
@@ -37,7 +37,7 @@ class _CustomDescriptionState extends State<CustomDescription> {
                   isSeeMore
                       ? Text(
                           "Show Less",
-                          style: TextStyle(color: primaryColor, fontSize: 14),
+                          style: TextStyle(color: primaryColor, fontSize: 14,),
                         )
                       : Text("Show More",
                           style: TextStyle(color: primaryColor, fontSize: 14))

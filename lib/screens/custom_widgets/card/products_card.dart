@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/product_details_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
+import 'package:flutter_app/screens/details_screen/details_screen.dart';
 import 'package:get/get.dart';
 
 import '../../product_details_screen.dart';
@@ -16,7 +17,7 @@ class ProductsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(ProductDetailsScreen(product.id));
+        Get.to(DetailsScreen(productId:product.id));
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.6,

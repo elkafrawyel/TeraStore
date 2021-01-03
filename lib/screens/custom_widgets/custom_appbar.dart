@@ -5,20 +5,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String text;
   final List<Widget> actions;
 
-  CustomAppBar({this.text, this.actions});
+  CustomAppBar({this.text = '', this.actions});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      elevation: 1,
+      elevation: 0,
       iconTheme: IconThemeData(
         color: Constants.appBarTextColor,
       ),
       backgroundColor: Constants.appBarBackgroundColor,
       title: Text(
         text,
-        style: TextStyle(color: Constants.appBarTextColor,fontSize: 16),
+        style: TextStyle(color: Constants.appBarTextColor, fontSize: 16),
       ),
       actions: actions,
     );

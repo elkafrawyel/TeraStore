@@ -9,6 +9,8 @@ class BudgetCartIconView extends StatelessWidget {
 
   BudgetCartIconView({this.press});
 
+  final controller = Get.find<CartController>();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -24,15 +26,18 @@ class BudgetCartIconView extends StatelessWidget {
             child: Badge(
               badgeColor: Colors.red,
               animationType: BadgeAnimationType.slide,
-              badgeContent: GetBuilder<CartController>(
-                builder: (controller) => Text(
-                  controller.cartCount.toString(),
+              badgeContent: Obx(
+                () => Text(
+                  controller.cartCount.value.toString(),
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(kDefaultPadding / 2),
-                child: Icon(Icons.shopping_cart,color: Colors.white,),
+                child: Icon(
+                  Icons.shopping_cart,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),

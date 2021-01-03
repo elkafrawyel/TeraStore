@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'custom_widgets/custom_appbar.dart';
 import 'custom_widgets/data_state_views/empty_view.dart';
 import 'custom_widgets/data_state_views/loading_view.dart';
+import 'details_screen/details_screen.dart';
 import 'main_screen/components/product_card.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -43,8 +44,9 @@ class ProductsScreen extends StatelessWidget {
                                         product: controller.products[index],
                                         press: () {
                                           Get.to(
-                                            ProductDetailsScreen(
-                                                controller.products[index].id),
+                                            DetailsScreen(
+                                                productId: controller
+                                                    .products[index].id),
                                           );
                                         },
                                       );

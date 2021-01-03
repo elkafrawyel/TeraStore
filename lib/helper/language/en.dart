@@ -69,5 +69,6 @@ Map<String, String> en = {
   'checkOut': 'Check Out',
   'total': 'Total',
   'settings': 'Settings',
+  'emptyCart': 'Cart is Empty',
 
 };

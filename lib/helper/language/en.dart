@@ -19,7 +19,7 @@ Map<String, String> en = {
   'seeAll': 'See All',
   'bestSelling': 'Best Selling',
   'cart': 'Cart',
-  'home': 'Explore',
+  'home': 'Tera Store',
   'profile': 'Account',
   'logOut': 'Log Out',
   'email': 'Email',
@@ -64,4 +64,10 @@ Map<String, String> en = {
   'addedToFavourite': 'Added to your favourite list',
   'reviews': 'Reviews',
   'addToCart': 'Add to Cart',
+  'about': 'About Us',
+  'privacy': 'Privacy Policy',
+  'checkOut': 'Check Out',
+  'total': 'Total',
+  'settings': 'Settings',
+
 };

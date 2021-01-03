@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
 
 // ================ Colors ========================
-const primaryColor = Colors.purple;
-const accentColor = Colors.purpleAccent;
-const primarySwatch = Colors.purple;
+const primaryColor = Colors.blue;
+const accentColor = Colors.blueAccent;
+const primarySwatch = Colors.blue;
 
+// ================ values =========================
+const kDefaultPadding = 20.0;
+
+// list of colors that we use in our app
+const kBackgroundColor = Color(0xFFF1EFF1);
+const kPrimaryColor = Color(0xFF035AA6);
+const kSecondaryColor = Color(0xFFFFA41B);
+const kTextColor = Color(0xFF000839);
+const kTextLightColor = Color(0xFF747474);
+const kBlueColor = Color(0xFF40BAD5);
+
+
+// our default Shadow
+const kDefaultShadow = BoxShadow(
+  offset: Offset(0, 15),
+  blurRadius: 27,
+  color: Colors.black12, // Black color with 12% opacity
+);
 // ================ images ========================
 const placeholder = 'src/images/placeholder.jpg';
 const logo = 'src/images/logo.png';

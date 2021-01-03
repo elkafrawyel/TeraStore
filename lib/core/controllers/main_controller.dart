@@ -6,10 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/cart_controller.dart';
 import 'package:flutter_app/core/services/user_service.dart';
 import 'package:flutter_app/model/user_model.dart';
-import 'package:flutter_app/view/auth/login_screen.dart';
-import 'package:flutter_app/view/home/cart_screen.dart';
-import 'package:flutter_app/view/home/explore_screen.dart';
-import 'package:flutter_app/view/home/profile_screen.dart';
+import 'package:flutter_app/screens/auth/login_screen.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -17,19 +14,18 @@ class MainController extends GetxController {
   ValueNotifier<bool> loading = ValueNotifier(false);
   ValueNotifier<bool> empty = ValueNotifier(false);
 
-  int _navigatorSelectedIndex = 0;
-
-  get navigatorSelectedIndex => _navigatorSelectedIndex;
-  Widget _currentScreen = ExploreScreen();
-
-  get currentScreen => _currentScreen;
-
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   UserModel _user;
 
   UserModel get user => _user;
   PickedFile selectedImage;
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadUserData();
+  }
 
   loadUserData() async {
     String userId = _auth.currentUser?.uid;
@@ -79,43 +75,12 @@ class MainController extends GetxController {
     await UserService().addUserToFireStore(user);
     loading.value = false;
     update();
-    Get.find<MainController>().setScreen(ProfileScreen());
   }
 
   logOut() async {
     await _auth.signOut();
-    resetData();
-    Get.offAll(LoginScreen());
-  }
-
-  void changeSelectedIndex(int selectedIndex) {
-    _navigatorSelectedIndex = selectedIndex;
-
-    switch (selectedIndex) {
-      case 0:
-        _currentScreen = ExploreScreen();
-        break;
-
-      case 1:
-        _currentScreen = CartScreen();
-        break;
-
-      case 2:
-        _currentScreen = ProfileScreen();
-        break;
-    }
-    update();
-  }
-
-  setScreen(Widget screen) {
-    _currentScreen = screen;
-    update();
-  }
-
-  resetData() {
-    _currentScreen = ExploreScreen();
-    _navigatorSelectedIndex = 0;
     Get.find<CartController>().products.clear();
     update();
+    Get.offAll(LoginScreen());
   }
 }

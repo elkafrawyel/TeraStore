@@ -24,9 +24,8 @@ class CartController extends MainController {
   }
 
   getCartItems() async {
-    if (loading.value) {
-      return;
-    }
+    if (opRunning) return;
+    opRunning = true;
     loading.value = true;
     _products.clear();
     CartModel cartModel = await CartService().getMyCartList();
@@ -43,6 +42,7 @@ class CartController extends MainController {
       empty.value = false;
     }
     cartCount = _products.length;
+    opRunning = false;
     update();
   }
 

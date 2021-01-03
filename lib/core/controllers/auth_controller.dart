@@ -5,7 +5,7 @@ import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/helper/local_storage.dart';
 import 'package:flutter_app/model/user_model.dart';
-import 'package:flutter_app/view/home/home_screen.dart';
+import 'package:flutter_app/screens/main_screen/main_screen.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -63,7 +63,7 @@ class AuthController extends MainController {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      Get.offAll(HomeScreen());
+      Get.offAll(MainScreen());
     } on FirebaseAuthException catch (e) {
       handleError(e);
       print('Failed with error code: ${e.code}');
@@ -94,7 +94,7 @@ class AuthController extends MainController {
 
   void saveUser(UserModel user) async {
     await UserService().addUserToFireStore(user);
-    Get.offAll(HomeScreen());
+    Get.offAll(MainScreen());
   }
 
   handleError(error) async {

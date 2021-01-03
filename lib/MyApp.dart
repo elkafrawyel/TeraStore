@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/helper/language/Translation.dart';
-import 'package:flutter_app/view/splash_screen.dart';
+import 'package:flutter_app/screens/splash_screen.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'helper/Constant.dart';
 import 'helper/get_binding.dart';

@@ -5,6 +5,7 @@ import 'package:flutter_app/model/image_model.dart';
 import 'package:flutter_app/model/product_model.dart';
 
 class ExploreController extends MainController {
+  int selectedCategoryIndex = 0;
   List<CategoryModel> _categories = [];
   List<ProductModel> _products = [];
   List<ImageModel> _images = [];

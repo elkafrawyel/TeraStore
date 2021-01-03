@@ -5,7 +5,7 @@ import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/model/category_model.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/model/sub_category_model.dart';
-import 'package:flutter_app/view/home/home_screen.dart';
+import 'package:flutter_app/screens/main_screen/main_screen.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -71,7 +71,7 @@ class AddProductController extends MainController {
         selectedImage, (bool) {
       loading.value = false;
       update();
-      Get.offAll(HomeScreen());
+      Get.offAll(MainScreen());
       CommonMethods().showMessage(name, 'created Successfully!');
     });
   }

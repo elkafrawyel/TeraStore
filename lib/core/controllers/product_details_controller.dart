@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 class ProductDetailsController extends MainController {
   ProductModel productModel;
 
-  getProductById(String productId) async {
+  Future<void> getProductById(String productId) async {
     loading.value = true;
     update();
     DocumentSnapshot snapshot =
@@ -40,16 +40,14 @@ class ProductDetailsController extends MainController {
   addToFavourites(String productId) async {
     await ProductService().addToFavourites(productId);
     productModel.isFav = true;
-    CommonMethods()
-        .showMessage(productModel.name, 'addedToFavourite'.tr);
+    CommonMethods().showMessage(productModel.name, 'addedToFavourite'.tr);
     update();
   }
 
   removeFromFavourites(String productId) async {
     await ProductService().removeFromFavourites(productId);
     productModel.isFav = false;
-    CommonMethods()
-        .showMessage(productModel.name, 'removedFromFavourite'.tr);
+    CommonMethods().showMessage(productModel.name, 'removedFromFavourite'.tr);
     update();
   }
 }

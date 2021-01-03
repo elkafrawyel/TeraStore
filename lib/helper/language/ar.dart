@@ -1,6 +1,6 @@
 Map<String, String> ar = {
-  'appName': "تيرا ستور",
-  'labelWelcome': "اهلا بك في تيرا ستور",
+  'appName': "متجر تيرا",
+  'labelWelcome': "اهلا بك في متجر تيرا",
   'labelSelectLanguage': "اختار اللغة",
   'pickImage': "أختر صورة",
   'loading': "يتم التحميل",
@@ -18,7 +18,7 @@ Map<String, String> ar = {
   'seeAll': 'مشاهدة الكل',
   'bestSelling': 'الاكثر مبيعا',
   'cart': 'السلة',
-  'home': 'استكشف',
+  'home': 'متجر تيرا',
   'profile': 'حسابي',
   'logOut': 'تسجيل الخروج',
   'email': 'البريد الالكتروني',
@@ -63,4 +63,9 @@ Map<String, String> ar = {
   'addedToFavourite': 'تمت اضافته الي المفضلة',
   'reviews': 'تعليقات',
   'addToCart': 'أضف الي السلة',
+  'about': 'عن التطبيق',
+  'privacy': 'سياسة الخصوصية',
+  'checkOut': 'الدفع',
+  'total': 'المجموع',
+  'settings': 'الاعدادات',
 };

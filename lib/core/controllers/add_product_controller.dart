@@ -48,7 +48,7 @@ class AddProductController extends MainController {
     }
 
     if (subCategoryModel == null) {
-      CommonMethods().showMessage('addProduct'.tr,'selectSubCategory'.tr);
+      CommonMethods().showMessage('addProduct'.tr, 'selectSubCategory'.tr);
       return;
     }
     //price validation
@@ -72,6 +72,7 @@ class AddProductController extends MainController {
       loading.value = false;
       update();
       Get.offAll(HomeScreen());
+      Get.find<HomeController>().getBestSellingProducts();
       CommonMethods().showMessage(name, 'created'.tr);
     });
   }

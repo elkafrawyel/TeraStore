@@ -55,10 +55,8 @@ class HomeController extends MainController {
   }
 
   getBestSellingProducts() async {
-    if (_products.length > 0) {
-      return;
-    }
     loading.value = true;
+    _products.clear();
     ExploreService().getBestSellingProducts().then((docs) {
       docs.forEach((element) {
         _products.add(ProductModel.fromJson(element.data()));

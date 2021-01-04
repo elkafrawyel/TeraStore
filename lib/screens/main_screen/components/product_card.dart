@@ -88,8 +88,7 @@ class ProductCard extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: kDefaultPadding / 4),
                           child: CustomText(
-                            text:
-                                'our image take 200 width, thats why we set out total width - 200',
+                            text: product.name,
                             fontSize: 14,
                             maxLines: 4,
                             alignment: AlignmentDirectional.center,

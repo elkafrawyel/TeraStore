@@ -12,8 +12,7 @@ import 'category_list.dart';
 import 'product_card.dart';
 
 class Body extends StatelessWidget {
-
-  Body(){
+  Body() {
     Get.put(HomeController());
   }
 

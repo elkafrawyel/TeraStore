@@ -52,17 +52,17 @@ class CommonMethods {
     Get.snackbar(title, body,
         messageText: CustomText(
           text: body,
-          color: Colors.white,
+          color: Colors.black,
           fontSize: 16,
         ),
         titleText: CustomText(
           text: title,
-          color: Colors.white,
+          color: Colors.black,
           fontWeight: FontWeight.bold,
           fontSize: 18,
         ),
         snackStyle: SnackStyle.FLOATING,
-        backgroundColor: Color(LocalStorage().getInt(LocalStorage.selectedColorValue)),
+        backgroundColor: Colors.white,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM);
   }
@@ -79,7 +79,8 @@ class CommonMethods {
       context: context,
       builder: (ctx) => AlertDialog(
         scrollable: true,
-        backgroundColor: Color(LocalStorage().getInt(LocalStorage.selectedColorValue)),
+        backgroundColor:
+            Color(LocalStorage().getInt(LocalStorage.selectedColorValue)),
         actions: [
           CustomButton(
             text: 'ok'.tr,

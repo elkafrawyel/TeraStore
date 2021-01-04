@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/controllers/home_controller.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
@@ -273,8 +274,8 @@ class HomeScreen extends StatelessWidget {
   buildFloatingButton() {
     return FloatingActionButton(
       backgroundColor: Colors.amber,
-      onPressed: () {
-        Get.to(AddProductScreen());
+      onPressed: () async {
+        await Get.to(AddProductScreen());
       },
       child: Icon(
         Icons.add,

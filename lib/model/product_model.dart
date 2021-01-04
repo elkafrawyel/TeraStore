@@ -1,7 +1,13 @@
 import 'user_model.dart';
 
 class ProductModel {
-  String id, name, description, image, userId, subCategoryId, timeStamp;
+  String id,
+      name,
+      description,
+      image,
+      userId,
+      subCategoryId,
+      timeStamp;
   int discountPrice, price;
 
   //run time attributes

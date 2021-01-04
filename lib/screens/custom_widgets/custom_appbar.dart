@@ -6,15 +6,16 @@ import 'package:get/get.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String text;
   final List<Widget> actions;
+  final double elevation;
 
-  CustomAppBar({this.text = '', this.actions});
+  CustomAppBar({this.text = '', this.actions, this.elevation = 0});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MainController>(
       builder: (controller) => AppBar(
         centerTitle: true,
-        elevation: 0,
+        elevation: elevation,
         iconTheme: IconThemeData(
           color: Constants.appBarTextColor,
         ),

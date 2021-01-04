@@ -80,7 +80,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                             ),
                           );
                         },
-                        child: Image.network(item.image,
+                        child: Image.network(item.image==null?'':item.image,
                             fit: BoxFit.contain, width: 1000.0),
                       ),
                       Positioned(
@@ -91,7 +91,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                Color.fromARGB(200, 0, 0, 0),
+                                Color.fromARGB(100, 0, 0, 0),
                                 Color.fromARGB(0, 0, 0, 0)
                               ],
                               begin: Alignment.bottomCenter,

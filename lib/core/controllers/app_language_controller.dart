@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/helper/language/language_model.dart';
-import 'package:flutter_app/helper/local_storage.dart';
+import 'file:///F:/Apps/My%20Flutter%20Apps/E-commerce/lib/storage/local_storage.dart';
 import 'package:get/get.dart';
 
 class AppLanguageController extends GetxController {

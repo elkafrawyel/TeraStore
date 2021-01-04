@@ -6,23 +6,26 @@ import 'package:get/get.dart';
 class EmptyView extends StatelessWidget {
   final String message;
   final EmptyViews emptyViews;
+  final Color textColor;
 
-  EmptyView({this.message, this.emptyViews});
+  EmptyView({this.message, this.emptyViews, this.textColor = Colors.white});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      color: Constants.backgroundColor,
+      height: 400,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _emptyImage(),
           Text(
             message == null ? 'empty'.tr : message,
-            style: TextStyle(fontSize: 18, color: Colors.grey.shade500),
-          )
+            style: TextStyle(fontSize: 18, color: textColor),
+          ),
+          SizedBox(
+            height: 40,
+          ),
         ],
       ),
     );

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_app/core/services/product_service.dart';
 import 'package:flutter_app/core/services/sub_category_service.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
+import 'package:flutter_app/helper/image_converter.dart';
 import 'package:flutter_app/model/category_model.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/model/sub_category_model.dart';
@@ -13,7 +16,7 @@ import 'home_controller.dart';
 import 'main_controller.dart';
 
 class AddProductController extends MainController {
-  PickedFile selectedImage;
+  File productImage;
   CategoryModel categoryModel;
   SubCategoryModel subCategoryModel;
   List<CategoryModel> categories = Get.find<HomeController>().categories;
@@ -31,13 +34,18 @@ class AddProductController extends MainController {
     update();
   }
 
-  setProductImage(PickedFile image) {
-    selectedImage = image;
+  setProductImage(File image) async {
+    // File file =
+    //     await ImageConverter().compressProductBigImage(image.path);
+    // File file1 = await ImageConverter()
+    //     .compressProductSmallImage(image.path);
+    // productBigImage = file;
+    productImage = image;
     update();
   }
 
   addProduct(String name, String desc, int price, int discountPrice) {
-    if (selectedImage == null) {
+    if (productImage == null) {
       CommonMethods().showMessage('addProduct'.tr, 'selectImage'.tr);
       return;
     }
@@ -68,11 +76,11 @@ class AddProductController extends MainController {
           subCategoryId: subCategoryModel.id,
           timeStamp: id.toString(),
         ),
-        selectedImage, (bool) {
+        productImage, (bool) {
       loading.value = false;
       update();
       Get.offAll(HomeScreen());
-      Get.find<HomeController>().getBestSellingProducts();
+      Get.find<HomeController>().filterProducts();
       CommonMethods().showMessage(name, 'created'.tr);
     });
   }

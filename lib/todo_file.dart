@@ -1,13 +1,8 @@
-
-//transparent images
-//filter dialog
-//search
+//image picker ios needs to add lines
+//cart,favourite local database
 // check login again google ,facebook
 //when re login get the old image by id
-//favourites to rest of the app !!
 //add actions to my products delete edit
-//delete cart with swipe
-//similar products
 // checkOut
 //test on IOS
 //handle network

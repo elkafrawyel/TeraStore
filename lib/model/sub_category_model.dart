@@ -1,4 +1,4 @@
-import 'package:flutter_app/helper/local_storage.dart';
+import 'file:///F:/Apps/My%20Flutter%20Apps/E-commerce/lib/storage/local_storage.dart';
 
 class SubCategoryModel {
   String id, nameEn, nameAr, image, categoryId;

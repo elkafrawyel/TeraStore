@@ -18,9 +18,7 @@ class _CategoryListState extends State<CategoryList> {
       margin: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
       height: 45,
       child: GetBuilder<HomeController>(
-        builder: (controller) => controller.loading.value
-            ? LoadingView()
-            : ListView.builder(
+        builder: (controller) => ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: controller.categories.length,
                 itemBuilder: (context, index) => GestureDetector(

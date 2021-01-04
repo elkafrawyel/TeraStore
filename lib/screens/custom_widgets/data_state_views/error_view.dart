@@ -14,7 +14,7 @@ class ErrorView extends StatelessWidget {
           Center(
             child: Text(
               'error'.tr,
-              style: TextStyle(fontSize: 20, color: Colors.red),
+              style: TextStyle(fontSize: 20, color: Colors.white),
             ),
           )
         ],

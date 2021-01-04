@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/add_product_controller.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
+import 'package:flutter_app/helper/image_converter.dart';
 import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
 import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/menus/categories_drop_down_menu.dart';
@@ -98,13 +100,13 @@ class AddProductScreen extends StatelessWidget {
 
   imgFromCamera() async {
     PickedFile image = await ImagePicker().getImage(source: ImageSource.camera);
-    Get.find<AddProductController>().setProductImage(image);
+    Get.find<AddProductController>().setProductImage(File(image.path));
   }
 
   imgFromGallery() async {
     PickedFile image =
         await ImagePicker().getImage(source: ImageSource.gallery);
-    Get.find<AddProductController>().setProductImage(image);
+    Get.find<AddProductController>().setProductImage(File(image.path));
   }
 
   Widget _productImage() {
@@ -112,7 +114,7 @@ class AddProductScreen extends StatelessWidget {
       onTap: () {
         _showPicker();
       },
-      child: _addProductController.selectedImage == null
+      child: _addProductController.productImage == null
           ? Container(
               decoration: BoxDecoration(
                   color: Colors.grey[200],
@@ -126,14 +128,13 @@ class AddProductScreen extends StatelessWidget {
             )
           :
           //Image
-          Container(
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
-              width: 300,
-              height: 200,
+          ClipRRect(
+              borderRadius: BorderRadius.circular(10),
               child: Image.file(
-                File(_addProductController.selectedImage.path),
-              )),
+                File(_addProductController.productImage.path),
+                fit: BoxFit.contain,
+              ),
+            ),
     );
   }
 

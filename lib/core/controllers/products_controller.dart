@@ -16,6 +16,10 @@ class ProductsController extends MainController {
 
   List<SubCategoryModel> get subCategories => _subCategories;
 
+  List<ProductModel> _products = [];
+
+  List<ProductModel> get products => _products;
+
   getSubCategories(String categoryId) async {
     loadingSubCategories.value = true;
     _subCategories.clear();
@@ -40,10 +44,6 @@ class ProductsController extends MainController {
     print('SubCategories count => ${_subCategories.length}');
     update();
   }
-
-  List<ProductModel> _products = [];
-
-  List<ProductModel> get products => _products;
 
   getProducts() async {
     loading.value = true;

@@ -23,15 +23,25 @@ class ProductService {
     return value.docs;
   }
 
-  addProduct(ProductModel productModel, PickedFile selectedImage,
-      Function(bool finish) callback) {
+  //get products in same subCategory
+  Future<List<QueryDocumentSnapshot>> getSimilarProducts(
+      String subCategoryId, String productId) async {
+    Query query =
+        _productsRef.where('subCategoryId', isEqualTo: subCategoryId).limit(10);
+    var value = await query.get();
+
+    return value.docs;
+  }
+
+  addProduct(
+      ProductModel productModel, File image, Function(bool finish) callback) {
     //upload image
     Reference reference = FirebaseStorage.instance
         .ref()
         .child('ProductsImages/${productModel.id}');
-    reference.putFile(File(selectedImage.path)).then((value) {
+
+    reference.putFile(image).then((value) {
       reference.getDownloadURL().then((url) {
-        print(url);
         productModel.image = url;
         _productsRef
             .doc(productModel.id)
@@ -115,4 +125,6 @@ class ProductService {
       await _favouritesRef.doc(userId).set(favouriteModel.toJson());
     }
   }
+
+  filter() {}
 }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/core/services/product_service.dart';
 import 'package:flutter_app/core/services/user_service.dart';
@@ -9,6 +10,14 @@ import 'package:get/get.dart';
 
 class ProductDetailsController extends MainController {
   ProductModel productModel;
+  int selectedTab = 0;
+
+  List<ProductModel> similarProducts = [];
+
+  updateSelectedTab(int index) {
+    selectedTab = index;
+    update();
+  }
 
   Future<void> getProductById(String productId) async {
     loading.value = true;
@@ -24,15 +33,15 @@ class ProductDetailsController extends MainController {
       productModel.owner = owner;
       //check if is favourite
       await checkIfFavourite(productId);
-      print('product : $productModel');
-      print('owner : $owner');
-      if(productModel!=null && productModel.owner!=null){
+      if (productModel != null && productModel.owner != null) {
         loading.value = false;
         update();
-      }else{
+      } else {
         loading.value = true;
         update();
       }
+
+      getSimilarProducts(productModel.subCategoryId, productModel.id);
     }
   }
 
@@ -53,6 +62,28 @@ class ProductDetailsController extends MainController {
     await ProductService().removeFromFavourites(productId);
     productModel.isFav = false;
     CommonMethods().showMessage(productModel.name, 'removedFromFavourite'.tr);
+    update();
+  }
+
+  getSimilarProducts(String subCategoryId, String productId) async {
+    similarProducts.clear();
+    List<QueryDocumentSnapshot> list =
+        await ProductService().getSimilarProducts(subCategoryId, productId);
+
+    list.forEach((element) {
+      ProductModel productModel = ProductModel.fromJson(element.data());
+      if (productId == element.id) return;
+      productModel.id = element.id;
+      similarProducts.add(productModel);
+      print('Product model => $productModel');
+    });
+    if (similarProducts.isEmpty) {
+      empty.value = true;
+    } else {
+      empty.value = false;
+    }
+    print('Products Size => ${similarProducts.length}');
+
     update();
   }
 }

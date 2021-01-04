@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'helper/Constant.dart';
 import 'helper/get_binding.dart';
-import 'helper/local_storage.dart';
+import 'storage/local_storage.dart';
 
 class MyApp extends StatefulWidget {
   @override
@@ -25,6 +25,7 @@ class _MyAppState extends State<MyApp> {
       locale: Locale('en'),
       fallbackLocale: Locale('en'),
       theme: ThemeData(
+        // fontFamily: 'Crimson',
         primaryColor: Get.put(MainController(),permanent: true).primaryColor,
         accentColor: Get.find<MainController>().primaryColor,
       ),

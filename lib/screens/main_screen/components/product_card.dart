@@ -63,7 +63,7 @@ class ProductCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   child: Image.network(
                     product.image,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),

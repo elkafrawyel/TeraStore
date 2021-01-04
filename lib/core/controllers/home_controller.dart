@@ -1,37 +1,41 @@
-import 'package:flutter_app/core/services/explore_service.dart';
+import 'package:flutter_app/core/services/home_service.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/model/category_model.dart';
 import 'package:flutter_app/model/image_model.dart';
 import 'package:flutter_app/model/product_model.dart';
+import 'package:flutter_app/screens/main_screen/home_screen.dart';
 
 class HomeController extends MainController {
+  ProductFilters filter = ProductFilters.HighPrice;
+
   int selectedCategoryIndex = 0;
   List<CategoryModel> _categories = [];
-  List<ProductModel> _products = [];
-  List<ImageModel> _images = [];
+  List<ProductModel> _filteredProducts = [];
+  List<ProductModel> _sliderProducts = [];
 
   List<CategoryModel> get categories => _categories;
 
-  List<ProductModel> get products => _products;
+  List<ProductModel> get products => _filteredProducts;
 
-  List<ImageModel> get images => _images;
+  List<ProductModel> get sliderProducts => _sliderProducts;
+
 
   HomeController() {
-    // getSliders();
+    getSliderProducts();
     getCategories();
-    getBestSellingProducts();
+    filterProducts();
   }
 
-  getSliders() async {
-    if (_images.length > 0) {
+  getSliderProducts() async {
+    if (_sliderProducts.length > 0) {
       return;
     }
     loading.value = true;
-    ExploreService().getSliders().then((docs) {
+    HomeService().getFilteredProducts(ProductFilters.HighPrice).then((docs) {
       docs.forEach((element) {
-        _images.add(ImageModel.fromJson(element.data()));
+        _sliderProducts.add(ProductModel.fromJson(element.data()));
       });
-      print('Slider Images => ${_images.length} items');
+      print('Slider count => ${_sliderProducts.length} items');
       loading.value = false;
       update();
     });
@@ -42,7 +46,7 @@ class HomeController extends MainController {
       return;
     }
     loading.value = true;
-    ExploreService().getCategories().then((docs) {
+    HomeService().getCategories().then((docs) {
       docs.forEach((element) {
         CategoryModel categoryModel = CategoryModel.fromJson(element.data());
         categoryModel.id = element.id;
@@ -54,16 +58,20 @@ class HomeController extends MainController {
     });
   }
 
-  getBestSellingProducts() async {
+  filterProducts() async {
     loading.value = true;
-    _products.clear();
-    ExploreService().getBestSellingProducts().then((docs) {
+    update();
+    _filteredProducts.clear();
+    HomeService().getFilteredProducts(filter).then((docs) {
       docs.forEach((element) {
-        _products.add(ProductModel.fromJson(element.data()));
+        _filteredProducts.add(ProductModel.fromJson(element.data()));
       });
-      print('Best Selling  => ${_products.length} items');
+      print('Best Selling  => ${_filteredProducts.length} items');
       loading.value = false;
+      empty.value = _filteredProducts.isEmpty;
       update();
     });
   }
+
+
 }

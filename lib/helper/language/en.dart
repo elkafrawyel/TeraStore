@@ -86,7 +86,16 @@ Map<String, String> en = {
   'selectImage': 'Pick Image',
   'selectCategory': 'Select Category',
   'selectSubCategory': 'Select SubCategory',
-  'change':'Change',
-  'pickColor':'Pick a color!',
-  'appColor':'Choose App Main Color'
+  'change': 'Change',
+  'pickColor': 'Pick a color!',
+  'appColor': 'Choose App Main Color',
+  'howToUse': 'How To Use',
+  'contactUs': 'Contact Us',
+  'sortBy': 'Sort By',
+  'filter': 'Filter',
+  'noFilteredProducts':'No Products for this search',
+  'details':'Details',
+  'similarProducts':'Similar Products',
+  'noSimilarProducts':'No Similar Products Founded',
+
 };

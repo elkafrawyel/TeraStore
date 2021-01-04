@@ -11,11 +11,12 @@ class PleaseWaitView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(),
+          CircularProgressIndicator(backgroundColor: Colors.white,),
           SizedBox(
             height: 20,
           ),
           CustomText(
+            color: Colors.white,
             alignment: AlignmentDirectional.center,
             text: 'pleaseWait'.tr,
           )

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'file:///F:/Apps/My%20Flutter%20Apps/E-commerce/lib/storage/local_storage.dart';
 
 // ================ values =========================
 const kDefaultPadding = 20.0;

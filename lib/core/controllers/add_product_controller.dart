@@ -4,14 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_app/core/services/product_service.dart';
 import 'package:flutter_app/core/services/sub_category_service.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
-import 'package:flutter_app/helper/image_converter.dart';
 import 'package:flutter_app/model/category_model.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/model/sub_category_model.dart';
 import 'package:flutter_app/screens/main_screen/home_screen.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-
 import 'home_controller.dart';
 import 'main_controller.dart';
 

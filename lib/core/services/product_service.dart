@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_app/model/favourite_model.dart';
 import 'package:flutter_app/model/product_model.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ProductService {
   final CollectionReference _productsRef =

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
-import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/user_model.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:url_launcher/url_launcher.dart';

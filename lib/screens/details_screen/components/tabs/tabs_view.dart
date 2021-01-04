@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/core/controllers/product_details_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:flutter_app/screens/details_screen/components/tabs/reviews_tab.dart';

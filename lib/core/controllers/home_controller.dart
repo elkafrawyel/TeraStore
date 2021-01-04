@@ -1,7 +1,6 @@
 import 'package:flutter_app/core/services/home_service.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/model/category_model.dart';
-import 'package:flutter_app/model/image_model.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/screens/main_screen/home_screen.dart';
 

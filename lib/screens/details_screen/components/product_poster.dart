@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/helper/Constant.dart';
 
 class ProductPoster extends StatelessWidget {
   ProductPoster({

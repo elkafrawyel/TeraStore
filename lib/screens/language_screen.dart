@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'file:///F:/Apps/My%20Flutter%20Apps/E-commerce/lib/storage/local_storage.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 
 import 'control_view.dart';

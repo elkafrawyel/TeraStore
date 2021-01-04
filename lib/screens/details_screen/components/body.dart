@@ -1,17 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/cart_controller.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
-import 'package:flutter_app/core/controllers/product_details_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/screens/custom_widgets/button/custom_cart_button.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
-import 'package:flutter_app/screens/details_screen/components/tabs/info_tab.dart';
-import 'package:flutter_app/screens/details_screen/components/tabs/reviews_tab.dart';
 import 'package:flutter_app/screens/details_screen/components/tabs/tabs_view.dart';
 import 'package:get/get.dart';
-import 'package:rating_bar/rating_bar.dart';
 import 'product_poster.dart';
 
 class Body extends StatelessWidget {

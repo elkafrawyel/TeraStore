@@ -1,4 +1,5 @@
-import 'file:///F:/Apps/My%20Flutter%20Apps/E-commerce/lib/storage/local_storage.dart';
+
+import 'package:flutter_app/storage/local_storage.dart';
 
 class CategoryModel {
   String id, nameAr, nameEn, image;

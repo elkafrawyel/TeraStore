@@ -3,12 +3,11 @@ import 'package:flutter_app/core/controllers/home_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
-import 'file:///F:/Apps/My%20Flutter%20Apps/E-commerce/lib/screens/main_screen/components/carousel_with_indicator.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
-import 'file:///F:/Apps/My%20Flutter%20Apps/E-commerce/lib/screens/search_screen/components/search_box.dart';
 import 'package:flutter_app/screens/details_screen/details_screen.dart';
 import 'package:get/get.dart';
 
+import 'carousel_with_indicator.dart';
 import 'category_list.dart';
 import 'product_card.dart';
 

@@ -3,12 +3,11 @@ import 'package:flutter_app/core/controllers/home_controller.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
-import 'file:///F:/Apps/My%20Flutter%20Apps/E-commerce/lib/storage/local_storage.dart';
 import 'package:flutter_app/screens/add_product_screen.dart';
+import 'package:flutter_app/screens/cart_screen.dart';
 import 'package:flutter_app/screens/custom_widgets/budget_cart_icon.dart';
 import 'package:flutter_app/screens/custom_widgets/menus/custom_language_menu.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
-import 'file:///F:/Apps/My%20Flutter%20Apps/E-commerce/lib/screens/cart_screen.dart';
 import 'package:flutter_app/screens/profile/profile_screen.dart';
 import 'package:flutter_app/screens/search_screen/search_screen.dart';
 import 'package:flutter_app/screens/settings_screen.dart';
@@ -17,9 +16,8 @@ import 'package:flutter_app/screens/user_screens/favourites_screen.dart';
 import 'package:flutter_app/screens/user_screens/notifications_screen.dart';
 import 'package:flutter_app/screens/user_screens/order_history_screen.dart';
 import 'package:flutter_app/screens/user_screens/shipping_address_screen.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
-import 'package:rating_bar/rating_bar.dart';
 import 'components/body.dart';
 
 class HomeScreen extends StatelessWidget {

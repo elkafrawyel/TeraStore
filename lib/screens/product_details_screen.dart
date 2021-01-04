@@ -6,7 +6,6 @@ import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
-import 'package:flutter_app/screens/custom_widgets/directional_widget.dart';
 import 'package:get/get.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -28,131 +27,124 @@ class ProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DirectionalWidget(
-      pageUi: Scaffold(
-        body: SingleChildScrollView(
-          child: GetBuilder<ProductDetailsController>(
-            builder: (controller) => controller.loading.value
-                ? LoadingView()
-                : Container(
-                    child: Column(
-                      children: [
-                        _header(context, controller),
-                        Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        child: CustomText(
-                                          text: controller.productModel.name,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.7,
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        controller.productModel.price
-                                            .toString(),
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          decoration:
-                                              TextDecoration.lineThrough,
-                                          color: Colors.grey.shade800,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      CustomText(
-                                        fontSize: 22,
-                                        text: controller
-                                            .productModel.discountPrice
-                                            .toString(),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: GetBuilder<ProductDetailsController>(
+          builder: (controller) => controller.loading.value
+              ? LoadingView()
+              : Container(
+                  child: Column(
+                    children: [
+                      _header(context, controller),
+                      Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                      child: CustomText(
+                                        text: controller.productModel.name,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.bold,
-                                        color: Get.find<MainController>()
-                                            .primaryColor,
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    children: [
-                                      RatingBar.readOnly(
-                                        initialRating: 3.5,
-                                        isHalfAllowed: true,
-                                        size: 30,
-                                        filledColor: Colors.amber,
-                                        halfFilledIcon: Icons.star_half,
-                                        filledIcon: Icons.star,
-                                        emptyIcon: Icons.star_border,
                                       ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      CustomText(
-                                        text: '1253 ${'reviews'.tr}',
-                                        fontSize: 14,
-                                        color: Colors.grey.shade600,
-                                      )
-                                    ],
-                                  ),
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-                                    child: CustomCartButton(
-                                      onPressed: () {
-                                        _addToCart(controller.productModel);
-                                      },
+                                      width: MediaQuery.of(context).size.width *
+                                          0.7,
                                     ),
-                                  ),
-                                ],
-                              ),
-                              _ownerView(controller),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              CustomText(
-                                text: 'description'.tr,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CustomDescription(
-                                  text: controller.productModel.description,
+                                  ],
                                 ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      controller.productModel.price.toString(),
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        decoration: TextDecoration.lineThrough,
+                                        color: Colors.grey.shade800,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    CustomText(
+                                      fontSize: 22,
+                                      text: controller
+                                          .productModel.discountPrice
+                                          .toString(),
+                                      fontWeight: FontWeight.bold,
+                                      color: Get.find<MainController>()
+                                          .primaryColor,
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    RatingBar.readOnly(
+                                      initialRating: 3.5,
+                                      isHalfAllowed: true,
+                                      size: 30,
+                                      filledColor: Colors.amber,
+                                      halfFilledIcon: Icons.star_half,
+                                      filledIcon: Icons.star,
+                                      emptyIcon: Icons.star_border,
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    CustomText(
+                                      text: '1253 ${'reviews'.tr}',
+                                      fontSize: 14,
+                                      color: Colors.grey.shade600,
+                                    )
+                                  ],
+                                ),
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.5,
+                                  child: CustomCartButton(
+                                    onPressed: () {
+                                      _addToCart(controller.productModel);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            _ownerView(controller),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            CustomText(
+                              text: 'description'.tr,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CustomDescription(
+                                text: controller.productModel.description,
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-          ),
+                ),
         ),
       ),
     );

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'file:///F:/Apps/My%20Flutter%20Apps/E-commerce/lib/storage/local_storage.dart';
-
 import '../text/custom_text.dart';
 import 'package:get/get.dart';
 
@@ -20,7 +17,7 @@ class CustomCartButton extends StatelessWidget {
         border: Border.all(width: 0.5, color: Colors.grey),
       ),
       child: FlatButton(
-          padding: EdgeInsets.only(top: 10,bottom: 10),
+          padding: EdgeInsets.only(top: 10, bottom: 10),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),

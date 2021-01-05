@@ -51,6 +51,7 @@ class SubCategoriesList extends StatelessWidget {
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: CustomText(
+                          fontSize: 18,
                           text: controller.subCategories[index].displayName,
                           alignment: AlignmentDirectional.center,
                           color: Colors.white,

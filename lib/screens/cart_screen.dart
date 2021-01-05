@@ -54,17 +54,24 @@ class CartScreen extends StatelessWidget {
                       topRight: Radius.circular(20)),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsetsDirectional.only(
+                      top: kDefaultPadding,
+                      start: kDefaultPadding / 2,
+                      bottom: kDefaultPadding,
+                      end: kDefaultPadding / 2),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                        padding: const EdgeInsetsDirectional.only(start: 20),
+                        padding: const EdgeInsetsDirectional.only(
+                            start: kDefaultPadding,
+                            bottom: kDefaultPadding,
+                            end: kDefaultPadding),
                         child: Container(
                             height: 50,
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                             padding: EdgeInsets.all(1),
                             child: RaisedButton(
@@ -85,7 +92,7 @@ class CartScreen extends StatelessWidget {
                           children: [
                             CustomText(
                               text: 'Total',
-                              fontSize: 18,
+                              fontSize: 20,
                               color: Colors.black,
                               alignment: AlignmentDirectional.center,
                             ),
@@ -99,7 +106,7 @@ class CartScreen extends StatelessWidget {
                                           .toString() +
                                       '\$',
                               alignment: AlignmentDirectional.center,
-                              fontSize: 22,
+                              fontSize: 25,
                               color: Colors.black,
                             ),
                           ],
@@ -133,7 +140,8 @@ class CartScreen extends StatelessWidget {
             alignment: AlignmentDirectional.centerStart,
           ),
           onDismissed: (direction) {
-            Get.find<CartController>().removeItem(cart.id, index: index,showLoading: true);
+            Get.find<CartController>()
+                .removeItem(cart.id, index: index, showLoading: true);
           },
           child: Card(
             shape: RoundedRectangleBorder(
@@ -185,14 +193,14 @@ class CartScreen extends StatelessWidget {
                       Align(
                         alignment: AlignmentDirectional.bottomEnd,
                         child: Container(
-                          width: 120,
+                          width: 150,
                           child: Card(
                             color: Get.find<MainController>().primaryColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 GestureDetector(
                                   onTap: () {

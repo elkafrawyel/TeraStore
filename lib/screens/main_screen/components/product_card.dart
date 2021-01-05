@@ -88,7 +88,7 @@ class ProductCard extends StatelessWidget {
                               horizontal: kDefaultPadding / 4),
                           child: CustomText(
                             text: product.name,
-                            fontSize: 14,
+                            fontSize: 18,
                             maxLines: 4,
                             alignment: AlignmentDirectional.center,
                           ),
@@ -114,6 +114,7 @@ class ProductCard extends StatelessWidget {
                         child: Text(
                           "\$${product.price}",
                           style: TextStyle(
+                            fontSize: 20,
                             color: Colors.white,
                           ),
                         ),

@@ -50,12 +50,12 @@ class AuthController extends MainController {
         case FacebookLoginStatus.error:
           print("Error");
           CommonMethods()
-              .showMessage(isArabic ? 'خطأ' : 'Error', result.errorMessage);
+              .showMessage(isArabic ? 'رسالة' : 'Message', isArabic ? 'حدث خطأ ما':'Error Happened');
           break;
         case FacebookLoginStatus.cancelledByUser:
           print("CancelledByUser");
           CommonMethods()
-              .showMessage(isArabic ? 'خطأ' : 'Error', result.errorMessage);
+              .showMessage(isArabic ? 'رسالة' : 'Message', isArabic ? 'تم الغاء العملية':'CancelledByUser');
           break;
         case FacebookLoginStatus.loggedIn:
           print("LoggedIn");

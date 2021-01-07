@@ -31,6 +31,12 @@ class HomeService {
     return value.docs;
   }
 
+  Future<List<QueryDocumentSnapshot>> getSliderProducts() async {
+    Query query = _productsRef.limit(5);
+    var value = await query.get();
+    return value.docs;
+  }
+
   Future<List<QueryDocumentSnapshot>> getFilteredProducts(
       ProductFilters filter) async {
     switch (filter) {

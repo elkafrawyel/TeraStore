@@ -13,4 +13,5 @@ class UserService {
     DocumentSnapshot snapshot = await _userCollectionRef.doc(userId).get();
     return snapshot;
   }
+
 }

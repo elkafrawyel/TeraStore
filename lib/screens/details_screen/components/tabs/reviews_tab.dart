@@ -25,38 +25,13 @@ class ReviewsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProductDetailsController>(
-      builder: (controller) => Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: kDefaultPadding,
+      builder: (controller) =>
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: _reviewsList(controller),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.only(
-                  start: kDefaultPadding, end: kDefaultPadding),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _ratingView(controller),
-                  CustomOutLinedButton(
-                    text: 'addComment'.tr,
-                    colorText: LocalStorage().primaryColor(),
-                    onPressed: () {
-                      _buildRatingDialog(controller);
-                    },
-                    borderColor: LocalStorage().primaryColor(),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: kDefaultPadding,
-            ),
-            _reviewsList(controller)
-          ],
-        ),
-      ),
+          ),
     );
   }
 
@@ -184,91 +159,135 @@ class ReviewsTab extends StatelessWidget {
   }
 
   _reviewsList(ProductDetailsController controller) {
-    return Container(
-      height: MediaQuery.of(Get.context).size.height / 2,
-      child: controller.empty.value
-          ? EmptyView(
-              textColor: Colors.black,
-              message: 'noReviews'.tr,
-            )
-          : ListView.builder(
-              shrinkWrap: false,
-              itemCount: controller.reviews.length,
-              scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsetsDirectional.only(
-                      start: kDefaultPadding / 2,
-                      end: kDefaultPadding / 2,
-                      bottom: kDefaultPadding),
-                  child: Row(
+    return _reviews(controller);
+  }
+
+  List<Widget> _reviews(ProductDetailsController controller) {
+    List<Widget> widgets = [];
+    widgets.add(
+      SizedBox(
+        height: kDefaultPadding,
+      ),
+    );
+    widgets.add(
+      Padding(
+        padding: EdgeInsetsDirectional.only(
+            start: kDefaultPadding, end: kDefaultPadding),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _ratingView(controller),
+            Container(
+              width: MediaQuery.of(Get.context).size.width/3,
+              child: CustomOutLinedButton(
+                text: 'addComment'.tr,
+                colorText: LocalStorage().primaryColor(),
+                onPressed: () {
+                  _buildRatingDialog(controller);
+                },
+                borderColor: LocalStorage().primaryColor(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    widgets.add(
+      SizedBox(
+        height: kDefaultPadding,
+      ),
+    );
+    controller.reviews.length == 0
+        ? widgets.add(
+      EmptyView(
+        textColor: Colors.black,
+        message: 'noReviews'.tr,
+      ),
+    )
+        : controller.reviews.forEach((element) {
+      widgets.add(Padding(
+        padding: const EdgeInsetsDirectional.only(
+            start: kDefaultPadding / 2,
+            end: kDefaultPadding / 2,
+            bottom: kDefaultPadding),
+        child: Row(
+          children: [
+            Container(
+              alignment: AlignmentDirectional.topStart,
+              width: 70,
+              height: 70,
+              child: CircleAvatar(
+                backgroundColor: Colors.transparent,
+                backgroundImage: NetworkImage(controller
+                    .reviews[controller.reviews.indexOf(element)]
+                    .userImage),
+                radius: 50,
+              ),
+            ),
+            SizedBox(
+              width: kDefaultPadding / 2,
+            ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CustomText(
+                      alignment: AlignmentDirectional.centerStart,
+                      text: controller
+                          .reviews[controller.reviews.indexOf(element)]
+                          .message,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
-                        alignment: AlignmentDirectional.topStart,
-                        width: 70,
-                        height: 70,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          backgroundImage:
-                              NetworkImage(controller.reviews[index].userImage),
-                          radius: 50,
-                        ),
+                      RatingBar.readOnly(
+                        initialRating: controller
+                            .reviews[controller.reviews.indexOf(element)]
+                            .rate,
+                        isHalfAllowed: true,
+                        size: 25,
+                        filledColor: Colors.amber,
+                        halfFilledIcon: Icons.star_half,
+                        filledIcon: Icons.star,
+                        emptyIcon: Icons.star_border,
                       ),
-                      SizedBox(
-                        width: kDefaultPadding / 2,
-                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: kDefaultPadding / 2,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
                       Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CustomText(
-                                alignment: AlignmentDirectional.centerStart,
-                                text: controller.reviews[index].message,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                RatingBar.readOnly(
-                                  initialRating: controller.reviews[index].rate,
-                                  isHalfAllowed: true,
-                                  size: 25,
-                                  filledColor: Colors.amber,
-                                  halfFilledIcon: Icons.star_half,
-                                  filledIcon: Icons.star,
-                                  emptyIcon: Icons.star_border,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: kDefaultPadding / 2,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Expanded(
-                                  child: CustomText(
-                                    alignment: AlignmentDirectional.topEnd,
-                                    text: _buildText(controller, index),
-                                    fontSize: 16,
-                                    color: Colors.grey.shade700,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                        child: CustomText(
+                          alignment: AlignmentDirectional.topStart,
+                          text: _buildText(controller,
+                              controller.reviews.indexOf(element)),
+                          fontSize: 14,
+                          color: Colors.grey.shade700,
                         ),
                       ),
                     ],
                   ),
-                );
-              },
+                ],
+              ),
             ),
+          ],
+        ),
+      ));
+    });
+    widgets.add(
+      SizedBox(
+        height: kDefaultPadding,
+      ),
     );
+    return widgets;
   }
 
   _buildText(ProductDetailsController controller, int index) {
@@ -314,10 +333,10 @@ class ReviewsTab extends StatelessWidget {
       }
     }
     double rate = (5 * fiveStar +
-            4 * fourStar +
-            3 * threeStar +
-            2 * twoStar +
-            1 * oneStar) /
+        4 * fourStar +
+        3 * threeStar +
+        2 * twoStar +
+        1 * oneStar) /
         (fiveStar + fourStar + threeStar + twoStar + oneStar);
 
     return rate;

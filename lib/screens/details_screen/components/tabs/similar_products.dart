@@ -16,25 +16,25 @@ class SimilarProducts extends StatelessWidget {
   }
 
   _productsList() {
-    return Container(
-      height: MediaQuery.of(Get.context).size.height / 2,
-      child: ListView.builder(
-        shrinkWrap: false,
-        itemCount: products.length,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) {
-          return ProductCard(
-            itemIndex: index,
-            product: products[index],
-            press: () {
-              Get.to(
-                DetailsScreen(
-                    productId: products[index].id),
-              );
-            },
+    return Column(
+      children: _similarProducts(),
+    );
+  }
+
+  List<Widget> _similarProducts() {
+    List<Widget> widgets = [];
+    products.forEach((element) {
+      widgets.add(ProductCard(
+        itemIndex: products.indexOf(element),
+        product: products[products.indexOf(element)],
+        press: () {
+          Get.to(
+            DetailsScreen(
+                productId: products[products.indexOf(element)].id),
           );
         },
-      ),
-    );
+      ));
+    });
+    return widgets;
   }
 }

@@ -27,7 +27,7 @@ class HomeController extends MainController {
       return;
     }
     loading.value = true;
-    HomeService().getFilteredProducts(ProductFilters.HighPrice).then((docs) {
+    HomeService().getSliderProducts().then((docs) {
       docs.forEach((element) {
         _sliderProducts.add(ProductModel.fromJson(element.data()));
       });

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/cart_controller.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/model/cart_model.dart';
 import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/please_wait_loading.dart';
@@ -108,7 +107,7 @@ class CartScreen extends StatelessWidget {
                                       '\$',
                               alignment: AlignmentDirectional.center,
                               fontSize: 22,
-                              color: Colors.black,
+                              color: LocalStorage().primaryColor(),
                             ),
                           ],
                         ),

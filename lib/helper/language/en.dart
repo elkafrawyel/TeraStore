@@ -106,4 +106,12 @@ Map<String, String> en = {
   'noReviews': 'No reviews Add first one',
   'by': 'By',
   'on': 'On',
+  'changePassword': 'Change password',
+  'oldPassword': 'Old Password',
+  'newPassword': 'New Password',
+  'confirmNewPassword': 'Confirm New Password',
+  'save': 'Save',
+  'newPasswordEmpty': 'Required Field',
+  'oldPasswordEmpty': 'Required Field',
+  'confirmNewPasswordEmpty': 'Required Field',
 };

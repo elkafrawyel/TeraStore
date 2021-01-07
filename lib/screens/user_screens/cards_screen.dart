@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
-
+import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
+import 'package:get/get.dart';
 class CardsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Center(
-        child: CustomText(text: 'empty',
-          alignment: AlignmentDirectional.center,),
+    return Scaffold(
+      appBar: CustomAppBar(
+        text: 'cards'.tr,
       ),
     );
   }

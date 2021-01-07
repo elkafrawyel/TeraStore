@@ -42,18 +42,19 @@ class OwnerInfo extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: EdgeInsetsDirectional.only(top: 10),
-                child: Column(
+                child: Row(
                   children: [
-                    CustomText(
-                      text: owner.name,
-                      color: Colors.white,
-                      fontSize: 18,
+                    Expanded(
+                      child: CustomText(
+                        text: owner.name,
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                    Column(
                       children: [
                         GestureDetector(
                           onTap: () {
@@ -72,18 +73,17 @@ class OwnerInfo extends StatelessWidget {
                         SizedBox(
                           width: 10,
                         ),
-                        // GestureDetector(
-                        //   onTap: () {},
-                        //   child: Padding(
-                        //     padding: const EdgeInsets.all(8.0),
-                        //     child: Icon(
-                        //       Icons.message,
-                        //       color: Colors.white,
-                        //       size: 30,
-                        //     ),
-                        //   ),
-                        // ),
-                        //
+                        GestureDetector(
+                          onTap: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.message,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                          ),
+                        ),
 
                       ],
                     ),

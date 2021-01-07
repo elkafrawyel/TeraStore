@@ -158,7 +158,7 @@ class AddProductScreen extends StatelessWidget {
             ),
             CustomOutlinedTextFormField(
               text: 'description'.tr,
-              hintText: 'emptyDescription'.tr,
+              hintText: 'description'.tr,
               controller: descController,
               maxLines: 4,
               validateEmptyText: 'emptyDesc'.tr,

@@ -15,6 +15,7 @@ class InfoTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: MediaQuery.of(Get.context).size.height / 1.5,
       child: Padding(
         padding: const EdgeInsets.all(kDefaultPadding),
         child: Column(
@@ -41,7 +42,7 @@ class InfoTab extends StatelessWidget {
                     owner: product.owner,
                   ),
             SizedBox(
-              height: 100,
+              height: kDefaultPadding,
             ),
           ],
         ),

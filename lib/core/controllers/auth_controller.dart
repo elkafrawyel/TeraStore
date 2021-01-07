@@ -97,8 +97,8 @@ class AuthController extends MainController {
     Get.offAll(HomeScreen());
   }
 
-  handleError(error) async {
-    bool isArabic = await LocalStorage().getLanguage() == 'ar';
+  handleError(error) {
+    bool isArabic = LocalStorage().isArabicLanguage();
     switch (error.code) {
       case 'user-not-found':
         CommonMethods().showMessage(isArabic ? 'خطأ' : 'Error',

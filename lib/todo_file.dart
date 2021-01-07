@@ -1,4 +1,3 @@
-//add reviews
 // checkOut
 //take heavy work to background
 //handle network

@@ -9,14 +9,13 @@ class AppLanguageController extends GetxController {
   var languageList = LanguageData.languageList();
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
     LocalStorage localStorage = LocalStorage();
-    appLocaleCode = await localStorage.getLanguage() == null
+    appLocaleCode = localStorage.getLanguage() == null
         ? Get.deviceLocale.languageCode
-        : await localStorage.getLanguage();
+        : localStorage.getLanguage();
     Get.updateLocale(Locale(appLocaleCode));
-
     update();
   }
 

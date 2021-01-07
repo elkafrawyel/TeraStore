@@ -6,6 +6,7 @@ import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/please_wait_loading.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import 'details_screen/details_screen.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,7 @@ class CartScreen extends StatelessWidget {
       ),
       body: GetBuilder<CartController>(
         builder: (controller) => Container(
-          color: Get.find<MainController>().primaryColor,
+          color: LocalStorage().primaryColor(),
           child: Column(
             children: [
               SizedBox(
@@ -75,8 +76,8 @@ class CartScreen extends StatelessWidget {
                             ),
                             padding: EdgeInsets.all(1),
                             child: RaisedButton(
-                              child: Text('CheckOut'.tr),
-                              color: Get.find<MainController>().primaryColor,
+                              child: Text('checkOut'.tr),
+                              color: LocalStorage().primaryColor(),
                               elevation: 1,
                               disabledTextColor: Colors.black,
                               disabledColor: Colors.grey,
@@ -91,8 +92,8 @@ class CartScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             CustomText(
-                              text: 'Total',
-                              fontSize: 20,
+                              text: 'total'.tr,
+                              fontSize: 18,
                               color: Colors.black,
                               alignment: AlignmentDirectional.center,
                             ),
@@ -106,7 +107,7 @@ class CartScreen extends StatelessWidget {
                                           .toString() +
                                       '\$',
                               alignment: AlignmentDirectional.center,
-                              fontSize: 25,
+                              fontSize: 22,
                               color: Colors.black,
                             ),
                           ],
@@ -133,11 +134,21 @@ class CartScreen extends StatelessWidget {
         child: Dismissible(
           key: Key(cart.id),
           direction: DismissDirection.startToEnd,
-          background: CustomText(
-            text: 'Remove',
-            color: Colors.white,
-            fontSize: 20,
-            alignment: AlignmentDirectional.centerStart,
+          background: Container(
+            color: Colors.red,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: kDefaultPadding * 2,
+                ),
+                Image.asset(
+                  deleteImage,
+                  width: 30,
+                  height: 30,
+                ),
+              ],
+            ),
           ),
           onDismissed: (direction) {
             Get.find<CartController>()
@@ -183,8 +194,8 @@ class CartScreen extends StatelessWidget {
                         child: CustomText(
                           text:
                               cart.productModel.discountPrice.toString() + '\$',
-                          fontSize: 18,
-                          color: Get.find<MainController>().primaryColor,
+                          fontSize: 16,
+                          color: LocalStorage().primaryColor(),
                         ),
                       ),
                       SizedBox(
@@ -195,7 +206,7 @@ class CartScreen extends StatelessWidget {
                         child: Container(
                           width: 150,
                           child: Card(
-                            color: Get.find<MainController>().primaryColor,
+                            color: LocalStorage().primaryColor(),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
@@ -221,7 +232,7 @@ class CartScreen extends StatelessWidget {
                                   child: CustomText(
                                     text: cart.quantity.toString(),
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     color: Colors.white,
                                   ),
                                 ),

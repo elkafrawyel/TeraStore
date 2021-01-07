@@ -1,12 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
+import 'package:flutter_app/screens/custom_widgets/menus/custom_language_menu.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
+import 'package:flutter_app/screens/main_screen/home_screen.dart';
 import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 
-import 'control_view.dart';
-import 'custom_widgets/button/custom_button.dart';
-import 'custom_widgets/menus/custom_language_menu.dart';
+import 'auth/login_screen.dart';
 
 class LanguageScreen extends StatelessWidget {
   @override
@@ -51,13 +52,15 @@ class LanguageScreen extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.4,
                   child: CustomButton(
-                    colorBackground: Get.find<MainController>().primaryColor,
+                    colorBackground: LocalStorage().primaryColor(),
                     colorText: Colors.white,
                     text: 'continueToHome'.tr,
                     onPressed: () {
-                      Get.offAll(ControlView());
                       LocalStorage()
                           .setBool(LocalStorage.isLanguageChecked, true);
+                      FirebaseAuth.instance.currentUser == null
+                          ? Get.offAll(LoginScreen())
+                          : Get.offAll(HomeScreen());
                     },
                   ),
                 )

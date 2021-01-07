@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/core/services/product_service.dart';
+import 'package:flutter_app/core/services/review_service.dart';
 import 'package:flutter_app/core/services/user_service.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/model/product_model.dart';
+import 'package:flutter_app/model/review_model.dart';
 import 'package:flutter_app/model/user_model.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +14,7 @@ class ProductDetailsController extends MainController {
   int selectedTab = 0;
 
   List<ProductModel> similarProducts = [];
+  List<Review> reviews = [];
 
   updateSelectedTab(int index) {
     selectedTab = index;
@@ -41,6 +44,7 @@ class ProductDetailsController extends MainController {
       }
 
       getSimilarProducts(productModel.subCategoryId, productModel.id);
+      getReviewsList(productId);
     }
   }
 
@@ -68,7 +72,6 @@ class ProductDetailsController extends MainController {
     similarProducts.clear();
     List<QueryDocumentSnapshot> list =
         await ProductService().getSimilarProducts(subCategoryId, productId);
-
     list.forEach((element) {
       ProductModel productModel = ProductModel.fromJson(element.data());
       if (productId == element.id) return;
@@ -82,7 +85,33 @@ class ProductDetailsController extends MainController {
       empty.value = false;
     }
     print('Products Size => ${similarProducts.length}');
-
     update();
+  }
+
+  getReviewsList(String productId) async {
+    List<Review> list = await ReviewService().getReviewsList(productId);
+    reviews.clear();
+    reviews.addAll(list);
+    if (reviews.isEmpty) {
+      empty.value = true;
+    } else {
+      empty.value = false;
+    }
+    update();
+  }
+
+  addReview(String productId, String reviewText, double ratingValue) async {
+    int id = DateTime.now().millisecondsSinceEpoch;
+
+    await ReviewService().addReview(
+        productId,
+        Review(
+            id: id.toString(),
+            rate: ratingValue,
+            time: id,
+            message: reviewText,
+            userImage: Get.find<MainController>().user.photo,
+            userName: Get.find<MainController>().user.name));
+    getReviewsList(productId);
   }
 }

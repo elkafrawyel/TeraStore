@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 
 class CustomDescription extends StatefulWidget {
@@ -40,13 +41,13 @@ class _CustomDescriptionState extends State<CustomDescription> {
                         ? Text(
                             "Show Less",
                             style: TextStyle(
-                              color: Get.find<MainController>().primaryColor,
+                              color: LocalStorage().primaryColor(),
                               fontSize: 14,
                             ),
                           )
                         : Text("Show More",
                             style: TextStyle(
-                                color: Get.find<MainController>().primaryColor, fontSize: 14))
+                                color: LocalStorage().primaryColor(), fontSize: 14))
                   ],
               ),
             ),

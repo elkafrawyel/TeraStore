@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/add_product_controller.dart';
+import 'package:flutter_app/core/controllers/home_controller.dart';
 import 'package:flutter_app/model/category_model.dart';
 import 'package:flutter_app/model/sub_category_model.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
 
 class CategoriesDropDownMenu extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AddProductController>(
+    return GetBuilder<HomeController>(
       builder: (controller) => Column(
         children: [
           Container(
@@ -26,7 +28,7 @@ class CategoriesDropDownMenu extends StatelessWidget {
                   child: CustomText(
                     text: 'category'.tr,
                     color: Colors.grey.shade500,
-                    fontSize: 18,
+                    fontSize: 16,
                     alignment: AlignmentDirectional.center,
                   ),
                 ),
@@ -41,8 +43,7 @@ class CategoriesDropDownMenu extends StatelessWidget {
                           ),
                         ),
                       ),
-                    )
-                    .toList(),
+                    ).toList(),
               ),
             ),
           ),
@@ -64,7 +65,7 @@ class CategoriesDropDownMenu extends StatelessWidget {
                   child: CustomText(
                     text: 'subCategory'.tr,
                     color: Colors.grey.shade500,
-                    fontSize: 18,
+                    fontSize: 16,
                     alignment: AlignmentDirectional.center,
                   ),
                 ),

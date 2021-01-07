@@ -2,14 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_outline_text_form_field.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../profile/profile_screen.dart';
 
 class EditProfileScreen extends StatelessWidget {
   final picker = ImagePicker();
@@ -150,7 +149,7 @@ class EditProfileScreen extends StatelessWidget {
                                     MediaQuery.of(Get.context).size.width * 0.6,
                                 child: CustomButton(
                                   text: 'Save',
-                                  colorBackground: Get.find<MainController>().primaryColor,
+                                  colorBackground: LocalStorage().primaryColor(),
                                   colorText: Colors.white,
                                   onPressed: () {
                                     _save();

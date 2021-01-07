@@ -2,11 +2,8 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_app/core/services/product_service.dart';
-import 'package:flutter_app/core/services/sub_category_service.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
-import 'package:flutter_app/model/category_model.dart';
 import 'package:flutter_app/model/product_model.dart';
-import 'package:flutter_app/model/sub_category_model.dart';
 import 'package:flutter_app/screens/main_screen/home_screen.dart';
 import 'package:get/get.dart';
 import 'home_controller.dart';
@@ -14,22 +11,6 @@ import 'main_controller.dart';
 
 class AddProductController extends MainController {
   File productImage;
-  CategoryModel categoryModel;
-  SubCategoryModel subCategoryModel;
-  List<CategoryModel> categories = Get.find<HomeController>().categories;
-
-  List<SubCategoryModel> subCategories = [];
-
-  setCategoryModel(CategoryModel model) async {
-    categoryModel = model;
-    update();
-    await getSubCategories(model.id);
-  }
-
-  setSubCategoryModel(SubCategoryModel model) {
-    subCategoryModel = model;
-    update();
-  }
 
   setProductImage(File image) async {
     // File file =
@@ -47,12 +28,12 @@ class AddProductController extends MainController {
       return;
     }
 
-    if (categoryModel == null) {
+    if (Get.find<HomeController>().categoryModel == null) {
       CommonMethods().showMessage('addProduct'.tr, 'selectCategory'.tr);
       return;
     }
 
-    if (subCategoryModel == null) {
+    if (Get.find<HomeController>().subCategoryModel == null) {
       CommonMethods().showMessage('addProduct'.tr, 'selectSubCategory'.tr);
       return;
     }
@@ -70,7 +51,8 @@ class AddProductController extends MainController {
           price: price,
           discountPrice: discountPrice,
           userId: FirebaseAuth.instance.currentUser.uid,
-          subCategoryId: subCategoryModel.id,
+          categoryId: Get.find<HomeController>().categoryModel.id,
+          subCategoryId: Get.find<HomeController>().subCategoryModel.id,
           timeStamp: id.toString(),
         ),
         productImage, (bool) {
@@ -79,21 +61,6 @@ class AddProductController extends MainController {
       Get.offAll(HomeScreen());
       Get.find<HomeController>().filterProducts();
       CommonMethods().showMessage(name, 'created'.tr);
-    });
-  }
-
-  getSubCategories(String categoryId) async {
-    subCategories.clear();
-    SubCategoryService().getSubCategories(categoryId).then((docs) {
-      docs.forEach((element) {
-        SubCategoryModel subCategoryModel =
-            SubCategoryModel.fromJson(element.data());
-        subCategoryModel.id = element.id;
-        subCategories.add(subCategoryModel);
-      });
-      if (subCategories.isNotEmpty) subCategoryModel = subCategories[0];
-      print('SubCategories => ${subCategories.length}');
-      update();
     });
   }
 

@@ -1,12 +1,13 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/cart_controller.dart';
 import 'package:flutter_app/core/services/user_service.dart';
 import 'package:flutter_app/model/user_model.dart';
-import 'package:flutter_app/screens/auth/login_screen.dart';
+import 'package:flutter_app/screens/start_up_screens/auth/login_screen.dart';
 import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -25,30 +26,19 @@ class MainController extends GetxController {
 
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  UserModel _user;
-
-  UserModel get user => _user;
+  UserModel user;
   PickedFile selectedImage;
 
-  @override
-  void onInit() {
-    super.onInit();
-    loadUserData();
-  }
-
   loadUserData() async {
-    String userId = _auth.currentUser?.uid;
-    if (userId == null) return;
-    if (_user != null && _user.id == userId) return;
-    loading.value = true;
-    UserService().getUser(userId).then((doc) {
-      _user = UserModel.fromJson(doc.data());
-      loading.value = false;
+    if (_auth.currentUser != null) {
+      String userId = _auth.currentUser.uid;
+
+      DocumentSnapshot snapshot = await UserService().getUser(userId);
+
+      user = UserModel.fromJson(snapshot.data());
       update();
-      print(_user);
-    }).catchError((onError) {
-      loading.value = false;
-    });
+      print(user);
+    }
   }
 
   setUserImage(PickedFile image) {

@@ -33,7 +33,7 @@ Map<String, String> ar = {
   'signInFaceBook': 'التسجيل بواسطة فيس بوك',
   'signInGoogle': 'التسجيل بواسطة جوجل',
   'signInToContinue': 'قم بتسجيل الدخول للمتابعة',
-  'signUp': 'تسجيل حساب جديد',
+  'signUp': 'حساب جديد',
   'welcome': 'أهلا بك,\n في تيرا ستور',
   'cards': 'بطاقات الائتمان',
   'editProfile': 'تعديل الملف الشخصي',
@@ -96,4 +96,13 @@ Map<String, String> ar = {
   'details': 'التفاصيل',
   'similarProducts':'منتجات مشابهة',
   'noSimilarProducts':'لا يوجد منتجات مشابهة',
+  'edit':'تعديل',
+  'delete':'حذف',
+  'deleteMessage':'هل انت متأكد من حذف هذا المنتج؟',
+  'addReview':'أضف تعليق',
+  'rate':'تقييم',
+  'rateProduct':'تقييم المنتج',
+  'noReviews':'لا توجد تعليقات أضف اول تعليق',
+  'by':'بواسطة',
+  'on':'في'
 };

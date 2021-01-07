@@ -1,19 +1,29 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/add_product_controller.dart';
+import 'package:flutter_app/core/controllers/edit_product_controller.dart';
 import 'package:flutter_app/core/controllers/home_controller.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
-import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
-import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
-import 'package:flutter_app/screens/custom_widgets/menus/categories_drop_down_menu.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_outline_text_form_field.dart';
+import 'package:flutter_app/model/category_model.dart';
+import 'package:flutter_app/model/product_model.dart';
+import 'package:flutter_app/model/sub_category_model.dart';
 import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-// ignore: must_be_immutable
-class AddProductScreen extends StatelessWidget {
+import 'custom_widgets/button/custom_button.dart';
+import 'custom_widgets/custom_appbar.dart';
+import 'custom_widgets/menus/categories_drop_down_menu.dart';
+import 'custom_widgets/text/custom_outline_text_form_field.dart';
+
+class EditProductScreen extends StatelessWidget {
+  final ProductModel productModel;
+
+  EditProductScreen({this.productModel}) {
+    Get.put(EditProductController()).product = productModel;
+    _getInitialValues(Get.find<HomeController>());
+  }
+
   final picker = ImagePicker();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
@@ -21,21 +31,15 @@ class AddProductScreen extends StatelessWidget {
   final TextEditingController priceController = TextEditingController();
   final TextEditingController discountPriceController = TextEditingController();
 
-  AddProductScreen() {
-    Get.find<HomeController>().categoryModel = null;
-    Get.find<HomeController>().subCategoryModel = null;
-  }
-
   @override
   Widget build(BuildContext context) {
-    Get.put(AddProductController());
-
+    _setDataToView();
     return Scaffold(
       appBar: CustomAppBar(
-        text: 'addProduct'.tr,
+        text: 'edit'.tr,
       ),
       body: SingleChildScrollView(
-        child: GetBuilder<AddProductController>(
+        child: GetBuilder<EditProductController>(
           builder: (controller) => Stack(
             children: [
               Padding(
@@ -100,30 +104,26 @@ class AddProductScreen extends StatelessWidget {
 
   imgFromCamera() async {
     PickedFile image = await ImagePicker().getImage(source: ImageSource.camera);
-    Get.find<AddProductController>().setProductImage(File(image.path));
+    Get.find<EditProductController>().setProductImage(File(image.path));
   }
 
   imgFromGallery() async {
     PickedFile image =
         await ImagePicker().getImage(source: ImageSource.gallery);
-    Get.find<AddProductController>().setProductImage(File(image.path));
+    Get.find<EditProductController>().setProductImage(File(image.path));
   }
 
-  Widget _productImage(AddProductController controller) {
+  Widget _productImage(EditProductController controller) {
     return GestureDetector(
       onTap: () {
         _showPicker();
       },
       child: controller.productImage == null
-          ? Container(
-              decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(10)),
-              width: 200,
-              height: 150,
-              child: Icon(
-                Icons.camera_alt,
-                color: Colors.grey[800],
+          ? ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                productModel.image,
+                fit: BoxFit.contain,
               ),
             )
           :
@@ -138,7 +138,7 @@ class AddProductScreen extends StatelessWidget {
     );
   }
 
-  Widget _productDetailsForm(AddProductController controller) {
+  Widget _productDetailsForm(EditProductController controller) {
     return Form(
       key: _formKey,
       child: Padding(
@@ -160,7 +160,7 @@ class AddProductScreen extends StatelessWidget {
               text: 'description'.tr,
               hintText: 'emptyDescription'.tr,
               controller: descController,
-              maxLines: 4,
+              maxLines: 6,
               validateEmptyText: 'emptyDesc'.tr,
               keyboardType: TextInputType.text,
               labelText: 'Description',
@@ -205,14 +205,13 @@ class AddProductScreen extends StatelessWidget {
               height: 40,
             ),
             Container(
-              height: 50,
               width: MediaQuery.of(Get.context).size.width * 0.6,
               child: CustomButton(
-                text: 'addProduct'.tr,
+                text: 'edit'.tr,
                 colorBackground: LocalStorage().primaryColor(),
                 colorText: Colors.white,
                 onPressed: () {
-                  _addProduct(controller);
+                  _editProduct(controller);
                 },
               ),
             )
@@ -222,18 +221,37 @@ class AddProductScreen extends StatelessWidget {
     );
   }
 
-  void _addProduct(AddProductController controller) {
+  void _editProduct(EditProductController controller) {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
 
       try {
-        int price = int.parse(priceController.text);
-        int discountPrice = int.parse(discountPriceController.text);
-        controller.addProduct(
-            nameController.text, descController.text, price, discountPrice);
+        controller.product.name = nameController.text;
+        controller.product.description = descController.text;
+        controller.product.price = int.parse(priceController.text);
+        controller.product.discountPrice =
+            int.parse(discountPriceController.text);
+        controller.editProduct();
       } catch (_) {
-        CommonMethods().showMessage('addProduct'.tr, 'invalidPrice'.tr);
+        CommonMethods().showMessage('edit'.tr, 'invalidPrice'.tr);
       }
     }
+  }
+
+  _getInitialValues(HomeController controller) {
+    if (productModel.categoryId != null) {
+      for (CategoryModel element in controller.categories) {
+        if (element.id == productModel.categoryId) {
+          controller.setCategoryModel(element,subCategoryIdToSelect: productModel.subCategoryId);
+        }
+      }
+    }
+  }
+
+  void _setDataToView() {
+    nameController.text = productModel.name;
+    descController.text = productModel.description;
+    priceController.text = productModel.price.toString();
+    discountPriceController.text = productModel.discountPrice.toString();
   }
 }

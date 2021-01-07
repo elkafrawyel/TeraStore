@@ -12,7 +12,9 @@ class CartService {
     DocumentSnapshot snapshot = await _cartRef.doc(userId).get();
     if (snapshot.exists) {
       CartModel cartModel = CartModel.fromJson(snapshot.data());
-      if (cartModel != null) {
+      if (cartModel != null &&
+          cartModel.cart != null &&
+          cartModel.cart.isNotEmpty) {
         print('cart list => ${cartModel.cart.length}');
         return cartModel;
       } else {

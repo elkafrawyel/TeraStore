@@ -52,15 +52,49 @@ class ProductService {
     });
   }
 
+  editProduct(
+      ProductModel productModel, File image, Function(bool finish) callback) {
+    //upload image
+    Reference reference = FirebaseStorage.instance
+        .ref()
+        .child('ProductsImages/${productModel.id}');
+
+    if (image != null) {
+      reference.putFile(image).then((value) {
+        reference.getDownloadURL().then((url) {
+          productModel.image = url;
+          _productsRef
+              .doc(productModel.id)
+              .update(productModel.toJson())
+              .then((value) {
+            callback(true);
+          });
+        });
+      });
+    } else {
+      _productsRef
+          .doc(productModel.id)
+          .update(productModel.toJson())
+          .then((value) {
+        callback(true);
+      });
+    }
+  }
+
   Future<List<QueryDocumentSnapshot>> getMyProducts() async {
-    Query query = _productsRef.where('userId', isEqualTo: userId);
+    Query query = _productsRef
+        .where('userId', isEqualTo: userId);
     var value = await query.get();
-    return value.docs;
+    return value.docs.reversed.toList();
   }
 
   Future<DocumentSnapshot> getProductById(String productId) async {
     var value = await _productsRef.doc(productId).get();
     return value;
+  }
+
+  deleteProduct(String productId) async {
+    await _productsRef.doc(productId).delete();
   }
 
   Future<void> checkIfFavourite(

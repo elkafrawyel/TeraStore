@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/model/user_model.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:flutter_app/screens/details_screen/details_screen.dart';
-import 'package:flutter_app/screens/main_screen/components/product_card.dart';
+import 'package:flutter_app/screens/profile/components/my_product_card.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 
 class Body extends StatelessWidget {
@@ -28,11 +28,11 @@ class Body extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                color: Get.find<MainController>().primaryColor,
+                color: LocalStorage().primaryColor(),
                 elevation: 1,
                 child: Padding(
                   padding: const EdgeInsets.all(kDefaultPadding),
-                  child: Row(
+                  child: Column(
                     children: [
                       Container(
                         width: 120,
@@ -45,46 +45,40 @@ class Body extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        width: 10,
+                        height: kDefaultPadding / 2,
                       ),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            CustomText(
-                              alignment: AlignmentDirectional.centerStart,
-                              text: user != null ? user.name : '',
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomText(
-                              alignment: AlignmentDirectional.centerStart,
-                              text: user != null
-                                  ? user.phone == null
-                                      ? 'noPhone'.tr
-                                      : user.phone
-                                  : '',
-                              fontSize: 14,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            CustomText(
-                              alignment: AlignmentDirectional.centerStart,
-                              text: user != null ? user.email : '',
-                              fontSize: 14,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                          ],
-                        ),
-                      )
+                      CustomText(
+                        alignment: AlignmentDirectional.center,
+                        text: user != null ? user.name : '',
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                      SizedBox(
+                        height: kDefaultPadding / 2,
+                      ),
+                      CustomText(
+                        alignment: AlignmentDirectional.center,
+                        text: user != null
+                            ? user.phone == null
+                                ? 'noPhone'.tr
+                                : user.phone
+                            : '',
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        height: kDefaultPadding / 2,
+                      ),
+                      CustomText(
+                        alignment: AlignmentDirectional.center,
+                        text: user != null ? user.email : '',
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        height: kDefaultPadding/2,
+                      ),
                     ],
                   ),
                 ),
@@ -114,7 +108,7 @@ class Body extends StatelessWidget {
   List<Widget> _myProducts() {
     List<Widget> widgets = [];
     products.forEach((element) {
-      widgets.add(ProductCard(
+      widgets.add(MyProductCard(
         itemIndex: products.indexOf(element),
         product: products[products.indexOf(element)],
         press: () {

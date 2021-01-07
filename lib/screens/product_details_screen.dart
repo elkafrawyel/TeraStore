@@ -6,6 +6,7 @@ import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -256,7 +257,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.message,
-                            color: Get.find<MainController>().primaryColor,
+                            color: LocalStorage().primaryColor(),
                             size: 30,
                           ),
                         ),
@@ -273,7 +274,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.call,
-                            color: Get.find<MainController>().primaryColor,
+                            color: LocalStorage().primaryColor(),
                             size: 30,
                           ),
                         ),

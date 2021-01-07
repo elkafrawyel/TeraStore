@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
-import 'package:flutter_app/core/controllers/product_details_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/screens/details_screen/details_screen.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 
-import '../../product_details_screen.dart';
 import '../text/custom_text.dart';
 
 class ProductsCard extends StatelessWidget {
@@ -93,7 +91,7 @@ class ProductsCard extends StatelessWidget {
                       CustomText(
                           text: product.discountPrice.toString(),
                           alignment: AlignmentDirectional.topStart,
-                          color: Get.find<MainController>().primaryColor,
+                          color: LocalStorage().primaryColor(),
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
 

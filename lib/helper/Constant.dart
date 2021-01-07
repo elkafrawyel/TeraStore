@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 // ================ values =========================
 const kDefaultPadding = 20.0;
-
+const textSizeSmall = 16;
+const textSizeBig = 18;
 // list of colors that we use in our app
 const kBackgroundColor = Color(0xFFF1EFF1);
 const kPrimaryColor = Color(0xFF035AA6);
@@ -34,6 +35,7 @@ const accountImage = 'src/images/Icon_User.png';
 const editProfileImage = 'src/images/edit_profile.png';
 const locationImage = 'src/images/Icon_Location.png';
 const historyImage = 'src/images/Icon_History.png';
+const deleteImage = 'src/images/Icon_Delete.png';
 const cardsImage = 'src/images/Icon_Payment.png';
 const notificationImage = 'src/images/Icon_Alert.png';
 const logOutImage = 'src/images/Icon_Exit.png';

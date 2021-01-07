@@ -60,4 +60,4 @@ flutter:
   fonts:
    - family: Crimson
      fonts:
-       - asset: src/fonts/CrimsonText-Regular.ttf
+       - asset: src/fonts/font.ttf

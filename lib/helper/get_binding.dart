@@ -1,6 +1,7 @@
 import 'package:flutter_app/core/controllers/app_language_controller.dart';
 import 'package:flutter_app/core/controllers/auth_controller.dart';
 import 'package:flutter_app/core/controllers/cart_controller.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:get/get.dart';
 
 class GetBinding implements Bindings {
@@ -11,6 +12,7 @@ class GetBinding implements Bindings {
 
     Get.put(CartController(), permanent: true);
 
-    Get.lazyPut<AuthController>(() => AuthController());
+    Get.put(MainController(), permanent: true);
+
   }
 }

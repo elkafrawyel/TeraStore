@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomOutlinedTextFormField extends StatelessWidget {
-  final bool isPassword;
+  bool isPassword;
   final TextStyle style;
   final String hintText;
   final String text;
@@ -13,29 +13,27 @@ class CustomOutlinedTextFormField extends StatelessWidget {
   final String labelText;
   final String suffixText;
   final ThemeData themeData;
-  final bool enabled;
 
-  const CustomOutlinedTextFormField(
-      {this.isPassword = false,
-      this.style,
-      this.hintText,
-      this.text,
-      this.validateEmptyText,
-      this.controller,
-      this.keyboardType,
-      this.maxLines,
-      this.maxLength,
-      this.labelText,
-      this.suffixText,
-      this.themeData,
-      this.enabled = true});
+  CustomOutlinedTextFormField({
+    this.isPassword = false,
+    this.style,
+    this.hintText,
+    this.text,
+    this.validateEmptyText,
+    this.controller,
+    this.keyboardType,
+    this.maxLines,
+    this.maxLength,
+    this.labelText,
+    this.suffixText,
+    this.themeData,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: isPassword,
       style: TextStyle(fontSize: 16),
-      enabled: enabled,
       controller: controller,
       keyboardType: keyboardType,
       validator: (String value) {
@@ -49,7 +47,7 @@ class CustomOutlinedTextFormField extends StatelessWidget {
       maxLength: maxLength,
       decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: TextStyle(fontSize: 16),
+          hintStyle: TextStyle(fontSize: 14),
           contentPadding: EdgeInsets.all(16),
           suffixText: suffixText,
           errorStyle: TextStyle(

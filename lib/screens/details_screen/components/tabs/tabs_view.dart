@@ -6,6 +6,7 @@ import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.d
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:flutter_app/screens/details_screen/components/tabs/reviews_tab.dart';
 import 'package:flutter_app/screens/details_screen/components/tabs/similar_products.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 
 import 'info_tab.dart';
@@ -24,7 +25,7 @@ class TabView extends StatelessWidget {
               alignment: AlignmentDirectional.center,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Get.find<MainController>().primaryColor,
+                color: LocalStorage().primaryColor(),
               ),
               child: Padding(
                   padding: const EdgeInsets.all(kDefaultPadding / 2),
@@ -56,7 +57,7 @@ class TabView extends StatelessWidget {
                             text: 'details'.tr,
                             alignment: AlignmentDirectional.center,
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -85,7 +86,7 @@ class TabView extends StatelessWidget {
                             text: 'similarProducts'.tr,
                             alignment: AlignmentDirectional.center,
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -114,7 +115,7 @@ class TabView extends StatelessWidget {
                             text: 'reviews'.tr,
                             alignment: AlignmentDirectional.center,
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                         ),
                       ),

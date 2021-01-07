@@ -62,8 +62,8 @@ class CommonMethods {
           fontSize: 18,
         ),
         snackStyle: SnackStyle.FLOATING,
-        backgroundColor: Colors.white,
-        colorText: Colors.white,
+        // backgroundColor: Colors.white,
+        // colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM);
   }
 
@@ -79,12 +79,10 @@ class CommonMethods {
       context: context,
       builder: (ctx) => AlertDialog(
         scrollable: true,
-        backgroundColor:
-            Color(LocalStorage().getInt(LocalStorage.selectedColorValue)),
+        backgroundColor: Colors.white,
         actions: [
           CustomButton(
             text: 'ok'.tr,
-            colorText: Colors.white,
             onPressed: () {
               Get.back();
               action();
@@ -92,7 +90,6 @@ class CommonMethods {
           ),
           CustomButton(
             text: 'cancel'.tr,
-            colorText: Colors.white,
             onPressed: () {
               Get.back();
             },
@@ -107,15 +104,13 @@ class CommonMethods {
             ),
             CustomText(
               text: 'logOut'.tr,
-              fontSize: 16,
-              color: Colors.white,
+              fontSize: 18,
             ),
           ],
         ),
         content: CustomText(
           text: 'logOutMessage'.tr,
-          color: Colors.white,
-          fontSize: 16,
+          fontSize: 18,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -124,49 +119,35 @@ class CommonMethods {
     );
   }
 
-  Future<bool> customCloseAlert({
-    BuildContext context,
-  }) async {
+  Future<bool> customAlert({String title,String message, Function action}) async {
     return showDialog(
-      context: context,
+      context: Get.context,
       builder: (ctx) => AlertDialog(
         scrollable: true,
-        backgroundColor: LocalStorage().primaryColor(),
+        backgroundColor: Colors.white,
         actions: [
           CustomButton(
             text: 'ok'.tr,
-            colorText: Colors.white,
             onPressed: () {
               Get.back();
-              SystemNavigator.pop(animated: true);
+              action();
+
             },
           ),
           CustomButton(
             text: 'cancel'.tr,
-            colorText: Colors.white,
             onPressed: () {
               Get.back();
             },
           ),
         ],
-        title: Row(
-          children: [
-            Image.asset(
-              logo,
-              width: 50,
-              height: 50,
-            ),
-            CustomText(
-              text: 'close'.tr,
-              fontSize: 18,
-              color: Colors.white,
-            ),
-          ],
+        title: CustomText(
+          text: title,
+          fontSize: 20,
         ),
         content: CustomText(
-          text: 'closeMessage'.tr,
-          color: Colors.white,
-          fontSize: 16,
+          text: message,
+          fontSize: 18,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),

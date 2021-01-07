@@ -1,56 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/core/controllers/product_details_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
+import 'package:flutter_app/model/review_model.dart';
 import 'package:flutter_app/screens/custom_widgets/button/custom_outlined_button.dart';
+import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 import 'package:rating_bar/rating_bar.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class ReviewsTab extends StatelessWidget {
   final ProductModel product;
 
-  ReviewsTab({this.product});
+  ReviewsTab({this.product}) {
+    if (LocalStorage().isArabicLanguage())
+      initializeDateFormatting("ar_SA", null);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: kDefaultPadding,
-          ),
-          Padding(
-            padding: EdgeInsetsDirectional.only(
-                start: kDefaultPadding, end: kDefaultPadding),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _ratingView(),
-                CustomOutLinedButton(
-                  text: 'addComment'.tr,
-                  colorText: Get.find<MainController>().primaryColor,
-                  onPressed: () {
-                    _buildRatingDialog();
-                  },
-                  borderColor: Get.find<MainController>().primaryColor,
-                ),
-              ],
+    return GetBuilder<ProductDetailsController>(
+      builder: (controller) => Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: kDefaultPadding,
             ),
-          ),
-          SizedBox(
-            height: kDefaultPadding,
-          ),
-          _reviewsList()
-        ],
+            Padding(
+              padding: EdgeInsetsDirectional.only(
+                  start: kDefaultPadding, end: kDefaultPadding),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _ratingView(controller),
+                  CustomOutLinedButton(
+                    text: 'addComment'.tr,
+                    colorText: LocalStorage().primaryColor(),
+                    onPressed: () {
+                      _buildRatingDialog(controller);
+                    },
+                    borderColor: LocalStorage().primaryColor(),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: kDefaultPadding,
+            ),
+            _reviewsList(controller)
+          ],
+        ),
       ),
     );
   }
 
-  _buildRatingDialog() {
+  _buildRatingDialog(ProductDetailsController controller) {
     double ratingValue;
     String reviewText;
     showDialog(
@@ -98,7 +108,7 @@ class ReviewsTab extends StatelessWidget {
                         reviewText = value;
                       },
                       decoration: InputDecoration(
-                        hintText: "Add Review",
+                        hintText: "addReview".tr,
                         hintStyle: TextStyle(fontSize: 18),
                         border: InputBorder.none,
                       ),
@@ -109,26 +119,28 @@ class ReviewsTab extends StatelessWidget {
                     onTap: () {
                       if (ratingValue == null) {
                         CommonMethods()
-                            .showMessage('Rating', 'Please choose stars');
+                            .showMessage('rate'.tr, 'Please choose stars');
                       } else if (reviewText == null || reviewText.isEmpty) {
                         CommonMethods()
-                            .showMessage('Rating', 'Please type some words');
+                            .showMessage('rate'.tr, 'Please type some words');
                       } else {
                         Get.back();
                         CommonMethods().showMessage(
                             'Rating', 'Thanks for giving us $ratingValue star');
+                        controller.addReview(
+                            product.id, reviewText, ratingValue);
                       }
                     },
                     child: Container(
                       padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                       decoration: BoxDecoration(
-                        color: Get.find<MainController>().primaryColor,
+                        color: LocalStorage().primaryColor(),
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(32.0),
                             bottomRight: Radius.circular(32.0)),
                       ),
                       child: Text(
-                        "Rate Product",
+                        'rateProduct'.tr,
                         style: TextStyle(color: Colors.white),
                         textAlign: TextAlign.center,
                       ),
@@ -141,27 +153,27 @@ class ReviewsTab extends StatelessWidget {
         });
   }
 
-  _ratingView() {
+  _ratingView(ProductDetailsController controller) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Column(
           children: [
             RatingBar.readOnly(
-              initialRating: 3.5,
+              initialRating: _calculateRating(controller),
               isHalfAllowed: true,
-              size: 20,
+              size: 25,
               filledColor: Colors.amber,
               halfFilledIcon: Icons.star_half,
               filledIcon: Icons.star,
               emptyIcon: Icons.star_border,
             ),
             SizedBox(
-              height: 5,
+              height: kDefaultPadding / 2,
             ),
             CustomText(
-              text: '1253 ${'reviews'.tr}',
-              fontSize: 12,
+              text: '(${controller.reviews.length})',
+              fontSize: 16,
               alignment: AlignmentDirectional.center,
               color: Colors.grey.shade600,
             )
@@ -171,20 +183,143 @@ class ReviewsTab extends StatelessWidget {
     );
   }
 
-  _reviewsList() {
+  _reviewsList(ProductDetailsController controller) {
     return Container(
-      height: MediaQuery.of(Get.context).size.height /2,
-      child: ListView.builder(
-        shrinkWrap: false,
-        itemCount: 100,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) {
-          return CustomText(
-            text: 'Review $index',
-            fontSize: 20,
-          );
-        },
-      ),
+      height: MediaQuery.of(Get.context).size.height / 2,
+      child: controller.empty.value
+          ? EmptyView(
+              textColor: Colors.black,
+              message: 'noReviews'.tr,
+            )
+          : ListView.builder(
+              shrinkWrap: false,
+              itemCount: controller.reviews.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                      start: kDefaultPadding / 2,
+                      end: kDefaultPadding / 2,
+                      bottom: kDefaultPadding),
+                  child: Row(
+                    children: [
+                      Container(
+                        alignment: AlignmentDirectional.topStart,
+                        width: 70,
+                        height: 70,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          backgroundImage:
+                              NetworkImage(controller.reviews[index].userImage),
+                          radius: 50,
+                        ),
+                      ),
+                      SizedBox(
+                        width: kDefaultPadding / 2,
+                      ),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CustomText(
+                                alignment: AlignmentDirectional.centerStart,
+                                text: controller.reviews[index].message,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                RatingBar.readOnly(
+                                  initialRating: controller.reviews[index].rate,
+                                  isHalfAllowed: true,
+                                  size: 25,
+                                  filledColor: Colors.amber,
+                                  halfFilledIcon: Icons.star_half,
+                                  filledIcon: Icons.star,
+                                  emptyIcon: Icons.star_border,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: kDefaultPadding / 2,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Expanded(
+                                  child: CustomText(
+                                    alignment: AlignmentDirectional.topEnd,
+                                    text: _buildText(controller, index),
+                                    fontSize: 16,
+                                    color: Colors.grey.shade700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
     );
+  }
+
+  _buildText(ProductDetailsController controller, int index) {
+    String name = controller.reviews[index].userName;
+    int time = controller.reviews[index].time;
+    return '${'by'.tr} $name \n${'on'.tr} ${_getDateString(time)}';
+  }
+
+  String _getDateString(int time) {
+    var date = DateTime.fromMillisecondsSinceEpoch(time);
+    if (LocalStorage().isArabicLanguage()) {
+      var formatter = DateFormat.yMMMMEEEEd('ar_SA');
+      print(formatter.locale);
+      String formatted = formatter.format(date);
+      print(formatted);
+      return formatted;
+    } else {
+      var formatter = DateFormat.yMMMMEEEEd();
+      print(formatter.locale);
+      String formatted = formatter.format(date);
+      print(formatted);
+      return formatted;
+    }
+  }
+
+  double _calculateRating(ProductDetailsController controller) {
+    int oneStar = 0;
+    int twoStar = 0;
+    int threeStar = 0;
+    int fourStar = 0;
+    int fiveStar = 0;
+    for (Review review in controller.reviews) {
+      if (review.rate == 5) {
+        fiveStar++;
+      } else if (review.rate == 4) {
+        fourStar++;
+      } else if (review.rate == 3) {
+        threeStar++;
+      } else if (review.rate == 2) {
+        twoStar++;
+      } else {
+        oneStar++;
+      }
+    }
+    double rate = (5 * fiveStar +
+            4 * fourStar +
+            3 * threeStar +
+            2 * twoStar +
+            1 * oneStar) /
+        (fiveStar + fourStar + threeStar + twoStar + oneStar);
+
+    return rate;
   }
 }

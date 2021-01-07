@@ -13,9 +13,12 @@ class ProductsList extends StatelessWidget {
       builder: (controller) => controller.loading.value
           ? LoadingView()
           : controller.empty.value
-              ? EmptyView(
-                  message: 'noProductsFound'.tr,
-                )
+              ? Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: EmptyView(
+                    message: 'noProductsFound'.tr,
+                  ),
+              )
               : Container(
                   color: Colors.white,
                   child: Padding(

@@ -17,9 +17,6 @@ class AppLanguageController extends GetxController {
         : await localStorage.getLanguage();
     Get.updateLocale(Locale(appLocaleCode));
 
-    if (localStorage.getInt(LocalStorage.selectedColorValue) == 0)
-      localStorage.setInt(LocalStorage.selectedColorValue, Colors.blue.value);
-
     update();
   }
 

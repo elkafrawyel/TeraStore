@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_app/core/controllers/home_controller.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
@@ -8,11 +9,11 @@ import 'package:flutter_app/screens/cart_screen.dart';
 import 'package:flutter_app/screens/custom_widgets/budget_cart_icon.dart';
 import 'package:flutter_app/screens/custom_widgets/menus/custom_language_menu.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
+import 'package:flutter_app/screens/favourite_screen/favourites_screen.dart';
 import 'package:flutter_app/screens/profile/profile_screen.dart';
 import 'package:flutter_app/screens/search_screen/search_screen.dart';
 import 'package:flutter_app/screens/settings_screen.dart';
 import 'package:flutter_app/screens/user_screens/cards_screen.dart';
-import 'package:flutter_app/screens/user_screens/favourites_screen.dart';
 import 'package:flutter_app/screens/user_screens/notifications_screen.dart';
 import 'package:flutter_app/screens/user_screens/order_history_screen.dart';
 import 'package:flutter_app/screens/user_screens/shipping_address_screen.dart';
@@ -21,15 +22,21 @@ import 'package:get/get.dart';
 import 'components/body.dart';
 
 class HomeScreen extends StatelessWidget {
+  HomeScreen() {
+    Get.find<MainController>().loadUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(),
-      drawer: _buildDrawer(),
-      floatingActionButton: _buildFloatingButton(),
-      backgroundColor: Get.find<MainController>().primaryColor,
-      body: Body(),
-    );
+    return WillPopScope(
+        child: Scaffold(
+          appBar: _buildAppBar(),
+          drawer: _buildDrawer(),
+          floatingActionButton: _buildFloatingButton(),
+          backgroundColor: LocalStorage().primaryColor(),
+          body: Body(),
+        ),
+        onWillPop: _willPopCallback);
   }
 
   _buildAppBar() {
@@ -39,9 +46,9 @@ class HomeScreen extends StatelessWidget {
       iconTheme: IconThemeData(color: Colors.white),
       title: Text(
         'home'.tr,
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.white, fontSize: 16),
       ),
-      backgroundColor: Get.find<MainController>().primaryColor,
+      backgroundColor: LocalStorage().primaryColor(),
       actions: <Widget>[
         IconButton(
           icon: Icon(
@@ -93,7 +100,7 @@ class HomeScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: 60,
+                            height: kDefaultPadding * 2,
                           ),
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
@@ -107,16 +114,16 @@ class HomeScreen extends StatelessWidget {
                           ),
                           CustomText(
                             text: controller.user.name,
-                            fontSize: 16,
+                            fontSize: 18,
                             alignment: AlignmentDirectional.center,
                             color: Colors.white,
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 5,
                           ),
                           CustomText(
                             text: controller.user.email,
-                            fontSize: 12,
+                            fontSize: 16,
                             alignment: AlignmentDirectional.center,
                             color: Colors.white,
                           ),
@@ -173,7 +180,7 @@ class HomeScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsetsDirectional.only(start: 20, end: 20),
                 child: Divider(
-                  thickness: 3,
+                  thickness: 2,
                 ),
               ),
               SizedBox(
@@ -272,7 +279,7 @@ class HomeScreen extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsetsDirectional.only(
             top: kDefaultPadding / 2,
-            start: kDefaultPadding,
+            start: kDefaultPadding / 2,
             end: kDefaultPadding),
         child: GetBuilder<MainController>(
           builder: (controller) => Row(
@@ -320,7 +327,6 @@ class HomeScreen extends StatelessWidget {
 
   _buildFilterDialog() {
     showDialog(
-        barrierDismissible: false,
         context: Get.context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -341,7 +347,7 @@ class HomeScreen extends StatelessWidget {
                     CustomText(
                       text: 'sortBy'.tr,
                       alignment: AlignmentDirectional.center,
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                     SizedBox(
@@ -355,84 +361,73 @@ class HomeScreen extends StatelessWidget {
                         color: Colors.grey,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(end: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Row(
-                            children: [
-                              //Low Price Radio
-                              Radio(
-                                value: ProductFilters.HighPrice,
-                                groupValue: controller.filter,
-                                onChanged: (value) {
-                                  controller.filter = value;
-                                  controller.update();
-                                },
-                              ),
-                              Text(ProductFilters.HighPrice.text,
-                                  style: TextStyle(fontSize: 18)),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              //High Rate Radio
-                              Radio(
-                                value: ProductFilters.HighRate,
-                                groupValue: controller.filter,
-                                onChanged: (value) {
-                                  controller.filter = value;
-                                  controller.update();
-                                },
-                              ),
-                              Text(ProductFilters.HighRate.text,
-                                  style: TextStyle(fontSize: 18)),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(end: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Row(
-                            children: [
-                              //Low Price Radio
-                              Radio(
-                                value: ProductFilters.LowPrice,
-                                groupValue: controller.filter,
-                                onChanged: (value) {
-                                  controller.filter = value;
-                                  controller.update();
-                                },
-                              ),
-                              Text(ProductFilters.LowPrice.text,
-                                  style: TextStyle(fontSize: 18)),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              //Low Rate Radio
-                              Radio(
-                                value: ProductFilters.LowRate,
-                                groupValue: controller.filter,
-                                onChanged: (value) {
-                                  controller.filter = value;
-                                  controller.update();
-                                },
-                              ),
-                              Text(ProductFilters.LowRate.text,
-                                  style: TextStyle(fontSize: 18)),
-                            ],
-                          ),
-                        ],
-                      ),
+                    Column(
+                      children: [
+                        //High Price Radio
+                        Row(
+                          children: [
+                            Radio(
+                              value: ProductFilters.HighPrice,
+                              groupValue: controller.filter,
+                              onChanged: (value) {
+                                controller.filter = value;
+                                controller.update();
+                              },
+                            ),
+                            Text(ProductFilters.HighPrice.text,
+                                style: TextStyle(fontSize: 16)),
+                          ],
+                        ),
+                        //Low Price Radio
+                        Row(
+                          children: [
+                            Radio(
+                              value: ProductFilters.LowPrice,
+                              groupValue: controller.filter,
+                              onChanged: (value) {
+                                controller.filter = value;
+                                controller.update();
+                              },
+                            ),
+                            Text(ProductFilters.LowPrice.text,
+                                style: TextStyle(fontSize: 16)),
+                          ],
+                        ),
+                        //High Rate Radio
+                        Row(
+                          children: [
+                            Radio(
+                              value: ProductFilters.HighRate,
+                              groupValue: controller.filter,
+                              onChanged: (value) {
+                                controller.filter = value;
+                                controller.update();
+                              },
+                            ),
+                            Text(ProductFilters.HighRate.text,
+                                style: TextStyle(fontSize: 16)),
+                          ],
+                        ),
+
+                        //Low Rate Radio
+                        Row(
+                          children: [
+                            Radio(
+                              value: ProductFilters.LowRate,
+                              groupValue: controller.filter,
+                              onChanged: (value) {
+                                controller.filter = value;
+                                controller.update();
+                              },
+                            ),
+                            Text(ProductFilters.LowRate.text,
+                                style: TextStyle(fontSize: 16)),
+                          ],
+                        ),
+                      ],
                     ),
                     SizedBox(
-                      height: 40,
+                      height: kDefaultPadding,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -444,7 +439,7 @@ class HomeScreen extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                         decoration: BoxDecoration(
-                          color: Get.find<MainController>().primaryColor,
+                          color: LocalStorage().primaryColor(),
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(10.0),
                               bottomRight: Radius.circular(10.0)),
@@ -462,6 +457,16 @@ class HomeScreen extends StatelessWidget {
             ),
           );
         });
+  }
+
+  Future<bool> _willPopCallback() async {
+    CommonMethods().customAlert(
+        title: 'close'.tr,
+        message: 'closeMessage'.tr,
+        action: () {
+          SystemNavigator.pop(animated: true);
+        });
+    return Future.value(true);
   }
 }
 

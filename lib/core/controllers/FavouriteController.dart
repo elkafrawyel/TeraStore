@@ -7,12 +7,14 @@ import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/model/user_model.dart';
 
 class FavouriteController extends MainController {
+  ProductModel productModel;
   List<ProductModel> _products = [];
 
   List<ProductModel> get products => _products;
 
   getMyFavouriteProducts() async {
     loading.value = true;
+    update();
     _products.clear();
     FavouriteModel favouriteModel = await ProductService().getMyFavouriteList();
     for (FavouriteProduct element in favouriteModel.myProducts) {
@@ -48,5 +50,13 @@ class FavouriteController extends MainController {
 
     }
     return productModel;
+  }
+
+  removeFromFavourites(ProductModel productModel) async {
+    await ProductService().removeFromFavourites(productModel.id);
+    _products.remove(productModel);
+
+    empty.value = _products.isEmpty;
+    update();
   }
 }

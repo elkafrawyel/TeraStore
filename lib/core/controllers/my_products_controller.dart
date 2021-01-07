@@ -26,4 +26,10 @@ class MyProductsController extends MainController {
       update();
     });
   }
+
+  delete(ProductModel productModel) {
+    ProductService().deleteProduct(productModel.id);
+    _products.remove(productModel);
+    update();
+  }
 }

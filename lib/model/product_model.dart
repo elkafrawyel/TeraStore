@@ -6,9 +6,13 @@ class ProductModel {
       description,
       image,
       userId,
+      categoryId,
       subCategoryId,
       timeStamp;
   int discountPrice, price;
+
+  // add also category name, subCategory name,
+
 
   //run time attributes
   bool isNew = false;
@@ -21,6 +25,7 @@ class ProductModel {
       this.description,
       this.image,
       this.userId,
+      this.categoryId,
       this.subCategoryId,
       this.discountPrice,
       this.price,
@@ -30,6 +35,7 @@ class ProductModel {
     if (map == null) return;
     id = map['id'];
     image = map['image'];
+    categoryId = map['categoryId'];
     subCategoryId = map['subCategoryId'];
     timeStamp = map['timeStamp'];
     price = map['price'];
@@ -45,6 +51,7 @@ class ProductModel {
       'id': id,
       'userId': userId,
       'name': name,
+      'categoryId': categoryId,
       'subCategoryId': subCategoryId,
       'description': description,
       'discountPrice': discountPrice,

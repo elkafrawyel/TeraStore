@@ -12,8 +12,8 @@ class LocalStorage {
     await GetStorage().write(languageKey, languageCode);
   }
 
-  Future<String> getLanguage() async {
-    return await GetStorage().read(languageKey);
+  String getLanguage() {
+    return GetStorage().read(languageKey);
   }
 
   bool isArabicLanguage() {
@@ -33,7 +33,14 @@ class LocalStorage {
   }
 
   bool getBool(String key) {
-    return GetStorage().read(key) == null ? false : GetStorage().read(key);
+    bool value = GetStorage().read(key);
+    if (value == null) {
+      if (key == notifications)
+        return true;
+      else
+        return false;
+    }
+    return value;
   }
 
   setInt(String key, int value) async {
@@ -45,6 +52,10 @@ class LocalStorage {
   }
 
   Color primaryColor() {
-    return Color(getInt(selectedColorValue));
+    if (getInt(selectedColorValue) == 0) {
+      return Color(Colors.blue.value);
+    } else {
+      return Color(getInt(selectedColorValue));
+    }
   }
 }

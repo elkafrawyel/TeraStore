@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import '../text/custom_text.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +28,7 @@ class CustomCartButton extends StatelessWidget {
             children: [
               Icon(
                 Icons.add_shopping_cart_rounded,
-                color: Get.find<MainController>().primaryColor,
+                color: LocalStorage().primaryColor(),
                 size: 40,
               ),
               SizedBox(

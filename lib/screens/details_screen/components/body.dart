@@ -23,7 +23,7 @@ class Body extends StatelessWidget {
           height: size.height,
           margin: EdgeInsetsDirectional.only(top: 0),
           decoration: BoxDecoration(
-            color: kBackgroundColor,
+            color: Colors.white,
             borderRadius: BorderRadius.only(
                 // bottomLeft: Radius.circular(50),
                 // bottomRight: Radius.circular(50),
@@ -71,7 +71,7 @@ class Body extends StatelessWidget {
                                     Text(
                                       '\$${product.price}',
                                       style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 16,
                                         decoration: TextDecoration.lineThrough,
                                         color: Colors.black,
                                       ),
@@ -82,7 +82,7 @@ class Body extends StatelessWidget {
                                     Text(
                                       '\$${product.discountPrice}',
                                       style: TextStyle(
-                                        fontSize: 25,
+                                        fontSize: 22,
                                         fontWeight: FontWeight.bold,
                                         color: kSecondaryColor,
                                       ),

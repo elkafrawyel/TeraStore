@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
+import 'package:flutter_app/screens/details_screen/details_screen.dart';
 import 'package:flutter_app/screens/main_screen/components/product_card.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +17,6 @@ class SimilarProducts extends StatelessWidget {
 
   _productsList() {
     return Container(
-      padding: EdgeInsets.all(kDefaultPadding),
       height: MediaQuery.of(Get.context).size.height / 2,
       child: ListView.builder(
         shrinkWrap: false,
@@ -26,7 +26,12 @@ class SimilarProducts extends StatelessWidget {
           return ProductCard(
             itemIndex: index,
             product: products[index],
-            press: () {},
+            press: () {
+              Get.to(
+                DetailsScreen(
+                    productId: products[index].id),
+              );
+            },
           );
         },
       ),

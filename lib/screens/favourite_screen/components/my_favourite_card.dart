@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/controllers/FavouriteController.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
+import 'package:get/get.dart';
 
-class ProductCard extends StatelessWidget {
-  const ProductCard({
+class MyFavouriteCard extends StatelessWidget {
+  const MyFavouriteCard({
     Key key,
     this.itemIndex,
     this.product,
     this.press,
-    this.showActions = false,
   }) : super(key: key);
 
   final int itemIndex;
   final ProductModel product;
   final Function press;
-  final bool showActions;
 
   @override
   Widget build(BuildContext context) {
-    // It  will provide us total height and width of our screen
-    Size size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.symmetric(
         horizontal: kDefaultPadding / 2,
@@ -75,12 +73,13 @@ class ProductCard extends StatelessWidget {
                           start: kDefaultPadding / 2),
                       child: CustomText(
                         text: product.name,
-                        fontSize: 18,
+                        fontSize: 16,
                         maxLines: 4,
                         alignment: AlignmentDirectional.topStart,
                       ),
                     ),
                   ),
+                  _favIcon()
                 ],
               ),
             ),
@@ -89,7 +88,7 @@ class ProductCard extends StatelessWidget {
               alignment: AlignmentDirectional.bottomEnd,
               child: Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: kDefaultPadding, // 30 padding
+                  horizontal: kDefaultPadding * 1.5, // 30 padding
                   vertical: kDefaultPadding / 4, // 5 top and bottom
                 ),
                 decoration: BoxDecoration(
@@ -102,7 +101,7 @@ class ProductCard extends StatelessWidget {
                 child: Text(
                   "\$${product.discountPrice}",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.white,
                   ),
                 ),
@@ -110,6 +109,20 @@ class ProductCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  _favIcon() {
+    return GestureDetector(
+      onTap: () {
+        //remove
+        Get.find<FavouriteController>().removeFromFavourites(product);
+      },
+      child: Icon(
+        Icons.favorite_outlined,
+        color: Colors.red,
+        size: 30,
       ),
     );
   }

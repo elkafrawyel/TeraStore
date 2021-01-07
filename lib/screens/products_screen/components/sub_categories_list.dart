@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/core/controllers/products_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 
 class SubCategoriesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Get.find<MainController>().primaryColor,
+      color: LocalStorage().primaryColor(),
       height: 40,
       child: GetBuilder<ProductsController>(
         builder: (controller) => controller.loadingSubCategories.value

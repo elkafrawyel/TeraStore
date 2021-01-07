@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/helper/Constant.dart';
 
 import '../text/custom_text.dart';
 
@@ -25,7 +26,7 @@ class CustomSocialButton extends StatelessWidget {
           child: Row(
             children: [
               SizedBox(
-                width: 20,
+                width: 10,
               ),
               Image.asset(
                 imageAsset,
@@ -33,10 +34,11 @@ class CustomSocialButton extends StatelessWidget {
                 height: 30,
               ),
               SizedBox(
-                width: 50,
+                width: kDefaultPadding,
               ),
               CustomText(
                 text: text,
+                fontSize: 16,
               )
             ],
           )),

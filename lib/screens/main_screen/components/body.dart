@@ -65,6 +65,7 @@ class Body extends StatelessWidget {
         },
       ));
     });
+    widgets.add(SizedBox(height: 80,));
     return widgets;
   }
 }

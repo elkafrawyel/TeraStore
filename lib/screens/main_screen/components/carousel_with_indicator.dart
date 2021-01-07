@@ -110,7 +110,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                             },
                             child: CustomText(
                               text: '${products[products.indexOf(item)].name}',
-                              fontSize: 18,
+                              fontSize: 16,
                               alignment: AlignmentDirectional.center,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,

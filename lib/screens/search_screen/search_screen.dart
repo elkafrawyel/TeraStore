@@ -6,6 +6,7 @@ import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.d
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
 import 'package:flutter_app/screens/details_screen/details_screen.dart';
 import 'package:flutter_app/screens/main_screen/components/product_card.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 
 import 'components/search_box.dart';
@@ -23,7 +24,7 @@ class SearchScreen extends StatelessWidget {
         builder: (controller) => Column(
           children: [
             Container(
-              color: Get.find<MainController>().primaryColor,
+              color: LocalStorage().primaryColor(),
               child: SearchBox(
                 onSubmitted: (value) {
                   controller.search(value);

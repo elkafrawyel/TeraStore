@@ -6,9 +6,14 @@ class CustomButton extends StatelessWidget {
   final Function onPressed;
   final Color colorBackground;
   final Color colorText;
+  final double fontSize;
 
   CustomButton(
-      {this.text, this.onPressed, this.colorBackground, this.colorText});
+      {this.text,
+      this.onPressed,
+      this.colorBackground,
+      this.colorText,
+      this.fontSize = 16});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +25,7 @@ class CustomButton extends StatelessWidget {
         color: colorBackground,
         child: CustomText(
           text: text,
-          fontSize: 14,
+          fontSize: fontSize,
           color: colorText,
           alignment: AlignmentDirectional.center,
         ));

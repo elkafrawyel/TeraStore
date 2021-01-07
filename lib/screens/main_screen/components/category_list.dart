@@ -15,7 +15,7 @@ class _CategoryListState extends State<CategoryList> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
-      height: 45,
+      height: 50,
       child: GetBuilder<HomeController>(
         builder: (controller) => ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -46,7 +46,7 @@ class _CategoryListState extends State<CategoryList> {
                 text: controller.categories[index].displayName,
                 alignment: AlignmentDirectional.center,
                 color: Colors.white,
-                fontSize: 18,
+                fontSize: 16,
               ),
             ),
           ),

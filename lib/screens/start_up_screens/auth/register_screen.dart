@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/auth_controller.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/helper/validator.dart';
-import 'package:flutter_app/screens/auth/login_screen.dart';
 import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
+import 'package:flutter_app/screens/custom_widgets/text/custom_outline_text_form_field.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text_form_field.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 
-class RegisterScreen extends GetWidget<AuthController> {
+class RegisterScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -16,15 +17,15 @@ class RegisterScreen extends GetWidget<AuthController> {
 
   @override
   Widget build(BuildContext context) {
+
     return GetBuilder<AuthController>(
-      init: Get.find<AuthController>(),
       builder: (controller) => Scaffold(
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
           leading: GestureDetector(
             onTap: () {
-              Get.off(LoginScreen());
+              Get.back();
             },
             child: Icon(
               Icons.arrow_back,
@@ -39,7 +40,10 @@ class RegisterScreen extends GetWidget<AuthController> {
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 20, left: 10, right: 10, bottom: 50),
+                      top: kDefaultPadding * 2,
+                      left: kDefaultPadding / 2,
+                      right: kDefaultPadding / 2,
+                      bottom: kDefaultPadding * 2),
                   child: Column(
                     children: [
                       Card(
@@ -58,45 +62,51 @@ class RegisterScreen extends GetWidget<AuthController> {
                                 SizedBox(
                                   height: 20,
                                 ),
-                                CustomTextFormField(
+                                CustomOutlinedTextFormField(
                                   text: 'name'.tr,
                                   controller: nameController,
                                   hintText: 'name'.tr,
+                                  labelText: 'name'.tr,
                                   keyboardType: TextInputType.text,
-                                  validatorText: 'nameIsEmpty'.tr,
+                                  validateEmptyText: 'nameIsEmpty'.tr,
                                 ),
                                 SizedBox(
                                   height: 30,
                                 ),
-                                CustomTextFormField(
+                                CustomOutlinedTextFormField(
                                   text: 'email'.tr,
                                   controller: emailController,
                                   hintText: 'someone@something.com',
+                                  labelText: 'email'.tr,
+                                  validateEmptyText: 'emailIsEmpty'.tr,
                                   keyboardType: TextInputType.emailAddress,
-                                  validatorText: 'emailIsEmpty'.tr,
                                 ),
                                 SizedBox(
                                   height: 30,
                                 ),
-                                CustomTextFormField(
+                                CustomOutlinedTextFormField(
                                   text: 'password'.tr,
                                   controller: passwordController,
                                   hintText: '***********',
-                                  obscureText: true,
-                                  validatorText: 'passwordIsEmpty'.tr,
+                                  isPassword: true,
+                                  maxLines: 1,
+                                  labelText: 'password'.tr,
+                                  validateEmptyText: 'passwordIsEmpty'.tr,
+                                  keyboardType: TextInputType.text,
                                 ),
                                 SizedBox(
                                   height: 40,
                                 ),
                                 Container(
+                                  height: 50,
                                   width:
-                                  MediaQuery.of(context).size.width * 0.7,
+                                      MediaQuery.of(context).size.width * 0.7,
                                   child: CustomButton(
                                     colorBackground:
-                                    Get.find<MainController>()
-                                        .primaryColor,
+                                        LocalStorage().primaryColor(),
                                     colorText: Colors.white,
                                     text: 'signUp'.tr,
+                                    fontSize: 20,
                                     onPressed: () {
                                       if (_formKey.currentState.validate()) {
                                         FocusScope.of(context).unfocus();

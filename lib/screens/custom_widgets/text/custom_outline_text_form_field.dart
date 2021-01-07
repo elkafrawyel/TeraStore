@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomOutlinedTextFormField extends StatelessWidget {
-  bool isPassword;
+  final bool isPassword;
   final TextStyle style;
   final String hintText;
   final String text;

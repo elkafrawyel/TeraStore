@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_app/core/services/user_service.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/core/services/user_service.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/graph_model.dart';
@@ -49,13 +47,13 @@ class AuthController extends MainController {
       switch (result.status) {
         case FacebookLoginStatus.error:
           print("Error");
-          CommonMethods()
-              .showMessage(isArabic ? 'رسالة' : 'Message', isArabic ? 'حدث خطأ ما':'Error Happened');
+          CommonMethods().showMessage(isArabic ? 'رسالة' : 'Message',
+              isArabic ? 'حدث خطأ ما' : 'Error Happened');
           break;
         case FacebookLoginStatus.cancelledByUser:
           print("CancelledByUser");
-          CommonMethods()
-              .showMessage(isArabic ? 'رسالة' : 'Message', isArabic ? 'تم الغاء العملية':'CancelledByUser');
+          CommonMethods().showMessage(isArabic ? 'رسالة' : 'Message',
+              isArabic ? 'تم الغاء العملية' : 'CancelledByUser');
           break;
         case FacebookLoginStatus.loggedIn:
           print("LoggedIn");

@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/model/cart_model.dart';
+import 'package:get/get.dart';
 
 class CartService {
   final CollectionReference _cartRef =
       FirebaseFirestore.instance.collection('Cart');
 
-  final String userId = FirebaseAuth.instance.currentUser?.uid;
-
   Future<CartModel> getMyCartList() async {
-    DocumentSnapshot snapshot = await _cartRef.doc(userId).get();
+    DocumentSnapshot snapshot =
+        await _cartRef.doc(Get.find<MainController>().user.id).get();
     if (snapshot.exists) {
       CartModel cartModel = CartModel.fromJson(snapshot.data());
       if (cartModel != null &&
@@ -38,10 +38,14 @@ class CartService {
     }
     if (cart != null) {
       cartModel.cart[index].quantity++;
-      await _cartRef.doc(userId).set(cartModel.toJson());
+      await _cartRef
+          .doc(Get.find<MainController>().user.id)
+          .set(cartModel.toJson());
     } else {
       cartModel.cart.add(Cart(id: productId, quantity: 1));
-      await _cartRef.doc(userId).set(cartModel.toJson());
+      await _cartRef
+          .doc(Get.find<MainController>().user.id)
+          .set(cartModel.toJson());
     }
   }
 
@@ -61,7 +65,9 @@ class CartService {
       if (cartModel.cart[index].quantity == 0) {
         cartModel.cart.removeAt(index);
       }
-      await _cartRef.doc(userId).set(cartModel.toJson());
+      await _cartRef
+          .doc(Get.find<MainController>().user.id)
+          .set(cartModel.toJson());
     }
   }
 
@@ -78,7 +84,9 @@ class CartService {
     }
     if (cart != null) {
       cartModel.cart.removeAt(index);
-      await _cartRef.doc(userId).set(cartModel.toJson());
+      await _cartRef
+          .doc(Get.find<MainController>().user.id)
+          .set(cartModel.toJson());
     }
   }
 }

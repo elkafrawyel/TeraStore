@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/auth_controller.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/helper/validator.dart';
 import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';

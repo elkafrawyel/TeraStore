@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/model/user_model.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
-import 'package:flutter_app/storage/local_storage.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OwnerInfo extends StatelessWidget {
   final UserModel owner;
@@ -16,10 +14,9 @@ class OwnerInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: LocalStorage().primaryColor()),
+          borderRadius: BorderRadius.circular(10.0), color: Colors.white),
       child: Padding(
-        padding: EdgeInsetsDirectional.only(start: 10, top: 10,bottom: 10),
+        padding: EdgeInsetsDirectional.only(start: 10, top: 10, bottom: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -41,13 +38,14 @@ class OwnerInfo extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                padding: EdgeInsetsDirectional.only(top: 10),
+                padding: EdgeInsetsDirectional.only(top: 10, end: 10),
                 child: Row(
                   children: [
                     Expanded(
                       child: CustomText(
                         text: owner.name,
-                        color: Colors.white,
+                        color: Colors.black,
+                        alignment: AlignmentDirectional.topStart,
                         fontSize: 18,
                       ),
                     ),
@@ -65,7 +63,7 @@ class OwnerInfo extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: Icon(
                               Icons.call,
-                              color: Colors.white,
+                              color: Colors.black,
                               size: 30,
                             ),
                           ),
@@ -79,12 +77,11 @@ class OwnerInfo extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: Icon(
                               Icons.message,
-                              color: Colors.white,
+                              color: Colors.black,
                               size: 30,
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ],

@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/model/favourite_model.dart';
 import 'package:flutter_app/model/product_model.dart';
+import 'package:get/get.dart';
 
 class ProductService {
   final CollectionReference _productsRef =
@@ -13,7 +14,7 @@ class ProductService {
   final CollectionReference _favouritesRef =
       FirebaseFirestore.instance.collection('Favourites');
 
-  final String userId = FirebaseAuth.instance.currentUser.uid;
+  final String userId = Get.find<MainController>().user.id;
 
   Future<List<QueryDocumentSnapshot>> getProducts(String subCategoryId) async {
     Query query = _productsRef.where('subCategoryId', isEqualTo: subCategoryId);

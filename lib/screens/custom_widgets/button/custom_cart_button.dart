@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/storage/local_storage.dart';
 import '../text/custom_text.dart';
 import 'package:get/get.dart';

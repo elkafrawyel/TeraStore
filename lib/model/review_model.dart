@@ -5,7 +5,7 @@ class ReviewModel {
 
   ReviewModel.fromJson(Map<String, dynamic> json) {
     if (json['cart'] != null) {
-      reviews = new List<Review>();
+      reviews = List<Review>.empty(growable: true);
       json['cart'].forEach((v) {
         reviews.add(new Review.fromJson(v));
       });

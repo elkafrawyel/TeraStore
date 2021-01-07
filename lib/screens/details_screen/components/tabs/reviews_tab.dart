@@ -10,9 +10,9 @@ import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.d
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
-import 'package:rating_bar/rating_bar.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
+import 'package:rating_bar/rating_bar.dart';
 
 class ReviewsTab extends StatelessWidget {
   final ProductModel product;
@@ -25,13 +25,12 @@ class ReviewsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProductDetailsController>(
-      builder: (controller) =>
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: _reviewsList(controller),
-            ),
-          ),
+      builder: (controller) => Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: _reviewsList(controller),
+        ),
+      ),
     );
   }
 
@@ -178,7 +177,7 @@ class ReviewsTab extends StatelessWidget {
           children: [
             _ratingView(controller),
             Container(
-              width: MediaQuery.of(Get.context).size.width/3,
+              width: MediaQuery.of(Get.context).size.width / 3,
               child: CustomOutLinedButton(
                 text: 'addComment'.tr,
                 colorText: LocalStorage().primaryColor(),
@@ -199,89 +198,89 @@ class ReviewsTab extends StatelessWidget {
     );
     controller.reviews.length == 0
         ? widgets.add(
-      EmptyView(
-        textColor: Colors.black,
-        message: 'noReviews'.tr,
-      ),
-    )
+            EmptyView(
+              textColor: Colors.black,
+              message: 'noReviews'.tr,
+            ),
+          )
         : controller.reviews.forEach((element) {
-      widgets.add(Padding(
-        padding: const EdgeInsetsDirectional.only(
-            start: kDefaultPadding / 2,
-            end: kDefaultPadding / 2,
-            bottom: kDefaultPadding),
-        child: Row(
-          children: [
-            Container(
-              alignment: AlignmentDirectional.topStart,
-              width: 70,
-              height: 70,
-              child: CircleAvatar(
-                backgroundColor: Colors.transparent,
-                backgroundImage: NetworkImage(controller
-                    .reviews[controller.reviews.indexOf(element)]
-                    .userImage),
-                radius: 50,
-              ),
-            ),
-            SizedBox(
-              width: kDefaultPadding / 2,
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+            widgets.add(Padding(
+              padding: const EdgeInsetsDirectional.only(
+                  start: kDefaultPadding / 2,
+                  end: kDefaultPadding / 2,
+                  bottom: kDefaultPadding),
+              child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CustomText(
-                      alignment: AlignmentDirectional.centerStart,
-                      text: controller
+                  Container(
+                    alignment: AlignmentDirectional.topStart,
+                    width: 70,
+                    height: 70,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: NetworkImage(controller
                           .reviews[controller.reviews.indexOf(element)]
-                          .message,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                          .userImage),
+                      radius: 50,
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      RatingBar.readOnly(
-                        initialRating: controller
-                            .reviews[controller.reviews.indexOf(element)]
-                            .rate,
-                        isHalfAllowed: true,
-                        size: 25,
-                        filledColor: Colors.amber,
-                        halfFilledIcon: Icons.star_half,
-                        filledIcon: Icons.star,
-                        emptyIcon: Icons.star_border,
-                      ),
-                    ],
-                  ),
                   SizedBox(
-                    height: kDefaultPadding / 2,
+                    width: kDefaultPadding / 2,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: CustomText(
-                          alignment: AlignmentDirectional.topStart,
-                          text: _buildText(controller,
-                              controller.reviews.indexOf(element)),
-                          fontSize: 14,
-                          color: Colors.grey.shade700,
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CustomText(
+                            alignment: AlignmentDirectional.centerStart,
+                            text: controller
+                                .reviews[controller.reviews.indexOf(element)]
+                                .message,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            RatingBar.readOnly(
+                              initialRating: controller
+                                  .reviews[controller.reviews.indexOf(element)]
+                                  .rate,
+                              isHalfAllowed: true,
+                              size: 25,
+                              filledColor: Colors.amber,
+                              halfFilledIcon: Icons.star_half,
+                              filledIcon: Icons.star,
+                              emptyIcon: Icons.star_border,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: kDefaultPadding / 2,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              child: CustomText(
+                                alignment: AlignmentDirectional.topStart,
+                                text: _buildText(controller,
+                                    controller.reviews.indexOf(element)),
+                                fontSize: 14,
+                                color: Colors.grey.shade700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
-      ));
-    });
+            ));
+          });
     widgets.add(
       SizedBox(
         height: kDefaultPadding,
@@ -319,6 +318,7 @@ class ReviewsTab extends StatelessWidget {
     int threeStar = 0;
     int fourStar = 0;
     int fiveStar = 0;
+    if (controller.reviews.isEmpty) return 0;
     for (Review review in controller.reviews) {
       if (review.rate == 5) {
         fiveStar++;
@@ -333,10 +333,10 @@ class ReviewsTab extends StatelessWidget {
       }
     }
     double rate = (5 * fiveStar +
-        4 * fourStar +
-        3 * threeStar +
-        2 * twoStar +
-        1 * oneStar) /
+            4 * fourStar +
+            3 * threeStar +
+            2 * twoStar +
+            1 * oneStar) /
         (fiveStar + fourStar + threeStar + twoStar + oneStar);
 
     return rate;

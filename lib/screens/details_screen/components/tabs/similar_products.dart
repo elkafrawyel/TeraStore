@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/screens/details_screen/details_screen.dart';
 import 'package:flutter_app/screens/main_screen/components/product_card.dart';

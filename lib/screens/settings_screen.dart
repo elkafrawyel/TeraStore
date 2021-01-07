@@ -99,26 +99,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
     // raise the [showDialog] widget
     showDialog(
       context: context,
-      child: AlertDialog(
-        title: Text('pickColor'.tr),
-        content: SingleChildScrollView(
-          child: BlockPicker(
-            pickerColor: pickedColor,
-            onColorChanged: changeColor,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('pickColor'.tr),
+          content: SingleChildScrollView(
+            child: BlockPicker(
+              pickerColor: pickedColor,
+              onColorChanged: changeColor,
+            ),
           ),
-        ),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('change'.tr),
-            onPressed: () {
-              Navigator.of(context).pop();
-              Get.find<MainController>().changeAppColor(pickedColor);
-              setState(() {});
-              Get.offAll(HomeScreen());
-            },
-          ),
-        ],
-      ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('change'.tr),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Get.find<MainController>().changeAppColor(pickedColor);
+                setState(() {});
+                Get.offAll(HomeScreen());
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

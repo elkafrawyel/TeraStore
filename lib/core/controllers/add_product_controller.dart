@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_app/core/services/product_service.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/model/product_model.dart';
@@ -50,7 +49,7 @@ class AddProductController extends MainController {
           description: desc,
           price: price,
           discountPrice: discountPrice,
-          userId: FirebaseAuth.instance.currentUser.uid,
+          userId: Get.find<MainController>().user.id,
           categoryId: Get.find<HomeController>().categoryModel.id,
           subCategoryId: Get.find<HomeController>().subCategoryModel.id,
           timeStamp: id.toString(),

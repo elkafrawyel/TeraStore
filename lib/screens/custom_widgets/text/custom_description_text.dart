@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/storage/local_storage.dart';
-import 'package:get/get.dart';
 
 class CustomDescription extends StatefulWidget {
   final String text;

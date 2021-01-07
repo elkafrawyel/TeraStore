@@ -6,7 +6,6 @@ import 'package:flutter_app/core/controllers/home_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/model/category_model.dart';
 import 'package:flutter_app/model/product_model.dart';
-import 'package:flutter_app/model/sub_category_model.dart';
 import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';

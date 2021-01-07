@@ -7,7 +7,7 @@ class CartModel {
 
   CartModel.fromJson(Map<String, dynamic> json) {
     if (json['cart'] != null) {
-      cart = new List<Cart>();
+      cart = List<Cart>.empty(growable: true);
       json['cart'].forEach((v) {
         cart.add(new Cart.fromJson(v));
       });

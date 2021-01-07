@@ -1,5 +1,4 @@
 import 'package:flutter_app/core/controllers/app_language_controller.dart';
-import 'package:flutter_app/core/controllers/auth_controller.dart';
 import 'package:flutter_app/core/controllers/cart_controller.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:get/get.dart';
@@ -10,9 +9,8 @@ class GetBinding implements Bindings {
     //put not lazyPut to load and set locale immediately
     Get.put(AppLanguageController());
 
-    Get.put(CartController(), permanent: true);
-
     Get.put(MainController(), permanent: true);
 
+    Get.put(CartController(), permanent: true);
   }
 }

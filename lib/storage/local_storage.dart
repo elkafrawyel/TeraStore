@@ -53,7 +53,7 @@ class LocalStorage {
 
   Color primaryColor() {
     if (getInt(selectedColorValue) == 0) {
-      return Color(Colors.blue.value);
+      return Color(Colors.purple.value);
     } else {
       return Color(getInt(selectedColorValue));
     }

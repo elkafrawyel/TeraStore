@@ -4,8 +4,8 @@ import 'package:flutter_app/screens/cart_screen.dart';
 import 'package:flutter_app/screens/custom_widgets/budget_cart_icon.dart';
 import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
-import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
+
 import 'components/body.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -28,7 +28,7 @@ class DetailsScreen extends StatelessWidget {
           controller.loading.value || controller.productModel == null
               ? LoadingView()
               : Scaffold(
-                  backgroundColor: LocalStorage().primaryColor(),
+                  // backgroundColor: LocalStorage().primaryColor(),
                   appBar: buildAppBar(context, controller),
                   body: Body(
                     product: controller.productModel,

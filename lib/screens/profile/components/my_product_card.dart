@@ -5,7 +5,6 @@ import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:flutter_app/screens/edit_product_screen.dart';
-import 'package:flutter_app/screens/user_screens/edit_profile_screen.dart';
 import 'package:get/get.dart';
 
 class MyProductCard extends StatelessWidget {

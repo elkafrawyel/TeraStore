@@ -18,12 +18,15 @@ import 'package:flutter_app/screens/user_screens/notifications_screen.dart';
 import 'package:flutter_app/screens/user_screens/order_history_screen.dart';
 import 'package:flutter_app/screens/user_screens/shipping_address_screen.dart';
 import 'package:flutter_app/storage/local_storage.dart';
+import 'package:flutter_app/storage/network/MyService.dart';
 import 'package:get/get.dart';
 import 'components/body.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen() {
     Get.find<MainController>().loadUserData();
+    var myService = MyService.create(NetworkBaseUrlType.MainUrl);
+    myService.getDummyObject();
   }
 
   @override
@@ -115,15 +118,6 @@ class HomeScreen extends StatelessWidget {
                           CustomText(
                             text: controller.user.name,
                             fontSize: 18,
-                            alignment: AlignmentDirectional.center,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          CustomText(
-                            text: controller.user.email,
-                            fontSize: 16,
                             alignment: AlignmentDirectional.center,
                             color: Colors.white,
                           ),

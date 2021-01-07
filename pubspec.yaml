@@ -16,6 +16,7 @@ dependencies:
 
   cupertino_icons: ^1.0.0
   get:
+  chopper:
   google_sign_in:
   firebase_core:
   firebase_auth:
@@ -42,6 +43,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner:
+  chopper_generator:
 
 flutter_icons:
   android: true

@@ -34,11 +34,13 @@ class CustomSocialButton extends StatelessWidget {
                 height: 30,
               ),
               SizedBox(
-                width: kDefaultPadding,
+                width: kDefaultPadding/2,
               ),
-              CustomText(
-                text: text,
-                fontSize: 16,
+              Expanded(
+                child: CustomText(
+                  text: text,
+                  fontSize: 16,
+                ),
               )
             ],
           )),

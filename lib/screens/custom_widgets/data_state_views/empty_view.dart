@@ -12,22 +12,26 @@ class EmptyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 400,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _emptyImage(),
-          Text(
-            message == null ? 'empty'.tr : message,
-            style: TextStyle(fontSize: 18, color: textColor),
+    return ListView(
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: 400,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _emptyImage(),
+              Text(
+                message == null ? 'empty'.tr : message,
+                style: TextStyle(fontSize: 18, color: textColor),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+            ],
           ),
-          SizedBox(
-            height: 40,
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

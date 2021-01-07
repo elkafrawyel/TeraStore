@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_app/core/services/user_service.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
+import 'package:flutter_app/model/graph_model.dart';
 import 'package:flutter_app/model/user_model.dart';
 import 'package:flutter_app/screens/main_screen/home_screen.dart';
 import 'package:flutter_app/storage/local_storage.dart';
+import 'package:flutter_app/storage/network/MyService.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -14,6 +18,7 @@ class AuthController extends MainController {
   FirebaseAuth _auth = FirebaseAuth.instance;
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   FacebookLogin _facebookLogin = FacebookLogin();
+  bool isArabic = LocalStorage().isArabicLanguage();
 
   signInGoogle() async {
     try {
@@ -39,30 +44,39 @@ class AuthController extends MainController {
   }
 
   signInFacebook() async {
-    UserCredential userCredential;
     try {
       FacebookLoginResult result = await _facebookLogin.logIn(['email']);
       switch (result.status) {
         case FacebookLoginStatus.error:
           print("Error");
-          CommonMethods().showMessage('Error', result.errorMessage);
+          CommonMethods()
+              .showMessage(isArabic ? 'خطأ' : 'Error', result.errorMessage);
           break;
         case FacebookLoginStatus.cancelledByUser:
           print("CancelledByUser");
-          CommonMethods().showMessage('Error', result.errorMessage);
+          CommonMethods()
+              .showMessage(isArabic ? 'خطأ' : 'Error', result.errorMessage);
           break;
         case FacebookLoginStatus.loggedIn:
           print("LoggedIn");
           final accessToken = result.accessToken.token;
           final facebookAuthCredential =
               FacebookAuthProvider.credential(accessToken);
-          userCredential =
+          UserCredential userCredential =
               await _auth.signInWithCredential(facebookAuthCredential);
+
+          // getting facebook profile photo
+          var myService = MyService.create(NetworkBaseUrlType.GraphUrl);
+          var response =
+              await myService.getFacebookGraph(result.accessToken.token);
+          GraphModel graphModel = GraphModel.fromJson(response.body);
+          print('response : ' + response.body.toString());
+          String photoUrl = graphModel.picture.data.url;
           saveUser(UserModel(
               id: userCredential.user.uid,
               email: userCredential.user.email,
               name: userCredential.user.displayName,
-              photo: userCredential.user.photoURL));
+              photo: photoUrl));
           break;
       }
     } on FirebaseAuthException catch (e) {
@@ -112,7 +126,6 @@ class AuthController extends MainController {
   }
 
   handleError(error) {
-    bool isArabic = LocalStorage().isArabicLanguage();
     switch (error.code) {
       case 'account-exists-with-different-credential':
         CommonMethods().showMessage(

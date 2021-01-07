@@ -97,7 +97,7 @@ class Body extends StatelessWidget {
               ? [
                   Container(
                       height: MediaQuery.of(context).size.height / 2,
-                      child: EmptyView(message: 'noProducts'.tr))
+                      child: EmptyView(message: 'noProducts'.tr,textColor: Colors.black,))
                 ]
               : _myProducts(),
         ))

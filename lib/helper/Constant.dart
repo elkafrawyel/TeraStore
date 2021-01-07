@@ -44,6 +44,9 @@ const logOutImage = 'src/images/Icon_Exit.png';
 const defaultImageUrl =
     'https://firebasestorage.googleapis.com/v0/b/ecommerce-43b02.appspot.com/o/DefaultImages%2FAvatar.png?alt=media&token=ab2a22a6-43f5-47f7-8638-c6892e03292f';
 
+
+
+//=========================================================
 class Constants {
   static final Color backgroundColor = Colors.grey.shade200;
   static final Color appBarTextColor = Colors.white;

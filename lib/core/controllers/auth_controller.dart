@@ -42,15 +42,29 @@ class AuthController extends MainController {
     UserCredential userCredential;
     try {
       FacebookLoginResult result = await _facebookLogin.logIn(['email']);
-      final accessToken = result.accessToken.token;
-      final facebookAuthCredential =
-          FacebookAuthProvider.credential(accessToken);
-      userCredential = await _auth.signInWithCredential(facebookAuthCredential);
-      saveUser(UserModel(
-          id: userCredential.user.uid,
-          email: userCredential.user.email,
-          name: userCredential.user.displayName,
-          photo: userCredential.user.photoURL));
+      switch (result.status) {
+        case FacebookLoginStatus.error:
+          print("Error");
+          CommonMethods().showMessage('Error', result.errorMessage);
+          break;
+        case FacebookLoginStatus.cancelledByUser:
+          print("CancelledByUser");
+          CommonMethods().showMessage('Error', result.errorMessage);
+          break;
+        case FacebookLoginStatus.loggedIn:
+          print("LoggedIn");
+          final accessToken = result.accessToken.token;
+          final facebookAuthCredential =
+              FacebookAuthProvider.credential(accessToken);
+          userCredential =
+              await _auth.signInWithCredential(facebookAuthCredential);
+          saveUser(UserModel(
+              id: userCredential.user.uid,
+              email: userCredential.user.email,
+              name: userCredential.user.displayName,
+              photo: userCredential.user.photoURL));
+          break;
+      }
     } on FirebaseAuthException catch (e) {
       handleError(e);
       print('Failed with error code: ${e.code}');
@@ -100,6 +114,13 @@ class AuthController extends MainController {
   handleError(error) {
     bool isArabic = LocalStorage().isArabicLanguage();
     switch (error.code) {
+      case 'account-exists-with-different-credential':
+        CommonMethods().showMessage(
+            isArabic ? 'خطأ' : 'Error',
+            isArabic
+                ? 'هذا الايميل موجود بالفعل حاول التسجيل بطريق اخري'
+                : 'Account Exists ,Try to login with different method.');
+        break;
       case 'user-not-found':
         CommonMethods().showMessage(isArabic ? 'خطأ' : 'Error',
             isArabic ? 'لايوجد مستخدم بهذة البيانات' : 'User not found');

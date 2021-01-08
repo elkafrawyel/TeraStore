@@ -36,7 +36,9 @@ class MainController extends GetxController {
       DocumentSnapshot snapshot = await UserService().getUser(userId);
 
       user = UserModel.fromJson(snapshot.data());
-      Get.find<CartController>().getCartItems();
+
+      Get.put(CartController(), permanent: true);
+
       update();
       print(user);
     }
@@ -47,8 +49,7 @@ class MainController extends GetxController {
     update();
   }
 
-  editProfile(
-      {String name, String email, String phone, String location}) async {
+  editProfile({String name, String email, String phone}) async {
     loading.value = true;
     update();
     if (selectedImage != null) {
@@ -58,20 +59,18 @@ class MainController extends GetxController {
         reference.getDownloadURL().then((url) async {
           print(url);
           user.photo = url;
-          _addRemainData(name, email, phone, location);
+          _addRemainData(name, email, phone);
         });
       });
     } else {
-      _addRemainData(name, email, phone, location);
+      _addRemainData(name, email, phone);
     }
   }
 
-  _addRemainData(
-      String name, String email, String phone, String location) async {
+  _addRemainData(String name, String email, String phone) async {
     user.name = name;
     user.email = email;
     user.phone = phone;
-    user.location = location;
     await UserService().addUserToFireStore(user);
     loading.value = false;
     Get.back();

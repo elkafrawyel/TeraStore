@@ -116,7 +116,7 @@ class Body extends StatelessWidget {
   }
 
   void _addToCart(ProductModel productModel) async {
-    await Get.put(CartController()).addToCart(productModel);
+    await Get.find<CartController>().addToCart(productModel);
     CommonMethods()
         .showMessage('cart'.tr, productModel.name + ' ' + 'addedToCart'.tr);
   }

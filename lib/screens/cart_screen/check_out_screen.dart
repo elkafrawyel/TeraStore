@@ -1,0 +1,204 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_app/core/controllers/general_controller.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/helper/Constant.dart';
+import 'package:flutter_app/model/address_model.dart';
+import 'package:flutter_app/screens/cart_screen/payment_screen.dart';
+import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
+import 'package:flutter_app/screens/custom_widgets/button/custom_outlined_button.dart';
+import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
+import 'package:flutter_app/screens/custom_widgets/text/custom_outline_text_form_field.dart';
+import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
+import 'package:flutter_app/screens/user_screens/add_address_screen.dart';
+import 'package:flutter_app/storage/local_storage.dart';
+import 'package:get/get.dart';
+
+class CheckOutScreen extends StatelessWidget {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController detailsController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey();
+
+  CheckOutScreen() {
+    Get.put(GeneralController()).getAddressList();
+    nameController.text = Get.find<MainController>().user.name;
+    phoneController.text = Get.find<MainController>().user.phone;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        text: 'Checkout',
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(kDefaultPadding),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: kDefaultPadding,
+                ),
+                CustomOutlinedTextFormField(
+                  hintText: 'name'.tr,
+                  labelText: 'name'.tr,
+                  controller: nameController,
+                  validateEmptyText: 'requiredField'.tr,
+                  keyboardType: TextInputType.text,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CustomOutlinedTextFormField(
+                  hintText: 'phone'.tr,
+                  labelText: 'phone'.tr,
+                  controller: phoneController,
+                  validateEmptyText: 'requiredField'.tr,
+                  keyboardType: TextInputType.text,
+                  required: true,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CustomOutlinedTextFormField(
+                  required: false,
+                  hintText: 'note'.tr,
+                  labelText: 'note'.tr,
+                  maxLines: 3,
+                  controller: detailsController,
+                  keyboardType: TextInputType.text,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                _buildAddressMenu(),
+                SizedBox(
+                  height: kDefaultPadding,
+                ),
+                Container(
+                  height: 80,
+                  padding: EdgeInsetsDirectional.only(bottom: kDefaultPadding),
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: CustomButton(
+                    text: 'nextToPayment'.tr,
+                    colorText: Colors.white,
+                    colorBackground: LocalStorage().primaryColor(),
+                    fontSize: 20,
+                    onPressed: () {
+                      _nextToPayment();
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _buildAddressMenu() {
+    return GetBuilder<GeneralController>(
+      builder: (controller) => Column(
+        children: [
+          Visibility(
+            child: Row(
+              children: [
+                Expanded(
+                  child: CustomText(
+                    text: 'noSavedAddress'.tr,
+                    fontSize: 16,
+                    color: Colors.grey.shade700,
+                  ),
+                ),
+                CustomOutLinedButton(
+                  text: 'addAddress'.tr,
+                  borderColor: LocalStorage().primaryColor(),
+                  colorText: LocalStorage().primaryColor(),
+                  onPressed: () async {
+                    await Get.to(AddAddressScreen());
+                    controller.getAddressList();
+                  },
+                )
+              ],
+            ),
+            visible: controller.addressList.length == 0,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            width: MediaQuery.of(Get.context).size.width * 0.7,
+            child: Center(
+              child: DropdownButton<Address>(
+                iconDisabledColor: Colors.grey,
+                isExpanded: true,
+                iconSize: 40,
+                itemHeight: 70,
+                hint: Center(
+                  child: CustomText(
+                    text: 'chooseAddress'.tr,
+                    fontSize: 16,
+                    color: Colors.grey.shade700,
+                    alignment: AlignmentDirectional.center,
+                  ),
+                ),
+                onChanged: (Address address) {
+                  controller.setAddress(address);
+                },
+                value: controller.selectedAddress,
+                items: controller.addressList
+                    .map<DropdownMenuItem<Address>>(
+                      (model) => DropdownMenuItem<Address>(
+                        value: model,
+                        child: Container(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              CustomText(
+                                text: model.title,
+                                fontSize: 18,
+                                maxLines: 1,
+                                fontWeight: FontWeight.bold,
+                                alignment: AlignmentDirectional.centerStart,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CustomText(
+                                text: model.body,
+                                fontSize: 16,
+                                maxLines: 1,
+                                color: Colors.grey.shade700,
+                                alignment: AlignmentDirectional.centerStart,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _nextToPayment() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      //save data to general
+      //check address
+      Get.to(PaymentScreen());
+    }
+  }
+}

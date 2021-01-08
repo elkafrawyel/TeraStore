@@ -299,7 +299,7 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   void _addToCart(ProductModel productModel) async {
-    Get.put(CartController()).addToCart(productModel).then((value) {
+    Get.find<CartController>().addToCart(productModel).then((value) {
       CommonMethods().showMessage(productModel.name, 'addedToCart'.tr);
     });
   }

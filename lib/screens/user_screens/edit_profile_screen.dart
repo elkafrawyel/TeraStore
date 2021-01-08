@@ -9,14 +9,12 @@ import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 class EditProfileScreen extends StatelessWidget {
   final picker = ImagePicker();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  final TextEditingController locationController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,6 @@ class EditProfileScreen extends StatelessWidget {
     nameController.text = Get.find<MainController>().user.name;
     emailController.text = Get.find<MainController>().user.email;
     phoneController.text = Get.find<MainController>().user.phone;
-    locationController.text = Get.find<MainController>().user.location;
     return Scaffold(
         appBar: AppBar(
           toolbarHeight: 0.0,
@@ -131,17 +128,6 @@ class EditProfileScreen extends StatelessWidget {
                                 labelText: 'Phone',
                               ),
                               SizedBox(
-                                height: 20,
-                              ),
-                              CustomOutlinedTextFormField(
-                                text: 'Address',
-                                hintText: 'your address',
-                                controller: locationController,
-                                validateEmptyText: 'Address Empty',
-                                keyboardType: TextInputType.text,
-                                labelText: 'Address',
-                              ),
-                              SizedBox(
                                 height: 40,
                               ),
                               Container(
@@ -149,7 +135,8 @@ class EditProfileScreen extends StatelessWidget {
                                     MediaQuery.of(Get.context).size.width * 0.6,
                                 child: CustomButton(
                                   text: 'Save',
-                                  colorBackground: LocalStorage().primaryColor(),
+                                  colorBackground:
+                                      LocalStorage().primaryColor(),
                                   colorText: Colors.white,
                                   onPressed: () {
                                     _save();
@@ -223,10 +210,10 @@ class EditProfileScreen extends StatelessWidget {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       Get.find<MainController>().editProfile(
-          name: nameController.text,
-          email: emailController.text,
-          phone: phoneController.text,
-          location: locationController.text);
+        name: nameController.text,
+        email: emailController.text,
+        phone: phoneController.text,
+      );
     }
   }
 }

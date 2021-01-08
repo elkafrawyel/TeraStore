@@ -59,15 +59,45 @@ class Body extends StatelessWidget {
                       SizedBox(
                         height: kDefaultPadding / 2,
                       ),
-                      CustomText(
-                        alignment: AlignmentDirectional.center,
-                        text: user != null
-                            ? user.phone == null
-                                ? 'noPhone'.tr
-                                : user.phone
-                            : '',
-                        fontSize: 18,
-                        color: Colors.white,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Visibility(
+                            child: user.phoneVerified
+                                ? Icon(
+                                    Icons.verified_user_rounded,
+                                    color: Colors.green,
+                                    size: 25,
+                                  )
+                                : GestureDetector(
+                                    onTap: () {
+                                      _verifyPhone();
+                                    },
+                                    child: Text(
+                                      '(verify)',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                            visible: user.phone != null,
+                          ),
+                          SizedBox(
+                            width: kDefaultPadding,
+                          ),
+                          CustomText(
+                            alignment: AlignmentDirectional.center,
+                            text: user != null
+                                ? user.phone == null
+                                    ? 'noPhone'.tr
+                                    : user.phone
+                                : '',
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: kDefaultPadding / 2,
@@ -79,7 +109,7 @@ class Body extends StatelessWidget {
                         color: Colors.white,
                       ),
                       SizedBox(
-                        height: kDefaultPadding/2,
+                        height: kDefaultPadding / 2,
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width / 2,
@@ -135,4 +165,6 @@ class Body extends StatelessWidget {
     });
     return widgets;
   }
+
+  void _verifyPhone() {}
 }

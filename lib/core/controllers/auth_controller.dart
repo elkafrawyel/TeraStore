@@ -33,7 +33,8 @@ class AuthController extends MainController {
           id: userCredential.user.uid,
           email: userCredential.user.email,
           name: userCredential.user.displayName,
-          photo: userCredential.user.photoURL));
+          photo: userCredential.user.photoURL,
+          phoneVerified: false));
     } on FirebaseAuthException catch (e) {
       handleError(e);
       print('Failed with error code: ${e.code}');
@@ -74,7 +75,8 @@ class AuthController extends MainController {
               id: userCredential.user.uid,
               email: userCredential.user.email,
               name: userCredential.user.displayName,
-              photo: photoUrl));
+              photo: photoUrl,
+              phoneVerified: false));
           break;
       }
     } on FirebaseAuthException catch (e) {
@@ -108,7 +110,8 @@ class AuthController extends MainController {
           id: credential.user.uid,
           email: email,
           name: name,
-          photo: defaultImageUrl));
+          photo: defaultImageUrl,
+          phoneVerified: false));
     } on FirebaseAuthException catch (e) {
       handleError(e);
       print('Failed with error code: ${e.code}');

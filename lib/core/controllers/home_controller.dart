@@ -1,5 +1,5 @@
-import 'package:flutter_app/core/services/home_service.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/core/services/home_service.dart';
 import 'package:flutter_app/core/services/sub_category_service.dart';
 import 'package:flutter_app/model/category_model.dart';
 import 'package:flutter_app/model/product_model.dart';
@@ -7,7 +7,7 @@ import 'package:flutter_app/model/sub_category_model.dart';
 import 'package:flutter_app/screens/main_screen/home_screen.dart';
 
 class HomeController extends MainController {
-  ProductFilters filter = ProductFilters.HighPrice;
+  ProductFilters filter = ProductFilters.Latest;
 
   List<ProductModel> _filteredProducts = [];
   List<ProductModel> _sliderProducts = [];

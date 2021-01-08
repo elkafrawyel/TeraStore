@@ -5,7 +5,7 @@ import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/screens/add_product_screen.dart';
-import 'package:flutter_app/screens/cart_screen.dart';
+import 'package:flutter_app/screens/cart_screen/cart_screen.dart';
 import 'package:flutter_app/screens/custom_widgets/budget_cart_icon.dart';
 import 'package:flutter_app/screens/custom_widgets/menus/custom_language_menu.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
@@ -13,12 +13,10 @@ import 'package:flutter_app/screens/favourite_screen/favourites_screen.dart';
 import 'package:flutter_app/screens/profile/profile_screen.dart';
 import 'package:flutter_app/screens/search_screen/search_screen.dart';
 import 'package:flutter_app/screens/settings_screen.dart';
-import 'package:flutter_app/screens/user_screens/cards_screen.dart';
 import 'package:flutter_app/screens/user_screens/notifications_screen.dart';
 import 'package:flutter_app/screens/user_screens/order_history_screen.dart';
 import 'package:flutter_app/screens/user_screens/shipping_address_screen.dart';
 import 'package:flutter_app/storage/local_storage.dart';
-import 'package:flutter_app/storage/network/MyService.dart';
 import 'package:get/get.dart';
 
 import 'components/body.dart';
@@ -26,8 +24,8 @@ import 'components/body.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen() {
     Get.find<MainController>().loadUserData();
-    var myService = MyService.create(NetworkBaseUrlType.MainUrl);
-    myService.getDummyObject();
+    // var myService = MyService.create(NetworkBaseUrlType.MainUrl);
+    // myService.getDummyObject();
   }
 
   @override
@@ -153,13 +151,6 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              _buildRow('cards'.tr, Icons.credit_card, () {
-                Get.to(CardsScreen());
-              }),
-
-              SizedBox(
-                height: 20,
-              ),
               _buildRow('notifications'.tr, Icons.notifications_active, () {
                 Get.to(NotificationsScreen());
               }),
@@ -181,27 +172,19 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              _buildRow('about'.tr, Icons.info_outlined, () {
-                Get.to(CardsScreen());
-              }),
+              _buildRow('about'.tr, Icons.info_outlined, () {}),
               SizedBox(
                 height: 20,
               ),
-              _buildRow('privacy'.tr, Icons.mark_chat_read_outlined, () {
-                Get.to(CardsScreen());
-              }),
+              _buildRow('privacy'.tr, Icons.mark_chat_read_outlined, () {}),
               SizedBox(
                 height: 20,
               ),
-              _buildRow('howToUse'.tr, Icons.question_answer, () {
-                Get.to(CardsScreen());
-              }),
+              _buildRow('howToUse'.tr, Icons.question_answer, () {}),
               SizedBox(
                 height: 20,
               ),
-              _buildRow('contactUs'.tr, Icons.contact_support, () {
-                Get.to(CardsScreen());
-              }),
+              _buildRow('contactUs'.tr, Icons.contact_support, () {}),
               SizedBox(
                 height: 20,
               ),
@@ -392,33 +375,33 @@ class HomeScreen extends StatelessWidget {
                         Row(
                           children: [
                             Radio(
-                              value: ProductFilters.HighRate,
+                              value: ProductFilters.Latest,
                               groupValue: controller.filter,
                               onChanged: (value) {
                                 controller.filter = value;
                                 controller.update();
                               },
                             ),
-                            Text(ProductFilters.HighRate.text,
+                            Text(ProductFilters.Latest.text,
                                 style: TextStyle(fontSize: 16)),
                           ],
                         ),
 
-                        //Low Rate Radio
-                        Row(
-                          children: [
-                            Radio(
-                              value: ProductFilters.LowRate,
-                              groupValue: controller.filter,
-                              onChanged: (value) {
-                                controller.filter = value;
-                                controller.update();
-                              },
-                            ),
-                            Text(ProductFilters.LowRate.text,
-                                style: TextStyle(fontSize: 16)),
-                          ],
-                        ),
+                        // //Low Rate Radio
+                        // Row(
+                        //   children: [
+                        //     Radio(
+                        //       value: ProductFilters.LowRate,
+                        //       groupValue: controller.filter,
+                        //       onChanged: (value) {
+                        //         controller.filter = value;
+                        //         controller.update();
+                        //       },
+                        //     ),
+                        //     Text(ProductFilters.LowRate.text,
+                        //         style: TextStyle(fontSize: 16)),
+                        //   ],
+                        // ),
                       ],
                     ),
                     SizedBox(
@@ -465,7 +448,12 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-enum ProductFilters { HighPrice, LowPrice, HighRate, LowRate }
+enum ProductFilters {
+  HighPrice,
+  LowPrice,
+  Latest,
+  // LowRate
+}
 
 extension ProductFiltersExtension on ProductFilters {
   String get value {
@@ -474,10 +462,10 @@ extension ProductFiltersExtension on ProductFilters {
         return 'highPrice';
       case ProductFilters.LowPrice:
         return 'lowPrice';
-      case ProductFilters.HighRate:
-        return 'highRate';
-      case ProductFilters.LowRate:
-        return 'lowRate';
+      case ProductFilters.Latest:
+        return 'latest';
+      // case ProductFilters.LowRate:
+      //   return 'lowRate';
     }
     return 'highPrice';
   }
@@ -488,12 +476,12 @@ extension ProductFiltersExtension on ProductFilters {
         return LocalStorage().isArabicLanguage() ? 'الاعلي سعرا' : 'High Price';
       case ProductFilters.LowPrice:
         return LocalStorage().isArabicLanguage() ? 'الاقل سعرا' : 'Low Price';
-      case ProductFilters.HighRate:
+      case ProductFilters.Latest:
         return LocalStorage().isArabicLanguage()
-            ? 'الاعلي تقييما'
-            : 'High Rate';
-      case ProductFilters.LowRate:
-        return LocalStorage().isArabicLanguage() ? 'الاقل تقييما' : 'Low Rate';
+            ? 'احدث المنتجات'
+            : 'Latest Arrived';
+      // case ProductFilters.LowRate:
+      //   return LocalStorage().isArabicLanguage() ? 'الاقل تقييما' : 'Low Rate';
     }
     return LocalStorage().isArabicLanguage() ? 'الاعلي سعرا' : 'High Price';
   }

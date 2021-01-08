@@ -3,7 +3,13 @@ import 'package:flutter_app/core/services/general_service.dart';
 import 'package:flutter_app/model/address_model.dart';
 
 class GeneralController extends MainController {
+  Address selectedAddress;
   List<Address> addressList = [];
+
+  setAddress(Address address) {
+    selectedAddress = address;
+    update();
+  }
 
   getAddressList() async {
     loading.value = true;

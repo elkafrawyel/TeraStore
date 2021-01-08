@@ -1,8 +1,14 @@
 class UserModel {
-  String id, email, name, photo, phone, location;
+  String id, email, name, photo, phone;
+  bool phoneVerified;
 
   UserModel(
-      {this.id, this.email, this.name, this.photo, this.phone, this.location});
+      {this.id,
+      this.email,
+      this.name,
+      this.photo,
+      this.phone,
+      this.phoneVerified});
 
   UserModel.fromJson(Map<dynamic, dynamic> map) {
     if (map == null) return;
@@ -12,7 +18,7 @@ class UserModel {
     name = map['name'];
     photo = map['photo'];
     phone = map['phone'];
-    location = map['location'];
+    phoneVerified = map['phoneVerified'];
   }
 
   toJson() {
@@ -21,8 +27,8 @@ class UserModel {
       'email': email,
       'name': name,
       'phone': phone,
-      'location': location,
       'photo': photo,
+      'phoneVerified': phoneVerified,
     };
   }
 

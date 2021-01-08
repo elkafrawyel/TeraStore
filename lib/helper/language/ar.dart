@@ -117,4 +117,8 @@ Map<String, String> ar = {
   'add': 'أضافة',
   'requiredField': 'حقل مطلوب',
   'title': 'العنوان',
+  'chooseAddress': 'أختر عنوان الشحن',
+  'noSavedAddress': 'ليس لديك اي عناوين للشحن أضافة عنوان؟',
+  'note': 'ملاحظة...',
+  'nextToPayment': 'متابعة للدفع',
 };

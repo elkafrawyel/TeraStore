@@ -19,6 +19,7 @@ class CartController extends MainController {
   @override
   onInit() {
     super.onInit();
+    getCartItems();
   }
 
   getCartItems({bool showLoading = false}) async {

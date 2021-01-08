@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/product_details_controller.dart';
-import 'package:flutter_app/screens/cart_screen.dart';
 import 'package:flutter_app/screens/custom_widgets/budget_cart_icon.dart';
 import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
 import 'package:get/get.dart';
+
+import 'file:///F:/Apps/My%20Flutter%20Apps/E-commerce/lib/screens/cart_screen/cart_screen.dart';
 
 import 'components/body.dart';
 

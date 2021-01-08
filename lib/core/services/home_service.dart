@@ -44,12 +44,12 @@ class HomeService {
         return await _highPriceFilter();
       case ProductFilters.LowPrice:
         return await _lowPriceFilter();
-      case ProductFilters.HighRate:
+      case ProductFilters.Latest:
         print('Todo work');
-        return [];
-      case ProductFilters.LowRate:
-        print('Todo work');
-        return [];
+        return _latestFilter();
+      // case ProductFilters.LowRate:
+      //   print('Todo work');
+      //   return [];
     }
     return await _highPriceFilter();
   }
@@ -66,5 +66,9 @@ class HomeService {
     return value.docs;
   }
 
-
+  Future<List<QueryDocumentSnapshot>> _latestFilter() async {
+    Query query = _productsRef.orderBy('id', descending: true);
+    var value = await query.get();
+    return value.docs;
+  }
 }

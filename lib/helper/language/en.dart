@@ -118,4 +118,8 @@ Map<String, String> en = {
   'add': 'Add',
   'requiredField': 'Required Field',
   'title': 'Title',
+  'chooseAddress': 'Choose your shipping address',
+  'noSavedAddress': 'You don\'t have any saved addresses add one?',
+  'note': 'Note....',
+  'nextToPayment': 'Next to payment',
 };

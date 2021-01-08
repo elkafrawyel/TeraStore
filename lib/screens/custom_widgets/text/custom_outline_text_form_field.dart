@@ -13,6 +13,7 @@ class CustomOutlinedTextFormField extends StatelessWidget {
   final String labelText;
   final String suffixText;
   final ThemeData themeData;
+  final bool required;
 
   CustomOutlinedTextFormField({
     this.isPassword = false,
@@ -27,6 +28,7 @@ class CustomOutlinedTextFormField extends StatelessWidget {
     this.labelText,
     this.suffixText,
     this.themeData,
+    this.required = true,
   });
 
   @override
@@ -36,19 +38,22 @@ class CustomOutlinedTextFormField extends StatelessWidget {
       style: TextStyle(fontSize: 16),
       controller: controller,
       keyboardType: keyboardType,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return validateEmptyText;
-        } else {
-          return null;
-        }
-      },
+      validator: !required
+          ? null
+          : (String value) {
+              if (value.isEmpty) {
+                return validateEmptyText;
+              } else {
+                return null;
+              }
+            },
       maxLines: maxLines,
       maxLength: maxLength,
       decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(fontSize: 14),
           contentPadding: EdgeInsets.all(16),
+          alignLabelWithHint: true,
           suffixText: suffixText,
           errorStyle: TextStyle(
             fontFamily: "Cairo",

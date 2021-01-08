@@ -19,7 +19,6 @@ class CartController extends MainController {
   @override
   onInit() {
     super.onInit();
-    getCartItems();
   }
 
   getCartItems({bool showLoading = false}) async {
@@ -80,7 +79,6 @@ class CartController extends MainController {
     getCartItems(showLoading: showLoading);
 
     opRunning = false;
-
   }
 
   Future<void> deleteFromCart(String productId,

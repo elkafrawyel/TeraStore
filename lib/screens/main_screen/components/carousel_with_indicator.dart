@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
@@ -66,6 +67,20 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
         .map(
           (item) => Container(
             child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(100, 255, 255, 255),
+                    Color.fromARGB(0, 255, 255, 255)
+                  ],
+                  begin: AlignmentDirectional.topCenter,
+                  end: AlignmentDirectional.bottomCenter,
+                ),
+                borderRadius: BorderRadiusDirectional.only(
+                  topStart: Radius.circular(10),
+                  topEnd: Radius.circular(10),
+                ),
+              ),
               margin: EdgeInsets.all(5.0),
               child: ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -79,8 +94,10 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                             ),
                           );
                         },
-                        child: Image.network(item.image==null?'':item.image,
-                            fit: BoxFit.contain, width: 1000.0),
+                        child: Image.network(
+                            item.image == null ? '' : item.image,
+                            fit: BoxFit.contain,
+                            width: 1000.0),
                       ),
                       Positioned(
                         bottom: 0.0,
@@ -90,8 +107,8 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                Color.fromARGB(100, 0, 0, 0),
-                                Color.fromARGB(0, 0, 0, 0)
+                                Color.fromARGB(100, 255, 255, 255),
+                                Color.fromARGB(0, 255, 255, 255)
                               ],
                               begin: Alignment.bottomCenter,
                               end: Alignment.topCenter,

@@ -36,6 +36,7 @@ class MainController extends GetxController {
       DocumentSnapshot snapshot = await UserService().getUser(userId);
 
       user = UserModel.fromJson(snapshot.data());
+      Get.find<CartController>().getCartItems();
       update();
       print(user);
     }

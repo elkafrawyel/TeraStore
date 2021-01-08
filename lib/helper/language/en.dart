@@ -114,4 +114,8 @@ Map<String, String> en = {
   'newPasswordEmpty': 'Required Field',
   'oldPasswordEmpty': 'Required Field',
   'confirmNewPasswordEmpty': 'Required Field',
+  'addAddress': 'Add New Address',
+  'add': 'Add',
+  'requiredField': 'Required Field',
+  'title': 'Title',
 };

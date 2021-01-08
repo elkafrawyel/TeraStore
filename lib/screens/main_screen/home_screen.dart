@@ -20,6 +20,7 @@ import 'package:flutter_app/screens/user_screens/shipping_address_screen.dart';
 import 'package:flutter_app/storage/local_storage.dart';
 import 'package:flutter_app/storage/network/MyService.dart';
 import 'package:get/get.dart';
+
 import 'components/body.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -207,7 +208,7 @@ class HomeScreen extends StatelessWidget {
               Row(
                 children: [
                   SizedBox(
-                    width: 20,
+                    width: 10,
                   ),
                   GetBuilder<MainController>(
                     builder: (controller) => Icon(
@@ -237,7 +238,7 @@ class HomeScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       SizedBox(
-                        width: 20,
+                        width: 10,
                       ),
                       GetBuilder<MainController>(
                         builder: (controller) => Icon(

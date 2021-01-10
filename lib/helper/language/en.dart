@@ -129,4 +129,6 @@ Map<String, String> en = {
   'typeWords': 'Please type some words',
   'errorTitle': 'Error',
   'codeSent': 'A code sent to your phone',
+  'enterValidPhone': 'Enter valid phone number',
+  'enterPhone': 'Enter your phone number.',
 };

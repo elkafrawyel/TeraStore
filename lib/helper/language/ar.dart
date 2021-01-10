@@ -128,4 +128,6 @@ Map<String, String> ar = {
   'typeWords': 'قم بكتابة تقييمك للمنتج',
   'errorTitle': 'خطأ',
   'codeSent': 'تم ارسال كود التأكيد الي هاتفك',
+  'enterValidPhone': 'أدخل رقم هاتف صحيح',
+  'enterPhone': 'أدخل رقم هاتف',
 };

@@ -37,6 +37,57 @@
             {
               "client_id": "60249999140-u8k8m0btl7jt46hb4j3b19a4h5tv8m7g.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "60249999140-cnitqepg54v1rrjdkpcnk557kgrcs3l7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.elkafrawyel.ecommerce"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60249999140:android:888edaeea0f9d5a61695b1",
+        "android_client_info": {
+          "package_name": "com.tera.store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60249999140-0i3ro3ddqajhrljraevf8c1erj8apj7u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tera.store",
+            "certificate_hash": "2ce10d3d962e2359b0f8655b7fe2d5370c4b244c"
+          }
+        },
+        {
+          "client_id": "60249999140-u8k8m0btl7jt46hb4j3b19a4h5tv8m7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK1JixaSZN-UhdzcEEZmqzMXcrv4r6drA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60249999140-u8k8m0btl7jt46hb4j3b19a4h5tv8m7g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "60249999140-cnitqepg54v1rrjdkpcnk557kgrcs3l7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.elkafrawyel.ecommerce"
+              }
             }
           ]
         }

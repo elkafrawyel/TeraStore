@@ -7,6 +7,7 @@ import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/graph_model.dart';
 import 'package:flutter_app/model/user_model.dart';
+import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:flutter_app/screens/main_screen/home_screen.dart';
 import 'package:flutter_app/screens/start_up_screens/auth/verify_phone_screen.dart';
 import 'package:flutter_app/storage/local_storage.dart';
@@ -144,6 +145,9 @@ class AuthController extends MainController {
       context: Get.context,
       builder: (context) {
         return AlertDialog(
+          title: CustomText(
+            text: 'enterPhone'.tr,
+          ),
           contentPadding: const EdgeInsets.all(16.0),
           content: Row(
             children: <Widget>[
@@ -172,8 +176,8 @@ class AuthController extends MainController {
                         ),
                       );
                     } else {
-                      CommonMethods().showMessage(
-                          'message'.tr, 'Enter valid phone number');
+                      CommonMethods()
+                          .showMessage('message'.tr, 'enterValidPhone'.tr);
                     }
                   } else {
                     CommonMethods()
@@ -187,31 +191,32 @@ class AuthController extends MainController {
   }
 
   signInEmail(String email, String password) async {
-    loading.value = true;
-    try {
-      AuthResult result = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      DocumentSnapshot snapshot = await UserService().getUser(result.user.uid);
-
-      user = UserModel.fromJson(snapshot.data);
-      user.id = result.user.uid;
-      LocalStorage().setBool(LocalStorage.loginKey, true);
-      LocalStorage().setString(LocalStorage.userId, result.user.uid);
-
-      if (user.phoneVerified) {
-        Get.offAll(HomeScreen());
-      } else {
-        Get.offAll(VerifyPhoneScreen(
-          userModel: user,
-        ));
-      }
-    } on AuthException catch (e) {
-      handleError(e);
-      print('Failed with error code: ${e.code}');
-      print(e.message);
-    }
-    loading.value = false;
-    update();
+    _showGetPhoneDialog();
+    // loading.value = true;
+    // try {
+    //   AuthResult result = await FirebaseAuth.instance
+    //       .signInWithEmailAndPassword(email: email, password: password);
+    //   DocumentSnapshot snapshot = await UserService().getUser(result.user.uid);
+    //
+    //   user = UserModel.fromJson(snapshot.data);
+    //   user.id = result.user.uid;
+    //   LocalStorage().setBool(LocalStorage.loginKey, true);
+    //   LocalStorage().setString(LocalStorage.userId, result.user.uid);
+    //
+    //   if (user.phoneVerified) {
+    //     Get.offAll(HomeScreen());
+    //   } else {
+    //     Get.offAll(VerifyPhoneScreen(
+    //       userModel: user,
+    //     ));
+    //   }
+    // } on AuthException catch (e) {
+    //   handleError(e);
+    //   print('Failed with error code: ${e.code}');
+    //   print(e.message);
+    // }
+    // loading.value = false;
+    // update();
   }
 
   createAccount(

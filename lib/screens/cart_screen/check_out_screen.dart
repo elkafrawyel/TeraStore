@@ -75,12 +75,12 @@ class CheckOutScreen extends StatelessWidget {
                 ),
                 _buildAddressMenu(),
                 SizedBox(
-                  height: kDefaultPadding,
+                  height: kDefaultPadding * 2,
                 ),
                 Container(
                   height: 80,
                   padding: EdgeInsetsDirectional.only(bottom: kDefaultPadding),
-                  width: MediaQuery.of(context).size.width / 2,
+                  width: MediaQuery.of(context).size.width,
                   child: CustomButton(
                     text: 'nextToPayment'.tr,
                     colorText: Colors.white,
@@ -104,23 +104,24 @@ class CheckOutScreen extends StatelessWidget {
       builder: (controller) => Column(
         children: [
           Visibility(
-            child: Row(
+            child: Column(
               children: [
-                Expanded(
-                  child: CustomText(
-                    text: 'noSavedAddress'.tr,
-                    fontSize: 16,
-                    color: Colors.grey.shade700,
-                  ),
+                CustomText(
+                  text: 'noSavedAddress'.tr,
+                  fontSize: 16,
+                  color: Colors.grey.shade700,
                 ),
-                CustomOutLinedButton(
-                  text: 'addAddress'.tr,
-                  borderColor: LocalStorage().primaryColor(),
-                  colorText: LocalStorage().primaryColor(),
-                  onPressed: () async {
-                    await Get.to(AddAddressScreen());
-                    controller.getAddressList();
-                  },
+                Container(
+                  width: MediaQuery.of(Get.context).size.width / 2,
+                  child: CustomOutLinedButton(
+                    text: 'addAddress'.tr,
+                    borderColor: LocalStorage().primaryColor(),
+                    colorText: LocalStorage().primaryColor(),
+                    onPressed: () async {
+                      await Get.to(AddAddressScreen());
+                      controller.getAddressList();
+                    },
+                  ),
                 )
               ],
             ),
@@ -136,7 +137,7 @@ class CheckOutScreen extends StatelessWidget {
                 iconDisabledColor: Colors.grey,
                 isExpanded: true,
                 iconSize: 40,
-                itemHeight: 70,
+                itemHeight: 90,
                 hint: Center(
                   child: CustomText(
                     text: 'chooseAddress'.tr,
@@ -167,7 +168,7 @@ class CheckOutScreen extends StatelessWidget {
                                 alignment: AlignmentDirectional.centerStart,
                               ),
                               SizedBox(
-                                height: 10,
+                                height: 5,
                               ),
                               CustomText(
                                 text: model.body,

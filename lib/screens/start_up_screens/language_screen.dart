@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
 import 'package:flutter_app/screens/custom_widgets/menus/custom_language_menu.dart';
@@ -55,12 +54,12 @@ class LanguageScreen extends StatelessWidget {
                     colorBackground: LocalStorage().primaryColor(),
                     colorText: Colors.white,
                     text: 'continueToHome'.tr,
-                    onPressed: () {
+                    onPressed: () async {
                       LocalStorage()
                           .setBool(LocalStorage.isLanguageChecked, true);
-                      FirebaseAuth.instance.currentUser == null
-                          ? Get.offAll(LoginScreen())
-                          : Get.offAll(HomeScreen());
+                      LocalStorage().getBool(LocalStorage.loginKey)
+                          ? Get.offAll(HomeScreen())
+                          : Get.offAll(LoginScreen());
                     },
                   ),
                 )

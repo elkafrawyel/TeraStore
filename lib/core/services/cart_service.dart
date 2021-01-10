@@ -1,17 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/model/cart_model.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 
 class CartService {
-  final CollectionReference _cartRef =
-      FirebaseFirestore.instance.collection('Cart');
+  final CollectionReference _cartRef = Firestore.instance.collection('Cart');
 
   Future<CartModel> getMyCartList() async {
-    DocumentSnapshot snapshot =
-        await _cartRef.doc(Get.find<MainController>().user.id).get();
+    DocumentSnapshot snapshot = await _cartRef
+        .document(LocalStorage().getString(LocalStorage.userId))
+        .get();
     if (snapshot.exists) {
-      CartModel cartModel = CartModel.fromJson(snapshot.data());
+      CartModel cartModel =
+          CartModel.fromJson(Map<String, dynamic>.from(snapshot.data));
       if (cartModel != null &&
           cartModel.cart != null &&
           cartModel.cart.isNotEmpty) {
@@ -39,13 +41,14 @@ class CartService {
     if (cart != null) {
       cartModel.cart[index].quantity++;
       await _cartRef
-          .doc(Get.find<MainController>().user.id)
-          .set(cartModel.toJson());
+          .document(Get.find<MainController>().user.id)
+          .setData(cartModel.toJson());
+      print('Items is added to cart');
     } else {
       cartModel.cart.add(Cart(id: productId, quantity: 1));
       await _cartRef
-          .doc(Get.find<MainController>().user.id)
-          .set(cartModel.toJson());
+          .document(LocalStorage().getString(LocalStorage.userId))
+          .setData(cartModel.toJson());
     }
   }
 
@@ -66,8 +69,9 @@ class CartService {
         cartModel.cart.removeAt(index);
       }
       await _cartRef
-          .doc(Get.find<MainController>().user.id)
-          .set(cartModel.toJson());
+          .document(LocalStorage().getString(LocalStorage.userId))
+          .setData(cartModel.toJson());
+      print('Items is removed from cart');
     }
   }
 
@@ -85,8 +89,9 @@ class CartService {
     if (cart != null) {
       cartModel.cart.removeAt(index);
       await _cartRef
-          .doc(Get.find<MainController>().user.id)
-          .set(cartModel.toJson());
+          .document(LocalStorage().getString(LocalStorage.userId))
+          .setData(cartModel.toJson());
     }
+    print('Items is removed from cart');
   }
 }

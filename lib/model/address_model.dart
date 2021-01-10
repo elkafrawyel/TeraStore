@@ -5,9 +5,9 @@ class AddressModel {
 
   AddressModel.fromJson(Map<String, dynamic> json) {
     if (json['addresses'] != null) {
-      addressList = List<Address>();
+      addressList = List<Address>.empty(growable: true);
       json['addresses'].forEach((v) {
-        addressList.add(Address.fromJson(v));
+        addressList.add(Address.fromJson(Map<String, dynamic>.from(v)));
       });
     }
   }

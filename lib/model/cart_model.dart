@@ -9,13 +9,13 @@ class CartModel {
     if (json['cart'] != null) {
       cart = List<Cart>.empty(growable: true);
       json['cart'].forEach((v) {
-        cart.add(new Cart.fromJson(v));
+        cart.add(Cart.fromJson(Map<String, dynamic>.from(v)));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final data = new Map<String, dynamic>();
     if (this.cart != null) {
       data['cart'] = this.cart.map((v) => v.toJson()).toList();
     }

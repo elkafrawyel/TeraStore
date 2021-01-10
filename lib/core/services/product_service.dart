@@ -2,50 +2,51 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/model/favourite_model.dart';
 import 'package:flutter_app/model/product_model.dart';
-import 'package:get/get.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 
 class ProductService {
   final CollectionReference _productsRef =
-      FirebaseFirestore.instance.collection('Products');
+      Firestore.instance.collection('Products');
 
   final CollectionReference _favouritesRef =
-      FirebaseFirestore.instance.collection('Favourites');
+      Firestore.instance.collection('Favourites');
 
-  final String userId = Get.find<MainController>().user.id;
+  final String userId = LocalStorage().getString(LocalStorage.userId);
 
-  Future<List<QueryDocumentSnapshot>> getProducts(String subCategoryId) async {
+  Future<List<DocumentSnapshot>> getProducts(String subCategoryId) async {
     Query query = _productsRef.where('subCategoryId', isEqualTo: subCategoryId);
-    var value = await query.get();
+    var value = await query.getDocuments();
 
-    return value.docs;
+    return value.documents;
   }
 
   //get products in same subCategory
-  Future<List<QueryDocumentSnapshot>> getSimilarProducts(
+  Future<List<DocumentSnapshot>> getSimilarProducts(
       String subCategoryId, String productId) async {
     Query query =
         _productsRef.where('subCategoryId', isEqualTo: subCategoryId).limit(10);
-    var value = await query.get();
+    var value = await query.getDocuments();
 
-    return value.docs;
+    return value.documents;
   }
 
   addProduct(
       ProductModel productModel, File image, Function(bool finish) callback) {
     //upload image
-    Reference reference = FirebaseStorage.instance
+    StorageReference reference = FirebaseStorage.instance
         .ref()
         .child('ProductsImages/${productModel.id}');
 
-    reference.putFile(image).then((value) {
+    StorageUploadTask task = reference.putFile(image);
+
+    task.onComplete.then((value) {
       reference.getDownloadURL().then((url) {
         productModel.image = url;
         _productsRef
-            .doc(productModel.id)
-            .set(productModel.toJson())
+            .document(productModel.id)
+            .setData(productModel.toJson())
             .then((value) {
           callback(true);
         });
@@ -56,17 +57,19 @@ class ProductService {
   editProduct(
       ProductModel productModel, File image, Function(bool finish) callback) {
     //upload image
-    Reference reference = FirebaseStorage.instance
+    StorageReference reference = FirebaseStorage.instance
         .ref()
         .child('ProductsImages/${productModel.id}');
 
     if (image != null) {
-      reference.putFile(image).then((value) {
+      StorageUploadTask task = reference.putFile(image);
+
+      task.onComplete.then((value) {
         reference.getDownloadURL().then((url) {
           productModel.image = url;
           _productsRef
-              .doc(productModel.id)
-              .update(productModel.toJson())
+              .document(productModel.id)
+              .updateData(productModel.toJson())
               .then((value) {
             callback(true);
           });
@@ -74,28 +77,27 @@ class ProductService {
       });
     } else {
       _productsRef
-          .doc(productModel.id)
-          .update(productModel.toJson())
+          .document(productModel.id)
+          .updateData(productModel.toJson())
           .then((value) {
         callback(true);
       });
     }
   }
 
-  Future<List<QueryDocumentSnapshot>> getMyProducts() async {
-    Query query = _productsRef
-        .where('userId', isEqualTo: userId);
-    var value = await query.get();
-    return value.docs.reversed.toList();
+  Future<List<DocumentSnapshot>> getMyProducts() async {
+    Query query = _productsRef.where('userId', isEqualTo: userId);
+    var value = await query.getDocuments();
+    return value.documents.reversed.toList();
   }
 
   Future<DocumentSnapshot> getProductById(String productId) async {
-    var value = await _productsRef.doc(productId).get();
+    var value = await _productsRef.document(productId).get();
     return value;
   }
 
   deleteProduct(String productId) async {
-    await _productsRef.doc(productId).delete();
+    await _productsRef.document(productId).delete();
   }
 
   Future<void> checkIfFavourite(
@@ -114,9 +116,9 @@ class ProductService {
   }
 
   Future<FavouriteModel> getMyFavouriteList() async {
-    DocumentSnapshot snapshot = await _favouritesRef.doc(userId).get();
+    DocumentSnapshot snapshot = await _favouritesRef.document(userId).get();
     if (snapshot.exists) {
-      FavouriteModel favouriteModel = FavouriteModel.fromJson(snapshot.data());
+      FavouriteModel favouriteModel = FavouriteModel.fromJson(snapshot.data);
       if (favouriteModel != null) {
         print('fav list => ${favouriteModel.myProducts.length}');
         return favouriteModel;
@@ -139,7 +141,7 @@ class ProductService {
     });
     if (!isExists) {
       favouriteModel.myProducts.add(FavouriteProduct(id: productId));
-      await _favouritesRef.doc(userId).set(favouriteModel.toJson());
+      await _favouritesRef.document(userId).setData(favouriteModel.toJson());
     }
   }
 
@@ -156,7 +158,7 @@ class ProductService {
     });
     if (isExists) {
       favouriteModel.myProducts.remove(product);
-      await _favouritesRef.doc(userId).set(favouriteModel.toJson());
+      await _favouritesRef.document(userId).setData(favouriteModel.toJson());
     }
   }
 

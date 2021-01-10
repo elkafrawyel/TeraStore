@@ -98,30 +98,30 @@ class EditProfileScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               CustomOutlinedTextFormField(
-                                text: 'Name',
-                                hintText: 'your name',
+                                text: 'name'.tr,
+                                hintText: 'name'.tr,
                                 controller: nameController,
-                                validateEmptyText: 'Name Empty',
+                                validateEmptyText: 'nameIsEmpty'.tr,
                                 keyboardType: TextInputType.text,
-                                labelText: 'Name',
+                                labelText: 'name'.tr,
                               ),
                               SizedBox(
                                 height: 20,
                               ),
                               CustomOutlinedTextFormField(
-                                text: 'Email',
-                                hintText: 'your email',
+                                text: 'email'.tr,
+                                hintText: 'email'.tr,
                                 controller: emailController,
-                                validateEmptyText: 'Email Empty',
+                                validateEmptyText: 'emailIsEmpty'.tr,
                                 keyboardType: TextInputType.text,
-                                labelText: 'Email',
+                                labelText: 'email'.tr,
                               ),
                               SizedBox(
                                 height: 20,
                               ),
                               CustomOutlinedTextFormField(
-                                text: 'Phone',
-                                hintText: 'your phone',
+                                text: 'phone'.tr,
+                                hintText: 'phoneHint'.tr,
                                 controller: phoneController,
                                 validateEmptyText: 'Phone Empty',
                                 keyboardType: TextInputType.phone,

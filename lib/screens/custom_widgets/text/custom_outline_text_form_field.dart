@@ -14,6 +14,8 @@ class CustomOutlinedTextFormField extends StatelessWidget {
   final String suffixText;
   final ThemeData themeData;
   final bool required;
+  final Color hintColor;
+  final Color labelColor;
 
   CustomOutlinedTextFormField({
     this.isPassword = false,
@@ -29,6 +31,8 @@ class CustomOutlinedTextFormField extends StatelessWidget {
     this.suffixText,
     this.themeData,
     this.required = true,
+    this.hintColor,
+    this.labelColor,
   });
 
   @override
@@ -51,17 +55,17 @@ class CustomOutlinedTextFormField extends StatelessWidget {
       maxLength: maxLength,
       decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: TextStyle(fontSize: 14),
+          hintStyle: TextStyle(fontSize: 16, color: hintColor),
           contentPadding: EdgeInsets.all(16),
           alignLabelWithHint: true,
           suffixText: suffixText,
           errorStyle: TextStyle(
             fontFamily: "Cairo",
             color: Colors.red,
-            fontSize: 14,
+            fontSize: 16,
           ),
           labelText: labelText,
-          labelStyle: TextStyle(fontSize: 14),
+          labelStyle: TextStyle(fontSize: 16, color: labelColor),
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
     );

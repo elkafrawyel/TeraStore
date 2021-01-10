@@ -3,12 +3,12 @@ import 'package:flutter_app/model/review_model.dart';
 
 class ReviewService {
   final CollectionReference _reviewsRef =
-      FirebaseFirestore.instance.collection('Reviews');
+      Firestore.instance.collection('Reviews');
 
   Future<List<Review>> getReviewsList(String productId) async {
-    DocumentSnapshot snapshot = await _reviewsRef.doc(productId).get();
+    DocumentSnapshot snapshot = await _reviewsRef.document(productId).get();
     if (snapshot.exists) {
-      ReviewModel reviewModel = ReviewModel.fromJson(snapshot.data());
+      ReviewModel reviewModel = ReviewModel.fromJson(snapshot.data);
       if (reviewModel != null &&
           reviewModel.reviews != null &&
           reviewModel.reviews.isNotEmpty) {
@@ -26,6 +26,6 @@ class ReviewService {
     List<Review> reviews = await getReviewsList(productId);
     reviews.add(review);
     ReviewModel reviewModel = ReviewModel(reviews: reviews);
-    await _reviewsRef.doc(productId).set(reviewModel.toJson());
+    await _reviewsRef.document(productId).setData(reviewModel.toJson());
   }
 }

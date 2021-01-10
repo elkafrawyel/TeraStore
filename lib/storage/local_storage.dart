@@ -7,6 +7,8 @@ class LocalStorage {
   static final String isLanguageChecked = 'languageChecked';
   static final String notifications = 'notifications';
   static final String selectedColorValue = 'selectedColorValue';
+  static final String phoneVerified = 'phoneVerified';
+  static final String userId = 'userId';
 
   setLanguage(String languageCode) async {
     await GetStorage().write(languageKey, languageCode);
@@ -57,5 +59,13 @@ class LocalStorage {
     } else {
       return Color(getInt(selectedColorValue));
     }
+  }
+
+  clear() {
+    String language = getString(LocalStorage.languageKey);
+    bool isLanguageChecked = getBool(LocalStorage.isLanguageChecked);
+    GetStorage().erase();
+    setString(LocalStorage.languageKey, language);
+    setBool(LocalStorage.isLanguageChecked, isLanguageChecked);
   }
 }

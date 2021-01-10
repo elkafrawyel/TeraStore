@@ -5,13 +5,13 @@ import 'package:get/get.dart';
 
 class GeneralService {
   final CollectionReference _addressRef =
-      FirebaseFirestore.instance.collection('ShippingAddress');
+      Firestore.instance.collection('ShippingAddress');
 
   Future<List<Address>> getAddressList() async {
     DocumentSnapshot snapshot =
-        await _addressRef.doc(Get.find<MainController>().user.id).get();
+        await _addressRef.document(Get.find<MainController>().user.id).get();
     if (snapshot.exists) {
-      AddressModel addressModel = AddressModel.fromJson(snapshot.data());
+      AddressModel addressModel = AddressModel.fromJson(snapshot.data);
       if (addressModel != null &&
           addressModel.addressList != null &&
           addressModel.addressList.isNotEmpty) {
@@ -30,7 +30,7 @@ class GeneralService {
     list.add(address);
     AddressModel addressModel = AddressModel(addressList: list);
     await _addressRef
-        .doc(Get.find<MainController>().user.id)
-        .set(addressModel.toJson());
+        .document(Get.find<MainController>().user.id)
+        .setData(addressModel.toJson());
   }
 }

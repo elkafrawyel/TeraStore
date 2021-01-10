@@ -6,7 +6,6 @@ import 'package:flutter_app/core/services/user_service.dart';
 import 'package:flutter_app/model/cart_model.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/model/user_model.dart';
-import 'package:get/get.dart';
 
 class CartController extends MainController {
   //if a current call is running
@@ -14,7 +13,7 @@ class CartController extends MainController {
   List<Cart> _products = [];
 
   List<Cart> get products => _products;
-  var cartCount = 0.obs;
+  var cartCount = 0;
 
   @override
   onInit() {
@@ -43,8 +42,8 @@ class CartController extends MainController {
       empty.value = false;
     }
 
-    cartCount.value = _products.length;
-    print('cart count => ${cartCount.value}');
+    cartCount = _products.length;
+    print('cart count => $cartCount');
 
     update();
   }
@@ -54,11 +53,11 @@ class CartController extends MainController {
     DocumentSnapshot snapshot =
         await ProductService().getProductById(productId);
     if (snapshot.exists) {
-      productModel = ProductModel.fromJson(snapshot.data());
+      productModel = ProductModel.fromJson(snapshot.data);
       //get product owner
       DocumentSnapshot userSnapShot =
           await UserService().getUser(productModel.userId);
-      UserModel owner = UserModel.fromJson(userSnapShot.data());
+      UserModel owner = UserModel.fromJson(userSnapShot.data);
 
       productModel.owner = owner;
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../text/custom_text.dart';
 
 class CustomButton extends StatelessWidget {
@@ -18,6 +19,8 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
+        disabledColor: Colors.grey,
+        disabledTextColor: Colors.black,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),

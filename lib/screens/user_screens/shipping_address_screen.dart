@@ -28,7 +28,9 @@ class ShippingAddresses extends StatelessWidget {
               child: controller.loading.value
                   ? LoadingView()
                   : controller.empty.value
-                      ? EmptyView()
+                      ? EmptyView(
+                          textColor: Colors.black,
+                        )
                       : ListView.builder(
                           itemCount: controller.addressList.length,
                           itemBuilder: (context, index) {

@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/core/services/user_service.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/graph_model.dart';
 import 'package:flutter_app/model/user_model.dart';
 import 'package:flutter_app/screens/main_screen/home_screen.dart';
+import 'package:flutter_app/screens/start_up_screens/auth/verify_phone_screen.dart';
 import 'package:flutter_app/storage/local_storage.dart';
 import 'package:flutter_app/storage/network/MyService.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -23,22 +26,45 @@ class AuthController extends MainController {
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       GoogleSignInAuthentication googleSignInAuthentication =
           await googleUser.authentication;
-      AuthCredential googleAuthCredential = GoogleAuthProvider.credential(
+      AuthCredential googleAuthCredential = GoogleAuthProvider.getCredential(
           idToken: googleSignInAuthentication.idToken,
           accessToken: googleSignInAuthentication.accessToken);
-      UserCredential userCredential =
+
+      AuthResult result =
           await _auth.signInWithCredential(googleAuthCredential);
 
-      saveUser(UserModel(
-          id: userCredential.user.uid,
-          email: userCredential.user.email,
-          name: userCredential.user.displayName,
-          photo: userCredential.user.photoURL,
-          phoneVerified: false));
-    } on FirebaseAuthException catch (e) {
-      handleError(e);
-      print('Failed with error code: ${e.code}');
-      print(e.message);
+      String userId = result.user.uid;
+      DocumentSnapshot snapshot = await UserService().getUser(userId);
+      if (snapshot.exists && snapshot.data != null) {
+        user = UserModel.fromJson(snapshot.data);
+        user.id = snapshot.documentID;
+        LocalStorage().setBool(LocalStorage.loginKey, true);
+        LocalStorage().setString(LocalStorage.userId, snapshot.documentID);
+        if (user.phone == null) {
+          _showGetPhoneDialog();
+        } else {
+          if (user.phoneVerified) {
+            Get.offAll(HomeScreen());
+          } else {
+            Get.offAll(VerifyPhoneScreen(
+              userModel: user,
+            ));
+          }
+        }
+      } else {
+        user = UserModel(
+            id: result.user.uid,
+            email: result.user.email,
+            name: result.user.displayName,
+            photo: result.user.photoUrl,
+            phoneVerified: false);
+
+        //showDialog to get phone number
+        _showGetPhoneDialog();
+      }
+    } on AuthResult catch (error) {
+      handleError(error);
+      print('Failed with error code: $error');
     }
   }
 
@@ -60,39 +86,126 @@ class AuthController extends MainController {
           print("LoggedIn");
           final accessToken = result.accessToken.token;
           final facebookAuthCredential =
-              FacebookAuthProvider.credential(accessToken);
-          UserCredential userCredential =
+              FacebookAuthProvider.getCredential(accessToken: accessToken);
+          AuthResult authResult =
               await _auth.signInWithCredential(facebookAuthCredential);
 
-          // getting facebook profile photo
-          var myService = MyService.create(NetworkBaseUrlType.GraphUrl);
-          var response =
-              await myService.getFacebookGraph(result.accessToken.token);
-          GraphModel graphModel = GraphModel.fromJson(response.body);
-          print('response : ' + response.body.toString());
-          String photoUrl = graphModel.picture.data.url;
-          saveUser(UserModel(
-              id: userCredential.user.uid,
-              email: userCredential.user.email,
-              name: userCredential.user.displayName,
-              photo: photoUrl,
-              phoneVerified: false));
+          String userId = authResult.user.uid;
+          DocumentSnapshot snapshot = await UserService().getUser(userId);
+
+          if (snapshot.exists && snapshot.data != null) {
+            user = UserModel.fromJson(snapshot.data);
+            user.id = snapshot.documentID;
+            LocalStorage().setBool(LocalStorage.loginKey, true);
+            LocalStorage().setString(LocalStorage.userId, snapshot.documentID);
+            if (user.phone == null) {
+              _showGetPhoneDialog();
+            } else {
+              if (user.phoneVerified) {
+                Get.offAll(HomeScreen());
+              } else {
+                Get.offAll(VerifyPhoneScreen(
+                  userModel: user,
+                ));
+              }
+            }
+          } else {
+            //first time to login in with facebook
+            // getting facebook profile photo
+            var myService = MyService.create(NetworkBaseUrlType.GraphUrl);
+            var response =
+                await myService.getFacebookGraph(result.accessToken.token);
+            GraphModel graphModel = GraphModel.fromJson(response.body);
+            print('response : ' + response.body.toString());
+            String photoUrl = graphModel.picture.data.url;
+            user = UserModel(
+                id: authResult.user.uid,
+                email: authResult.user.email,
+                name: authResult.user.displayName,
+                photo: photoUrl,
+                phoneVerified: false);
+
+            //showDialog to get phone number
+            _showGetPhoneDialog();
+          }
+
           break;
       }
-    } on FirebaseAuthException catch (e) {
+    } on AuthException catch (e) {
       handleError(e);
       print('Failed with error code: ${e.code}');
       print(e.message);
     }
   }
 
+  _showGetPhoneDialog() async {
+    TextEditingController controller = TextEditingController();
+    showDialog<String>(
+      context: Get.context,
+      builder: (context) {
+        return AlertDialog(
+          contentPadding: const EdgeInsets.all(16.0),
+          content: Row(
+            children: <Widget>[
+              Expanded(
+                child: new TextField(
+                  controller: controller,
+                  keyboardType: TextInputType.phone,
+                  autofocus: true,
+                  decoration: new InputDecoration(hintText: 'phone'.tr),
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            FlatButton(
+                child: Text('ok'.tr),
+                onPressed: () {
+                  if (controller.text.isNotEmpty) {
+                    if (GetUtils.isPhoneNumber(controller.text)) {
+                      user.phone = controller.text;
+                      saveUser(user);
+                      Navigator.pop(context);
+                      Get.to(
+                        VerifyPhoneScreen(
+                          userModel: user,
+                        ),
+                      );
+                    } else {
+                      CommonMethods().showMessage(
+                          'message'.tr, 'Enter valid phone number');
+                    }
+                  } else {
+                    CommonMethods()
+                        .showMessage('message'.tr, 'Enter your phone number');
+                  }
+                }),
+          ],
+        );
+      },
+    );
+  }
+
   signInEmail(String email, String password) async {
     loading.value = true;
     try {
-      await FirebaseAuth.instance
+      AuthResult result = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      Get.offAll(HomeScreen());
-    } on FirebaseAuthException catch (e) {
+      DocumentSnapshot snapshot = await UserService().getUser(result.user.uid);
+
+      user = UserModel.fromJson(snapshot.data);
+      user.id = result.user.uid;
+      LocalStorage().setBool(LocalStorage.loginKey, true);
+      LocalStorage().setString(LocalStorage.userId, result.user.uid);
+
+      if (user.phoneVerified) {
+        Get.offAll(HomeScreen());
+      } else {
+        Get.offAll(VerifyPhoneScreen(
+          userModel: user,
+        ));
+      }
+    } on AuthException catch (e) {
       handleError(e);
       print('Failed with error code: ${e.code}');
       print(e.message);
@@ -101,18 +214,29 @@ class AuthController extends MainController {
     update();
   }
 
-  createAccount(String name, String email, String password) async {
+  createAccount(
+      String name, String email, String phone, String password) async {
     loading.value = true;
     try {
-      UserCredential credential = await _auth.createUserWithEmailAndPassword(
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      saveUser(UserModel(
-          id: credential.user.uid,
+      user = UserModel(
+          id: result.user.uid,
           email: email,
           name: name,
           photo: defaultImageUrl,
-          phoneVerified: false));
-    } on FirebaseAuthException catch (e) {
+          phone: phone,
+          phoneVerified: false);
+
+      saveUser(user);
+      LocalStorage().setBool(LocalStorage.loginKey, true);
+      LocalStorage().setString(LocalStorage.userId, result.user.uid);
+      Get.offAll(
+        VerifyPhoneScreen(
+          userModel: user,
+        ),
+      );
+    } on AuthException catch (e) {
       handleError(e);
       print('Failed with error code: ${e.code}');
       print(e.message);
@@ -123,7 +247,6 @@ class AuthController extends MainController {
 
   void saveUser(UserModel user) async {
     await UserService().addUserToFireStore(user);
-    Get.offAll(HomeScreen());
   }
 
   handleError(error) {

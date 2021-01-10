@@ -14,7 +14,7 @@ class CustomSocialButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
+        color: Colors.white38,
         border: Border.all(width: 0.5, color: Colors.grey),
       ),
       child: FlatButton(
@@ -34,7 +34,7 @@ class CustomSocialButton extends StatelessWidget {
                 height: 30,
               ),
               SizedBox(
-                width: kDefaultPadding/2,
+                width: kDefaultPadding / 2,
               ),
               Expanded(
                 child: CustomText(

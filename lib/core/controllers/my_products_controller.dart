@@ -1,5 +1,5 @@
-import 'package:flutter_app/core/services/product_service.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/core/services/product_service.dart';
 import 'package:flutter_app/model/product_model.dart';
 
 class MyProductsController extends MainController {
@@ -12,8 +12,8 @@ class MyProductsController extends MainController {
     _products.clear();
     ProductService().getMyProducts().then((docs) {
       docs.forEach((element) {
-        ProductModel productModel = ProductModel.fromJson(element.data());
-        productModel.id = element.id;
+        ProductModel productModel = ProductModel.fromJson(element.data);
+        productModel.id = element.documentID;
         _products.add(productModel);
       });
       loading.value = false;

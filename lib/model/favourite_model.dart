@@ -7,7 +7,7 @@ class FavouriteModel {
     if (json['Products'] != null) {
       myProducts = List<FavouriteProduct>.empty(growable: true);
       json['Products'].forEach((v) {
-        myProducts.add(FavouriteProduct.fromJson(v));
+        myProducts.add(FavouriteProduct.fromJson(Map<String, dynamic>.from(v)));
       });
     }
   }

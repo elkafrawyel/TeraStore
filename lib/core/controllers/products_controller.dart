@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/services/product_service.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/core/services/product_service.dart';
 import 'package:flutter_app/core/services/sub_category_service.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/model/sub_category_model.dart';
@@ -23,13 +23,13 @@ class ProductsController extends MainController {
   getSubCategories(String categoryId) async {
     loadingSubCategories.value = true;
     _subCategories.clear();
-    List<QueryDocumentSnapshot> list =
+    List<DocumentSnapshot> list =
         await SubCategoryService().getSubCategories(categoryId);
 
     list.forEach((element) {
       SubCategoryModel subCategoryModel =
-          SubCategoryModel.fromJson(element.data());
-      subCategoryModel.id = element.id;
+          SubCategoryModel.fromJson(element.data);
+      subCategoryModel.id = element.documentID;
       _subCategories.add(subCategoryModel);
     });
     if (_subCategories.isEmpty) {
@@ -51,11 +51,11 @@ class ProductsController extends MainController {
     _products.clear();
     String id = _subCategories[selectedSubCategoryIndex].id;
 
-    List<QueryDocumentSnapshot> list = await ProductService().getProducts(id);
+    List<DocumentSnapshot> list = await ProductService().getProducts(id);
 
     list.forEach((element) {
-      ProductModel productModel = ProductModel.fromJson(element.data());
-      productModel.id = element.id;
+      ProductModel productModel = ProductModel.fromJson(element.data);
+      productModel.id = element.documentID;
       _products.add(productModel);
       print('Product model => $productModel');
     });

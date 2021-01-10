@@ -24,24 +24,15 @@ class MainController extends GetxController {
   ValueNotifier<bool> loading = ValueNotifier(false);
   ValueNotifier<bool> empty = ValueNotifier(false);
 
-  FirebaseAuth _auth = FirebaseAuth.instance;
-
   UserModel user;
   PickedFile selectedImage;
 
   loadUserData() async {
-    if (_auth.currentUser != null) {
-      String userId = _auth.currentUser.uid;
-
-      DocumentSnapshot snapshot = await UserService().getUser(userId);
-
-      user = UserModel.fromJson(snapshot.data());
-
-      Get.put(CartController(), permanent: true);
-
-      update();
-      print(user);
-    }
+    String userId = LocalStorage().getString(LocalStorage.userId);
+    DocumentSnapshot snapshot = await UserService().getUser(userId);
+    user = UserModel.fromJson(snapshot.data);
+    update();
+    print(user);
   }
 
   setUserImage(PickedFile image) {
@@ -53,9 +44,10 @@ class MainController extends GetxController {
     loading.value = true;
     update();
     if (selectedImage != null) {
-      Reference reference =
+      StorageReference reference =
           FirebaseStorage.instance.ref().child('Users/${user.id}');
-      reference.putFile(File(selectedImage.path)).then((value) {
+      StorageUploadTask task = reference.putFile(File(selectedImage.path));
+      task.onComplete.then((value) {
         reference.getDownloadURL().then((url) async {
           print(url);
           user.photo = url;
@@ -78,8 +70,11 @@ class MainController extends GetxController {
   }
 
   logOut() async {
-    await _auth.signOut();
+    LocalStorage().clear();
+
     Get.find<CartController>().products.clear();
+    Get.find<MainController>().user = null;
+    await FirebaseAuth.instance.signOut();
     update();
     Get.offAll(LoginScreen());
   }

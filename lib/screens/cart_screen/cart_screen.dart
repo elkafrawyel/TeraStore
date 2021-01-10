@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/cart_controller.dart';
+import 'package:flutter_app/core/controllers/general_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/cart_model.dart';
 import 'package:flutter_app/screens/cart_screen/check_out_screen.dart';
@@ -85,8 +86,10 @@ class CartScreen extends StatelessWidget {
                               textColor: Colors.white,
                               onPressed: controller.products.length == 0
                                   ? null
-                                  : () {
-                                      Get.to(CheckOutScreen());
+                                  : () async {
+                                      await Get.to(CheckOutScreen());
+                                      Get.find<GeneralController>()
+                                          .selectedAddress = null;
                                     },
                             )),
                       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app/core/controllers/cart_controller.dart';
 import 'package:flutter_app/core/controllers/home_controller.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
@@ -23,7 +24,9 @@ import 'components/body.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen() {
+    print('Saved User ID' + LocalStorage().getString(LocalStorage.userId));
     Get.find<MainController>().loadUserData();
+    Get.find<CartController>().getCartItems();
     // var myService = MyService.create(NetworkBaseUrlType.MainUrl);
     // myService.getDummyObject();
   }
@@ -91,7 +94,7 @@ class HomeScreen extends StatelessWidget {
               //Header
               GetBuilder<MainController>(
                 builder: (controller) => Container(
-                  color: controller.primaryColor,
+                  color: LocalStorage().primaryColor(),
                   child: GetBuilder<MainController>(
                     builder: (controller) => GestureDetector(
                       onTap: () {
@@ -107,7 +110,9 @@ class HomeScreen extends StatelessWidget {
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
                             backgroundImage: NetworkImage(
-                              controller.user.photo,
+                              controller.user == null
+                                  ? defaultImageUrl
+                                  : controller.user.photo,
                             ),
                             radius: 60,
                           ),
@@ -115,7 +120,9 @@ class HomeScreen extends StatelessWidget {
                             height: 10,
                           ),
                           CustomText(
-                            text: controller.user.name,
+                            text: controller.user == null
+                                ? ''
+                                : controller.user.name,
                             fontSize: 18,
                             alignment: AlignmentDirectional.center,
                             color: Colors.white,
@@ -197,7 +204,7 @@ class HomeScreen extends StatelessWidget {
                     builder: (controller) => Icon(
                       Icons.language,
                       size: 25,
-                      color: controller.primaryColor,
+                      color: LocalStorage().primaryColor(),
                     ),
                   ),
                   SizedBox(
@@ -227,7 +234,7 @@ class HomeScreen extends StatelessWidget {
                         builder: (controller) => Icon(
                           Icons.logout,
                           size: 25,
-                          color: controller.primaryColor,
+                          color: LocalStorage().primaryColor(),
                         ),
                       ),
                       SizedBox(
@@ -259,32 +266,30 @@ class HomeScreen extends StatelessWidget {
             top: kDefaultPadding / 2,
             start: kDefaultPadding / 2,
             end: kDefaultPadding),
-        child: GetBuilder<MainController>(
-          builder: (controller) => Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    icon,
-                    size: 25,
-                    color: controller.primaryColor,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  CustomText(
-                    text: text,
-                    fontSize: 16,
-                  ),
-                ],
-              ),
-              Icon(
-                Icons.arrow_forward_ios,
-                color: controller.primaryColor,
-              ),
-            ],
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  icon,
+                  size: 25,
+                  color: LocalStorage().primaryColor(),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                CustomText(
+                  text: text,
+                  fontSize: 16,
+                ),
+              ],
+            ),
+            Icon(
+              Icons.arrow_forward_ios,
+              color: LocalStorage().primaryColor(),
+            ),
+          ],
         ),
       ),
     );

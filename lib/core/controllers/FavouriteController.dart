@@ -36,11 +36,11 @@ class FavouriteController extends MainController {
     DocumentSnapshot snapshot =
         await ProductService().getProductById(productId);
     if (snapshot.exists) {
-      productModel = ProductModel.fromJson(snapshot.data());
+      productModel = ProductModel.fromJson(snapshot.data);
       //get product owner
       DocumentSnapshot userSnapShot =
           await UserService().getUser(productModel.userId);
-      UserModel owner = UserModel.fromJson(userSnapShot.data());
+      UserModel owner = UserModel.fromJson(userSnapShot.data);
       productModel.owner = owner;
 
       productModel.isFav = true;

@@ -20,33 +20,27 @@ class OwnerInfo extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Stack(
-              children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    backgroundImage: NetworkImage(owner.photo),
-                    radius: 50,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: 10,
-            ),
             Expanded(
               child: Padding(
                 padding: EdgeInsetsDirectional.only(top: 10, end: 10),
                 child: Row(
                   children: [
                     Expanded(
-                      child: CustomText(
-                        text: owner.name,
-                        color: Colors.black,
-                        alignment: AlignmentDirectional.topStart,
-                        fontSize: 18,
+                      child: Column(
+                        children: [
+                          CustomText(
+                            text: owner.name,
+                            color: Colors.black,
+                            alignment: AlignmentDirectional.topStart,
+                            fontSize: 18,
+                          ),
+                          CustomText(
+                            text: 'owner.email',
+                            color: Colors.grey.shade500,
+                            alignment: AlignmentDirectional.topStart,
+                            fontSize: 16,
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(

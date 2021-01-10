@@ -5,7 +5,6 @@ import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/model/review_model.dart';
-import 'package:flutter_app/screens/custom_widgets/button/custom_outlined_button.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:flutter_app/storage/local_storage.dart';
@@ -44,83 +43,83 @@ class ReviewsTab extends StatelessWidget {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(32.0))),
             contentPadding: EdgeInsets.only(top: 10.0),
-            content: Container(
-              width: 300.0,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  SizedBox(
-                    height: 20,
-                  ),
-                  RatingBar(
-                    onRatingChanged: (rating) {
-                      ratingValue = rating;
-                    },
-                    initialRating: 0,
-                    isHalfAllowed: true,
-                    size: 40,
-                    halfFilledColor: Colors.amber,
-                    maxRating: 5,
-                    filledColor: Colors.amber,
-                    halfFilledIcon: Icons.star_half,
-                    filledIcon: Icons.star,
-                    emptyIcon: Icons.star_border,
-                  ),
-                  SizedBox(
-                    height: 5.0,
-                  ),
-                  Divider(
-                    color: Colors.grey,
-                    height: 4.0,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                    child: TextField(
-                      onChanged: (value) {
-                        reviewText = value;
+            content: SingleChildScrollView(
+              child: Container(
+                width: 300.0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 20,
+                    ),
+                    RatingBar(
+                      onRatingChanged: (rating) {
+                        ratingValue = rating;
                       },
-                      decoration: InputDecoration(
-                        hintText: "addReview".tr,
-                        hintStyle: TextStyle(fontSize: 18),
-                        border: InputBorder.none,
-                      ),
-                      maxLines: 8,
+                      initialRating: 0,
+                      isHalfAllowed: true,
+                      size: 40,
+                      halfFilledColor: Colors.amber,
+                      maxRating: 5,
+                      filledColor: Colors.amber,
+                      halfFilledIcon: Icons.star_half,
+                      filledIcon: Icons.star,
+                      emptyIcon: Icons.star_border,
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      if (ratingValue == null) {
-                        CommonMethods()
-                            .showMessage('rate'.tr, 'Please choose stars');
-                      } else if (reviewText == null || reviewText.isEmpty) {
-                        CommonMethods()
-                            .showMessage('rate'.tr, 'Please type some words');
-                      } else {
-                        Get.back();
-                        CommonMethods().showMessage(
-                            'Rating', 'Thanks for giving us $ratingValue star');
-                        controller.addReview(
-                            product.id, reviewText, ratingValue);
-                      }
-                    },
-                    child: Container(
-                      padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                      decoration: BoxDecoration(
-                        color: LocalStorage().primaryColor(),
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(32.0),
-                            bottomRight: Radius.circular(32.0)),
-                      ),
-                      child: Text(
-                        'rateProduct'.tr,
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.center,
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    Divider(
+                      color: Colors.grey,
+                      height: 4.0,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                      child: TextField(
+                        onChanged: (value) {
+                          reviewText = value;
+                        },
+                        decoration: InputDecoration(
+                          hintText: "addReview".tr,
+                          hintStyle: TextStyle(fontSize: 18),
+                          border: InputBorder.none,
+                        ),
+                        maxLines: 8,
                       ),
                     ),
-                  ),
-                ],
+                    GestureDetector(
+                      onTap: () {
+                        if (ratingValue == null) {
+                          CommonMethods()
+                              .showMessage('rate'.tr, 'chooseStars'.tr);
+                        } else if (reviewText == null || reviewText.isEmpty) {
+                          CommonMethods()
+                              .showMessage('rate'.tr, 'typeWords'.tr);
+                        } else {
+                          Get.back();
+                          controller.addReview(
+                              product.id, reviewText, ratingValue);
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                        decoration: BoxDecoration(
+                          color: LocalStorage().primaryColor(),
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(32.0),
+                              bottomRight: Radius.circular(32.0)),
+                        ),
+                        child: Text(
+                          'rateProduct'.tr,
+                          style: TextStyle(color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -176,16 +175,32 @@ class ReviewsTab extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _ratingView(controller),
+            // Container(
+            //   width: MediaQuery.of(Get.context).size.width / 3,
+            //   child: CustomOutLinedButton(
+            //     text: 'addComment'.tr,
+            //     colorText: LocalStorage().primaryColor(),
+            //     onPressed: () {
+            //       _buildRatingDialog(controller);
+            //     },
+            //     borderColor: LocalStorage().primaryColor(),
+            //   ),
+            // ),
             Container(
-              width: MediaQuery.of(Get.context).size.width / 3,
-              child: CustomOutLinedButton(
-                text: 'addComment'.tr,
-                colorText: LocalStorage().primaryColor(),
-                onPressed: () {
-                  _buildRatingDialog(controller);
-                },
-                borderColor: LocalStorage().primaryColor(),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: LocalStorage().primaryColor(),
               ),
+              alignment: AlignmentDirectional.center,
+              child: IconButton(
+                  alignment: AlignmentDirectional.center,
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    _buildRatingDialog(controller);
+                  }),
             ),
           ],
         ),

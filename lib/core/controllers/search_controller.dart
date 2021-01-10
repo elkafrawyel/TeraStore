@@ -13,7 +13,7 @@ class SearchController extends MainController {
     _searchProducts.clear();
     HomeService().searchProducts(searchText).then((docs) {
       docs.forEach((element) {
-        _searchProducts.add(ProductModel.fromJson(element.data()));
+        _searchProducts.add(ProductModel.fromJson(element.data));
       });
       print('search count  => ${_searchProducts.length} items');
       loading.value = false;

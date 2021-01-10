@@ -27,11 +27,11 @@ class ProductDetailsController extends MainController {
     DocumentSnapshot snapshot =
         await ProductService().getProductById(productId);
     if (snapshot.exists) {
-      productModel = ProductModel.fromJson(snapshot.data());
+      productModel = ProductModel.fromJson(snapshot.data);
       //get product owner
       DocumentSnapshot userSnapShot =
           await UserService().getUser(productModel.userId);
-      UserModel owner = UserModel.fromJson(userSnapShot.data());
+      UserModel owner = UserModel.fromJson(userSnapShot.data);
       productModel.owner = owner;
       //check if is favourite
       await checkIfFavourite(productId);
@@ -70,12 +70,12 @@ class ProductDetailsController extends MainController {
 
   getSimilarProducts(String subCategoryId, String productId) async {
     similarProducts.clear();
-    List<QueryDocumentSnapshot> list =
+    List<DocumentSnapshot> list =
         await ProductService().getSimilarProducts(subCategoryId, productId);
     list.forEach((element) {
-      ProductModel productModel = ProductModel.fromJson(element.data());
-      if (productId == element.id) return;
-      productModel.id = element.id;
+      ProductModel productModel = ProductModel.fromJson(element.data);
+      if (productId == element.documentID) return;
+      productModel.id = element.documentID;
       similarProducts.add(productModel);
       print('Product model => $productModel');
     });

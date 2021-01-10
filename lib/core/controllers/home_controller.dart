@@ -29,7 +29,7 @@ class HomeController extends MainController {
     loading.value = true;
     HomeService().getSliderProducts().then((docs) {
       docs.forEach((element) {
-        _sliderProducts.add(ProductModel.fromJson(element.data()));
+        _sliderProducts.add(ProductModel.fromJson(element.data));
       });
       print('Slider count => ${_sliderProducts.length} items');
       loading.value = false;
@@ -43,7 +43,7 @@ class HomeController extends MainController {
     _filteredProducts.clear();
     HomeService().getFilteredProducts(filter).then((docs) {
       docs.forEach((element) {
-        _filteredProducts.add(ProductModel.fromJson(element.data()));
+        _filteredProducts.add(ProductModel.fromJson(element.data));
       });
       print('Best Selling  => ${_filteredProducts.length} items');
       loading.value = false;
@@ -52,7 +52,7 @@ class HomeController extends MainController {
     });
   }
 
-// categories and Sub categories to be shared in app screens
+  // categories and Sub categories to be shared in app screens
   // and to get them into menus right away
 
   int selectedCategoryIndex = 0;
@@ -83,8 +83,8 @@ class HomeController extends MainController {
     loading.value = true;
     HomeService().getCategories().then((docs) {
       docs.forEach((element) {
-        CategoryModel categoryModel = CategoryModel.fromJson(element.data());
-        categoryModel.id = element.id;
+        CategoryModel categoryModel = CategoryModel.fromJson(element.data);
+        categoryModel.id = element.documentID;
         _categories.add(categoryModel);
       });
       print('Categories => ${_categories.length} items');
@@ -98,8 +98,8 @@ class HomeController extends MainController {
     SubCategoryService().getSubCategories(categoryId).then((docs) {
       docs.forEach((element) {
         SubCategoryModel subCategoryModel =
-            SubCategoryModel.fromJson(element.data());
-        subCategoryModel.id = element.id;
+            SubCategoryModel.fromJson(element.data);
+        subCategoryModel.id = element.documentID;
         subCategories.add(subCategoryModel);
       });
 

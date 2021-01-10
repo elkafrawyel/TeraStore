@@ -3,41 +3,41 @@ import 'package:flutter_app/screens/main_screen/home_screen.dart';
 
 class HomeService {
   final CollectionReference _slidersRef =
-      FirebaseFirestore.instance.collection('sliders');
+      Firestore.instance.collection('sliders');
 
   final CollectionReference _categoriesRef =
-      FirebaseFirestore.instance.collection('Categories');
+      Firestore.instance.collection('Categories');
 
   final CollectionReference _productsRef =
-      FirebaseFirestore.instance.collection('Products');
+      Firestore.instance.collection('Products');
 
-  Future<List<QueryDocumentSnapshot>> getSliders() async {
-    var value = await _slidersRef.get();
-    return value.docs;
+  Future<List<DocumentSnapshot>> getSliders() async {
+    var value = await _slidersRef.getDocuments();
+    return value.documents;
   }
 
-  Future<List<QueryDocumentSnapshot>> getCategories() async {
-    var value = await _categoriesRef.get();
-    return value.docs;
+  Future<List<DocumentSnapshot>> getCategories() async {
+    var value = await _categoriesRef.getDocuments();
+    return value.documents;
   }
 
   //get products in same subCategory
-  Future<List<QueryDocumentSnapshot>> searchProducts(String searchText) async {
+  Future<List<DocumentSnapshot>> searchProducts(String searchText) async {
     Query query = _productsRef
         .orderBy('name')
         .startAt([searchText]).endAt([searchText + '\uf8ff']);
-    var value = await query.get();
+    var value = await query.getDocuments();
 
-    return value.docs;
+    return value.documents;
   }
 
-  Future<List<QueryDocumentSnapshot>> getSliderProducts() async {
+  Future<List<DocumentSnapshot>> getSliderProducts() async {
     Query query = _productsRef.limit(5);
-    var value = await query.get();
-    return value.docs;
+    var value = await query.getDocuments();
+    return value.documents;
   }
 
-  Future<List<QueryDocumentSnapshot>> getFilteredProducts(
+  Future<List<DocumentSnapshot>> getFilteredProducts(
       ProductFilters filter) async {
     switch (filter) {
       case ProductFilters.HighPrice:
@@ -54,21 +54,21 @@ class HomeService {
     return await _highPriceFilter();
   }
 
-  Future<List<QueryDocumentSnapshot>> _highPriceFilter() async {
+  Future<List<DocumentSnapshot>> _highPriceFilter() async {
     Query query = _productsRef.orderBy('discountPrice', descending: true);
-    var value = await query.get();
-    return value.docs;
+    var value = await query.getDocuments();
+    return value.documents;
   }
 
-  Future<List<QueryDocumentSnapshot>> _lowPriceFilter() async {
+  Future<List<DocumentSnapshot>> _lowPriceFilter() async {
     Query query = _productsRef.orderBy('discountPrice', descending: false);
-    var value = await query.get();
-    return value.docs;
+    var value = await query.getDocuments();
+    return value.documents;
   }
 
-  Future<List<QueryDocumentSnapshot>> _latestFilter() async {
+  Future<List<DocumentSnapshot>> _latestFilter() async {
     Query query = _productsRef.orderBy('id', descending: true);
-    var value = await query.get();
-    return value.docs;
+    var value = await query.getDocuments();
+    return value.documents;
   }
 }

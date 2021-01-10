@@ -12,31 +12,31 @@ class RegisterScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-
     return GetBuilder<AuthController>(
       builder: (controller) => Scaffold(
         appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          leading: GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-          ),
+          toolbarHeight: 0.0,
         ),
-        body: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Container(
-                color: Colors.white,
+        body: Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  colorFilter: ColorFilter.mode(
+                      Colors.white.withAlpha(150), BlendMode.dstATop),
+                  image: AssetImage(
+                    'src/images/login_back.jpg',
+                  ),
+                ),
+              ),
+              child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.only(
                       top: kDefaultPadding * 2,
@@ -45,88 +45,113 @@ class RegisterScreen extends StatelessWidget {
                       bottom: kDefaultPadding * 2),
                   child: Column(
                     children: [
-                      Card(
-                        color: Colors.white,
-                        elevation: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              children: [
-                                CustomText(
-                                  text: 'signUp'.tr,
-                                  fontSize: 25,
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                CustomOutlinedTextFormField(
-                                  text: 'name'.tr,
-                                  controller: nameController,
-                                  hintText: 'name'.tr,
-                                  labelText: 'name'.tr,
-                                  keyboardType: TextInputType.text,
-                                  validateEmptyText: 'nameIsEmpty'.tr,
-                                ),
-                                SizedBox(
-                                  height: 30,
-                                ),
-                                CustomOutlinedTextFormField(
-                                  text: 'email'.tr,
-                                  controller: emailController,
-                                  hintText: 'someone@something.com',
-                                  labelText: 'email'.tr,
-                                  validateEmptyText: 'emailIsEmpty'.tr,
-                                  keyboardType: TextInputType.emailAddress,
-                                ),
-                                SizedBox(
-                                  height: 30,
-                                ),
-                                CustomOutlinedTextFormField(
-                                  text: 'password'.tr,
-                                  controller: passwordController,
-                                  hintText: '***********',
-                                  isPassword: true,
-                                  maxLines: 1,
-                                  labelText: 'password'.tr,
-                                  validateEmptyText: 'passwordIsEmpty'.tr,
-                                  keyboardType: TextInputType.text,
-                                ),
-                                SizedBox(
-                                  height: 40,
-                                ),
-                                Container(
-                                  height: 50,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.7,
-                                  child: CustomButton(
-                                    colorBackground:
-                                        LocalStorage().primaryColor(),
-                                    colorText: Colors.white,
-                                    text: 'signUp'.tr,
-                                    fontSize: 20,
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.arrow_back),
                                     onPressed: () {
-                                      if (_formKey.currentState.validate()) {
-                                        FocusScope.of(context).unfocus();
-
-                                        if (Validator().validateEmail(
-                                            emailController.text)) {
-                                          _formKey.currentState.save();
-                                          controller.createAccount(
-                                              nameController.text,
-                                              emailController.text,
-                                              passwordController.text);
-                                        }
-                                      }
+                                      Get.back();
                                     },
                                   ),
+                                  CustomText(
+                                    text: 'signUp'.tr,
+                                    fontSize: 22,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: kDefaultPadding * 2,
+                              ),
+                              CustomOutlinedTextFormField(
+                                text: 'name'.tr,
+                                controller: nameController,
+                                hintText: 'name'.tr,
+                                labelText: 'name'.tr,
+                                keyboardType: TextInputType.text,
+                                validateEmptyText: 'nameIsEmpty'.tr,
+                                labelColor: Colors.black,
+                                hintColor: Colors.black,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              CustomOutlinedTextFormField(
+                                text: 'email'.tr,
+                                controller: emailController,
+                                hintText: 'someone@something.com',
+                                labelText: 'email'.tr,
+                                validateEmptyText: 'emailIsEmpty'.tr,
+                                keyboardType: TextInputType.emailAddress,
+                                labelColor: Colors.black,
+                                hintColor: Colors.black,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              CustomOutlinedTextFormField(
+                                text: 'phone'.tr,
+                                hintText: 'phoneHint'.tr,
+                                controller: phoneController,
+                                validateEmptyText: 'Phone Empty',
+                                keyboardType: TextInputType.phone,
+                                labelText: 'Phone',
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              CustomOutlinedTextFormField(
+                                text: 'password'.tr,
+                                controller: passwordController,
+                                hintText: '***********',
+                                isPassword: true,
+                                maxLines: 1,
+                                labelText: 'password'.tr,
+                                validateEmptyText: 'passwordIsEmpty'.tr,
+                                keyboardType: TextInputType.text,
+                                labelColor: Colors.black,
+                                hintColor: Colors.black,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                height: 50,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                child: CustomButton(
+                                  colorBackground: LocalStorage()
+                                      .primaryColor()
+                                      .withOpacity(0.7),
+                                  colorText: Colors.white,
+                                  text: 'signUp'.tr,
+                                  fontSize: 20,
+                                  onPressed: () {
+                                    if (_formKey.currentState.validate()) {
+                                      FocusScope.of(context).unfocus();
+
+                                      if (Validator().validateEmail(
+                                          emailController.text)) {
+                                        _formKey.currentState.save();
+                                        controller.createAccount(
+                                            nameController.text,
+                                            emailController.text,
+                                            phoneController.text,
+                                            passwordController.text);
+                                      }
+                                    }
+                                  },
                                 ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -137,22 +162,22 @@ class RegisterScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                top: 0.0,
-                bottom: 0.0,
-                right: 0.0,
-                left: 0.0,
-                child: Visibility(
-                  visible: controller.loading.value,
-                  child: Container(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+            ),
+            Positioned(
+              top: 0.0,
+              bottom: 0.0,
+              right: 0.0,
+              left: 0.0,
+              child: Visibility(
+                visible: controller.loading.value,
+                child: Container(
+                  child: Center(
+                    child: CircularProgressIndicator(),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

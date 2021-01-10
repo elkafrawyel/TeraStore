@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
-import 'package:get/get.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String text;
@@ -12,20 +11,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MainController>(
-      builder: (controller) => AppBar(
-        centerTitle: true,
-        elevation: elevation,
-        iconTheme: IconThemeData(
-          color: Constants.appBarTextColor,
-        ),
-        backgroundColor: controller.primaryColor,
-        title: Text(
-          text,
-          style: TextStyle(color: Constants.appBarTextColor, fontSize: 16),
-        ),
-        actions: actions,
+    return AppBar(
+      centerTitle: true,
+      elevation: elevation,
+      iconTheme: IconThemeData(
+        color: Constants.appBarTextColor,
       ),
+      backgroundColor: LocalStorage().primaryColor(),
+      title: Text(
+        text,
+        style: TextStyle(color: Constants.appBarTextColor, fontSize: 16),
+      ),
+      actions: actions,
     );
   }
 

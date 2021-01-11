@@ -8,16 +8,20 @@ import 'auth/login_screen.dart';
 import 'language_screen.dart';
 
 class SplashScreen extends StatelessWidget {
-  final bool isLangChecked =
-      LocalStorage().getBool(LocalStorage.isLanguageChecked);
-  final bool isPhoneVerifies =
-      LocalStorage().getBool(LocalStorage.phoneVerified);
-  final bool isLoggedIn = LocalStorage().getBool(LocalStorage.loginKey);
-
   @override
   Widget build(BuildContext context) {
+    final bool isLangChecked =
+        LocalStorage().getBool(LocalStorage.isLanguageChecked);
+    final bool isPhoneVerifies =
+        LocalStorage().getBool(LocalStorage.phoneVerified);
+    final bool isLoggedIn = LocalStorage().getBool(LocalStorage.loginKey);
+
     return SplashScreenView(
-      home: _getDestination(),
+      home: isLangChecked
+          ? isLoggedIn && isPhoneVerifies
+              ? HomeScreen()
+              : LoginScreen()
+          : LanguageScreen(),
       duration: 3000,
       imageSize: 250,
       imageSrc: 'src/images/logo.png',
@@ -28,13 +32,5 @@ class SplashScreen extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
     );
-  }
-
-  _getDestination() {
-    return isLangChecked
-        ? isLoggedIn && isPhoneVerifies
-            ? HomeScreen()
-            : LoginScreen()
-        : LanguageScreen();
   }
 }

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:chopper/chopper.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 
 part 'MyService.chopper.dart';
 
@@ -12,15 +15,20 @@ abstract class MyService extends ChopperService {
   @Get(path: '/todos/1')
   Future<Response> getDummyObject();
 
+  static final String token = LocalStorage().getString(LocalStorage.token);
+
   static MyService create(NetworkBaseUrlType networkBaseUrlType) {
     final client = ChopperClient(
         baseUrl: _getBaseUrl(networkBaseUrlType),
         services: [_$MyService()],
         converter: JsonConverter(),
+        errorConverter: JsonConverter(),
         interceptors: [
           HttpLoggingInterceptor(),
-          HeadersInterceptor({'Content-Type': 'application/json'}),
-          HeadersInterceptor({'Cache-Control': 'no-Cache'}),
+          HeadersInterceptor(
+              {HttpHeaders.contentTypeHeader: 'application/json'}),
+          HeadersInterceptor({HttpHeaders.cacheControlHeader: 'no-Cache'}),
+          HeadersInterceptor({HttpHeaders.authorizationHeader: token}),
         ]);
 
     return _$MyService(client);

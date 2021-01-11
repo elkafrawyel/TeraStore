@@ -1,17 +1,19 @@
 import 'dart:io';
 
 import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/core/controllers/profile_controller.dart';
 import 'package:flutter_app/core/services/product_service.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/model/product_model.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 
 import 'home_controller.dart';
-import 'my_products_controller.dart';
 
 class EditProductController extends MainController {
   ProductModel product;
   File productImage;
+  var controller = Get.find<HomeController>();
 
   setProductImage(File image) async {
     productImage = image;
@@ -19,12 +21,12 @@ class EditProductController extends MainController {
   }
 
   editProduct() {
-    if (Get.find<HomeController>().categoryModel == null) {
+    if (controller.categoryModel == null) {
       CommonMethods().showMessage('edit'.tr, 'selectCategory'.tr);
       return;
     }
 
-    if (Get.find<HomeController>().subCategoryModel == null) {
+    if (controller.subCategoryModel == null) {
       CommonMethods().showMessage('edit'.tr, 'selectSubCategory'.tr);
       return;
     }
@@ -40,16 +42,16 @@ class EditProductController extends MainController {
           price: product.price,
           image: product.image,
           discountPrice: product.discountPrice,
-          userId: Get.find<MainController>().user.id,
-          categoryId: Get.find<HomeController>().categoryModel.id,
-          subCategoryId: Get.find<HomeController>().subCategoryModel.id,
+          userId: LocalStorage().getString(LocalStorage.userId),
+          categoryId: controller.categoryModel.id,
+          subCategoryId: controller.subCategoryModel.id,
           timeStamp: product.id,
         ),
         productImage, (bool) {
       loading.value = false;
       update();
       Get.back();
-      Get.find<MyProductsController>().getMyProducts();
+      Get.find<ProfileController>().getMyProducts();
     });
   }
 

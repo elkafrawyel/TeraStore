@@ -10,15 +10,16 @@ class ProductsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProductsController>(
+      init: ProductsController(),
       builder: (controller) => controller.loading.value
           ? LoadingView()
           : controller.empty.value
               ? Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: EmptyView(
+                  padding: const EdgeInsets.all(30.0),
+                  child: EmptyView(
                     message: 'noProductsFound'.tr,
                   ),
-              )
+                )
               : Container(
                   color: Colors.white,
                   child: Padding(

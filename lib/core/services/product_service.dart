@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/favourite_model.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/storage/local_storage.dart';
@@ -13,7 +14,66 @@ class ProductService {
   final CollectionReference _favouritesRef =
       Firestore.instance.collection('Favourites');
 
+  final CollectionReference _slidersRef =
+      Firestore.instance.collection('sliders');
+
   final String userId = LocalStorage().getString(LocalStorage.userId);
+
+  Future<List<DocumentSnapshot>> getSliders() async {
+    var value = await _slidersRef.getDocuments();
+    return value.documents;
+  }
+
+  //get products in same subCategory
+  Future<List<DocumentSnapshot>> searchProducts(String searchText) async {
+    Query query = _productsRef
+        .orderBy('name')
+        .startAt([searchText]).endAt([searchText + '\uf8ff']);
+    var value = await query.getDocuments();
+
+    return value.documents;
+  }
+
+  Future<List<DocumentSnapshot>> getSliderProducts() async {
+    Query query = _productsRef.limit(5);
+    var value = await query.getDocuments();
+    return value.documents;
+  }
+
+  Future<List<DocumentSnapshot>> getFilteredProducts(
+      ProductFilters filter) async {
+    switch (filter) {
+      case ProductFilters.HighPrice:
+        return await _highPriceFilter();
+      case ProductFilters.LowPrice:
+        return await _lowPriceFilter();
+      case ProductFilters.Latest:
+        print('Todo work');
+        return _latestFilter();
+      // case ProductFilters.LowRate:
+      //   print('Todo work');
+      //   return [];
+    }
+    return await _highPriceFilter();
+  }
+
+  Future<List<DocumentSnapshot>> _highPriceFilter() async {
+    Query query = _productsRef.orderBy('discountPrice', descending: true);
+    var value = await query.getDocuments();
+    return value.documents;
+  }
+
+  Future<List<DocumentSnapshot>> _lowPriceFilter() async {
+    Query query = _productsRef.orderBy('discountPrice', descending: false);
+    var value = await query.getDocuments();
+    return value.documents;
+  }
+
+  Future<List<DocumentSnapshot>> _latestFilter() async {
+    Query query = _productsRef.orderBy('id', descending: true);
+    var value = await query.getDocuments();
+    return value.documents;
+  }
 
   Future<List<DocumentSnapshot>> getProducts(String subCategoryId) async {
     Query query = _productsRef.where('subCategoryId', isEqualTo: subCategoryId);
@@ -120,7 +180,7 @@ class ProductService {
     if (snapshot.exists) {
       FavouriteModel favouriteModel = FavouriteModel.fromJson(snapshot.data);
       if (favouriteModel != null) {
-        print('fav list => ${favouriteModel.myProducts.length}');
+        print('Favourite count => ${favouriteModel.myProducts.length}');
         return favouriteModel;
       } else {
         return FavouriteModel(myProducts: []);
@@ -161,6 +221,4 @@ class ProductService {
       await _favouritesRef.document(userId).setData(favouriteModel.toJson());
     }
   }
-
-  filter() {}
 }

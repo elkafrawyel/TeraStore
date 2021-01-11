@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
-import 'package:flutter_app/core/controllers/my_products_controller.dart';
+import 'package:flutter_app/core/controllers/profile_controller.dart';
 import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
 import 'package:flutter_app/screens/profile/components/body.dart';
@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen() {
-    Get.put(MyProductsController()).getMyProducts();
+    Get.find<ProfileController>().getMyProducts();
   }
 
   @override
@@ -33,7 +33,8 @@ class ProfileScreen extends StatelessWidget {
           )
         ],
       ),
-      body: GetBuilder<MyProductsController>(
+      body: GetBuilder<ProfileController>(
+          init: ProfileController(),
           builder: (controller) => controller.loading.value
               ? LoadingView()
               : GetBuilder<MainController>(

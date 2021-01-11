@@ -2,7 +2,9 @@ import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/core/services/product_service.dart';
 import 'package:flutter_app/model/product_model.dart';
 
-class MyProductsController extends MainController {
+class ProfileController extends MainController {
+  //will contain user data, edit profile, myProducts
+
   List<ProductModel> _products = [];
 
   List<ProductModel> get products => _products;

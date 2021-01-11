@@ -4,28 +4,45 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/cart_controller.dart';
 import 'package:flutter_app/core/services/user_service.dart';
+import 'package:flutter_app/helper/language/language_model.dart';
 import 'package:flutter_app/model/user_model.dart';
 import 'package:flutter_app/screens/start_up_screens/auth/login_screen.dart';
 import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'cart_controller.dart';
+
 class MainController extends GetxController {
   Color primaryColor = LocalStorage().primaryColor();
-
-  changeAppColor(Color pickedColor) {
-    LocalStorage().setInt(LocalStorage.selectedColorValue, pickedColor.value);
-    primaryColor = pickedColor;
-    update();
-  }
 
   ValueNotifier<bool> loading = ValueNotifier(false);
   ValueNotifier<bool> empty = ValueNotifier(false);
 
   UserModel user;
   PickedFile selectedImage;
+
+  var appLocaleCode = Get.deviceLocale.languageCode;
+
+  var languageList = LanguageData.languageList();
+
+  @override
+  void onInit() {
+    super.onInit();
+    LocalStorage localStorage = LocalStorage();
+    appLocaleCode = localStorage.getLanguage() == null
+        ? Get.deviceLocale.languageCode
+        : localStorage.getLanguage();
+    Get.updateLocale(Locale(appLocaleCode));
+    update();
+  }
+
+  changeAppColor(Color pickedColor) {
+    LocalStorage().setInt(LocalStorage.selectedColorValue, pickedColor.value);
+    primaryColor = pickedColor;
+    update();
+  }
 
   loadUserData() async {
     String userId = LocalStorage().getString(LocalStorage.userId);
@@ -71,11 +88,39 @@ class MainController extends GetxController {
 
   logOut() async {
     LocalStorage().clear();
-
     Get.find<CartController>().products.clear();
     Get.find<MainController>().user = null;
     await FirebaseAuth.instance.signOut();
     update();
     Get.offAll(LoginScreen());
   }
+
+  //=================== Language =======================
+  LanguageData getSelectedLanguage() {
+    LanguageData lang;
+    languageList.forEach((element) {
+      if (element.languageCode == appLocaleCode) {
+        lang = element;
+        return;
+      }
+    });
+    return lang;
+  }
+
+  changeLanguage(String languageCode) async {
+    LocalStorage localStorage = LocalStorage();
+    if (appLocaleCode == languageCode) {
+      return;
+    }
+    if (languageCode == 'ar') {
+      appLocaleCode = 'ar';
+      localStorage.setLanguage('ar');
+    } else {
+      appLocaleCode = 'en';
+      localStorage.setLanguage('en');
+    }
+    update();
+  }
+
+//===========================================
 }

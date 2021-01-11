@@ -4,6 +4,7 @@ import 'package:flutter_app/screens/custom_widgets/budget_cart_icon.dart';
 import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
 import 'package:get/get.dart';
+
 import '../cart_screen/cart_screen.dart';
 import 'components/body.dart';
 
@@ -14,8 +15,9 @@ class DetailsScreen extends StatelessWidget {
     _loadDetails();
   }
 
+  final controller = Get.find<ProductDetailsController>();
+
   _loadDetails() async {
-    var controller = Get.put(ProductDetailsController());
     controller.selectedTab = 0;
     await controller.getProductById(productId);
   }
@@ -23,12 +25,12 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProductDetailsController>(
+      init: ProductDetailsController(),
       builder: (controller) =>
           controller.loading.value || controller.productModel == null
               ? LoadingView()
               : Scaffold(
-                  // backgroundColor: LocalStorage().primaryColor(),
-                  appBar: buildAppBar(context, controller),
+                  appBar: buildAppBar(),
                   body: Body(
                     product: controller.productModel,
                   ),
@@ -36,10 +38,10 @@ class DetailsScreen extends StatelessWidget {
     );
   }
 
-  buildAppBar(BuildContext context, ProductDetailsController controller) {
+  buildAppBar() {
     return CustomAppBar(
       actions: [
-        _favIcon(controller),
+        _favIcon(),
         BudgetCartIconView(
           press: () {
             Get.to(CartScreen());
@@ -49,7 +51,7 @@ class DetailsScreen extends StatelessWidget {
     );
   }
 
-  _favIcon(ProductDetailsController controller) {
+  _favIcon() {
     return controller.productModel == null
         ? GestureDetector(
             onTap: () {

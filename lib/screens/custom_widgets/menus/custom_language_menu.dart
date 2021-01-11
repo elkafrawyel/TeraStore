@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/app_language_controller.dart';
+import 'package:flutter_app/core/controllers/main_controller.dart';
 import 'package:flutter_app/helper/language/language_model.dart';
 import 'package:get/get.dart';
 
 class CustomLanguageMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AppLanguageController>(
-      init: AppLanguageController(),
+    return GetBuilder<MainController>(
+      init: MainController(),
       builder: (controller) => DropdownButton<LanguageData>(
         iconSize: 20,
         onChanged: (LanguageData language) {

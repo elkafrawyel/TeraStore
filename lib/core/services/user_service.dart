@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app/model/user_model.dart';
 
 class UserService {
+  //login , register, edit, verify, logOut,
+
   final CollectionReference _userCollectionRef =
       Firestore.instance.collection('Users');
 

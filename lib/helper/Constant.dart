@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/storage/local_storage.dart';
 
 // ================ values =========================
 const kDefaultPadding = 20.0;
@@ -44,11 +45,48 @@ const logOutImage = 'src/images/Icon_Exit.png';
 const defaultImageUrl =
     'https://firebasestorage.googleapis.com/v0/b/ecommerce-43b02.appspot.com/o/DefaultImages%2FAvatar.png?alt=media&token=ab2a22a6-43f5-47f7-8638-c6892e03292f';
 
-
-
 //=========================================================
 class Constants {
   static final Color backgroundColor = Colors.grey.shade200;
   static final Color appBarTextColor = Colors.white;
   static final double appBarHeight = 50;
+}
+
+enum ProductFilters {
+  HighPrice,
+  LowPrice,
+  Latest,
+  // LowRate
+}
+
+extension ProductFiltersExtension on ProductFilters {
+  String get value {
+    switch (this) {
+      case ProductFilters.HighPrice:
+        return 'highPrice';
+      case ProductFilters.LowPrice:
+        return 'lowPrice';
+      case ProductFilters.Latest:
+        return 'latest';
+      // case ProductFilters.LowRate:
+      //   return 'lowRate';
+    }
+    return 'highPrice';
+  }
+
+  String get text {
+    switch (this) {
+      case ProductFilters.HighPrice:
+        return LocalStorage().isArabicLanguage() ? 'الاعلي سعرا' : 'High Price';
+      case ProductFilters.LowPrice:
+        return LocalStorage().isArabicLanguage() ? 'الاقل سعرا' : 'Low Price';
+      case ProductFilters.Latest:
+        return LocalStorage().isArabicLanguage()
+            ? 'احدث المنتجات'
+            : 'Latest Arrived';
+      // case ProductFilters.LowRate:
+      //   return LocalStorage().isArabicLanguage() ? 'الاقل تقييما' : 'Low Rate';
+    }
+    return LocalStorage().isArabicLanguage() ? 'الاعلي سعرا' : 'High Price';
+  }
 }

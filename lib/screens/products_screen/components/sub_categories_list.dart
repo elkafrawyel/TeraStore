@@ -13,6 +13,7 @@ class SubCategoriesList extends StatelessWidget {
       color: LocalStorage().primaryColor(),
       height: 40,
       child: GetBuilder<ProductsController>(
+        init: ProductsController(),
         builder: (controller) => controller.loadingSubCategories.value
             ? LoadingView()
             : controller.emptySubCategories.value

@@ -18,6 +18,7 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AuthController>(
+      init: AuthController(),
       builder: (controller) => Scaffold(
         appBar: AppBar(
           toolbarHeight: 0.0,

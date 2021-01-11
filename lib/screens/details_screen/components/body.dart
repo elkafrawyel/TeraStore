@@ -17,6 +17,7 @@ import 'tabs/similar_products.dart';
 
 class Body extends StatelessWidget {
   final ProductModel product;
+  final controller = Get.find<ProductDetailsController>();
 
   Body({Key key, this.product});
 
@@ -103,9 +104,10 @@ class Body extends StatelessWidget {
           delegate: SliverChildListDelegate(
             [
               GetBuilder<ProductDetailsController>(
+                init: ProductDetailsController(),
                 builder: (controller) => Container(
                   color: Colors.white,
-                  child: _getTabView(controller),
+                  child: _getTabView(),
                 ),
               ),
             ],
@@ -121,7 +123,7 @@ class Body extends StatelessWidget {
         .showMessage('cart'.tr, productModel.name + ' ' + 'addedToCart'.tr);
   }
 
-  Widget _getTabView(ProductDetailsController controller) {
+  Widget _getTabView() {
     switch (controller.selectedTab) {
       case 0:
         return InfoTab(
@@ -153,108 +155,106 @@ class Body extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
       ),
-      child: GetBuilder<ProductDetailsController>(
-        builder: (controller) => Padding(
-            padding: const EdgeInsets.all(kDefaultPadding / 2),
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    controller.updateSelectedTab(0);
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(
-                      left: kDefaultPadding / 4,
-                      right: kDefaultPadding / 4,
-                    ),
-                    padding: EdgeInsetsDirectional.only(
-                        top: kDefaultPadding / 4,
-                        bottom: kDefaultPadding / 4,
-                        end: kDefaultPadding,
-                        start: kDefaultPadding),
-                    decoration: BoxDecoration(
-                      color: controller.selectedTab == 0
-                          ? LocalStorage().primaryColor()
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: CustomText(
-                      text: 'details'.tr,
-                      alignment: AlignmentDirectional.center,
-                      color: controller.selectedTab == 0
-                          ? Colors.white
-                          : Colors.black,
-                      fontSize: 16,
-                    ),
+      child: Padding(
+          padding: const EdgeInsets.all(kDefaultPadding / 2),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  controller.updateSelectedTab(0);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(
+                    left: kDefaultPadding / 4,
+                    right: kDefaultPadding / 4,
+                  ),
+                  padding: EdgeInsetsDirectional.only(
+                      top: kDefaultPadding / 4,
+                      bottom: kDefaultPadding / 4,
+                      end: kDefaultPadding,
+                      start: kDefaultPadding),
+                  decoration: BoxDecoration(
+                    color: controller.selectedTab == 0
+                        ? LocalStorage().primaryColor()
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: CustomText(
+                    text: 'details'.tr,
+                    alignment: AlignmentDirectional.center,
+                    color: controller.selectedTab == 0
+                        ? Colors.white
+                        : Colors.black,
+                    fontSize: 16,
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    controller.updateSelectedTab(1);
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(
-                      left: kDefaultPadding / 4,
-                      right: kDefaultPadding / 4,
-                    ),
-                    padding: EdgeInsetsDirectional.only(
-                        top: kDefaultPadding / 4,
-                        bottom: kDefaultPadding / 4,
-                        end: kDefaultPadding,
-                        start: kDefaultPadding),
-                    decoration: BoxDecoration(
-                      color: controller.selectedTab == 1
-                          ? LocalStorage().primaryColor()
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: CustomText(
-                      text: 'similarProducts'.tr,
-                      alignment: AlignmentDirectional.center,
-                      color: controller.selectedTab == 1
-                          ? Colors.white
-                          : Colors.black,
-                      fontSize: 16,
-                    ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  controller.updateSelectedTab(1);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(
+                    left: kDefaultPadding / 4,
+                    right: kDefaultPadding / 4,
+                  ),
+                  padding: EdgeInsetsDirectional.only(
+                      top: kDefaultPadding / 4,
+                      bottom: kDefaultPadding / 4,
+                      end: kDefaultPadding,
+                      start: kDefaultPadding),
+                  decoration: BoxDecoration(
+                    color: controller.selectedTab == 1
+                        ? LocalStorage().primaryColor()
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: CustomText(
+                    text: 'similarProducts'.tr,
+                    alignment: AlignmentDirectional.center,
+                    color: controller.selectedTab == 1
+                        ? Colors.white
+                        : Colors.black,
+                    fontSize: 16,
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    controller.updateSelectedTab(2);
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(
-                      left: kDefaultPadding / 4,
-                      right: kDefaultPadding / 4,
-                    ),
-                    padding: EdgeInsetsDirectional.only(
-                        top: kDefaultPadding / 4,
-                        bottom: kDefaultPadding / 4,
-                        end: kDefaultPadding,
-                        start: kDefaultPadding),
-                    decoration: BoxDecoration(
-                      color: controller.selectedTab == 2
-                          ? LocalStorage().primaryColor()
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: CustomText(
-                      text: 'reviews'.tr,
-                      alignment: AlignmentDirectional.center,
-                      color: controller.selectedTab == 2
-                          ? Colors.white
-                          : Colors.black,
-                      fontSize: 16,
-                    ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  controller.updateSelectedTab(2);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(
+                    left: kDefaultPadding / 4,
+                    right: kDefaultPadding / 4,
+                  ),
+                  padding: EdgeInsetsDirectional.only(
+                      top: kDefaultPadding / 4,
+                      bottom: kDefaultPadding / 4,
+                      end: kDefaultPadding,
+                      start: kDefaultPadding),
+                  decoration: BoxDecoration(
+                    color: controller.selectedTab == 2
+                        ? LocalStorage().primaryColor()
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: CustomText(
+                    text: 'reviews'.tr,
+                    alignment: AlignmentDirectional.center,
+                    color: controller.selectedTab == 2
+                        ? Colors.white
+                        : Colors.black,
+                    fontSize: 16,
                   ),
                 ),
-              ],
-            )),
-      ),
+              ),
+            ],
+          )),
     );
   }
 }

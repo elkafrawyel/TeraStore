@@ -8,13 +8,16 @@ import 'package:flutter_app/screens/favourite_screen/components/my_favourite_car
 import 'package:get/get.dart';
 
 class FavouritesScreen extends StatelessWidget {
+  final controller = Get.find<FavouriteController>();
+
   FavouritesScreen() {
-    Get.put(FavouriteController()).getMyFavouriteProducts();
+    controller.getMyFavouriteProducts();
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<FavouriteController>(
+      init: FavouriteController(),
       builder: (controller) => Scaffold(
           appBar: CustomAppBar(
             text: 'favorite'.tr,
@@ -26,12 +29,12 @@ class FavouritesScreen extends StatelessWidget {
                   ? LoadingView()
                   : controller.empty.value
                       ? Center(
-                        child: EmptyView(
+                          child: EmptyView(
                             message: 'noFavProducts'.tr,
                             emptyViews: EmptyViews.Box,
                             textColor: Colors.black,
                           ),
-                      )
+                        )
                       : ListView.builder(
                           itemCount: controller.products.length,
                           itemBuilder: (context, index) {

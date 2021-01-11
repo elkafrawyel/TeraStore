@@ -16,13 +16,14 @@ import 'custom_widgets/text/custom_text.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   final String productId;
-
-  _loadDetails() async {
-    await Get.put(ProductDetailsController()).getProductById(productId);
-  }
+  final controller = Get.find<ProductDetailsController>();
 
   ProductDetailsScreen(this.productId) {
     _loadDetails();
+  }
+
+  _loadDetails() async {
+    await controller.getProductById(productId);
   }
 
   @override
@@ -30,12 +31,13 @@ class ProductDetailsScreen extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: GetBuilder<ProductDetailsController>(
+          init: ProductDetailsController(),
           builder: (controller) => controller.loading.value
               ? LoadingView()
               : Container(
                   child: Column(
                     children: [
-                      _header(context, controller),
+                      _header(context),
                       Padding(
                         padding: const EdgeInsets.all(12),
                         child: Column(
@@ -123,7 +125,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            _ownerView(controller),
+                            _ownerView(),
                             SizedBox(
                               height: 20,
                             ),
@@ -149,7 +151,7 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _header(BuildContext context, ProductDetailsController controller) {
+  Widget _header(BuildContext context) {
     return Stack(
       children: [
         Container(
@@ -211,7 +213,7 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _ownerView(ProductDetailsController controller) {
+  Widget _ownerView() {
     return Padding(
       padding: EdgeInsetsDirectional.only(start: 10, top: 10),
       child: Row(

@@ -11,8 +11,10 @@ import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 
 class ShippingAddresses extends StatelessWidget {
+  final controller = Get.find<GeneralController>();
+
   ShippingAddresses() {
-    Get.put(GeneralController()).getAddressList();
+    controller.getAddressList();
   }
 
   @override
@@ -22,6 +24,7 @@ class ShippingAddresses extends StatelessWidget {
         text: 'shippingAddresses'.tr,
       ),
       body: GetBuilder<GeneralController>(
+        init: GeneralController(),
         builder: (controller) => Column(
           children: [
             Expanded(
@@ -34,7 +37,7 @@ class ShippingAddresses extends StatelessWidget {
                       : ListView.builder(
                           itemCount: controller.addressList.length,
                           itemBuilder: (context, index) {
-                            return _addressCard(index, controller);
+                            return _addressCard(index);
                           },
                         ),
             ),
@@ -58,7 +61,7 @@ class ShippingAddresses extends StatelessWidget {
     );
   }
 
-  Widget _addressCard(int index, GeneralController controller) {
+  Widget _addressCard(int index) {
     return Padding(
       padding: const EdgeInsetsDirectional.only(
           start: kDefaultPadding,

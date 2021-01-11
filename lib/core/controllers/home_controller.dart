@@ -1,10 +1,10 @@
 import 'package:flutter_app/core/controllers/main_controller.dart';
-import 'package:flutter_app/core/services/home_service.dart';
-import 'package:flutter_app/core/services/sub_category_service.dart';
+import 'package:flutter_app/core/services/category_service.dart';
+import 'package:flutter_app/core/services/product_service.dart';
+import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/category_model.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/model/sub_category_model.dart';
-import 'package:flutter_app/screens/main_screen/home_screen.dart';
 
 class HomeController extends MainController {
   ProductFilters filter = ProductFilters.Latest;
@@ -16,18 +16,12 @@ class HomeController extends MainController {
 
   List<ProductModel> get sliderProducts => _sliderProducts;
 
-  HomeController() {
-    getSliderProducts();
-    getCategories();
-    filterProducts();
-  }
-
-  getSliderProducts() async {
+  Future<void> getSliderProducts() async {
     if (_sliderProducts.length > 0) {
       return;
     }
     loading.value = true;
-    HomeService().getSliderProducts().then((docs) {
+    ProductService().getSliderProducts().then((docs) {
       docs.forEach((element) {
         _sliderProducts.add(ProductModel.fromJson(element.data));
       });
@@ -37,11 +31,11 @@ class HomeController extends MainController {
     });
   }
 
-  filterProducts() async {
+  Future<void> filterProducts() async {
     loading.value = true;
     update();
     _filteredProducts.clear();
-    HomeService().getFilteredProducts(filter).then((docs) {
+    ProductService().getFilteredProducts(filter).then((docs) {
       docs.forEach((element) {
         _filteredProducts.add(ProductModel.fromJson(element.data));
       });
@@ -76,12 +70,12 @@ class HomeController extends MainController {
     update();
   }
 
-  getCategories() async {
+  Future<void> getCategories() async {
     if (_categories.length > 0) {
       return;
     }
     loading.value = true;
-    HomeService().getCategories().then((docs) {
+    CategoryService().getCategories().then((docs) {
       docs.forEach((element) {
         CategoryModel categoryModel = CategoryModel.fromJson(element.data);
         categoryModel.id = element.documentID;
@@ -95,7 +89,7 @@ class HomeController extends MainController {
 
   getSubCategories(String categoryId, {String subCategoryIdToSelect}) async {
     subCategories.clear();
-    SubCategoryService().getSubCategories(categoryId).then((docs) {
+    CategoryService().getSubCategories(categoryId).then((docs) {
       docs.forEach((element) {
         SubCategoryModel subCategoryModel =
             SubCategoryModel.fromJson(element.data);

@@ -5,8 +5,6 @@ import 'package:flutter_app/screens/custom_widgets/text/custom_description_text.
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
 
-import 'owner_info.dart';
-
 class InfoTab extends StatelessWidget {
   final ProductModel product;
 
@@ -36,14 +34,14 @@ class InfoTab extends StatelessWidget {
               ),
             ),
             SizedBox(height: kDefaultPadding),
-            product.owner == null
-                ? Container()
-                : OwnerInfo(
-                    owner: product.owner,
-                  ),
-            SizedBox(
-              height: kDefaultPadding,
-            ),
+            // product.owner == null
+            //     ? Container()
+            //     : OwnerInfo(
+            //         owner: product.owner,
+            //       ),
+            // SizedBox(
+            //   height: kDefaultPadding,
+            // ),
           ],
         ),
       ),

@@ -45,6 +45,7 @@ class AuthController extends MainController {
           _showGetPhoneDialog();
         } else {
           if (user.phoneVerified) {
+            LocalStorage().setBool(LocalStorage.phoneVerified, true);
             Get.offAll(HomeScreen());
           } else {
             Get.offAll(VerifyPhoneScreen(
@@ -90,10 +91,8 @@ class AuthController extends MainController {
               FacebookAuthProvider.getCredential(accessToken: accessToken);
           AuthResult authResult =
               await _auth.signInWithCredential(facebookAuthCredential);
-
           String userId = authResult.user.uid;
           DocumentSnapshot snapshot = await UserService().getUser(userId);
-
           if (snapshot.exists && snapshot.data != null) {
             user = UserModel.fromJson(snapshot.data);
             user.id = snapshot.documentID;
@@ -103,6 +102,7 @@ class AuthController extends MainController {
               _showGetPhoneDialog();
             } else {
               if (user.phoneVerified) {
+                LocalStorage().setBool(LocalStorage.phoneVerified, true);
                 Get.offAll(HomeScreen());
               } else {
                 Get.offAll(VerifyPhoneScreen(
@@ -125,11 +125,9 @@ class AuthController extends MainController {
                 name: authResult.user.displayName,
                 photo: photoUrl,
                 phoneVerified: false);
-
             //showDialog to get phone number
             _showGetPhoneDialog();
           }
-
           break;
       }
     } on AuthException catch (e) {
@@ -191,32 +189,32 @@ class AuthController extends MainController {
   }
 
   signInEmail(String email, String password) async {
-    _showGetPhoneDialog();
-    // loading.value = true;
-    // try {
-    //   AuthResult result = await FirebaseAuth.instance
-    //       .signInWithEmailAndPassword(email: email, password: password);
-    //   DocumentSnapshot snapshot = await UserService().getUser(result.user.uid);
-    //
-    //   user = UserModel.fromJson(snapshot.data);
-    //   user.id = result.user.uid;
-    //   LocalStorage().setBool(LocalStorage.loginKey, true);
-    //   LocalStorage().setString(LocalStorage.userId, result.user.uid);
-    //
-    //   if (user.phoneVerified) {
-    //     Get.offAll(HomeScreen());
-    //   } else {
-    //     Get.offAll(VerifyPhoneScreen(
-    //       userModel: user,
-    //     ));
-    //   }
-    // } on AuthException catch (e) {
-    //   handleError(e);
-    //   print('Failed with error code: ${e.code}');
-    //   print(e.message);
-    // }
-    // loading.value = false;
-    // update();
+    loading.value = true;
+    try {
+      AuthResult result = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      DocumentSnapshot snapshot = await UserService().getUser(result.user.uid);
+
+      user = UserModel.fromJson(snapshot.data);
+      user.id = result.user.uid;
+      LocalStorage().setBool(LocalStorage.loginKey, true);
+      LocalStorage().setString(LocalStorage.userId, result.user.uid);
+
+      if (user.phoneVerified) {
+        LocalStorage().setBool(LocalStorage.phoneVerified, true);
+        Get.offAll(HomeScreen());
+      } else {
+        Get.offAll(VerifyPhoneScreen(
+          userModel: user,
+        ));
+      }
+    } on AuthException catch (e) {
+      handleError(e);
+      print('Failed with error code: ${e.code}');
+      print(e.message);
+    }
+    loading.value = false;
+    update();
   }
 
   createAccount(

@@ -12,14 +12,13 @@ import 'category_list.dart';
 import 'product_card.dart';
 
 class Body extends StatelessWidget {
-  Body() {
-    Get.put(HomeController());
-  }
+  final controller = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: GetBuilder<HomeController>(
+        init: HomeController(),
         builder: (controller) => controller.loading.value
             ? LoadingView()
             : CustomScrollView(
@@ -65,7 +64,9 @@ class Body extends StatelessWidget {
         },
       ));
     });
-    widgets.add(SizedBox(height: 80,));
+    widgets.add(SizedBox(
+      height: 80,
+    ));
     return widgets;
   }
 }

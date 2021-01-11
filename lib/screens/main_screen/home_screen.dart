@@ -23,12 +23,15 @@ import 'package:get/get.dart';
 import 'components/body.dart';
 
 class HomeScreen extends StatelessWidget {
+  final controller = Get.find<HomeController>();
+
   HomeScreen() {
     print('Saved User ID' + LocalStorage().getString(LocalStorage.userId));
     Get.find<MainController>().loadUserData();
-    Get.find<CartController>().getCartItems();
-    // var myService = MyService.create(NetworkBaseUrlType.MainUrl);
-    // myService.getDummyObject();
+    Get.find<CartController>().getCartItems(showLoading: true);
+    controller.getSliderProducts();
+    controller.getCategories();
+    controller.filterProducts();
   }
 
   @override
@@ -319,6 +322,7 @@ class HomeScreen extends StatelessWidget {
             content: Container(
               width: MediaQuery.of(context).size.width,
               child: GetBuilder<HomeController>(
+                init: HomeController(),
                 builder: (controller) => Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -20,7 +20,6 @@ class FavouriteController extends MainController {
     for (FavouriteProduct element in favouriteModel.myProducts) {
       ProductModel model = await getProductById(element.id);
       _products.add(model);
-      print('element id${element.id}');
     }
     loading.value = false;
     if (_products.isEmpty) {

@@ -9,6 +9,7 @@ class LocalStorage {
   static final String selectedColorValue = 'selectedColorValue';
   static final String phoneVerified = 'phoneVerified';
   static final String userId = 'userId';
+  static final String token = 'token';
 
   setLanguage(String languageCode) async {
     await GetStorage().write(languageKey, languageCode);

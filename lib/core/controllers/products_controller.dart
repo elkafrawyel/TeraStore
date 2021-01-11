@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/core/services/category_service.dart';
 import 'package:flutter_app/core/services/product_service.dart';
-import 'package:flutter_app/core/services/sub_category_service.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/model/sub_category_model.dart';
 import 'package:get/get.dart';
@@ -24,7 +24,7 @@ class ProductsController extends MainController {
     loadingSubCategories.value = true;
     _subCategories.clear();
     List<DocumentSnapshot> list =
-        await SubCategoryService().getSubCategories(categoryId);
+        await CategoryService().getSubCategories(categoryId);
 
     list.forEach((element) {
       SubCategoryModel subCategoryModel =
@@ -38,7 +38,7 @@ class ProductsController extends MainController {
     } else {
       emptySubCategories.value = false;
       //load products of first subCategory
-      Get.put(ProductsController()).getProducts();
+      Get.find<ProductsController>().getProducts();
     }
     loadingSubCategories.value = false;
     print('SubCategories count => ${_subCategories.length}');

@@ -15,13 +15,7 @@ class CartController extends MainController {
   List<Cart> get products => _products;
   var cartCount = 0;
 
-  @override
-  onInit() {
-    super.onInit();
-    getCartItems();
-  }
-
-  getCartItems({bool showLoading = false}) async {
+  Future<void> getCartItems({bool showLoading = false}) async {
     loading.value = showLoading;
     update();
     _products.clear();

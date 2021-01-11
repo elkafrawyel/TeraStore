@@ -6,10 +6,10 @@ import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
 
 class CategoriesDropDownMenu extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
+      init: HomeController(),
       builder: (controller) => Column(
         children: [
           Container(
@@ -42,7 +42,8 @@ class CategoriesDropDownMenu extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ).toList(),
+                    )
+                    .toList(),
               ),
             ),
           ),

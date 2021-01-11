@@ -17,10 +17,11 @@ import 'custom_widgets/text/custom_outline_text_form_field.dart';
 
 class EditProductScreen extends StatelessWidget {
   final ProductModel productModel;
+  final controller = Get.find<EditProductController>();
 
   EditProductScreen({this.productModel}) {
-    Get.put(EditProductController()).product = productModel;
-    _getInitialValues(Get.find<HomeController>());
+    controller.product = productModel;
+    _getInitialValues();
   }
 
   final picker = ImagePicker();
@@ -39,6 +40,7 @@ class EditProductScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: GetBuilder<EditProductController>(
+          init: EditProductController(),
           builder: (controller) => Stack(
             children: [
               Padding(
@@ -46,11 +48,11 @@ class EditProductScreen extends StatelessWidget {
                 child: Center(
                   child: Column(
                     children: [
-                      _productImage(controller),
+                      _productImage(),
                       SizedBox(
                         height: 20,
                       ),
-                      _productDetailsForm(controller)
+                      _productDetailsForm()
                     ],
                   ),
                 ),
@@ -112,7 +114,7 @@ class EditProductScreen extends StatelessWidget {
     Get.find<EditProductController>().setProductImage(File(image.path));
   }
 
-  Widget _productImage(EditProductController controller) {
+  Widget _productImage() {
     return GestureDetector(
       onTap: () {
         _showPicker();
@@ -137,7 +139,7 @@ class EditProductScreen extends StatelessWidget {
     );
   }
 
-  Widget _productDetailsForm(EditProductController controller) {
+  Widget _productDetailsForm() {
     return Form(
       key: _formKey,
       child: Padding(
@@ -210,7 +212,7 @@ class EditProductScreen extends StatelessWidget {
                 colorBackground: LocalStorage().primaryColor(),
                 colorText: Colors.white,
                 onPressed: () {
-                  _editProduct(controller);
+                  _editProduct();
                 },
               ),
             )
@@ -220,7 +222,7 @@ class EditProductScreen extends StatelessWidget {
     );
   }
 
-  void _editProduct(EditProductController controller) {
+  void _editProduct() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
 
@@ -237,11 +239,13 @@ class EditProductScreen extends StatelessWidget {
     }
   }
 
-  _getInitialValues(HomeController controller) {
+  _getInitialValues() {
+    var homeController = Get.find<HomeController>();
     if (productModel.categoryId != null) {
-      for (CategoryModel element in controller.categories) {
+      for (CategoryModel element in homeController.categories) {
         if (element.id == productModel.categoryId) {
-          controller.setCategoryModel(element,subCategoryIdToSelect: productModel.subCategoryId);
+          homeController.setCategoryModel(element,
+              subCategoryIdToSelect: productModel.subCategoryId);
         }
       }
     }

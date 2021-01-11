@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/my_products_controller.dart';
+import 'package:flutter_app/core/controllers/profile_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
@@ -155,7 +155,7 @@ class MyProductCard extends StatelessWidget {
         message: 'deleteMessage'.tr,
         title: 'delete'.tr,
         action: () {
-          Get.find<MyProductsController>().delete(product);
+          Get.find<ProfileController>().delete(product);
         });
   }
 

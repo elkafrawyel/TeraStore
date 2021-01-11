@@ -15,6 +15,7 @@ import 'package:rating_bar/rating_bar.dart';
 
 class ReviewsTab extends StatelessWidget {
   final ProductModel product;
+  final controller = Get.find<ProductDetailsController>();
 
   ReviewsTab({this.product}) {
     if (LocalStorage().isArabicLanguage())
@@ -24,16 +25,17 @@ class ReviewsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProductDetailsController>(
+      init: ProductDetailsController(),
       builder: (controller) => Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: _reviewsList(controller),
+          children: _reviewsList(),
         ),
       ),
     );
   }
 
-  _buildRatingDialog(ProductDetailsController controller) {
+  _buildRatingDialog() {
     double ratingValue;
     String reviewText;
     showDialog(
@@ -126,14 +128,14 @@ class ReviewsTab extends StatelessWidget {
         });
   }
 
-  _ratingView(ProductDetailsController controller) {
+  _ratingView() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Column(
           children: [
             RatingBar.readOnly(
-              initialRating: _calculateRating(controller),
+              initialRating: _calculateRating(),
               isHalfAllowed: true,
               size: 25,
               filledColor: Colors.amber,
@@ -156,11 +158,11 @@ class ReviewsTab extends StatelessWidget {
     );
   }
 
-  _reviewsList(ProductDetailsController controller) {
-    return _reviews(controller);
+  _reviewsList() {
+    return _reviews();
   }
 
-  List<Widget> _reviews(ProductDetailsController controller) {
+  List<Widget> _reviews() {
     List<Widget> widgets = [];
     widgets.add(
       SizedBox(
@@ -174,18 +176,7 @@ class ReviewsTab extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _ratingView(controller),
-            // Container(
-            //   width: MediaQuery.of(Get.context).size.width / 3,
-            //   child: CustomOutLinedButton(
-            //     text: 'addComment'.tr,
-            //     colorText: LocalStorage().primaryColor(),
-            //     onPressed: () {
-            //       _buildRatingDialog(controller);
-            //     },
-            //     borderColor: LocalStorage().primaryColor(),
-            //   ),
-            // ),
+            _ratingView(),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
@@ -199,7 +190,7 @@ class ReviewsTab extends StatelessWidget {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    _buildRatingDialog(controller);
+                    _buildRatingDialog();
                   }),
             ),
           ],
@@ -281,7 +272,7 @@ class ReviewsTab extends StatelessWidget {
                             Expanded(
                               child: CustomText(
                                 alignment: AlignmentDirectional.topStart,
-                                text: _buildText(controller,
+                                text: _buildText(
                                     controller.reviews.indexOf(element)),
                                 fontSize: 14,
                                 color: Colors.grey.shade700,
@@ -304,7 +295,7 @@ class ReviewsTab extends StatelessWidget {
     return widgets;
   }
 
-  _buildText(ProductDetailsController controller, int index) {
+  _buildText(int index) {
     String name = controller.reviews[index].userName;
     int time = controller.reviews[index].time;
     return '${'by'.tr} $name \n${'on'.tr} ${_getDateString(time)}';
@@ -327,7 +318,7 @@ class ReviewsTab extends StatelessWidget {
     }
   }
 
-  double _calculateRating(ProductDetailsController controller) {
+  double _calculateRating() {
     int oneStar = 0;
     int twoStar = 0;
     int threeStar = 0;

@@ -11,15 +11,17 @@ import 'package:get/get.dart';
 import 'components/search_box.dart';
 
 class SearchScreen extends StatelessWidget {
+  final controller = Get.find<SearchController>();
+
   @override
   Widget build(BuildContext context) {
-    Get.put(SearchController()).loading.value = false;
     return Scaffold(
       appBar: CustomAppBar(
         text: 'search'.tr,
         elevation: 0,
       ),
       body: GetBuilder<SearchController>(
+        init: SearchController(),
         builder: (controller) => Column(
           children: [
             Container(

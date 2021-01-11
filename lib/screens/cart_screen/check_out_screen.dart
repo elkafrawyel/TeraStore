@@ -18,11 +18,13 @@ class CheckOutScreen extends StatelessWidget {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController detailsController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
+  final homeController = Get.find<MainController>();
+  final controller = Get.find<GeneralController>();
 
   CheckOutScreen() {
-    Get.put(GeneralController()).getAddressList();
-    nameController.text = Get.find<MainController>().user.name;
-    phoneController.text = Get.find<MainController>().user.phone;
+    controller.getAddressList();
+    nameController.text = homeController.user.name;
+    phoneController.text = homeController.user.phone;
   }
 
   @override
@@ -101,6 +103,7 @@ class CheckOutScreen extends StatelessWidget {
 
   _buildAddressMenu() {
     return GetBuilder<GeneralController>(
+      init: GeneralController(),
       builder: (controller) => Column(
         children: [
           Visibility(

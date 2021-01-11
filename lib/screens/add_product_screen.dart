@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/add_product_controller.dart';
 import 'package:flutter_app/core/controllers/home_controller.dart';
@@ -20,21 +21,24 @@ class AddProductScreen extends StatelessWidget {
   final TextEditingController priceController = TextEditingController();
   final TextEditingController discountPriceController = TextEditingController();
 
+  final controller = Get.find<AddProductController>();
+  final homeController = Get.find<HomeController>();
+
   AddProductScreen() {
-    Get.find<HomeController>().categoryModel = null;
-    Get.find<HomeController>().subCategoryModel = null;
+    homeController.categoryModel = null;
+    homeController.subCategoryModel = null;
+    controller.productImage = null;
   }
 
   @override
   Widget build(BuildContext context) {
-    Get.put(AddProductController());
-
     return Scaffold(
       appBar: CustomAppBar(
         text: 'addProduct'.tr,
       ),
       body: SingleChildScrollView(
         child: GetBuilder<AddProductController>(
+          init: AddProductController(),
           builder: (controller) => Stack(
             children: [
               Padding(
@@ -46,7 +50,7 @@ class AddProductScreen extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      _productDetailsForm(controller)
+                      _productDetailsForm()
                     ],
                   ),
                 ),
@@ -99,13 +103,13 @@ class AddProductScreen extends StatelessWidget {
 
   imgFromCamera() async {
     PickedFile image = await ImagePicker().getImage(source: ImageSource.camera);
-    Get.find<AddProductController>().setProductImage(File(image.path));
+    controller.setProductImage(File(image.path));
   }
 
   imgFromGallery() async {
     PickedFile image =
         await ImagePicker().getImage(source: ImageSource.gallery);
-    Get.find<AddProductController>().setProductImage(File(image.path));
+    controller.setProductImage(File(image.path));
   }
 
   Widget _productImage(AddProductController controller) {
@@ -137,7 +141,7 @@ class AddProductScreen extends StatelessWidget {
     );
   }
 
-  Widget _productDetailsForm(AddProductController controller) {
+  Widget _productDetailsForm() {
     return Form(
       key: _formKey,
       child: Padding(
@@ -211,7 +215,7 @@ class AddProductScreen extends StatelessWidget {
                 colorBackground: LocalStorage().primaryColor(),
                 colorText: Colors.white,
                 onPressed: () {
-                  _addProduct(controller);
+                  _addProduct();
                 },
               ),
             )
@@ -221,7 +225,7 @@ class AddProductScreen extends StatelessWidget {
     );
   }
 
-  void _addProduct(AddProductController controller) {
+  void _addProduct() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
 

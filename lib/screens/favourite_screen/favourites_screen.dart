@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/FavouriteController.dart';
+import 'package:flutter_app/controllers/FavouriteController.dart';
 import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';

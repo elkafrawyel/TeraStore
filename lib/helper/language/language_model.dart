@@ -1,4 +1,3 @@
-
 class LanguageData {
   final String flag;
   final String name;

@@ -13,7 +13,6 @@ class ProductModel {
 
   // add also category name, subCategory name,
 
-
   //run time attributes
   bool isNew = false;
   bool isFav = false;

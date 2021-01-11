@@ -117,7 +117,8 @@ class CommonMethods {
     );
   }
 
-  Future<bool> customAlert({String title,String message, Function action}) async {
+  Future<bool> customAlert(
+      {String title, String message, Function action}) async {
     return showDialog(
       context: Get.context,
       builder: (ctx) => AlertDialog(
@@ -129,7 +130,6 @@ class CommonMethods {
             onPressed: () {
               Get.back();
               action();
-
             },
           ),
           CustomButton(

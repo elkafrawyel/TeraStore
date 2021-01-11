@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/controllers/main_controller.dart';
 import 'package:flutter_app/helper/language/language_model.dart';
 import 'package:get/get.dart';
 

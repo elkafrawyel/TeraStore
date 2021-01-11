@@ -20,10 +20,10 @@ dependencies:
   google_sign_in:
   firebase_core:
   firebase_auth:
-  sms_autofill:
+  cloud_firestore:
+  firebase_messaging:
   firebase_storage:
   flutter_facebook_login:
-  cloud_firestore:
   splash_screen_view:
   shared_preferences:
   rating_bar:
@@ -31,15 +31,14 @@ dependencies:
   badges:
   carousel_slider:
   flutter_launcher_icons:
-  bottom_bar_with_sheet:
   get_storage:
   image_picker:
   getwidget:
   url_launcher:
-  flutter_svg:
   flutter_colorpicker:
   pin_entry_field:
-
+  flutter_local_notifications:
+  flutter_ringtone_player:
 
 dev_dependencies:
   flutter_test:

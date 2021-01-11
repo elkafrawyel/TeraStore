@@ -11,7 +11,9 @@ class PleaseWaitView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(backgroundColor: Colors.white,),
+          CircularProgressIndicator(
+            backgroundColor: Colors.white,
+          ),
           SizedBox(
             height: 20,
           ),

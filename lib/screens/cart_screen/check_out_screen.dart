@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/general_controller.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/a_storage/local_storage.dart';
+import 'package:flutter_app/controllers/general_controller.dart';
+import 'package:flutter_app/controllers/main_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/address_model.dart';
 import 'package:flutter_app/screens/cart_screen/payment_screen.dart';
@@ -9,9 +10,9 @@ import 'package:flutter_app/screens/custom_widgets/button/custom_outlined_button
 import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_outline_text_form_field.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
-import 'package:flutter_app/screens/user_screens/add_address_screen.dart';
-import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
+
+import 'file:///F:/Apps/My%20Flutter%20Apps/TeraStore/lib/screens/add_address_screen.dart';
 
 class CheckOutScreen extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();

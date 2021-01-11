@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/add_product_controller.dart';
-import 'package:flutter_app/core/controllers/home_controller.dart';
+import 'package:flutter_app/a_storage/local_storage.dart';
+import 'package:flutter_app/controllers/add_product_controller.dart';
+import 'package:flutter_app/controllers/home_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
 import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/menus/categories_drop_down_menu.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_outline_text_form_field.dart';
-import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 

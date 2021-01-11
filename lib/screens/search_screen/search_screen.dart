@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/search_controller.dart';
+import 'package:flutter_app/a_storage/local_storage.dart';
+import 'package:flutter_app/controllers/search_controller.dart';
 import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
 import 'package:flutter_app/screens/details_screen/details_screen.dart';
-import 'package:flutter_app/screens/main_screen/components/product_card.dart';
-import 'package:flutter_app/storage/local_storage.dart';
+import 'package:flutter_app/screens/home_screen/components/product_card.dart';
 import 'package:get/get.dart';
 
 import 'components/search_box.dart';

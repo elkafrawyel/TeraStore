@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/storage/local_storage.dart';
+import 'package:flutter_app/a_storage/local_storage.dart';
 
 class CustomDescription extends StatefulWidget {
   final String text;
@@ -32,20 +32,21 @@ class _CustomDescriptionState extends State<CustomDescription> {
             child: Padding(
               padding: const EdgeInsetsDirectional.only(top: 10),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    isSeeMore
-                        ? Text(
-                            "Show Less",
-                            style: TextStyle(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  isSeeMore
+                      ? Text(
+                          "Show Less",
+                          style: TextStyle(
+                            color: LocalStorage().primaryColor(),
+                            fontSize: 14,
+                          ),
+                        )
+                      : Text("Show More",
+                          style: TextStyle(
                               color: LocalStorage().primaryColor(),
-                              fontSize: 14,
-                            ),
-                          )
-                        : Text("Show More",
-                            style: TextStyle(
-                                color: LocalStorage().primaryColor(), fontSize: 14))
-                  ],
+                              fontSize: 14))
+                ],
               ),
             ),
           )

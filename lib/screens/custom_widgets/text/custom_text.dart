@@ -8,11 +8,13 @@ class CustomText extends StatelessWidget {
   final int maxLines;
   final FontWeight fontWeight;
 
-  CustomText({this.text = '',
-    this.color = Colors.black,
-    this.fontSize = 14,
-    this.alignment = AlignmentDirectional.topStart,
-    this.maxLines, this.fontWeight});
+  CustomText(
+      {this.text = '',
+      this.color = Colors.black,
+      this.fontSize = 14,
+      this.alignment = AlignmentDirectional.topStart,
+      this.maxLines,
+      this.fontWeight});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,8 @@ class CustomText extends StatelessWidget {
       child: Text(
         text,
         maxLines: maxLines,
-        style: TextStyle(color: color, fontSize: fontSize,fontWeight: fontWeight),
+        style:
+            TextStyle(color: color, fontSize: fontSize, fontWeight: fontWeight),
       ),
     );
   }

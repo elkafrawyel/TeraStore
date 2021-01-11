@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/cart_controller.dart';
+import 'package:flutter_app/a_storage/local_storage.dart';
+import 'package:flutter_app/controllers/cart_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/cart_model.dart';
 import 'package:flutter_app/screens/cart_screen/check_out_screen.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/please_wait_loading.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
-import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 
 import '../details_screen/details_screen.dart';

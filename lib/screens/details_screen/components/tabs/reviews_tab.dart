@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_app/core/controllers/product_details_controller.dart';
+import 'package:flutter_app/a_storage/local_storage.dart';
+import 'package:flutter_app/controllers/product_details_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/model/review_model.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
-import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';

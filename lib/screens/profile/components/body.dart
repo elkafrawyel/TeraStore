@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/a_storage/local_storage.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/model/user_model.dart';
+import 'package:flutter_app/screens/change_password_screen.dart';
 import 'package:flutter_app/screens/custom_widgets/button/custom_outlined_button.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:flutter_app/screens/details_screen/details_screen.dart';
 import 'package:flutter_app/screens/profile/components/my_product_card.dart';
-import 'package:flutter_app/screens/user_screens/change_password_screen.dart';
-import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 
 class Body extends StatelessWidget {

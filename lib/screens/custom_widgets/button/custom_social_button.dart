@@ -15,7 +15,7 @@ class CustomSocialButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.white38,
-        border: Border.all(width: 0.5, color: Colors.grey),
+        border: Border.all(width: 0.4, color: Colors.grey),
       ),
       child: FlatButton(
           padding: EdgeInsets.all(15),
@@ -40,6 +40,7 @@ class CustomSocialButton extends StatelessWidget {
                 child: CustomText(
                   text: text,
                   fontSize: 16,
+                  color: Colors.white,
                 ),
               )
             ],

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
+import 'package:flutter_app/a_storage/local_storage.dart';
+import 'package:flutter_app/controllers/main_controller.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
-import 'package:flutter_app/screens/main_screen/home_screen.dart';
-import 'package:flutter_app/storage/local_storage.dart';
+import 'package:flutter_app/screens/home_screen/home_screen.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 

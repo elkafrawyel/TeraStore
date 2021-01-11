@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/product_model.dart';
 import 'package:flutter_app/screens/details_screen/details_screen.dart';
-import 'package:flutter_app/screens/main_screen/components/product_card.dart';
+import 'package:flutter_app/screens/home_screen/components/product_card.dart';
 import 'package:get/get.dart';
 
 class SimilarProducts extends StatelessWidget {
@@ -28,8 +28,7 @@ class SimilarProducts extends StatelessWidget {
         product: products[products.indexOf(element)],
         press: () {
           Get.to(
-            DetailsScreen(
-                productId: products[products.indexOf(element)].id),
+            DetailsScreen(productId: products[products.indexOf(element)].id),
           );
         },
       ));

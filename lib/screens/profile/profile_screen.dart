@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
-import 'package:flutter_app/core/controllers/profile_controller.dart';
+import 'package:flutter_app/controllers/main_controller.dart';
+import 'package:flutter_app/controllers/profile_controller.dart';
 import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
+import 'package:flutter_app/screens/edit_profile_screen.dart';
 import 'package:flutter_app/screens/profile/components/body.dart';
-import 'package:flutter_app/screens/user_screens/edit_profile_screen.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {

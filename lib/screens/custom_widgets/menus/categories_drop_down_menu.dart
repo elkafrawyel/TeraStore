@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/home_controller.dart';
+import 'package:flutter_app/controllers/home_controller.dart';
 import 'package:flutter_app/model/category_model.dart';
 import 'package:flutter_app/model/sub_category_model.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';

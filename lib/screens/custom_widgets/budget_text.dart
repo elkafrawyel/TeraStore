@@ -1,6 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/cart_controller.dart';
+import 'package:flutter_app/controllers/cart_controller.dart';
 import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
 

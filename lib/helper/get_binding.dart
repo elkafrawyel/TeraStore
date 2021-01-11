@@ -1,15 +1,15 @@
-import 'package:flutter_app/core/controllers/FavouriteController.dart';
-import 'package:flutter_app/core/controllers/add_product_controller.dart';
-import 'package:flutter_app/core/controllers/auth_controller.dart';
-import 'package:flutter_app/core/controllers/cart_controller.dart';
-import 'package:flutter_app/core/controllers/edit_product_controller.dart';
-import 'package:flutter_app/core/controllers/general_controller.dart';
-import 'package:flutter_app/core/controllers/home_controller.dart';
-import 'package:flutter_app/core/controllers/main_controller.dart';
-import 'package:flutter_app/core/controllers/product_details_controller.dart';
-import 'package:flutter_app/core/controllers/products_controller.dart';
-import 'package:flutter_app/core/controllers/profile_controller.dart';
-import 'package:flutter_app/core/controllers/search_controller.dart';
+import 'package:flutter_app/controllers/FavouriteController.dart';
+import 'package:flutter_app/controllers/add_product_controller.dart';
+import 'package:flutter_app/controllers/auth_controller.dart';
+import 'package:flutter_app/controllers/cart_controller.dart';
+import 'package:flutter_app/controllers/edit_product_controller.dart';
+import 'package:flutter_app/controllers/general_controller.dart';
+import 'package:flutter_app/controllers/home_controller.dart';
+import 'package:flutter_app/controllers/main_controller.dart';
+import 'package:flutter_app/controllers/product_details_controller.dart';
+import 'package:flutter_app/controllers/products_controller.dart';
+import 'package:flutter_app/controllers/profile_controller.dart';
+import 'package:flutter_app/controllers/search_controller.dart';
 import 'package:get/get.dart';
 
 class GetBinding implements Bindings {

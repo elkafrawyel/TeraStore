@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/profile_controller.dart';
+import 'package:flutter_app/controllers/profile_controller.dart';
 import 'package:flutter_app/helper/CommonMethods.dart';
 import 'package:flutter_app/helper/Constant.dart';
 import 'package:flutter_app/model/product_model.dart';

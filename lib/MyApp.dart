@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/a_storage/local_storage.dart';
 import 'package:flutter_app/helper/language/Translation.dart';
-import 'package:flutter_app/screens/start_up_screens/splash_screen.dart';
-import 'package:flutter_app/storage/local_storage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'helper/get_binding.dart';
+import 'screens/splash_screen.dart';
 
 class MyApp extends StatefulWidget {
   @override

@@ -43,7 +43,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(
+                  padding: EdgeInsets.only(
                       top: kDefaultPadding / 2,
                       left: kDefaultPadding / 2,
                       right: kDefaultPadding / 2,
@@ -56,7 +56,7 @@ class LoginScreen extends StatelessWidget {
                           height: kDefaultPadding,
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.only(
+                          padding: EdgeInsetsDirectional.only(
                               start: kDefaultPadding, top: kDefaultPadding),
                           child: CustomText(
                             text: 'welcome'.tr,
@@ -87,6 +87,7 @@ class LoginScreen extends StatelessWidget {
                           keyboardType: TextInputType.emailAddress,
                           labelColor: Colors.white,
                           hintColor: Colors.white,
+                          textColor: Colors.white,
                         ),
                         SizedBox(
                           height: kDefaultPadding,
@@ -102,6 +103,7 @@ class LoginScreen extends StatelessWidget {
                           keyboardType: TextInputType.text,
                           labelColor: Colors.white,
                           hintColor: Colors.white,
+                          textColor: Colors.white,
                         ),
                         SizedBox(
                           height: kDefaultPadding,
@@ -156,7 +158,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: kDefaultPadding / 2,
+                          height: kDefaultPadding,
                         ),
                         CustomText(
                             text: 'or'.tr,
@@ -164,7 +166,7 @@ class LoginScreen extends StatelessWidget {
                             fontSize: 18,
                             color: Colors.white),
                         SizedBox(
-                          height: kDefaultPadding / 2,
+                          height: kDefaultPadding,
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width * 0.9,
@@ -188,7 +190,20 @@ class LoginScreen extends StatelessWidget {
                               controller.signInGoogle();
                             },
                           ),
-                        )
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: CustomSocialButton(
+                            imageAsset: twitterImage,
+                            text: 'signInTwitter'.tr,
+                            onPressed: () {
+                              controller.signInGoogle();
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),

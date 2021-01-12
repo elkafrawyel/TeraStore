@@ -32,6 +32,7 @@ Map<String, String> en = {
   'passwordIsEmpty': 'Password is empty',
   'signIn': 'Sign In',
   'signInFaceBook': 'Sign in with facebook',
+  'signInTwitter': 'Sign in with twitter',
   'signInGoogle': 'Sign in with google',
   'signInToContinue': 'Sign in to continue',
   'signUp': 'Sign Up',

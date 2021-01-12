@@ -29,17 +29,9 @@ const emptyImageFace = 'src/json/empty.json';
 const emptyImageBox = 'src/json/empty_box.json';
 const newImage = 'src/images/Icon_New.png';
 const facebookImage = 'src/images/facebook.png';
+const twitterImage = 'src/images/twitter.png';
 const googleImage = 'src/images/google.png';
-const exploreImage = 'src/images/Icon_Explore.png';
-const cartImage = 'src/images/Icon_Cart.png';
-const accountImage = 'src/images/Icon_User.png';
-const editProfileImage = 'src/images/edit_profile.png';
-const locationImage = 'src/images/Icon_Location.png';
-const historyImage = 'src/images/Icon_History.png';
 const deleteImage = 'src/images/Icon_Delete.png';
-const cardsImage = 'src/images/Icon_Payment.png';
-const notificationImage = 'src/images/Icon_Alert.png';
-const logOutImage = 'src/images/Icon_Exit.png';
 
 // ================ Strings ========================
 const defaultImageUrl =

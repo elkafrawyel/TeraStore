@@ -34,6 +34,7 @@ Map<String, String> ar = {
   'passwordIsEmpty': 'كلمة المرور فارغة',
   'signIn': 'تسجيل الدخول',
   'signInFaceBook': 'التسجيل بواسطة فيس بوك',
+  'signInTwitter': 'التسجيل بواسطة تويتر',
   'signInGoogle': 'التسجيل بواسطة جوجل',
   'signInToContinue': 'قم بتسجيل الدخول للمتابعة',
   'signUp': 'حساب جديد',

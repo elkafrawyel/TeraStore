@@ -40,7 +40,7 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: kDefaultPadding * 2,
+                      top: kDefaultPadding,
                       left: kDefaultPadding / 2,
                       right: kDefaultPadding / 2,
                       bottom: kDefaultPadding * 2),
@@ -52,14 +52,14 @@ class RegisterScreen extends StatelessWidget {
                           key: _formKey,
                           child: Column(
                             children: [
-                              SizedBox(
-                                height: 20,
-                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   IconButton(
-                                    icon: Icon(Icons.arrow_back),
+                                    icon: Icon(
+                                      Icons.arrow_back,
+                                      color: Colors.white,
+                                    ),
                                     onPressed: () {
                                       Get.back();
                                     },
@@ -83,6 +83,7 @@ class RegisterScreen extends StatelessWidget {
                                 validateEmptyText: 'nameIsEmpty'.tr,
                                 labelColor: Colors.white,
                                 hintColor: Colors.white,
+                                textColor: Colors.white,
                               ),
                               SizedBox(
                                 height: 20,
@@ -96,6 +97,7 @@ class RegisterScreen extends StatelessWidget {
                                 keyboardType: TextInputType.emailAddress,
                                 labelColor: Colors.white,
                                 hintColor: Colors.white,
+                                textColor: Colors.white,
                               ),
                               SizedBox(
                                 height: 20,
@@ -104,11 +106,13 @@ class RegisterScreen extends StatelessWidget {
                                 text: 'phone'.tr,
                                 hintText: 'phoneHint'.tr,
                                 controller: phoneController,
+                                suffixText: '+2',
                                 validateEmptyText: 'phoneIsEmpty'.tr,
                                 keyboardType: TextInputType.phone,
                                 labelText: 'phone'.tr,
                                 labelColor: Colors.white,
                                 hintColor: Colors.white,
+                                textColor: Colors.white,
                               ),
                               SizedBox(
                                 height: 20,
@@ -124,6 +128,7 @@ class RegisterScreen extends StatelessWidget {
                                 keyboardType: TextInputType.text,
                                 labelColor: Colors.white,
                                 hintColor: Colors.white,
+                                textColor: Colors.white,
                               ),
                               SizedBox(
                                 height: 20,

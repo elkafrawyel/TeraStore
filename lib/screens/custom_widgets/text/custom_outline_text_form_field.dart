@@ -16,6 +16,7 @@ class CustomOutlinedTextFormField extends StatelessWidget {
   final bool required;
   final Color hintColor;
   final Color labelColor;
+  final Color textColor;
 
   CustomOutlinedTextFormField({
     this.isPassword = false,
@@ -33,13 +34,14 @@ class CustomOutlinedTextFormField extends StatelessWidget {
     this.required = true,
     this.hintColor,
     this.labelColor,
+    this.textColor = Colors.black,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: isPassword,
-      style: TextStyle(fontSize: 16),
+      style: TextStyle(fontSize: 16, color: textColor),
       controller: controller,
       keyboardType: keyboardType,
       validator: !required

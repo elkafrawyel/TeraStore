@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/controllers/general_controller.dart';
+import 'package:tera/data/requests/add_address_request.dart';
 import 'package:tera/helper/Constant.dart';
-import 'package:tera/model/address_model.dart';
 import 'package:tera/screens/add_address_screen/components/locations_menu.dart';
 import 'package:tera/screens/custom_widgets/button/custom_button.dart';
 import 'package:tera/screens/custom_widgets/custom_appbar.dart';
@@ -86,10 +86,11 @@ class AddAddressScreen extends StatelessWidget {
   void _add() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      Address address =
-          Address(title: titleController.text, body: detailsController.text);
-      Get.find<GeneralController>().addAddress(address);
-      Get.back();
+      AddAddressRequest addressRequest = AddAddressRequest(
+        title: titleController.text,
+        completeAdress: detailsController.text,
+      );
+      Get.find<GeneralController>().addAddress(addressRequest);
     }
   }
 }

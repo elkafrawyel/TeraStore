@@ -22,4 +22,26 @@ class _$AddressService extends AddressService {
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> getAddresses() {
+    final $url = '/getUserAdress';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> deleteUserAdress(String id) {
+    final $url = '/deleteUserAdress/$id';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> addAddress(AddAddressRequest addAddressRequest) {
+    final $url = '/createUserAdress';
+    final $body = addAddressRequest;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<dynamic, dynamic>($request);
+  }
 }

@@ -49,6 +49,15 @@ class _$UserService extends UserService {
   }
 
   @override
+  Future<Response<dynamic>> changePassword(
+      ChangePasswordRequest changePasswordRequest) {
+    final $url = '/changePassword';
+    final $body = changePasswordRequest;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<dynamic>> editProfileWithImage(
       String name, String email, String phone, String image) {
     final $url = '/editProfile';

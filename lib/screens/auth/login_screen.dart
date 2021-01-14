@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/controllers/auth_controller.dart';
+import 'package:tera/helper/CheckInternet.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
 import 'package:tera/screens/custom_widgets/button/custom_button.dart';
@@ -17,6 +18,7 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
 
   final controller = Get.put(AuthController());
+  final CheckInternet check = CheckInternet();
 
   @override
   Widget build(BuildContext context) {

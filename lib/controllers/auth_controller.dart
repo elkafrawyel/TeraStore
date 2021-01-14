@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:tera/a_repositories/user_repo.dart';
 import 'package:tera/a_storage/local_storage.dart';
@@ -61,13 +63,12 @@ class AuthController extends MainController {
     switch (result.status) {
       case FacebookLoginStatus.error:
         print("Error");
-        CommonMethods().showMessage(isArabic ? 'رسالة' : 'Message',
-            isArabic ? 'حدث خطأ ما' : 'Error Happened');
+        CommonMethods().showSnackBar('error'.tr, iconData: Icons.error);
         break;
       case FacebookLoginStatus.cancelledByUser:
         print("CancelledByUser");
-        CommonMethods().showMessage(isArabic ? 'رسالة' : 'Message',
-            isArabic ? 'تم الغاء العملية' : 'CancelledByUser');
+        CommonMethods()
+            .showSnackBar('cancelledByUser'.tr, iconData: Icons.error);
         break;
       case FacebookLoginStatus.loggedIn:
         print("LoggedIn");
@@ -88,38 +89,6 @@ class AuthController extends MainController {
             uid: graphModel.id);
 
         await UserRepo().socialSignUp(socialRequest);
-    }
-  }
-
-  handleError(error) {
-    switch (error.code) {
-      case 'account-exists-with-different-credential':
-        CommonMethods().showMessage(
-            isArabic ? 'خطأ' : 'Error',
-            isArabic
-                ? 'هذا الايميل موجود بالفعل حاول التسجيل بطريق اخري'
-                : 'Account Exists ,Try to login with different method.');
-        break;
-      case 'user-not-found':
-        CommonMethods().showMessage(isArabic ? 'خطأ' : 'Error',
-            isArabic ? 'لايوجد مستخدم بهذة البيانات' : 'User not found');
-        break;
-      case 'email-already-in-use':
-        CommonMethods().showMessage(isArabic ? 'خطأ' : 'Error',
-            isArabic ? 'الايميل مستخدم بالفعل' : 'email already in use');
-        break;
-      case 'invalid-email':
-        CommonMethods().showMessage(isArabic ? 'خطأ' : 'Error',
-            isArabic ? 'البريد الالكتروني خطأ' : 'invalid email');
-        break;
-      case 'wrong-password':
-        CommonMethods().showMessage(isArabic ? 'خطأ' : 'Error',
-            isArabic ? 'كلمة المرور خطأ' : 'Wrong Password');
-        break;
-      case 'weak-password':
-        CommonMethods().showMessage(isArabic ? 'خطأ' : 'Error',
-            isArabic ? 'كلمة المرور ضعيفة' : 'Weak Password');
-        break;
     }
   }
 }

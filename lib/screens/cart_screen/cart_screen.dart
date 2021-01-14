@@ -36,7 +36,7 @@ class CartScreen extends StatelessWidget {
                       : controller.empty.value
                           ? EmptyView(
                               message: 'emptyCart'.tr,
-                              emptyViews: EmptyViews.Box,
+                              emptyViews: EmptyViews.Magnifier,
                             )
                           : ListView.builder(
                               itemCount: controller.products.length,

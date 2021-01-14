@@ -39,6 +39,7 @@ dependencies:
   pin_entry_field:
   flutter_local_notifications:
   flutter_ringtone_player:
+  data_connection_checker:
 
 dev_dependencies:
   flutter_test:

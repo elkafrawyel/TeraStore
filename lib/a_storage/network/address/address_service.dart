@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:chopper/chopper.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/data/requests/add_address_request.dart';
 
 part 'address_service.chopper.dart';
 
@@ -9,7 +12,18 @@ abstract class AddressService extends ChopperService {
   @Get(path: '/getGovernorates')
   Future<Response> getGovernorates();
 
+  @Get(path: '/getUserAdress')
+  Future<Response> getAddresses();
+
+  @Get(path: '/deleteUserAdress/{id}')
+  Future<Response> deleteUserAdress(@Path() String id);
+
+  @Post(path: '/createUserAdress')
+  Future<Response> addAddress(@Body() AddAddressRequest addAddressRequest);
+
   static AddressService create() {
+    String apiToken = LocalStorage().getString(LocalStorage.token);
+    String language = LocalStorage().getLanguage();
     final client = ChopperClient(
       baseUrl: baseUrl,
       services: [_$AddressService()],
@@ -25,6 +39,12 @@ abstract class AddressService extends ChopperService {
         ),
         HeadersInterceptor(
           {HttpHeaders.cacheControlHeader: 'no-Cache'},
+        ),
+        HeadersInterceptor(
+          {HttpHeaders.acceptLanguageHeader: language},
+        ),
+        HeadersInterceptor(
+          {HttpHeaders.authorizationHeader: 'Bearer $apiToken'},
         ),
       ],
     );

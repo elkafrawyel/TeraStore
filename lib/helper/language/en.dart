@@ -133,4 +133,6 @@ Map<String, String> en = {
   'enterValidPhone': 'Enter valid phone number',
   'enterPhone': 'Enter your phone number.',
   'enterValidEmail': 'Enter valid email',
+  'cancelledByUser': 'CancelledByUser',
+  'serverNotFound': 'Can\;t connect to server. try again later',
 };

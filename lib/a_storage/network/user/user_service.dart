@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:chopper/chopper.dart';
 import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/data/requests/change_password_request.dart';
 import 'package:tera/data/requests/edit_profile_request.dart';
 import 'package:tera/data/requests/firebase_token_request.dart';
 import 'package:tera/data/requests/login_request.dart';
@@ -23,6 +24,11 @@ abstract class UserService extends ChopperService {
 
   @Post(path: '/editProfile')
   Future<Response> editProfile(@Body() EditProfileRequest editProfileRequest);
+
+  @Post(path: '/changePassword')
+  Future<Response> changePassword(
+    @Body() ChangePasswordRequest changePasswordRequest,
+  );
 
   @Post(path: '/editProfile')
   @multipart

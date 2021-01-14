@@ -1,49 +1,75 @@
+import 'dart:io';
+
 import 'package:chopper/chopper.dart' as chopper;
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_repositories/user_repo.dart';
 import 'package:tera/helper/CommonMethods.dart';
 
 class NetworkMethods {
-  ApiState handleResponse(chopper.Response response) {
-    switch (response.statusCode) {
-      case 200:
-      case 201:
-      case 202:
-        print('OK');
-        return ApiState.success;
+  handleResponse({
+    Future<chopper.Response<dynamic>> call,
+    Function(chopper.Response response) whenSuccess,
+  }) async {
+    try {
+      chopper.Response response = await call;
+      switch (response.statusCode) {
+        case 200:
+          print('OK');
+          whenSuccess(response);
+          return ApiState.success;
 
-      case 400:
-        print('Bad Request');
-        return ApiState.error;
+        case 400:
+          print('Bad Request');
+          CommonMethods()
+              .showSnackBar('serverNotFound'.tr, iconData: Icons.error);
+          return ApiState.error;
 
-      case 401:
-        print('Unauthorized');
-        return ApiState.unauthorized;
+        case 401:
+          _unauthorized();
+          return ApiState.unauthorized;
 
-      case 403:
-        print('Forbidden Request');
-        return ApiState.error;
+        case 403:
+          print('Forbidden Request');
+          CommonMethods()
+              .showSnackBar('serverNotFound'.tr, iconData: Icons.error);
+          return ApiState.error;
 
-      case 404:
-        print('Page Not Found');
-        return ApiState.error;
+        case 404:
+          print('Page Not Found');
+          CommonMethods()
+              .showSnackBar('serverNotFound'.tr, iconData: Icons.error);
+          return ApiState.error;
 
-      case 405:
-        print('Method Not Allowed');
-        CommonMethods().showMessage('error'.tr, 'Method Not Allowed');
-        return ApiState.error;
+        case 405:
+          print('Method Not Allowed');
+          CommonMethods()
+              .showSnackBar('serverNotFound'.tr, iconData: Icons.error);
+          return ApiState.error;
 
-      case 406:
-      case 429:
-        print('Not Acceptable');
-        CommonMethods().showMessage('error'.tr, 'Not Acceptable');
-        return ApiState.error;
+        case 406:
+        case 429:
+          print('Not Acceptable');
+          CommonMethods()
+              .showSnackBar('serverNotFound'.tr, iconData: Icons.error);
+          return ApiState.error;
 
-      case 500:
-        print('Internal Server Error');
-        CommonMethods().showMessage('error'.tr, 'Internal Server Error');
-        return ApiState.error;
+        case 500:
+          print('Internal Server Error');
+          CommonMethods()
+              .showSnackBar('serverNotFound'.tr, iconData: Icons.error);
+          return ApiState.error;
+      }
+    } on SocketException {
+      CommonMethods()
+          .showSnackBar('noInternetDialogTitle'.tr, iconData: Icons.wifi_off);
     }
-    return ApiState.error;
+  }
+
+  void _unauthorized() {
+    print('Unauthorized');
+    UserRepo().localLogOut();
+    CommonMethods().showMessage('message'.tr, 'Unauthorized Login Again');
   }
 }
 

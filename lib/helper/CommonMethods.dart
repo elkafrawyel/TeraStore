@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/helper/Constant.dart';
 import 'package:tera/screens/custom_widgets/button/custom_button.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 class CommonMethods {
+  showSnackBar(String message, {IconData iconData = Icons.info}) {
+    Get.showSnackbar(GetBar(
+      message: message,
+      icon: Icon(
+        iconData,
+        color: Colors.white,
+        size: 30,
+      ),
+      duration: Duration(seconds: 3),
+    ));
+  }
+
   showMessage(String title, String body) {
     Get.snackbar(title, body,
         messageText: CustomText(
           text: body,
-          color: Colors.white,
           fontSize: 16,
         ),
         titleText: CustomText(
           text: title,
-          color: Colors.white,
           fontWeight: FontWeight.bold,
           fontSize: 18,
         ),
         snackStyle: SnackStyle.FLOATING,
-        backgroundColor: LocalStorage().primaryColor(),
-        colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM);
   }
 

@@ -4,7 +4,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tera/a_repositories/user_repo.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/data/models/user_model.dart';
+import 'package:tera/data/requests/change_password_request.dart';
 import 'package:tera/data/requests/edit_profile_request.dart';
+import 'package:tera/helper/data_resource.dart';
 import 'package:tera/helper/language/language_model.dart';
 
 class MainController extends GetxController {
@@ -46,6 +48,25 @@ class MainController extends GetxController {
 
     update();
     print(user);
+  }
+
+  changePassword(
+    ChangePasswordRequest changePasswordRequest,
+  ) {
+    loading.value = true;
+    update();
+    UserRepo().changePassword(
+      changePasswordRequest,
+      state: (callState) {
+        if (callState is Success) {
+          Get.close(2);
+        } else if (callState is Failure) {
+          print('Error from UI');
+        }
+      },
+    );
+    loading.value = false;
+    update();
   }
 
   setUserImage(PickedFile image) {

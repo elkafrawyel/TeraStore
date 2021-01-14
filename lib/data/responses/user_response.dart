@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:tera/data/models/user_model.dart';
 import 'package:tera/helper/CommonMethods.dart';
 
@@ -68,21 +68,26 @@ class VErrors {
   }
 
   printErrors() {
+    String message;
     if (name != null) {
-      CommonMethods().showMessage('errorTitle'.tr, name[0]);
+      message = name[0];
       return;
     } else if (email != null) {
-      CommonMethods().showMessage('errorTitle'.tr, email[0]);
+      message = email[0];
       return;
     } else if (phone != null) {
-      CommonMethods().showMessage('errorTitle'.tr, phone[0]);
+      message = phone[0];
       return;
     } else if (password != null) {
-      CommonMethods().showMessage('errorTitle'.tr, password[0]);
+      message = password[0];
       return;
     } else if (socialType != null) {
-      CommonMethods().showMessage('errorTitle'.tr, socialType[0]);
+      message = socialType[0];
       return;
     }
+    CommonMethods().showSnackBar(
+      message,
+      iconData: Icons.error,
+    );
   }
 }

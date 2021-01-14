@@ -6,6 +6,7 @@ class UserModel {
   String phone;
   String approved;
   String apiToken;
+  String socialType;
 
   UserModel({
     this.id,
@@ -15,6 +16,7 @@ class UserModel {
     this.phone,
     this.approved,
     this.apiToken,
+    this.socialType,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -25,6 +27,7 @@ class UserModel {
     phone = json['phone'];
     approved = json['approved'];
     apiToken = json['api_token'];
+    socialType = json['socialType'];
   }
 
   Map<String, dynamic> toJson() {
@@ -36,6 +39,7 @@ class UserModel {
     data['phone'] = this.phone;
     data['approved'] = this.approved;
     data['api_token'] = this.apiToken;
+    data['socialType'] = this.socialType;
     return data;
   }
 

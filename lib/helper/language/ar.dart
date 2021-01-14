@@ -132,4 +132,6 @@ Map<String, String> ar = {
   'enterValidPhone': 'أدخل رقم هاتف صحيح',
   'enterPhone': 'أدخل رقم هاتف',
   'enterValidEmail': 'أدخل ايميل صحيح',
+  'cancelledByUser': 'تم الغاء تسجيل الدخول',
+  'serverNotFound': 'لا يمكن الاتصال بالسيرفر. حاول لاحقا',
 };

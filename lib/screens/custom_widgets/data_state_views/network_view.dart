@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/helper/Constant.dart';
-import 'package:tera/screens/custom_widgets/button/custom_button.dart';
 
 class NetworkView extends StatelessWidget {
   final Function onPress;
@@ -14,7 +12,9 @@ class NetworkView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
+      width: MediaQuery.of(context).size.width,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Lottie.asset(noNetworkImage,
@@ -28,15 +28,18 @@ class NetworkView extends StatelessWidget {
             'noNetwork'.tr,
             style: TextStyle(fontSize: 20, color: Colors.black),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          CustomButton(
-            text: 'retry'.tr,
-            colorText: Colors.white,
-            colorBackground: LocalStorage().primaryColor(),
-            onPressed: onPress,
-          )
+          // SizedBox(
+          //   height: 20,
+          // ),
+          // Container(
+          //   width: MediaQuery.of(context).size.width / 2,
+          //   child: CustomButton(
+          //     text: 'retry'.tr,
+          //     colorText: Colors.white,
+          //     colorBackground: LocalStorage().primaryColor(),
+          //     onPressed: onPress.call(),
+          //   ),
+          // )
         ],
       ),
     );

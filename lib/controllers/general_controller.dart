@@ -1,7 +1,11 @@
+import 'package:get/get.dart';
 import 'package:tera/a_repositories/general_repo.dart';
 import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/data/models/address_model.dart';
+import 'package:tera/data/requests/add_address_request.dart';
 import 'package:tera/data/responses/locations_response.dart';
-import 'package:tera/model/address_model.dart';
+import 'package:tera/helper/CommonMethods.dart';
+import 'package:tera/helper/data_resource.dart';
 
 class GeneralController extends MainController {
   LocationsResponse locationsResponse;
@@ -18,6 +22,7 @@ class GeneralController extends MainController {
   void setLocation(Location locationModel) {
     selectedLocation = locationModel;
     cities = selectedLocation.cities;
+    selectedCity = null;
     update();
   }
 
@@ -30,40 +35,85 @@ class GeneralController extends MainController {
     if (locationsResponse == null) {
       loading.value = true;
       update();
-      GeneralRepo().getLocations((locationsResponse) {
-        this.locationsResponse = locationsResponse;
-        loading.value = false;
-        update();
-      });
+      GeneralRepo().getLocations(
+        state: (callState) {
+          if (callState is Success) {
+            locationsResponse = callState.data as LocationsResponse;
+            loading.value = false;
+            update();
+          } else if (callState is Failure) {
+            print(callState.errorMessage);
+          }
+        },
+      );
     }
   }
 
-  Address selectedAddress;
-  List<Address> addressList = [];
+  AddressModel selectedAddress;
+  List<AddressModel> addressList = [];
 
-  setAddress(Address address) {
+  setAddress(AddressModel address) {
     selectedAddress = address;
     update();
   }
 
   getAddressList() async {
-    // loading.value = true;
-    // List<Address> list = await GeneralRepo().getLocations();
-    // addressList.clear();
-    // addressList.addAll(list);
-    // loading.value = false;
-    // if (addressList.isEmpty) {
-    //   empty.value = true;
-    // } else {
-    //   empty.value = false;
-    // }
-    // update();
+    loading.value = true;
+    GeneralRepo().getAddresses(
+      state: (callState) {
+        if (callState is Success) {
+          addressList.clear();
+          addressList.addAll(callState.data as List<AddressModel>);
+          loading.value = false;
+          if (addressList.isEmpty) {
+            empty.value = true;
+          } else {
+            empty.value = false;
+          }
+          update();
+        } else if (callState is Failure) {
+          print(callState.errorMessage);
+        }
+      },
+    );
   }
 
-  addAddress(Address address) async {
-    int id = DateTime.now().millisecondsSinceEpoch;
-    address.id = id.toString();
-    await GeneralRepo().addAddress(address);
-    getAddressList();
+  addAddress(AddAddressRequest addressRequest) async {
+    if (selectedLocation == null) {
+      CommonMethods().showSnackBar('Choose from the list');
+      return;
+    }
+    if (selectedCity == null) {
+      CommonMethods().showSnackBar('Choose from the list');
+      return;
+    }
+    addressRequest.governorate = selectedLocation.governorate;
+    addressRequest.city = selectedCity.city;
+    await GeneralRepo().addAddress(
+      addressRequest,
+      state: (callState) {
+        Get.back();
+        getAddressList();
+      },
+    );
+  }
+
+  void deleteAddress(int index) {
+    GeneralRepo().deleteUserAdress(
+      addressList[index].id.toString(),
+      state: (callState) {
+        if (callState is Success) {
+          addressList.removeAt(index);
+          if (addressList.isEmpty) {
+            empty.value = true;
+          } else {
+            empty.value = false;
+          }
+          update();
+        } else if (callState is Failure) {
+          print('Failed to delete address');
+        }
+      },
+    );
   }
 }

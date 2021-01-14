@@ -26,6 +26,7 @@ const errorImage = 'src/json/error.json';
 const loadingImage = 'src/json/loading.json';
 const noNetworkImage = 'src/json/no_internet.json';
 const emptyImageFace = 'src/json/empty.json';
+const emptyImageMagnifier = 'src/json/empty_magnifier.json';
 const emptyImageBox = 'src/json/empty_box.json';
 const newImage = 'src/images/Icon_New.png';
 const facebookImage = 'src/images/facebook.png';

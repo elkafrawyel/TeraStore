@@ -89,16 +89,19 @@ class Body extends StatelessWidget {
                       SizedBox(
                         height: kDefaultPadding / 2,
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        child: CustomOutLinedButton(
-                          text: 'changePassword'.tr,
-                          onPressed: () {
-                            Get.to(ChangePasswordScreen());
-                          },
-                          colorText: LocalStorage().primaryColor(),
-                          colorBackground: Colors.white,
-                          borderColor: LocalStorage().primaryColor(),
+                      Visibility(
+                        visible: user.socialType == null,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          child: CustomOutLinedButton(
+                            text: 'changePassword'.tr,
+                            onPressed: () {
+                              Get.to(ChangePasswordScreen());
+                            },
+                            colorText: LocalStorage().primaryColor(),
+                            colorBackground: Colors.white,
+                            borderColor: LocalStorage().primaryColor(),
+                          ),
                         ),
                       )
                     ],

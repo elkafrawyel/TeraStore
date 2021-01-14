@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/controllers/general_controller.dart';
 import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/data/models/address_model.dart';
 import 'package:tera/helper/Constant.dart';
-import 'package:tera/model/address_model.dart';
 import 'package:tera/screens/cart_screen/payment_screen.dart';
 import 'package:tera/screens/custom_widgets/button/custom_button.dart';
 import 'package:tera/screens/custom_widgets/button/custom_outlined_button.dart';
@@ -137,7 +137,7 @@ class CheckOutScreen extends StatelessWidget {
           Container(
             width: MediaQuery.of(Get.context).size.width * 0.7,
             child: Center(
-              child: DropdownButton<Address>(
+              child: DropdownButton<AddressModel>(
                 iconDisabledColor: Colors.grey,
                 isExpanded: true,
                 iconSize: 40,
@@ -150,13 +150,13 @@ class CheckOutScreen extends StatelessWidget {
                     alignment: AlignmentDirectional.center,
                   ),
                 ),
-                onChanged: (Address address) {
+                onChanged: (AddressModel address) {
                   controller.setAddress(address);
                 },
                 value: controller.selectedAddress,
                 items: controller.addressList
-                    .map<DropdownMenuItem<Address>>(
-                      (model) => DropdownMenuItem<Address>(
+                    .map<DropdownMenuItem<AddressModel>>(
+                      (model) => DropdownMenuItem<AddressModel>(
                         value: model,
                         child: Container(
                           child: Column(
@@ -175,7 +175,7 @@ class CheckOutScreen extends StatelessWidget {
                                 height: 5,
                               ),
                               CustomText(
-                                text: model.body,
+                                text: model.completeAdress,
                                 fontSize: 16,
                                 maxLines: 1,
                                 color: Colors.grey.shade700,

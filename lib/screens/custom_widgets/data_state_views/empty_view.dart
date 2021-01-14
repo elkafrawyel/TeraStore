@@ -37,6 +37,9 @@ class EmptyView extends StatelessWidget {
             width: 300, height: 300, repeat: false);
       case EmptyViews.Face:
         return Lottie.asset(emptyImageFace, repeat: false);
+      case EmptyViews.Magnifier:
+        return Lottie.asset(emptyImageMagnifier, repeat: true);
+        break;
     }
     return Lottie.asset(emptyImageBox, width: 300, height: 300, repeat: false);
   }
@@ -45,4 +48,5 @@ class EmptyView extends StatelessWidget {
 enum EmptyViews {
   Box,
   Face,
+  Magnifier,
 }

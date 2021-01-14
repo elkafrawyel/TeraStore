@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/controllers/general_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
-import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
-import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
-import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/controllers/general_controller.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/screens/custom_widgets/button/custom_button.dart';
+import 'package:tera/screens/custom_widgets/custom_appbar.dart';
+import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
+import 'package:tera/screens/custom_widgets/data_state_views/loading_view.dart';
 
-import 'file:///F:/Apps/My%20Flutter%20Apps/TeraStore/lib/screens/add_address_screen.dart';
+import 'add_address_screen/add_address_screen.dart';
+import 'custom_widgets/text/custom_text.dart';
 
 class ShippingAddresses extends StatelessWidget {
   final controller = Get.find<GeneralController>();
@@ -51,8 +51,10 @@ class ShippingAddresses extends StatelessWidget {
                 colorText: Colors.white,
                 colorBackground: LocalStorage().primaryColor(),
                 fontSize: 20,
-                onPressed: () {
-                  Get.to(AddAddressScreen());
+                onPressed: () async {
+                  await Get.to(AddAddressScreen());
+                  Get.find<GeneralController>().selectedLocation = null;
+                  Get.find<GeneralController>().selectedCity = null;
                 },
               ),
             )

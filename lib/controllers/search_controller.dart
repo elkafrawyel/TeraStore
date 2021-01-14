@@ -1,5 +1,5 @@
-import 'package:flutter_app/controllers/main_controller.dart';
-import 'package:flutter_app/model/product_model.dart';
+import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/model/product_model.dart';
 
 class SearchController extends MainController {
   List<ProductModel> _searchProducts = [];

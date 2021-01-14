@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/helper/messaging/push_notifications.dart';
-import 'package:flutter_app/screens/home_screen/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/helper/messaging/push_notifications.dart';
+import 'package:tera/screens/home_screen/home_screen.dart';
 
 import 'auth/login_screen.dart';
 import 'language_screen.dart';
@@ -14,13 +14,11 @@ class SplashScreen extends StatelessWidget {
     PushNotificationsManager().init(context);
     final bool isLangChecked =
         LocalStorage().getBool(LocalStorage.isLanguageChecked);
-    final bool isPhoneVerifies =
-        LocalStorage().getBool(LocalStorage.phoneVerified);
     final bool isLoggedIn = LocalStorage().getBool(LocalStorage.loginKey);
 
     return SplashScreenView(
       home: isLangChecked
-          ? isLoggedIn && isPhoneVerifies
+          ? isLoggedIn
               ? HomeScreen()
               : LoginScreen()
           : LanguageScreen(),

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/controllers/general_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/model/address_model.dart';
-import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
-import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_outline_text_form_field.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/controllers/general_controller.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/model/address_model.dart';
+import 'package:tera/screens/add_address_screen/components/locations_menu.dart';
+import 'package:tera/screens/custom_widgets/button/custom_button.dart';
+import 'package:tera/screens/custom_widgets/custom_appbar.dart';
+
+import '../custom_widgets/text/custom_outline_text_form_field.dart';
 
 class AddAddressScreen extends StatelessWidget {
   final TextEditingController titleController = TextEditingController();
@@ -53,7 +55,11 @@ class AddAddressScreen extends StatelessWidget {
                   keyboardType: TextInputType.text,
                 ),
                 SizedBox(
-                  height: 60,
+                  height: 20,
+                ),
+                LocationsMenu(),
+                SizedBox(
+                  height: 40,
                 ),
                 Container(
                   height: 80,

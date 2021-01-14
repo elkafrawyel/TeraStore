@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
-import 'package:flutter_app/screens/custom_widgets/menus/custom_language_menu.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
-import 'package:flutter_app/screens/home_screen/home_screen.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/screens/custom_widgets/button/custom_button.dart';
+import 'package:tera/screens/custom_widgets/menus/custom_language_menu.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
+import 'package:tera/screens/home_screen/home_screen.dart';
 
 import 'auth/login_screen.dart';
 

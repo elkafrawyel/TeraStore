@@ -1,12 +1,11 @@
 import 'dart:io';
 
-import 'package:flutter_app/a_repositories/product_repo.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/controllers/main_controller.dart';
-import 'package:flutter_app/controllers/profile_controller.dart';
-import 'package:flutter_app/helper/CommonMethods.dart';
-import 'package:flutter_app/model/product_model.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_repositories/product_repo.dart';
+import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/controllers/profile_controller.dart';
+import 'package:tera/helper/CommonMethods.dart';
+import 'package:tera/model/product_model.dart';
 
 import 'home_controller.dart';
 
@@ -42,7 +41,7 @@ class EditProductController extends MainController {
           price: product.price,
           image: product.image,
           discountPrice: product.discountPrice,
-          userId: LocalStorage().getString(LocalStorage.userId),
+          userId: 'LocalStorage().getString(LocalStorage.userId)',
           categoryId: controller.categoryModel.id,
           subCategoryId: controller.subCategoryModel.id,
           timeStamp: product.id,

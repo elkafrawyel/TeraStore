@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/controllers/home_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/model/product_model.dart';
-import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
-import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
-import 'package:flutter_app/screens/details_screen/details_screen.dart';
 import 'package:get/get.dart';
+import 'package:tera/controllers/home_controller.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/model/product_model.dart';
+import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
+import 'package:tera/screens/custom_widgets/data_state_views/loading_view.dart';
+import 'package:tera/screens/details_screen/details_screen.dart';
 
 import 'carousel_with_indicator.dart';
 import 'category_list.dart';

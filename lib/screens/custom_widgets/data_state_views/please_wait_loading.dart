@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 class PleaseWaitView extends StatelessWidget {
   @override

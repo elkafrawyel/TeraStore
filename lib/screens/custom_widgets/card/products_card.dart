@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/model/product_model.dart';
-import 'package:flutter_app/screens/details_screen/details_screen.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/model/product_model.dart';
+import 'package:tera/screens/details_screen/details_screen.dart';
 
 import '../text/custom_text.dart';
 

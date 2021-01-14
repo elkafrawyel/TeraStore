@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/model/product_model.dart';
-import 'package:flutter_app/model/user_model.dart';
-import 'package:flutter_app/screens/change_password_screen.dart';
-import 'package:flutter_app/screens/custom_widgets/button/custom_outlined_button.dart';
-import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
-import 'package:flutter_app/screens/details_screen/details_screen.dart';
-import 'package:flutter_app/screens/profile/components/my_product_card.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/data/models/user_model.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/model/product_model.dart';
+import 'package:tera/screens/change_password_screen.dart';
+import 'package:tera/screens/custom_widgets/button/custom_outlined_button.dart';
+import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
+import 'package:tera/screens/details_screen/details_screen.dart';
+import 'package:tera/screens/profile/components/my_product_card.dart';
 
 class Body extends StatelessWidget {
   final List<ProductModel> products;
@@ -41,8 +41,7 @@ class Body extends StatelessWidget {
                         height: 120,
                         child: CircleAvatar(
                           backgroundColor: Colors.transparent,
-                          backgroundImage: NetworkImage(
-                              user != null ? user.photo : defaultImageUrl),
+                          backgroundImage: NetworkImage(user.photo),
                           radius: 30,
                         ),
                       ),

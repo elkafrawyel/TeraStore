@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/model/product_model.dart';
-import 'package:flutter_app/screens/details_screen/details_screen.dart';
-import 'package:flutter_app/screens/home_screen/components/product_card.dart';
 import 'package:get/get.dart';
+import 'package:tera/model/product_model.dart';
+import 'package:tera/screens/details_screen/details_screen.dart';
+import 'package:tera/screens/home_screen/components/product_card.dart';
 
 class SimilarProducts extends StatelessWidget {
   final List<ProductModel> products;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/helper/CommonMethods.dart';
-import 'package:flutter_app/model/user_model.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
+import 'package:tera/data/models/user_model.dart';
+import 'package:tera/helper/CommonMethods.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OwnerInfo extends StatelessWidget {

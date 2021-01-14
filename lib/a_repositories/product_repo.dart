@@ -1,17 +1,14 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/model/favourite_model.dart';
-import 'package:flutter_app/model/product_model.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/model/favourite_model.dart';
+import 'package:tera/model/product_model.dart';
 
 class ProductRepo {
-  final String userId = LocalStorage().getString(LocalStorage.userId);
-
-  Future<List<DocumentSnapshot>> getSliders() async {
-    return [];
-  }
+  // Future<List<DocumentSnapshot>> getSliders() async {
+  //   return [];
+  // }
 
   //get products in same subCategory
   Future<List<DocumentSnapshot>> searchProducts(String searchText) async {

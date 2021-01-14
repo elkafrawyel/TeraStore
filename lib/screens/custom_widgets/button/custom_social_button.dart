@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/helper/Constant.dart';
+import 'package:tera/helper/Constant.dart';
 
 import '../text/custom_text.dart';
 

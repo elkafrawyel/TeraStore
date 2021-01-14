@@ -1,10 +1,10 @@
-import 'package:flutter_app/a_repositories/product_repo.dart';
-import 'package:flutter_app/a_repositories/review_repo.dart';
-import 'package:flutter_app/controllers/main_controller.dart';
-import 'package:flutter_app/helper/CommonMethods.dart';
-import 'package:flutter_app/model/product_model.dart';
-import 'package:flutter_app/model/review_model.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_repositories/product_repo.dart';
+import 'package:tera/a_repositories/review_repo.dart';
+import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/helper/CommonMethods.dart';
+import 'package:tera/model/product_model.dart';
+import 'package:tera/model/review_model.dart';
 
 class ProductDetailsController extends MainController {
   ProductModel productModel;
@@ -82,7 +82,7 @@ class ProductDetailsController extends MainController {
             rate: ratingValue,
             time: id,
             message: reviewText,
-            userImage: Get.find<MainController>().user.photo,
+            userImage: Get.find<MainController>().user.image,
             userName: Get.find<MainController>().user.name));
     getReviewsList(productId);
   }

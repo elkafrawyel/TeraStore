@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/controllers/cart_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/model/cart_model.dart';
-import 'package:flutter_app/screens/cart_screen/check_out_screen.dart';
-import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
-import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
-import 'package:flutter_app/screens/custom_widgets/data_state_views/please_wait_loading.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/controllers/cart_controller.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/model/cart_model.dart';
+import 'package:tera/screens/cart_screen/check_out_screen.dart';
+import 'package:tera/screens/custom_widgets/custom_appbar.dart';
+import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
+import 'package:tera/screens/custom_widgets/data_state_views/please_wait_loading.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 import '../details_screen/details_screen.dart';
 

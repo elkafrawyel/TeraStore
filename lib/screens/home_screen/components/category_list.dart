@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/controllers/home_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
-import 'package:flutter_app/screens/products_screen/products_screen.dart';
 import 'package:get/get.dart';
+import 'package:tera/controllers/home_controller.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
+import 'package:tera/screens/products_screen/products_screen.dart';
 
 class CategoryList extends StatefulWidget {
   @override

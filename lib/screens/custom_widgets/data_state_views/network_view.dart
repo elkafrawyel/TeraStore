@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/screens/custom_widgets/button/custom_button.dart';
 
 class NetworkView extends StatelessWidget {
   final Function onPress;

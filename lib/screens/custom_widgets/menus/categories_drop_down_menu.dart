@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/controllers/home_controller.dart';
-import 'package:flutter_app/model/category_model.dart';
-import 'package:flutter_app/model/sub_category_model.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
+import 'package:tera/controllers/home_controller.dart';
+import 'package:tera/model/category_model.dart';
+import 'package:tera/model/sub_category_model.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 class CategoriesDropDownMenu extends StatelessWidget {
   @override

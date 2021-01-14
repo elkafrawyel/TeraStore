@@ -1,6 +1,6 @@
-import 'package:flutter_app/a_repositories/product_repo.dart';
-import 'package:flutter_app/controllers/main_controller.dart';
-import 'package:flutter_app/model/product_model.dart';
+import 'package:tera/a_repositories/product_repo.dart';
+import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/model/product_model.dart';
 
 class ProfileController extends MainController {
   //will contain user data, edit profile, myProducts
@@ -27,6 +27,8 @@ class ProfileController extends MainController {
     //   print('Products Size => ${_products.length}');
     //   update();
     // });
+    loading.value = false;
+    update();
   }
 
   delete(ProductModel productModel) {

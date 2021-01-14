@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class LocalStorage {
@@ -10,7 +11,6 @@ class LocalStorage {
 
   //=============== According to app keys =======================
   static final String loginKey = 'login';
-  static final String phoneVerified = 'phoneVerified';
   static final String userId = 'userId';
   static final String token = 'token';
 
@@ -19,7 +19,9 @@ class LocalStorage {
   }
 
   String getLanguage() {
-    return GetStorage().read(languageKey);
+    return GetStorage().read(languageKey) == null
+        ? Get.deviceLocale.languageCode
+        : GetStorage().read(languageKey);
   }
 
   bool isArabicLanguage() {

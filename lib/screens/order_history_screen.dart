@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 class OrderHistoryScreen extends StatelessWidget {
   @override

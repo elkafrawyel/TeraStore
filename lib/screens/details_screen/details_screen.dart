@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/controllers/product_details_controller.dart';
-import 'package:flutter_app/screens/custom_widgets/budget_cart_icon.dart';
-import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
-import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
 import 'package:get/get.dart';
+import 'package:tera/controllers/product_details_controller.dart';
+import 'package:tera/screens/custom_widgets/budget_cart_icon.dart';
+import 'package:tera/screens/custom_widgets/custom_appbar.dart';
+import 'package:tera/screens/custom_widgets/data_state_views/loading_view.dart';
 
 import '../cart_screen/cart_screen.dart';
 import 'components/body.dart';

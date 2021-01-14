@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/controllers/cart_controller.dart';
-import 'package:flutter_app/controllers/home_controller.dart';
-import 'package:flutter_app/controllers/main_controller.dart';
-import 'package:flutter_app/helper/CommonMethods.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/screens/add_product_screen.dart';
-import 'package:flutter_app/screens/cart_screen/cart_screen.dart';
-import 'package:flutter_app/screens/custom_widgets/budget_cart_icon.dart';
-import 'package:flutter_app/screens/custom_widgets/menus/custom_language_menu.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
-import 'package:flutter_app/screens/favourite_screen/favourites_screen.dart';
-import 'package:flutter_app/screens/notifications_screen.dart';
-import 'package:flutter_app/screens/profile/profile_screen.dart';
-import 'package:flutter_app/screens/search_screen/search_screen.dart';
-import 'package:flutter_app/screens/settings_screen.dart';
 import 'package:get/get.dart';
-
-import 'file:///F:/Apps/My%20Flutter%20Apps/TeraStore/lib/screens/order_history_screen.dart';
-import 'file:///F:/Apps/My%20Flutter%20Apps/TeraStore/lib/screens/shipping_address_screen.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/controllers/cart_controller.dart';
+import 'package:tera/controllers/home_controller.dart';
+import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/helper/CommonMethods.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/screens/add_product_screen.dart';
+import 'package:tera/screens/cart_screen/cart_screen.dart';
+import 'package:tera/screens/custom_widgets/budget_cart_icon.dart';
+import 'package:tera/screens/custom_widgets/menus/custom_language_menu.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
+import 'package:tera/screens/favourite_screen/favourites_screen.dart';
+import 'package:tera/screens/notifications_screen.dart';
+import 'package:tera/screens/order_history_screen.dart';
+import 'package:tera/screens/profile/profile_screen.dart';
+import 'package:tera/screens/search_screen/search_screen.dart';
+import 'package:tera/screens/settings_screen.dart';
+import 'package:tera/screens/shipping_address_screen.dart';
 
 import 'components/body.dart';
 
@@ -27,7 +26,6 @@ class HomeScreen extends StatelessWidget {
   final controller = Get.find<HomeController>();
 
   HomeScreen() {
-    print('Saved User ID' + LocalStorage().getString(LocalStorage.userId));
     Get.find<MainController>().loadUserData();
     Get.find<CartController>().getCartItems(showLoading: true);
     controller.getSliderProducts();
@@ -97,48 +95,54 @@ class HomeScreen extends StatelessWidget {
             children: <Widget>[
               //Header
               GetBuilder<MainController>(
-                builder: (controller) => Container(
-                  color: LocalStorage().primaryColor(),
-                  child: GetBuilder<MainController>(
-                    builder: (controller) => GestureDetector(
-                      onTap: () {
-                        Get.back();
-                        Get.to(ProfileScreen());
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: kDefaultPadding * 2,
+                builder: (controller) => controller.user == null
+                    ? Container(
+                        height: 200,
+                        color: LocalStorage().primaryColor(),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.white,
                           ),
-                          CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            backgroundImage: NetworkImage(
-                              controller.user == null
-                                  ? defaultImageUrl
-                                  : controller.user.photo,
+                        ),
+                      )
+                    : Container(
+                        color: LocalStorage().primaryColor(),
+                        child: GetBuilder<MainController>(
+                          builder: (controller) => GestureDetector(
+                            onTap: () {
+                              Get.back();
+                              Get.to(ProfileScreen());
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: kDefaultPadding * 2,
+                                ),
+                                CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage: NetworkImage(
+                                    controller.user.photo,
+                                  ),
+                                  radius: 60,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                CustomText(
+                                  text: controller.user.name,
+                                  fontSize: 18,
+                                  alignment: AlignmentDirectional.center,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              ],
                             ),
-                            radius: 60,
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          CustomText(
-                            text: controller.user == null
-                                ? ''
-                                : controller.user.name,
-                            fontSize: 18,
-                            alignment: AlignmentDirectional.center,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
               ),
               SizedBox(
                 height: 20,

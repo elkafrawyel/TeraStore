@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/controllers/auth_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/helper/validator.dart';
-import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
-import 'package:flutter_app/screens/custom_widgets/button/custom_social_button.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_outline_text_form_field.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/controllers/auth_controller.dart';
+import 'package:tera/helper/CommonMethods.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/screens/custom_widgets/button/custom_button.dart';
+import 'package:tera/screens/custom_widgets/button/custom_social_button.dart';
+import 'package:tera/screens/custom_widgets/text/custom_outline_text_form_field.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 import 'register_screen.dart';
 
@@ -16,9 +16,7 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  LoginScreen() {
-    Get.put(AuthController());
-  }
+  final controller = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -50,159 +48,157 @@ class LoginScreen extends StatelessWidget {
                       bottom: kDefaultPadding * 2),
                   child: Form(
                     key: _formKey,
-                    child: Column(
+                    child: ListView(
                       children: [
-                        SizedBox(
-                          height: kDefaultPadding,
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.only(
-                              start: kDefaultPadding, top: kDefaultPadding),
-                          child: CustomText(
-                            text: 'welcome'.tr,
-                            fontSize: 22,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              start: kDefaultPadding, top: kDefaultPadding / 2),
-                          child: CustomText(
-                            text: 'signInToContinue'.tr,
-                            fontSize: 18,
-                            alignment: AlignmentDirectional.centerStart,
-                            color: Colors.white,
-                          ),
-                        ),
-                        SizedBox(
-                          height: kDefaultPadding,
-                        ),
-                        CustomOutlinedTextFormField(
-                          text: 'email'.tr,
-                          controller: emailController,
-                          hintText: 'someone@something.com',
-                          labelText: 'email'.tr,
-                          validateEmptyText: 'emailIsEmpty'.tr,
-                          keyboardType: TextInputType.emailAddress,
-                          labelColor: Colors.white,
-                          hintColor: Colors.white,
-                          textColor: Colors.white,
-                        ),
-                        SizedBox(
-                          height: kDefaultPadding,
-                        ),
-                        CustomOutlinedTextFormField(
-                          text: 'password'.tr,
-                          controller: passwordController,
-                          hintText: '***********',
-                          isPassword: true,
-                          maxLines: 1,
-                          labelText: 'password'.tr,
-                          validateEmptyText: 'passwordIsEmpty'.tr,
-                          keyboardType: TextInputType.text,
-                          labelColor: Colors.white,
-                          hintColor: Colors.white,
-                          textColor: Colors.white,
-                        ),
-                        SizedBox(
-                          height: kDefaultPadding,
-                        ),
-                        CustomText(
-                          text: 'forgetPassword'.tr,
-                          fontSize: 16,
-                          alignment: AlignmentDirectional.topEnd,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          height: kDefaultPadding,
-                        ),
-                        Container(
-                          height: 50,
-                          width: MediaQuery.of(context).size.width * 0.7,
-                          child: CustomButton(
-                            colorBackground:
-                                LocalStorage().primaryColor().withOpacity(0.6),
-                            colorText: Colors.white,
-                            fontSize: 20,
-                            text: 'signIn'.tr,
-                            onPressed: () {
-                              if (_formKey.currentState.validate()) {
-                                FocusScope.of(context).unfocus();
-
-                                if (Validator()
-                                    .validateEmail(emailController.text)) {
-                                  _formKey.currentState.save();
-                                  controller.signInEmail(emailController.text,
-                                      passwordController.text);
-                                }
-                              }
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: kDefaultPadding / 2,
-                        ),
-                        Container(
-                          height: 50,
-                          width: MediaQuery.of(context).size.width * 0.7,
-                          child: CustomButton(
-                            colorBackground:
-                                LocalStorage().primaryColor().withOpacity(0.7),
-                            colorText: Colors.white,
-                            fontSize: 20,
-                            text: 'signUp'.tr,
-                            onPressed: () {
-                              Get.to(RegisterScreen());
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: kDefaultPadding,
-                        ),
-                        CustomText(
-                            text: 'or'.tr,
-                            alignment: AlignmentDirectional.center,
-                            fontSize: 18,
-                            color: Colors.white),
-                        SizedBox(
-                          height: kDefaultPadding,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          child: CustomSocialButton(
-                            imageAsset: facebookImage,
-                            text: 'signInFaceBook'.tr,
-                            onPressed: () {
-                              controller.signInFacebook();
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          child: CustomSocialButton(
-                            imageAsset: googleImage,
-                            text: 'signInGoogle'.tr,
-                            onPressed: () {
-                              controller.signInGoogle();
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          child: CustomSocialButton(
-                            imageAsset: twitterImage,
-                            text: 'signInTwitter'.tr,
-                            onPressed: () {
-                              controller.signInGoogle();
-                            },
-                          ),
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: kDefaultPadding,
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.only(
+                                  start: kDefaultPadding, top: kDefaultPadding),
+                              child: CustomText(
+                                text: 'welcome'.tr,
+                                fontSize: 22,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.only(
+                                  start: kDefaultPadding,
+                                  top: kDefaultPadding / 2),
+                              child: CustomText(
+                                text: 'signInToContinue'.tr,
+                                fontSize: 18,
+                                alignment: AlignmentDirectional.centerStart,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(
+                              height: kDefaultPadding,
+                            ),
+                            CustomOutlinedTextFormField(
+                              text: 'email'.tr,
+                              controller: emailController,
+                              hintText: 'someone@something.com',
+                              labelText: 'email'.tr,
+                              validateEmptyText: 'emailIsEmpty'.tr,
+                              keyboardType: TextInputType.emailAddress,
+                              labelColor: Colors.white,
+                              hintColor: Colors.white,
+                              textColor: Colors.white,
+                            ),
+                            SizedBox(
+                              height: kDefaultPadding,
+                            ),
+                            CustomOutlinedTextFormField(
+                              text: 'password'.tr,
+                              controller: passwordController,
+                              hintText: '***********',
+                              isPassword: true,
+                              maxLines: 1,
+                              labelText: 'password'.tr,
+                              validateEmptyText: 'passwordIsEmpty'.tr,
+                              keyboardType: TextInputType.text,
+                              labelColor: Colors.white,
+                              hintColor: Colors.white,
+                              textColor: Colors.white,
+                            ),
+                            SizedBox(
+                              height: kDefaultPadding,
+                            ),
+                            CustomText(
+                              text: 'forgetPassword'.tr,
+                              fontSize: 16,
+                              alignment: AlignmentDirectional.topEnd,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              height: kDefaultPadding,
+                            ),
+                            Container(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              child: CustomButton(
+                                colorBackground: LocalStorage()
+                                    .primaryColor()
+                                    .withOpacity(0.6),
+                                colorText: Colors.white,
+                                fontSize: 20,
+                                text: 'signIn'.tr,
+                                onPressed: () {
+                                  _login();
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: kDefaultPadding / 2,
+                            ),
+                            Container(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              child: CustomButton(
+                                colorBackground: LocalStorage()
+                                    .primaryColor()
+                                    .withOpacity(0.7),
+                                colorText: Colors.white,
+                                fontSize: 20,
+                                text: 'signUp'.tr,
+                                onPressed: () {
+                                  Get.to(RegisterScreen());
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: kDefaultPadding,
+                            ),
+                            CustomText(
+                                text: 'or'.tr,
+                                alignment: AlignmentDirectional.center,
+                                fontSize: 18,
+                                color: Colors.white),
+                            SizedBox(
+                              height: kDefaultPadding,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              child: CustomSocialButton(
+                                imageAsset: facebookImage,
+                                text: 'signInFaceBook'.tr,
+                                onPressed: () {
+                                  controller.signInFacebook();
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              child: CustomSocialButton(
+                                imageAsset: googleImage,
+                                text: 'signInGoogle'.tr,
+                                onPressed: () {
+                                  controller.signInGoogle();
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              child: CustomSocialButton(
+                                imageAsset: twitterImage,
+                                text: 'signInTwitter'.tr,
+                                onPressed: () {
+                                  controller.signInGoogle();
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -228,5 +224,18 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _login() {
+    if (_formKey.currentState.validate()) {
+      FocusScope.of(Get.context).unfocus();
+
+      if (!GetUtils.isEmail(emailController.text)) {
+        CommonMethods().showMessage('errorTitle'.tr, 'enterValidEmail'.tr);
+      }
+
+      _formKey.currentState.save();
+      controller.login(emailController.text, passwordController.text);
+    }
   }
 }

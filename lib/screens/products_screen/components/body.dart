@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/screens/products_screen/components/products_list.dart';
-import 'package:flutter_app/screens/products_screen/components/sub_categories_list.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/screens/products_screen/components/products_list.dart';
+import 'package:tera/screens/products_screen/components/sub_categories_list.dart';
 
 class Body extends StatelessWidget {
   @override

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/controllers/products_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/controllers/products_controller.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/screens/custom_widgets/data_state_views/loading_view.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 class SubCategoriesList extends StatelessWidget {
   @override

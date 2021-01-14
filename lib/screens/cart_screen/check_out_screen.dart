@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/controllers/general_controller.dart';
-import 'package:flutter_app/controllers/main_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/model/address_model.dart';
-import 'package:flutter_app/screens/cart_screen/payment_screen.dart';
-import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
-import 'package:flutter_app/screens/custom_widgets/button/custom_outlined_button.dart';
-import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_outline_text_form_field.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/controllers/general_controller.dart';
+import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/model/address_model.dart';
+import 'package:tera/screens/cart_screen/payment_screen.dart';
+import 'package:tera/screens/custom_widgets/button/custom_button.dart';
+import 'package:tera/screens/custom_widgets/button/custom_outlined_button.dart';
+import 'package:tera/screens/custom_widgets/custom_appbar.dart';
+import 'package:tera/screens/custom_widgets/text/custom_outline_text_form_field.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
-import 'file:///F:/Apps/My%20Flutter%20Apps/TeraStore/lib/screens/add_address_screen.dart';
+import '../add_address_screen/add_address_screen.dart';
 
 class CheckOutScreen extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();

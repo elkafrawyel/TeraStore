@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/controllers/main_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
-import 'package:flutter_app/screens/home_screen/home_screen.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/screens/custom_widgets/custom_appbar.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
+
+import 'home_screen/home_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override

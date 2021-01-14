@@ -2,6 +2,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
+import 'package:tera/a_repositories/user_repo.dart';
+import 'package:tera/a_storage/local_storage.dart';
 
 class PushNotificationsManager {
   PushNotificationsManager._();
@@ -19,12 +21,13 @@ class PushNotificationsManager {
   bool _initialized = false;
 
   Future<void> init(BuildContext context) async {
+    _firebaseMessaging.getToken().then((token) {
+      bool isLoggedIn = LocalStorage().getBool(LocalStorage.loginKey);
+      //if the token changed or new send it to server
+      print("FirebaseMessaging token: $token");
+      if (isLoggedIn) UserRepo().sendFireBaseToken(token);
+    });
     if (!_initialized) {
-      _firebaseMessaging.getToken().then((token) => {
-            //if the token changed or new send it to server
-            print("FirebaseMessaging token: $token")
-          });
-
       var initializationSettingsAndroid =
           new AndroidInitializationSettings('@mipmap/ic_launcher');
 

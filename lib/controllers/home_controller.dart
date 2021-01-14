@@ -1,8 +1,8 @@
-import 'package:flutter_app/controllers/main_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/model/category_model.dart';
-import 'package:flutter_app/model/product_model.dart';
-import 'package:flutter_app/model/sub_category_model.dart';
+import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/model/category_model.dart';
+import 'package:tera/model/product_model.dart';
+import 'package:tera/model/sub_category_model.dart';
 
 class HomeController extends MainController {
   ProductFilters filter = ProductFilters.Latest;
@@ -75,4 +75,7 @@ class HomeController extends MainController {
     print('SubCategories => ${subCategories.length}');
     update();
   }
+
+  //======================= Locations ========================
+
 }

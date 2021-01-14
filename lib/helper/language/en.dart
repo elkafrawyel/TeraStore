@@ -132,4 +132,5 @@ Map<String, String> en = {
   'codeSent': 'A code sent to your phone',
   'enterValidPhone': 'Enter valid phone number',
   'enterPhone': 'Enter your phone number.',
+  'enterValidEmail': 'Enter valid email',
 };

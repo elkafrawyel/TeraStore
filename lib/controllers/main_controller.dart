@@ -1,14 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_repositories/user_repo.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/helper/language/language_model.dart';
-import 'package:flutter_app/model/user_model.dart';
-import 'package:flutter_app/screens/auth/login_screen.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
-import 'cart_controller.dart';
+import 'package:tera/a_repositories/user_repo.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/data/models/user_model.dart';
+import 'package:tera/data/requests/edit_profile_request.dart';
+import 'package:tera/helper/language/language_model.dart';
 
 class MainController extends GetxController {
   Color primaryColor = LocalStorage().primaryColor();
@@ -27,9 +24,7 @@ class MainController extends GetxController {
   void onInit() {
     super.onInit();
     LocalStorage localStorage = LocalStorage();
-    appLocaleCode = localStorage.getLanguage() == null
-        ? Get.deviceLocale.languageCode
-        : localStorage.getLanguage();
+    appLocaleCode = localStorage.getLanguage();
     Get.updateLocale(Locale(appLocaleCode));
     update();
   }
@@ -40,8 +35,14 @@ class MainController extends GetxController {
     update();
   }
 
+  //===================== User ===========================
+
   loadUserData() async {
-    String userId = LocalStorage().getString(LocalStorage.userId);
+    bool isLoggedIn = LocalStorage().getBool(LocalStorage.loginKey);
+
+    if (isLoggedIn) {
+      await UserRepo().profile();
+    }
 
     update();
     print(user);
@@ -55,32 +56,23 @@ class MainController extends GetxController {
   editProfile({String name, String email, String phone}) async {
     loading.value = true;
     update();
-    if (selectedImage != null) {
-    } else {
-      _addRemainData(name, email, phone);
-    }
-  }
-
-  _addRemainData(String name, String email, String phone) async {
     user.name = name;
     user.email = email;
     user.phone = phone;
-    await UserRepo().addUserToFireStore(user);
+    await UserRepo().editProfile(
+        EditProfileRequest(name: name, email: email, phone: phone),
+        imagePath: selectedImage != null ? selectedImage.path : null);
     loading.value = false;
     Get.back();
     update();
   }
 
   logOut() async {
-    LocalStorage().clear();
-    Get.find<CartController>().products.clear();
-    Get.find<MainController>().user = null;
-    await FirebaseAuth.instance.signOut();
-    update();
-    Get.offAll(LoginScreen());
+    await UserRepo().logOut();
   }
 
   //=================== Language =======================
+
   LanguageData getSelectedLanguage() {
     LanguageData lang;
     languageList.forEach((element) {

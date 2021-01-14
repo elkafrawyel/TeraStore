@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
+import 'package:tera/a_storage/local_storage.dart';
 
 class CustomDescription extends StatefulWidget {
   final String text;

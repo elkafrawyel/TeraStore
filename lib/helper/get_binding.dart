@@ -1,16 +1,16 @@
-import 'package:flutter_app/controllers/FavouriteController.dart';
-import 'package:flutter_app/controllers/add_product_controller.dart';
-import 'package:flutter_app/controllers/auth_controller.dart';
-import 'package:flutter_app/controllers/cart_controller.dart';
-import 'package:flutter_app/controllers/edit_product_controller.dart';
-import 'package:flutter_app/controllers/general_controller.dart';
-import 'package:flutter_app/controllers/home_controller.dart';
-import 'package:flutter_app/controllers/main_controller.dart';
-import 'package:flutter_app/controllers/product_details_controller.dart';
-import 'package:flutter_app/controllers/products_controller.dart';
-import 'package:flutter_app/controllers/profile_controller.dart';
-import 'package:flutter_app/controllers/search_controller.dart';
 import 'package:get/get.dart';
+import 'package:tera/controllers/FavouriteController.dart';
+import 'package:tera/controllers/add_product_controller.dart';
+import 'package:tera/controllers/auth_controller.dart';
+import 'package:tera/controllers/cart_controller.dart';
+import 'package:tera/controllers/edit_product_controller.dart';
+import 'package:tera/controllers/general_controller.dart';
+import 'package:tera/controllers/home_controller.dart';
+import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/controllers/product_details_controller.dart';
+import 'package:tera/controllers/products_controller.dart';
+import 'package:tera/controllers/profile_controller.dart';
+import 'package:tera/controllers/search_controller.dart';
 
 class GetBinding implements Bindings {
   @override

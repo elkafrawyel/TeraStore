@@ -1,4 +1,4 @@
-import 'package:flutter_app/model/cart_model.dart';
+import 'package:tera/model/cart_model.dart';
 
 class CartRepo {
   Future<CartModel> getMyCartList() async {

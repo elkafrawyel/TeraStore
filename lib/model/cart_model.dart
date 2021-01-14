@@ -1,4 +1,4 @@
-import 'package:flutter_app/model/product_model.dart';
+import 'package:tera/model/product_model.dart';
 
 class CartModel {
   List<Cart> cart;

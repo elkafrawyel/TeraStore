@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/controllers/auth_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/helper/validator.dart';
-import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_outline_text_form_field.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/controllers/auth_controller.dart';
+import 'package:tera/helper/CommonMethods.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/screens/custom_widgets/button/custom_button.dart';
+import 'package:tera/screens/custom_widgets/text/custom_outline_text_form_field.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 class RegisterScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -15,10 +15,12 @@ class RegisterScreen extends StatelessWidget {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  final controller = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AuthController>(
-      init: AuthController(),
+      init: controller,
       builder: (controller) => Scaffold(
         appBar: AppBar(
           toolbarHeight: 0.0,
@@ -144,19 +146,7 @@ class RegisterScreen extends StatelessWidget {
                                   text: 'signUp'.tr,
                                   fontSize: 20,
                                   onPressed: () {
-                                    if (_formKey.currentState.validate()) {
-                                      FocusScope.of(context).unfocus();
-
-                                      if (Validator().validateEmail(
-                                          emailController.text)) {
-                                        _formKey.currentState.save();
-                                        controller.createAccount(
-                                            nameController.text,
-                                            emailController.text,
-                                            phoneController.text,
-                                            passwordController.text);
-                                      }
-                                    }
+                                    _register();
                                   },
                                 ),
                               ),
@@ -190,5 +180,22 @@ class RegisterScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _register() async {
+    if (_formKey.currentState.validate()) {
+      FocusScope.of(Get.context).unfocus();
+
+      if (!GetUtils.isEmail(emailController.text)) {
+        CommonMethods().showMessage('errorTitle'.tr, 'enterValidEmail'.tr);
+      }
+      if (!GetUtils.isPhoneNumber(phoneController.text)) {
+        CommonMethods().showMessage('errorTitle'.tr, 'enterValidPhone'.tr);
+      }
+
+      _formKey.currentState.save();
+      await controller.register(nameController.text, emailController.text,
+          phoneController.text, passwordController.text);
+    }
   }
 }

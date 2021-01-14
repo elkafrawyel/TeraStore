@@ -1,16 +1,17 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/controllers/add_product_controller.dart';
-import 'package:flutter_app/controllers/home_controller.dart';
-import 'package:flutter_app/helper/CommonMethods.dart';
-import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
-import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
-import 'package:flutter_app/screens/custom_widgets/menus/categories_drop_down_menu.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_outline_text_form_field.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/controllers/add_product_controller.dart';
+import 'package:tera/controllers/home_controller.dart';
+import 'package:tera/helper/CommonMethods.dart';
+import 'package:tera/screens/custom_widgets/button/custom_button.dart';
+import 'package:tera/screens/custom_widgets/custom_appbar.dart';
+import 'package:tera/screens/custom_widgets/menus/categories_drop_down_menu.dart';
+
+import 'custom_widgets/text/custom_outline_text_form_field.dart';
 
 // ignore: must_be_immutable
 class AddProductScreen extends StatelessWidget {

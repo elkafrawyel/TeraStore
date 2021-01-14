@@ -1,10 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_repositories/product_repo.dart';
-import 'package:flutter_app/controllers/main_controller.dart';
-import 'package:flutter_app/model/product_model.dart';
-import 'package:flutter_app/model/sub_category_model.dart';
 import 'package:get/get.dart';
+import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/model/product_model.dart';
+import 'package:tera/model/sub_category_model.dart';
 
 class ProductsController extends MainController {
   ValueNotifier<bool> loadingSubCategories = ValueNotifier(false);
@@ -50,7 +49,7 @@ class ProductsController extends MainController {
     _products.clear();
     String id = _subCategories[selectedSubCategoryIndex].id;
 
-    List<DocumentSnapshot> list = await ProductRepo().getProducts(id);
+    // List<DocumentSnapshot> list = await ProductRepo().getProducts(id);
 
     // list.forEach((element) {
     //   ProductModel productModel = ProductModel.fromJson(element.data);

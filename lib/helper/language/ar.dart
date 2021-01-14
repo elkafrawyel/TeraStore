@@ -131,4 +131,5 @@ Map<String, String> ar = {
   'codeSent': 'تم ارسال كود التأكيد الي هاتفك',
   'enterValidPhone': 'أدخل رقم هاتف صحيح',
   'enterPhone': 'أدخل رقم هاتف',
+  'enterValidEmail': 'أدخل ايميل صحيح',
 };

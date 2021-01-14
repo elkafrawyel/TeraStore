@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/controllers/products_controller.dart';
-import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
-import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
-import 'package:flutter_app/screens/details_screen/details_screen.dart';
-import 'package:flutter_app/screens/home_screen/components/product_card.dart';
 import 'package:get/get.dart';
+import 'package:tera/controllers/products_controller.dart';
+import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
+import 'package:tera/screens/custom_widgets/data_state_views/loading_view.dart';
+import 'package:tera/screens/details_screen/details_screen.dart';
+import 'package:tera/screens/home_screen/components/product_card.dart';
 
 class ProductsList extends StatelessWidget {
   @override

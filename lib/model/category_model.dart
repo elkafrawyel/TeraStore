@@ -1,4 +1,4 @@
-import 'package:flutter_app/a_storage/local_storage.dart';
+import 'package:tera/a_storage/local_storage.dart';
 
 class CategoryModel {
   String id, nameAr, nameEn, image;

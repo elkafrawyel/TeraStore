@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/controllers/FavouriteController.dart';
-import 'package:flutter_app/helper/Constant.dart';
-import 'package:flutter_app/model/product_model.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
+import 'package:tera/controllers/FavouriteController.dart';
+import 'package:tera/helper/Constant.dart';
+import 'package:tera/model/product_model.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 class MyFavouriteCard extends StatelessWidget {
   const MyFavouriteCard({

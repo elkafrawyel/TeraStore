@@ -1,16 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/helper/CommonMethods.dart';
-import 'package:flutter_app/model/user_model.dart';
-import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
-import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_outline_text_form_field.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
 import 'package:pin_entry_field/pin_entry_field.dart';
 import 'package:pin_entry_field/pin_entry_style.dart';
 import 'package:pin_entry_field/pin_input_type.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/data/models/user_model.dart';
+import 'package:tera/helper/CommonMethods.dart';
+import 'package:tera/screens/custom_widgets/button/custom_button.dart';
+import 'package:tera/screens/custom_widgets/custom_appbar.dart';
+import 'package:tera/screens/custom_widgets/text/custom_outline_text_form_field.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 class VerifyPhoneScreen extends StatefulWidget {
   final UserModel userModel;
@@ -150,7 +150,6 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
         verificationCompleted: (phoneAuthCredential) {
           print('verificationCompleted');
           Get.back();
-          LocalStorage().setBool(LocalStorage.phoneVerified, true);
         },
         verificationFailed: (FirebaseAuthException authException) {
           CommonMethods().showMessage('errorTitle'.tr, authException.message);

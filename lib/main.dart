@@ -13,7 +13,7 @@ void main() async {
 
   //print responses
   Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((event) {
-    print(event.message);
+  Logger.root.onRecord.listen((rec) {
+    print('Chopper Api ${rec.level.name}:${rec.message}');
   });
 }

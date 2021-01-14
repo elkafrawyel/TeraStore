@@ -1,11 +1,10 @@
 import 'dart:io';
 
-import 'package:flutter_app/a_repositories/product_repo.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/helper/CommonMethods.dart';
-import 'package:flutter_app/model/product_model.dart';
-import 'package:flutter_app/screens/home_screen/home_screen.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_repositories/product_repo.dart';
+import 'package:tera/helper/CommonMethods.dart';
+import 'package:tera/model/product_model.dart';
+import 'package:tera/screens/home_screen/home_screen.dart';
 
 import 'home_controller.dart';
 import 'main_controller.dart';
@@ -47,7 +46,7 @@ class AddProductController extends MainController {
           description: desc,
           price: price,
           discountPrice: discountPrice,
-          userId: LocalStorage().getString(LocalStorage.userId),
+          userId: 'LocalStorage().getString(LocalStorage.userId)',
           categoryId: controller.categoryModel.id,
           subCategoryId: controller.subCategoryModel.id,
           timeStamp: id.toString(),

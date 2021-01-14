@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/controllers/edit_product_controller.dart';
-import 'package:flutter_app/controllers/home_controller.dart';
-import 'package:flutter_app/helper/CommonMethods.dart';
-import 'package:flutter_app/model/category_model.dart';
-import 'package:flutter_app/model/product_model.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/controllers/edit_product_controller.dart';
+import 'package:tera/controllers/home_controller.dart';
+import 'package:tera/helper/CommonMethods.dart';
+import 'package:tera/model/category_model.dart';
+import 'package:tera/model/product_model.dart';
 
 import 'custom_widgets/button/custom_button.dart';
 import 'custom_widgets/custom_appbar.dart';

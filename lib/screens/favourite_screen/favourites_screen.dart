@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/controllers/FavouriteController.dart';
-import 'package:flutter_app/screens/custom_widgets/custom_appbar.dart';
-import 'package:flutter_app/screens/custom_widgets/data_state_views/empty_view.dart';
-import 'package:flutter_app/screens/custom_widgets/data_state_views/loading_view.dart';
-import 'package:flutter_app/screens/details_screen/details_screen.dart';
-import 'package:flutter_app/screens/favourite_screen/components/my_favourite_card.dart';
 import 'package:get/get.dart';
+import 'package:tera/controllers/FavouriteController.dart';
+import 'package:tera/screens/custom_widgets/custom_appbar.dart';
+import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
+import 'package:tera/screens/custom_widgets/data_state_views/loading_view.dart';
+import 'package:tera/screens/details_screen/details_screen.dart';
+import 'package:tera/screens/favourite_screen/components/my_favourite_card.dart';
 
 class FavouritesScreen extends StatelessWidget {
   final controller = Get.find<FavouriteController>();

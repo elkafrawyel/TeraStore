@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/helper/Constant.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:tera/helper/Constant.dart';
 
 class ErrorView extends StatelessWidget {
   @override

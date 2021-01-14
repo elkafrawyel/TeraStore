@@ -1,4 +1,4 @@
-import 'package:flutter_app/a_storage/local_storage.dart';
+import 'package:tera/a_storage/local_storage.dart';
 
 class SubCategoryModel {
   String id, nameEn, nameAr, image, categoryId;

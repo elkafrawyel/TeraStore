@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/controllers/main_controller.dart';
-import 'package:flutter_app/screens/custom_widgets/button/custom_button.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_outline_text_form_field.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/screens/custom_widgets/button/custom_button.dart';
+import 'package:tera/screens/custom_widgets/text/custom_outline_text_form_field.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 class EditProfileScreen extends StatelessWidget {
   final picker = ImagePicker();
@@ -59,34 +59,22 @@ class EditProfileScreen extends StatelessWidget {
                       SizedBox(
                         height: 30,
                       ),
-                      Stack(
-                        children: [
-                          Container(
-                            width: 120,
-                            height: 120,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              backgroundImage: controller.selectedImage == null
-                                  ? NetworkImage(controller.user.photo)
-                                  : FileImage(
-                                      File(controller.selectedImage.path)),
-                              radius: 50,
-                            ),
+                      GestureDetector(
+                        onTap: () {
+                          _showPicker();
+                        },
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: controller.selectedImage == null
+                                ? NetworkImage(controller.user.photo)
+                                : FileImage(
+                                    File(controller.selectedImage.path)),
+                            radius: 50,
                           ),
-                          Positioned.fill(
-                              child: Align(
-                            alignment: AlignmentDirectional.bottomStart,
-                            child: GestureDetector(
-                              onTap: () {
-                                _showPicker();
-                              },
-                              child: Icon(
-                                Icons.photo_camera,
-                                size: 30,
-                              ),
-                            ),
-                          ))
-                        ],
+                        ),
                       ),
                       SizedBox(
                         height: 10,

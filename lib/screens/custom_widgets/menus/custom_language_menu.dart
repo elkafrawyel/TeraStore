@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/controllers/main_controller.dart';
-import 'package:flutter_app/helper/language/language_model.dart';
 import 'package:get/get.dart';
+import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/helper/language/language_model.dart';
 
 class CustomLanguageMenu extends StatelessWidget {
   @override

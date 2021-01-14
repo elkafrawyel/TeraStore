@@ -1,8 +1,8 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/controllers/cart_controller.dart';
-import 'package:flutter_app/helper/Constant.dart';
 import 'package:get/get.dart';
+import 'package:tera/controllers/cart_controller.dart';
+import 'package:tera/helper/Constant.dart';
 
 class BudgetCartIconView extends StatelessWidget {
   final Function press;

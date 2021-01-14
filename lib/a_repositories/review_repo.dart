@@ -1,4 +1,4 @@
-import 'package:flutter_app/model/review_model.dart';
+import 'package:tera/model/review_model.dart';
 
 class ReviewRepo {
   Future<List<Review>> getReviewsList(String productId) async {

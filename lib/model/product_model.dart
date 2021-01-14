@@ -1,4 +1,4 @@
-import 'user_model.dart';
+import 'package:tera/data/models/user_model.dart';
 
 class ProductModel {
   String id,

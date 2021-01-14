@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_storage/local_storage.dart';
 
 import '../text/custom_text.dart';
 

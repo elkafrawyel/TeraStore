@@ -1,4 +1,4 @@
-# flutter_app
+# tera
 
 A E-commerce Flutter application.
 

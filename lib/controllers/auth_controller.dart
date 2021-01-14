@@ -1,252 +1,94 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_app/a_repositories/user_repo.dart';
-import 'package:flutter_app/a_storage/local_storage.dart';
-import 'package:flutter_app/controllers/main_controller.dart';
-import 'package:flutter_app/helper/CommonMethods.dart';
-import 'package:flutter_app/model/user_model.dart';
-import 'package:flutter_app/screens/auth/verify_phone_screen.dart';
-import 'package:flutter_app/screens/custom_widgets/text/custom_text.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:tera/a_repositories/user_repo.dart';
+import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/a_storage/network/user/user_service.dart';
+import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/data/models/graph_model.dart';
+import 'package:tera/data/requests/login_request.dart';
+import 'package:tera/data/requests/register_request.dart';
+import 'package:tera/data/requests/social_request.dart';
+import 'package:tera/helper/CommonMethods.dart';
 
 import 'main_controller.dart';
 
 class AuthController extends MainController {
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
-  FacebookLogin _facebookLogin = FacebookLogin();
   bool isArabic = LocalStorage().isArabicLanguage();
 
-  signInGoogle() async {
-    // try {
-    //   final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    //   GoogleSignInAuthentication googleSignInAuthentication =
-    //       await googleUser.authentication;
-    //   AuthCredential googleAuthCredential = GoogleAuthProvider.getCredential(
-    //       idToken: googleSignInAuthentication.idToken,
-    //       accessToken: googleSignInAuthentication.accessToken);
-    //
-    //   AuthResult result =
-    //       await _auth.signInWithCredential(googleAuthCredential);
-    //
-    //   String userId = result.user.uid;
-    //   DocumentSnapshot snapshot = await UserRepo().getUser(userId);
-    //   if (snapshot.exists && snapshot.data != null) {
-    //     user = UserModel.fromJson(snapshot.data);
-    //     user.id = snapshot.documentID;
-    //     LocalStorage().setBool(LocalStorage.loginKey, true);
-    //     LocalStorage().setString(LocalStorage.userId, snapshot.documentID);
-    //     if (user.phone == null) {
-    //       _showGetPhoneDialog();
-    //     } else {
-    //       if (user.phoneVerified) {
-    //         LocalStorage().setBool(LocalStorage.phoneVerified, true);
-    //         Get.offAll(HomeScreen());
-    //       } else {
-    //         Get.offAll(VerifyPhoneScreen(
-    //           userModel: user,
-    //         ));
-    //       }
-    //     }
-    //   } else {
-    //     user = UserModel(
-    //         id: result.user.uid,
-    //         email: result.user.email,
-    //         name: result.user.displayName,
-    //         photo: result.user.photoUrl,
-    //         phoneVerified: false);
-    //
-    //     //showDialog to get phone number
-    //     _showGetPhoneDialog();
-    //   }
-    // } on AuthResult catch (error) {
-    //   handleError(error);
-    //   print('Failed with error code: $error');
-    // }
+  void login(String email, String password) async {
+    loading.value = true;
+    update();
+
+    await UserRepo().login(LoginRequest(
+      email: email,
+      password: password,
+    ));
+
+    loading.value = false;
+    update();
   }
 
-  signInFacebook() async {
-    // try {
-    //   FacebookLoginResult result = await _facebookLogin.logIn(['email']);
-    //   switch (result.status) {
-    //     case FacebookLoginStatus.error:
-    //       print("Error");
-    //       CommonMethods().showMessage(isArabic ? 'رسالة' : 'Message',
-    //           isArabic ? 'حدث خطأ ما' : 'Error Happened');
-    //       break;
-    //     case FacebookLoginStatus.cancelledByUser:
-    //       print("CancelledByUser");
-    //       CommonMethods().showMessage(isArabic ? 'رسالة' : 'Message',
-    //           isArabic ? 'تم الغاء العملية' : 'CancelledByUser');
-    //       break;
-    //     case FacebookLoginStatus.loggedIn:
-    //       print("LoggedIn");
-    //       final accessToken = result.accessToken.token;
-    //       final facebookAuthCredential =
-    //           FacebookAuthProvider.getCredential(accessToken: accessToken);
-    //       AuthResult authResult =
-    //           await _auth.signInWithCredential(facebookAuthCredential);
-    //       String userId = authResult.user.uid;
-    //       DocumentSnapshot snapshot = await UserRepo().getUser(userId);
-    //       if (snapshot.exists && snapshot.data != null) {
-    //         user = UserModel.fromJson(snapshot.data);
-    //         user.id = snapshot.documentID;
-    //         LocalStorage().setBool(LocalStorage.loginKey, true);
-    //         LocalStorage().setString(LocalStorage.userId, snapshot.documentID);
-    //         if (user.phone == null) {
-    //           _showGetPhoneDialog();
-    //         } else {
-    //           if (user.phoneVerified) {
-    //             LocalStorage().setBool(LocalStorage.phoneVerified, true);
-    //             Get.offAll(HomeScreen());
-    //           } else {
-    //             Get.offAll(VerifyPhoneScreen(
-    //               userModel: user,
-    //             ));
-    //           }
-    //         }
-    //       } else {
-    //         //first time to login in with facebook
-    //         // getting facebook profile photo
-    //         var myService = MyService.create(NetworkBaseUrlType.GraphUrl);
-    //         var response =
-    //             await myService.getFacebookGraph(result.accessToken.token);
-    //         GraphModel graphModel = GraphModel.fromJson(response.body);
-    //         print('response : ' + response.body.toString());
-    //         String photoUrl = graphModel.picture.data.url;
-    //         user = UserModel(
-    //             id: authResult.user.uid,
-    //             email: authResult.user.email,
-    //             name: authResult.user.displayName,
-    //             photo: photoUrl,
-    //             phoneVerified: false);
-    //         //showDialog to get phone number
-    //         _showGetPhoneDialog();
-    //       }
-    //       break;
-    //   }
-    // } on AuthException catch (e) {
-    //   handleError(e);
-    //   print('Failed with error code: ${e.code}');
-    //   print(e.message);
-    // }
-  }
-
-  _showGetPhoneDialog() async {
-    TextEditingController controller = TextEditingController();
-    showDialog<String>(
-      context: Get.context,
-      builder: (context) {
-        return AlertDialog(
-          title: CustomText(
-            text: 'enterPhone'.tr,
-          ),
-          contentPadding: const EdgeInsets.all(16.0),
-          content: Row(
-            children: <Widget>[
-              Expanded(
-                child: new TextField(
-                  controller: controller,
-                  keyboardType: TextInputType.phone,
-                  autofocus: true,
-                  decoration: new InputDecoration(hintText: 'phone'.tr),
-                ),
-              ),
-            ],
-          ),
-          actions: <Widget>[
-            FlatButton(
-                child: Text('ok'.tr),
-                onPressed: () {
-                  if (controller.text.isNotEmpty) {
-                    if (GetUtils.isPhoneNumber(controller.text)) {
-                      user.phone = controller.text;
-                      saveUser(user);
-                      Navigator.pop(context);
-                      Get.to(
-                        VerifyPhoneScreen(
-                          userModel: user,
-                        ),
-                      );
-                    } else {
-                      CommonMethods()
-                          .showMessage('message'.tr, 'enterValidPhone'.tr);
-                    }
-                  } else {
-                    CommonMethods()
-                        .showMessage('message'.tr, 'Enter your phone number');
-                  }
-                }),
-          ],
-        );
-      },
-    );
-  }
-
-  signInEmail(String email, String password) async {
-    // loading.value = true;
-    // try {
-    //   AuthResult result = await FirebaseAuth.instance
-    //       .signInWithEmailAndPassword(email: email, password: password);
-    //   DocumentSnapshot snapshot = await UserRepo().getUser(result.user.uid);
-    //
-    //   user = UserModel.fromJson(snapshot.data);
-    //   user.id = result.user.uid;
-    //   LocalStorage().setBool(LocalStorage.loginKey, true);
-    //   LocalStorage().setString(LocalStorage.userId, result.user.uid);
-    //
-    //   if (user.phoneVerified) {
-    //     LocalStorage().setBool(LocalStorage.phoneVerified, true);
-    //     Get.offAll(HomeScreen());
-    //   } else {
-    //     Get.offAll(VerifyPhoneScreen(
-    //       userModel: user,
-    //     ));
-    //   }
-    // } on AuthException catch (e) {
-    //   handleError(e);
-    //   print('Failed with error code: ${e.code}');
-    //   print(e.message);
-    // }
-    // loading.value = false;
-    // update();
-  }
-
-  createAccount(
+  void register(
       String name, String email, String phone, String password) async {
-    // loading.value = true;
-    // try {
-    //   AuthResult result = await _auth.createUserWithEmailAndPassword(
-    //       email: email, password: password);
-    //   user = UserModel(
-    //       id: result.user.uid,
-    //       email: email,
-    //       name: name,
-    //       photo: defaultImageUrl,
-    //       phone: phone,
-    //       phoneVerified: false);
-    //
-    //   saveUser(user);
-    //   LocalStorage().setBool(LocalStorage.loginKey, true);
-    //   LocalStorage().setString(LocalStorage.userId, result.user.uid);
-    //   Get.offAll(
-    //     VerifyPhoneScreen(
-    //       userModel: user,
-    //     ),
-    //   );
-    // } on AuthException catch (e) {
-    //   handleError(e);
-    //   print('Failed with error code: ${e.code}');
-    //   print(e.message);
-    // }
-    // loading.value = false;
-    // update();
+    loading.value = true;
+    update();
+    await UserRepo().register(RegisterRequest(
+      name: name,
+      email: email,
+      phone: phone,
+      password: password,
+    ));
+    loading.value = false;
+    update();
   }
 
-  void saveUser(UserModel user) async {
-    await UserRepo().addUserToFireStore(user);
+  void signInGoogle() async {
+    final GoogleSignInAccount googleUser =
+        await GoogleSignIn(scopes: ['profile']).signIn();
+
+    SocialRequest socialRequest = SocialRequest(
+        name: googleUser.displayName,
+        email: googleUser.email,
+        image: googleUser.photoUrl,
+        socialType: 'google',
+        uid: googleUser.id);
+
+    await UserRepo().socialSignUp(socialRequest);
+  }
+
+  void signInFacebook() async {
+    FacebookLoginResult result = await FacebookLogin().logIn(['email']);
+    switch (result.status) {
+      case FacebookLoginStatus.error:
+        print("Error");
+        CommonMethods().showMessage(isArabic ? 'رسالة' : 'Message',
+            isArabic ? 'حدث خطأ ما' : 'Error Happened');
+        break;
+      case FacebookLoginStatus.cancelledByUser:
+        print("CancelledByUser");
+        CommonMethods().showMessage(isArabic ? 'رسالة' : 'Message',
+            isArabic ? 'تم الغاء العملية' : 'CancelledByUser');
+        break;
+      case FacebookLoginStatus.loggedIn:
+        print("LoggedIn");
+        final accessToken = result.accessToken.token;
+        final fields = 'name,first_name,last_name,email,picture.height(800)';
+
+        var myService = UserService.create(NetworkBaseUrlType.GraphUrl);
+        var response = await myService.getFacebookGraph(accessToken, fields);
+        GraphModel graphModel = GraphModel.fromJson(response.body);
+
+        String photoUrl = graphModel.picture.data.url;
+
+        SocialRequest socialRequest = SocialRequest(
+            name: graphModel.name,
+            email: graphModel.email,
+            image: photoUrl,
+            socialType: 'face',
+            uid: graphModel.id);
+
+        await UserRepo().socialSignUp(socialRequest);
+    }
   }
 
   handleError(error) {

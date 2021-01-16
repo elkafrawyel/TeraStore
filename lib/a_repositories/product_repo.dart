@@ -1,54 +1,92 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tera/a_storage/network/products/products_service.dart';
+import 'package:tera/data/responses/categories_with_sliders_response.dart';
+import 'package:tera/data/responses/product_filter_response.dart';
 import 'package:tera/helper/Constant.dart';
+import 'package:tera/helper/data_resource.dart';
+import 'package:tera/helper/network_methods.dart';
 import 'package:tera/model/favourite_model.dart';
-import 'package:tera/model/product_model.dart';
+
+import 'file:///F:/Apps/My%20Flutter%20Apps/TeraStore/lib/data/models/product_model.dart';
 
 class ProductRepo {
-  // Future<List<DocumentSnapshot>> getSliders() async {
-  //   return [];
-  // }
+  getCategoriesWithSliders({Function(DataResource dataResource) state}) async {
+    ProductsService service = ProductsService.create();
+
+    NetworkMethods().handleResponse(
+      call: service.getCategoriesWithSliders(),
+      whenSuccess: (response) {
+        try {
+          CategoriesWithSlidersResponse categoriesWithSlidersResponse =
+              CategoriesWithSlidersResponse.fromJson(response.body);
+          if (categoriesWithSlidersResponse.status) {
+            state(Success(data: categoriesWithSlidersResponse));
+          } else {
+            state(
+                Failure(errorMessage: 'Failed to get categories and sliders'));
+          }
+        } catch (e) {
+          print(e);
+          state(Failure(errorMessage: 'Failed to get categories and sliders'));
+        }
+      },
+    );
+  }
+
+  getFilteredProducts(ProductFilters filter,
+      {Function(DataResource dataResource) state}) async {
+    ProductsService service = ProductsService.create();
+    NetworkMethods().handleResponse(
+      call: service.productsFilter(filter.value),
+      failed: (message) {
+        state(Failure(errorMessage: message));
+      },
+      whenSuccess: (response) {
+        try {
+          ProductFilterResponse productFilterResponse =
+              ProductFilterResponse.fromJson(response.body);
+          if (productFilterResponse.status) {
+            state(Success(data: productFilterResponse.data));
+          } else {
+            state(Failure(errorMessage: 'Failed to Filter Products'));
+          }
+        } catch (e) {
+          print(e);
+          state(Failure(errorMessage: 'Failed to Filter Products'));
+        }
+      },
+    );
+  }
+
+  getProductsInCategory(int subCategoryId,
+      {Function(DataResource dataResource) state}) async {
+    ProductsService service = ProductsService.create();
+    NetworkMethods().handleResponse(
+      call: service.getProductsByInCategory(subCategoryId.toString()),
+      failed: (message) {
+        state(Failure(errorMessage: message));
+      },
+      whenSuccess: (response) {
+        try {
+          ProductFilterResponse productFilterResponse =
+              ProductFilterResponse.fromJson(response.body);
+          if (productFilterResponse.status) {
+            state(Success(data: productFilterResponse.data));
+          } else {
+            state(Failure(errorMessage: 'Failed to get Products in category'));
+          }
+        } catch (e) {
+          print(e);
+          state(Failure(errorMessage: 'Failed to get Products in category'));
+        }
+      },
+    );
+  }
 
   //get products in same subCategory
   Future<List<DocumentSnapshot>> searchProducts(String searchText) async {
-    return [];
-  }
-
-  Future<List<DocumentSnapshot>> getSliderProducts() async {
-    return [];
-  }
-
-  Future<List<DocumentSnapshot>> getFilteredProducts(
-      ProductFilters filter) async {
-    switch (filter) {
-      case ProductFilters.HighPrice:
-        return await _highPriceFilter();
-      case ProductFilters.LowPrice:
-        return await _lowPriceFilter();
-      case ProductFilters.Latest:
-        print('Todo work');
-        return _latestFilter();
-      // case ProductFilters.LowRate:
-      //   print('Todo work');
-      //   return [];
-    }
-    return await _highPriceFilter();
-  }
-
-  Future<List<DocumentSnapshot>> _highPriceFilter() async {
-    return [];
-  }
-
-  Future<List<DocumentSnapshot>> _lowPriceFilter() async {
-    return [];
-  }
-
-  Future<List<DocumentSnapshot>> _latestFilter() async {
-    return [];
-  }
-
-  Future<List<DocumentSnapshot>> getProducts(String subCategoryId) async {
     return [];
   }
 

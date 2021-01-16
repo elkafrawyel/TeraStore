@@ -13,6 +13,7 @@ class MainController extends GetxController {
   Color primaryColor = LocalStorage().primaryColor();
 
   ValueNotifier<bool> loading = ValueNotifier(false);
+  ValueNotifier<bool> error = ValueNotifier(false);
   ValueNotifier<bool> empty = ValueNotifier(false);
 
   UserModel user;

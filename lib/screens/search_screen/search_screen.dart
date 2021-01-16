@@ -45,7 +45,7 @@ class SearchScreen extends StatelessWidget {
                       )
                     : Expanded(
                         child: Container(
-                          color: Colors.white,
+                          color: LocalStorage().primaryColor(),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: ListView.builder(
@@ -58,7 +58,8 @@ class SearchScreen extends StatelessWidget {
                                     Get.to(
                                       DetailsScreen(
                                           productId: controller
-                                              .searchProducts[index].id),
+                                              .searchProducts[index].id
+                                              .toString()),
                                     );
                                   },
                                 );

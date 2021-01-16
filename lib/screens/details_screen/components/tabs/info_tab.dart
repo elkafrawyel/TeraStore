@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tera/data/models/product_model.dart';
 import 'package:tera/helper/Constant.dart';
-import 'package:tera/model/product_model.dart';
 import 'package:tera/screens/custom_widgets/text/custom_description_text.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
@@ -37,7 +37,7 @@ class InfoTab extends StatelessWidget {
             // product.owner == null
             //     ? Container()
             //     : OwnerInfo(
-            //         owner: product.owner,
+            //         owner: product,
             //       ),
             // SizedBox(
             //   height: kDefaultPadding,

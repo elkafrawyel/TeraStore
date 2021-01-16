@@ -5,10 +5,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/controllers/edit_product_controller.dart';
-import 'package:tera/controllers/home_controller.dart';
+import 'package:tera/data/models/product_model.dart';
 import 'package:tera/helper/CommonMethods.dart';
-import 'package:tera/model/category_model.dart';
-import 'package:tera/model/product_model.dart';
 
 import 'custom_widgets/button/custom_button.dart';
 import 'custom_widgets/custom_appbar.dart';
@@ -240,15 +238,15 @@ class EditProductScreen extends StatelessWidget {
   }
 
   _getInitialValues() {
-    var homeController = Get.find<HomeController>();
-    if (productModel.categoryId != null) {
-      for (CategoryModel element in homeController.categories) {
-        if (element.id == productModel.categoryId) {
-          homeController.setCategoryModel(element,
-              subCategoryIdToSelect: productModel.subCategoryId);
-        }
-      }
-    }
+    // var homeController = Get.find<HomeController>();
+    // if (productModel.categoryId != null) {
+    //   for (CategoryModel element in homeController.categories) {
+    //     if (element.id == productModel.categoryId) {
+    //       homeController.setCategoryModel(element,
+    //           subCategoryIdToSelect: productModel.subCategoryId);
+    //     }
+    //   }
+    // }
   }
 
   void _setDataToView() {

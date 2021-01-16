@@ -18,6 +18,8 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       smartManagement: SmartManagement.onlyBuilder,
+      defaultTransition: Transition.size,
+      transitionDuration: Duration(milliseconds: 500),
       initialBinding: GetBinding(),
       translations: Translation(),
       locale: Locale('en'),

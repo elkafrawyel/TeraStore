@@ -43,11 +43,22 @@ class _CategoryListState extends State<CategoryList> {
                 color: Colors.white.withOpacity(0.4),
                 borderRadius: BorderRadius.circular(6),
               ),
-              child: CustomText(
-                text: controller.categories[index].displayName,
-                alignment: AlignmentDirectional.center,
-                color: Colors.white,
-                fontSize: 16,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.category,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  CustomText(
+                    text: controller.categories[index].displayName,
+                    alignment: AlignmentDirectional.center,
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ],
               ),
             ),
           ),

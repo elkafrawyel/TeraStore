@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tera/data/models/user_model.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class OwnerInfo extends StatelessWidget {
-  final UserModel owner;
+import 'file:///F:/Apps/My%20Flutter%20Apps/TeraStore/lib/data/models/product_model.dart';
 
-  OwnerInfo({this.owner});
+class OwnerInfo extends StatelessWidget {
+  final ProductModel productModel;
+
+  OwnerInfo({this.productModel});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class OwnerInfo extends StatelessWidget {
                       child: Column(
                         children: [
                           CustomText(
-                            text: owner.name,
+                            text: 'productModel.owner.name',
                             color: Colors.black,
                             alignment: AlignmentDirectional.topStart,
                             fontSize: 18,
@@ -50,8 +51,8 @@ class OwnerInfo extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            var phone = owner.phone;
-                            _launchCaller(phone);
+                            // var phone = productModel.owner.phone;
+                            // _launchCaller(phone);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -90,7 +91,7 @@ class OwnerInfo extends StatelessWidget {
 
   _launchCaller(String phone) async {
     phone == null
-        ? CommonMethods().showMessage('message'.tr, 'userHaveNoPhone'.tr)
+        ? CommonMethods().showSnackBar('userHaveNoPhone'.tr)
         : await canLaunch("tel:$phone")
             ? await launch("tel:$phone")
             : throw 'Could not launch ${"tel:$phone"}';

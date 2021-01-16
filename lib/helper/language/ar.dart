@@ -134,4 +134,6 @@ Map<String, String> ar = {
   'enterValidEmail': 'أدخل ايميل صحيح',
   'cancelledByUser': 'تم الغاء تسجيل الدخول',
   'serverNotFound': 'لا يمكن الاتصال بالسيرفر. حاول لاحقا',
+  'governorate': 'المحافظة',
+  'city': 'المدينة',
 };

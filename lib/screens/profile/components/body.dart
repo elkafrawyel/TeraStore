@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/data/models/product_model.dart';
 import 'package:tera/data/models/user_model.dart';
 import 'package:tera/helper/Constant.dart';
-import 'package:tera/model/product_model.dart';
 import 'package:tera/screens/change_password_screen.dart';
 import 'package:tera/screens/custom_widgets/button/custom_outlined_button.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
@@ -68,11 +68,11 @@ class Body extends StatelessWidget {
                             color: Colors.white,
                           ),
                           SizedBox(
-                            width: kDefaultPadding,
+                            width: kDefaultPadding / 2,
                           ),
                           Icon(
                             Icons.verified_user_rounded,
-                            color: Colors.green,
+                            color: Colors.white,
                             size: 25,
                           ),
                         ],
@@ -139,8 +139,8 @@ class Body extends StatelessWidget {
         itemIndex: products.indexOf(element),
         product: products[products.indexOf(element)],
         press: () {
-          Get.to(
-              DetailsScreen(productId: products[products.indexOf(element)].id));
+          Get.to(DetailsScreen(
+              productId: products[products.indexOf(element)].id.toString()));
         },
       ));
     });

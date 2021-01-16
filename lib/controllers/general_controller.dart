@@ -87,13 +87,18 @@ class GeneralController extends MainController {
       CommonMethods().showSnackBar('Choose from the list');
       return;
     }
-    addressRequest.governorate = selectedLocation.governorate;
-    addressRequest.city = selectedCity.city;
+    addressRequest.governorate = selectedLocation.nameEn;
+    addressRequest.city = selectedCity.nameEn;
     await GeneralRepo().addAddress(
       addressRequest,
       state: (callState) {
-        Get.back();
-        getAddressList();
+        if (callState is Success) {
+          CommonMethods().hideKeyboard();
+          Get.back();
+          getAddressList();
+        } else if (callState is Failure) {
+          CommonMethods().showSnackBar(callState.errorMessage);
+        }
       },
     );
   }

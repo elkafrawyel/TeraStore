@@ -6,9 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/controllers/product_details_controller.dart';
+import 'package:tera/data/models/product_model.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
-import 'package:tera/model/product_model.dart';
 import 'package:tera/model/review_model.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
@@ -102,7 +102,7 @@ class ReviewsTab extends StatelessWidget {
                         } else {
                           Get.back();
                           controller.addReview(
-                              product.id, reviewText, ratingValue);
+                              product.id.toString(), reviewText, ratingValue);
                         }
                       },
                       child: Container(

@@ -25,19 +25,20 @@ class SubCategoriesList extends StatelessWidget {
                   )
                 : ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: controller.subCategories.length,
+                    itemCount: controller.categoryModel.subCategories.length,
                     itemBuilder: (context, index) => GestureDetector(
                       onTap: () {
                         if (controller.selectedSubCategoryIndex != index) {
-                          controller.selectedSubCategoryIndex = index;
-                          //load products
-                          Get.find<ProductsController>().getProducts();
+                          controller.changeSubCategory(index);
                         }
                       },
                       child: Container(
                         alignment: Alignment.center,
                         margin: EdgeInsetsDirectional.only(
-                          end: index == controller.subCategories.length - 1
+                          end: index ==
+                                  controller
+                                          .categoryModel.subCategories.length -
+                                      1
                               ? kDefaultPadding
                               : 0,
                           start: kDefaultPadding,
@@ -51,11 +52,23 @@ class SubCategoriesList extends StatelessWidget {
                               : Colors.transparent,
                           borderRadius: BorderRadius.circular(6),
                         ),
-                        child: CustomText(
-                          fontSize: 18,
-                          text: controller.subCategories[index].displayName,
-                          alignment: AlignmentDirectional.center,
-                          color: Colors.white,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.category,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            CustomText(
+                              fontSize: 18,
+                              text: controller.categoryModel
+                                  .subCategories[index].displayName,
+                              alignment: AlignmentDirectional.center,
+                              color: Colors.white,
+                            ),
+                          ],
                         ),
                       ),
                     ),

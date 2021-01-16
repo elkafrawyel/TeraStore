@@ -1,6 +1,6 @@
 import 'package:tera/a_repositories/product_repo.dart';
 import 'package:tera/controllers/main_controller.dart';
-import 'package:tera/model/product_model.dart';
+import 'package:tera/data/models/product_model.dart';
 
 class ProfileController extends MainController {
   //will contain user data, edit profile, myProducts
@@ -32,7 +32,7 @@ class ProfileController extends MainController {
   }
 
   delete(ProductModel productModel) {
-    ProductRepo().deleteProduct(productModel.id);
+    ProductRepo().deleteProduct(productModel.id.toString());
     _products.remove(productModel);
     update();
   }

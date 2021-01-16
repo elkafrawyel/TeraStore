@@ -1,4 +1,4 @@
-import 'package:tera/model/product_model.dart';
+import 'package:tera/data/models/product_model.dart';
 
 class CartModel {
   List<Cart> cart;

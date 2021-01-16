@@ -41,6 +41,7 @@ dependencies:
   flutter_ringtone_player:
   data_connection_checker:
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -61,6 +62,6 @@ flutter:
     - src/fonts/
 
   fonts:
-   - family: Crimson
-     fonts:
-       - asset: src/fonts/font.ttf
+    - family: Crimson
+      fonts:
+        - asset: src/fonts/font.ttf

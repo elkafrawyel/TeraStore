@@ -29,7 +29,6 @@ class HomeScreen extends StatelessWidget {
     Get.find<MainController>().loadUserData();
     Get.find<CartController>().getCartItems(showLoading: true);
     controller.getSliderProducts();
-    controller.getCategories();
     controller.filterProducts();
   }
 
@@ -74,12 +73,20 @@ class HomeScreen extends StatelessWidget {
             size: 25,
           ),
           onPressed: () {
-            Get.to(SearchScreen());
+            Get.to(
+              SearchScreen(),
+              transition: Transition.upToDown,
+              duration: Duration(milliseconds: 500),
+            );
           },
         ),
         BudgetCartIconView(
           press: () {
-            Get.to(CartScreen());
+            Get.to(
+              CartScreen(),
+              transition: Transition.upToDown,
+              duration: Duration(milliseconds: 500),
+            );
           },
         ),
       ],
@@ -111,7 +118,11 @@ class HomeScreen extends StatelessWidget {
                           builder: (controller) => GestureDetector(
                             onTap: () {
                               Get.back();
-                              Get.to(ProfileScreen());
+                              Get.to(
+                                ProfileScreen(),
+                                transition: Transition.zoom,
+                                duration: Duration(milliseconds: 500),
+                              );
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -148,32 +159,52 @@ class HomeScreen extends StatelessWidget {
                 height: 20,
               ),
               _buildRow('favorite'.tr, Icons.favorite, () {
-                Get.to(FavouritesScreen());
+                Get.to(
+                  FavouritesScreen(),
+                  transition: Transition.rightToLeftWithFade,
+                  duration: Duration(milliseconds: 500),
+                );
               }),
               SizedBox(
                 height: 20,
               ),
 
               _buildRow('shippingAddresses'.tr, Icons.location_on, () {
-                Get.to(ShippingAddresses());
+                Get.to(
+                  ShippingAddresses(),
+                  transition: Transition.rightToLeftWithFade,
+                  duration: Duration(milliseconds: 500),
+                );
               }),
               SizedBox(
                 height: 20,
               ),
               _buildRow('orderHistory'.tr, Icons.timer, () {
-                Get.to(OrderHistoryScreen());
+                Get.to(
+                  OrderHistoryScreen(),
+                  transition: Transition.rightToLeftWithFade,
+                  duration: Duration(milliseconds: 500),
+                );
               }),
               SizedBox(
                 height: 20,
               ),
               _buildRow('notifications'.tr, Icons.notifications_active, () {
-                Get.to(NotificationsScreen());
+                Get.to(
+                  NotificationsScreen(),
+                  transition: Transition.rightToLeftWithFade,
+                  duration: Duration(milliseconds: 500),
+                );
               }),
               SizedBox(
                 height: 20,
               ),
               _buildRow('settings'.tr, Icons.settings, () {
-                Get.to(SettingsScreen());
+                Get.to(
+                  SettingsScreen(),
+                  transition: Transition.rightToLeftWithFade,
+                  duration: Duration(milliseconds: 500),
+                );
               }),
               SizedBox(
                 height: 10,
@@ -307,7 +338,11 @@ class HomeScreen extends StatelessWidget {
     return FloatingActionButton(
       backgroundColor: Colors.amber,
       onPressed: () async {
-        await Get.to(AddProductScreen());
+        await Get.to(
+          AddProductScreen(),
+          transition: Transition.downToUp,
+          duration: Duration(milliseconds: 500),
+        );
       },
       child: Icon(
         Icons.add,
@@ -327,7 +362,6 @@ class HomeScreen extends StatelessWidget {
             content: Container(
               width: MediaQuery.of(context).size.width,
               child: GetBuilder<HomeController>(
-                init: HomeController(),
                 builder: (controller) => Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -388,7 +422,7 @@ class HomeScreen extends StatelessWidget {
                         //High Rate Radio
                         Row(
                           children: [
-                            Radio(
+                            Radio<ProductFilters>(
                               value: ProductFilters.Latest,
                               groupValue: controller.filter,
                               onChanged: (value) {
@@ -425,7 +459,7 @@ class HomeScreen extends StatelessWidget {
                       onTap: () {
                         Get.back();
                         controller.filterProducts();
-                        CommonMethods().showMessage('filter'.tr,
+                        CommonMethods().showSnackBar(
                             '${'sortBy'.tr} ${controller.filter.text}');
                       },
                       child: Container(
@@ -459,44 +493,5 @@ class HomeScreen extends StatelessWidget {
           SystemNavigator.pop(animated: true);
         });
     return Future.value(true);
-  }
-}
-
-enum ProductFilters {
-  HighPrice,
-  LowPrice,
-  Latest,
-  // LowRate
-}
-
-extension ProductFiltersExtension on ProductFilters {
-  String get value {
-    switch (this) {
-      case ProductFilters.HighPrice:
-        return 'highPrice';
-      case ProductFilters.LowPrice:
-        return 'lowPrice';
-      case ProductFilters.Latest:
-        return 'latest';
-      // case ProductFilters.LowRate:
-      //   return 'lowRate';
-    }
-    return 'highPrice';
-  }
-
-  String get text {
-    switch (this) {
-      case ProductFilters.HighPrice:
-        return LocalStorage().isArabicLanguage() ? 'الاعلي سعرا' : 'High Price';
-      case ProductFilters.LowPrice:
-        return LocalStorage().isArabicLanguage() ? 'الاقل سعرا' : 'Low Price';
-      case ProductFilters.Latest:
-        return LocalStorage().isArabicLanguage()
-            ? 'احدث المنتجات'
-            : 'Latest Arrived';
-      // case ProductFilters.LowRate:
-      //   return LocalStorage().isArabicLanguage() ? 'الاقل تقييما' : 'Low Rate';
-    }
-    return LocalStorage().isArabicLanguage() ? 'الاعلي سعرا' : 'High Price';
   }
 }

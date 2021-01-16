@@ -26,7 +26,7 @@ class LocationsMenu extends StatelessWidget {
                       value: controller.selectedLocation,
                       hint: Center(
                         child: CustomText(
-                          text: 'المحافظة'.tr,
+                          text: 'governorate'.tr,
                           color: Colors.grey.shade500,
                           fontSize: 16,
                           alignment: AlignmentDirectional.center,
@@ -38,7 +38,7 @@ class LocationsMenu extends StatelessWidget {
                               value: model,
                               child: Center(
                                 child: Text(
-                                  model.governorate,
+                                  model.displayName,
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ),
@@ -64,7 +64,7 @@ class LocationsMenu extends StatelessWidget {
                       value: controller.selectedCity,
                       hint: Center(
                         child: CustomText(
-                          text: 'المدينة'.tr,
+                          text: 'city'.tr,
                           color: Colors.grey.shade500,
                           fontSize: 16,
                           alignment: AlignmentDirectional.center,
@@ -76,7 +76,7 @@ class LocationsMenu extends StatelessWidget {
                               value: model,
                               child: Center(
                                 child: Text(
-                                  model.city,
+                                  model.displayName,
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ),

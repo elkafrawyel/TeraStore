@@ -22,7 +22,11 @@ class ProfileScreen extends StatelessWidget {
             padding: const EdgeInsetsDirectional.only(end: 20),
             child: GestureDetector(
               onTap: () async {
-                Get.to(EditProfileScreen());
+                Get.to(
+                  EditProfileScreen(),
+                  transition: Transition.upToDown,
+                  duration: Duration(milliseconds: 500),
+                );
               },
               child: Icon(
                 Icons.edit,

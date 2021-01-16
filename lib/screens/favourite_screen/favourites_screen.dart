@@ -43,7 +43,8 @@ class FavouritesScreen extends StatelessWidget {
                               press: () {
                                 Get.to(
                                   DetailsScreen(
-                                      productId: controller.products[index].id),
+                                      productId: controller.products[index].id
+                                          .toString()),
                                 );
                               },
                               product: controller.products[index],

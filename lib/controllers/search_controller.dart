@@ -1,5 +1,5 @@
 import 'package:tera/controllers/main_controller.dart';
-import 'package:tera/model/product_model.dart';
+import 'package:tera/data/models/product_model.dart';
 
 class SearchController extends MainController {
   List<ProductModel> _searchProducts = [];

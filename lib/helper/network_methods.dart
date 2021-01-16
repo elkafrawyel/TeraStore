@@ -10,12 +10,13 @@ class NetworkMethods {
   handleResponse({
     Future<chopper.Response<dynamic>> call,
     Function(chopper.Response response) whenSuccess,
+    Function(String message) failed,
   }) async {
     try {
       chopper.Response response = await call;
+      if (response == null) failed('Response is null');
       switch (response.statusCode) {
         case 200:
-          print('OK');
           whenSuccess(response);
           return ApiState.success;
 

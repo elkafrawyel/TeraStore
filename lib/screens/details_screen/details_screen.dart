@@ -64,7 +64,7 @@ class DetailsScreen extends StatelessWidget {
               size: 30,
             ),
           )
-        : controller.productModel.isFav
+        : true
             ? GestureDetector(
                 onTap: () {
                   //remove

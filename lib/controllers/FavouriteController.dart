@@ -1,6 +1,6 @@
 import 'package:tera/a_repositories/product_repo.dart';
 import 'package:tera/controllers/main_controller.dart';
-import 'package:tera/model/product_model.dart';
+import 'file:///F:/Apps/My%20Flutter%20Apps/TeraStore/lib/data/models/product_model.dart';
 
 class FavouriteController extends MainController {
   ProductModel productModel;
@@ -23,7 +23,7 @@ class FavouriteController extends MainController {
   }
 
   removeFromFavourites(ProductModel productModel) async {
-    await ProductRepo().removeFromFavourites(productModel.id);
+    await ProductRepo().removeFromFavourites(productModel.id.toString());
     _products.remove(productModel);
 
     empty.value = _products.isEmpty;

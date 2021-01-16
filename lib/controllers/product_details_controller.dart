@@ -1,9 +1,7 @@
 import 'package:get/get.dart';
-import 'package:tera/a_repositories/product_repo.dart';
 import 'package:tera/a_repositories/review_repo.dart';
 import 'package:tera/controllers/main_controller.dart';
-import 'package:tera/helper/CommonMethods.dart';
-import 'package:tera/model/product_model.dart';
+import 'package:tera/data/models/product_model.dart';
 import 'package:tera/model/review_model.dart';
 
 class ProductDetailsController extends MainController {
@@ -22,30 +20,30 @@ class ProductDetailsController extends MainController {
     loading.value = true;
     update();
 
-    loading.value = false;
-    update();
-    getSimilarProducts(productModel.subCategoryId, productModel.id);
-    getReviewsList(productId);
+    // loading.value = false;
+    // update();
+    // getSimilarProducts(productModel.subCategoryId, productModel.id.toString());
+    // getReviewsList(productId);
   }
 
   Future<void> checkIfFavourite(String productId) async {
-    await ProductRepo().checkIfFavourite(productId, (isFave) {
-      productModel.isFav = isFave;
-    });
+    // await ProductRepo().checkIfFavourite(productId, (isFave) {
+    //   productModel.isFav = isFave;
+    // });
   }
 
   addToFavourites(String productId) async {
-    await ProductRepo().addToFavourites(productId);
-    productModel.isFav = true;
-    CommonMethods().showMessage(productModel.name, 'addedToFavourite'.tr);
-    update();
+    // await ProductRepo().addToFavourites(productId);
+    // productModel.isFav = true;
+    // CommonMethods().showMessage(productModel.name, 'addedToFavourite'.tr);
+    // update();
   }
 
   removeFromFavourites(String productId) async {
-    await ProductRepo().removeFromFavourites(productId);
-    productModel.isFav = false;
-    CommonMethods().showMessage(productModel.name, 'removedFromFavourite'.tr);
-    update();
+    // await ProductRepo().removeFromFavourites(productId);
+    // productModel.isFav = false;
+    // CommonMethods().showMessage(productModel.name, 'removedFromFavourite'.tr);
+    // update();
   }
 
   getSimilarProducts(String subCategoryId, String productId) async {

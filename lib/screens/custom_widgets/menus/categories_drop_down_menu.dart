@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tera/controllers/home_controller.dart';
-import 'package:tera/model/category_model.dart';
-import 'package:tera/model/sub_category_model.dart';
+import 'package:tera/data/models/category_model.dart';
+import 'package:tera/data/models/sub_category_model.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 class CategoriesDropDownMenu extends StatelessWidget {

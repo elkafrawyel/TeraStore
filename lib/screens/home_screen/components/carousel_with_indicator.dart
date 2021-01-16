@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tera/model/product_model.dart';
+import 'package:tera/data/models/product_model.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 import 'package:tera/screens/details_screen/details_screen.dart';
 
@@ -90,7 +90,9 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                         onTap: () {
                           Get.to(
                             DetailsScreen(
-                              productId: products[products.indexOf(item)].id,
+                              productId: products[products.indexOf(item)]
+                                  .id
+                                  .toString(),
                             ),
                           );
                         },
@@ -120,8 +122,9 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                             onTap: () {
                               Get.to(
                                 DetailsScreen(
-                                  productId:
-                                      products[products.indexOf(item)].id,
+                                  productId: products[products.indexOf(item)]
+                                      .id
+                                      .toString(),
                                 ),
                               );
                             },

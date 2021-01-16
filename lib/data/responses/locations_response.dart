@@ -1,3 +1,5 @@
+import 'package:tera/a_storage/local_storage.dart';
+
 class LocationsResponse {
   bool status;
   String message;
@@ -29,19 +31,16 @@ class LocationsResponse {
 
 class Location {
   int id;
-  String governorate;
-  String createdAt;
-  String updatedAt;
+  String nameEn;
+  String nameAr;
   List<City> cities;
 
-  Location(
-      {this.id, this.governorate, this.createdAt, this.updatedAt, this.cities});
+  Location({this.id, this.nameEn, this.nameAr, this.cities});
 
   Location.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    governorate = json['governorate'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    nameEn = json['governorate'];
+    nameAr = json['governorateAr'];
     if (json['cities'] != null) {
       cities = new List<City>();
       json['cities'].forEach((v) {
@@ -53,40 +52,49 @@ class Location {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['governorate'] = this.governorate;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    data['governorate'] = this.nameEn;
+    data['governorateAr'] = this.nameAr;
     if (this.cities != null) {
       data['cities'] = this.cities.map((v) => v.toJson()).toList();
     }
     return data;
   }
+
+  String get displayName => LocalStorage().isArabicLanguage()
+      ? (nameAr == null ? '' : nameAr)
+      : (nameEn == null ? '' : nameEn);
 }
 
 class City {
   int id;
-  String city;
-  int govId;
-  String createdAt;
-  String updatedAt;
+  String nameEn;
+  String nameAr;
+  int locationId;
 
-  City({this.id, this.city, this.govId, this.createdAt, this.updatedAt});
+  City({
+    this.id,
+    this.nameEn,
+    this.nameAr,
+    this.locationId,
+  });
 
   City.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    city = json['city'];
-    govId = json['gov_id'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    nameEn = json['city'];
+    nameAr = json['cityAr'];
+    locationId = json['gov_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['city'] = this.city;
-    data['gov_id'] = this.govId;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    data['city'] = this.nameEn;
+    data['cityAr'] = this.nameAr;
+    data['gov_id'] = this.locationId;
     return data;
   }
+
+  String get displayName => LocalStorage().isArabicLanguage()
+      ? (nameAr == null ? '' : nameAr)
+      : (nameEn == null ? '' : nameEn);
 }

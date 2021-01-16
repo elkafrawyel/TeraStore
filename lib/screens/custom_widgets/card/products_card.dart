@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/helper/Constant.dart';
-import 'package:tera/model/product_model.dart';
+import 'file:///F:/Apps/My%20Flutter%20Apps/TeraStore/lib/data/models/product_model.dart';
 import 'package:tera/screens/details_screen/details_screen.dart';
 
 import '../text/custom_text.dart';
@@ -16,7 +16,7 @@ class ProductsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(DetailsScreen(productId: product.id));
+        Get.to(DetailsScreen(productId: product.id.toString()));
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.6,

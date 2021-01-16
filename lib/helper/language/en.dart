@@ -135,4 +135,6 @@ Map<String, String> en = {
   'enterValidEmail': 'Enter valid email',
   'cancelledByUser': 'CancelledByUser',
   'serverNotFound': 'Can\;t connect to server. try again later',
+  'governorate': 'Governorate',
+  'city': 'City',
 };

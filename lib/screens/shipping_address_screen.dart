@@ -56,7 +56,8 @@ class ShippingAddresses extends StatelessWidget {
                 colorBackground: LocalStorage().primaryColor(),
                 fontSize: 20,
                 onPressed: () async {
-                  await Get.to(AddAddressScreen());
+                  await Get.to(AddAddressScreen(),
+                      transition: Transition.rightToLeft);
                   Get.find<GeneralController>().selectedLocation = null;
                   Get.find<GeneralController>().selectedCity = null;
                 },
@@ -99,7 +100,7 @@ class ShippingAddresses extends StatelessWidget {
         child: Column(
           children: [
             CustomText(
-              text: '${index + 1} - ${controller.addressList[index].title}',
+              text: '${controller.addressList[index].title}',
               alignment: AlignmentDirectional.centerStart,
               fontSize: 22,
               fontWeight: FontWeight.bold,

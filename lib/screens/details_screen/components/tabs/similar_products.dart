@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tera/data/models/product_model.dart';
 import 'package:tera/screens/details_screen/details_screen.dart';
-import 'package:tera/screens/home_screen/components/product_card.dart';
+
+import '../similar_products_card.dart';
 
 class SimilarProducts extends StatelessWidget {
   final List<ProductModel> products;
@@ -23,7 +24,7 @@ class SimilarProducts extends StatelessWidget {
   List<Widget> _similarProducts() {
     List<Widget> widgets = [];
     products.forEach((element) {
-      widgets.add(ProductCard(
+      widgets.add(SimilarProductsCard(
         itemIndex: products.indexOf(element),
         product: products[products.indexOf(element)],
         press: () {

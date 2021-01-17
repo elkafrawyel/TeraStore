@@ -20,9 +20,7 @@ dependencies:
   google_sign_in:
   firebase_core:
   firebase_auth:
-  cloud_firestore:
   firebase_messaging:
-  firebase_storage:
   flutter_facebook_login:
   splash_screen_view:
   shared_preferences:
@@ -40,7 +38,7 @@ dependencies:
   flutter_local_notifications:
   flutter_ringtone_player:
   data_connection_checker:
-
+  toggle_switch:
 
 dev_dependencies:
   flutter_test:

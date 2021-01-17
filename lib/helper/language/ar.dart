@@ -102,7 +102,7 @@ Map<String, String> ar = {
   'noSimilarProducts': 'لا يوجد منتجات مشابهة',
   'edit': 'تعديل',
   'delete': 'حذف',
-  'deleteMessage': 'هل انت متأكد من حذف هذا المنتج؟',
+  'deleteMessage': 'هل انت متأكد من حذف هذا العنصر؟',
   'addReview': 'أضف تعليق',
   'rate': 'تقييم',
   'rateProduct': 'تقييم المنتج',
@@ -136,4 +136,6 @@ Map<String, String> ar = {
   'serverNotFound': 'لا يمكن الاتصال بالسيرفر. حاول لاحقا',
   'governorate': 'المحافظة',
   'city': 'المدينة',
+  'confirm': 'تأكيد',
+  'confirmOrder': 'تأكيد الطلب',
 };

@@ -35,8 +35,7 @@ class GeneralRepo {
           AddAddressResponse addAddressResponse =
               AddAddressResponse.fromJson(response.body);
           if (addAddressResponse.status) {
-            CommonMethods().showSnackBar(addAddressResponse.message);
-            state(Success());
+            state(Success(data: addAddressResponse.message));
           } else {
             state(Failure(errorMessage: 'Failed to add address'));
           }

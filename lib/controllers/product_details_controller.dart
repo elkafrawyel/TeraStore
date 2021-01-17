@@ -20,8 +20,8 @@ class ProductDetailsController extends MainController {
     loading.value = true;
     update();
 
-    // loading.value = false;
-    // update();
+    loading.value = false;
+    update();
     // getSimilarProducts(productModel.subCategoryId, productModel.id.toString());
     // getReviewsList(productId);
   }

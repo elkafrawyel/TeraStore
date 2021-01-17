@@ -103,7 +103,7 @@ Map<String, String> en = {
   'noSimilarProducts': 'No Similar Products Founded',
   'edit': 'Edit',
   'delete': 'Delete',
-  'deleteMessage': 'Are you sure to delete this product?',
+  'deleteMessage': 'Are you sure to delete this item?',
   'addReview': 'Add review',
   'rate': 'Rate',
   'rateProduct': "Rate Product",
@@ -137,4 +137,6 @@ Map<String, String> en = {
   'serverNotFound': 'Can\;t connect to server. try again later',
   'governorate': 'Governorate',
   'city': 'City',
+  'confirm': 'Confirm',
+  'confirmOrder': 'Confirm Order',
 };

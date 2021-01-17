@@ -61,7 +61,7 @@ class Body extends StatelessWidget {
                                     textColor: Colors.white,
                                   )
                                 ]
-                              : _buildProductsList(controller.products),
+                              : _buildProductsList(controller.filteredProducts),
                         ),
                       ),
                     ],

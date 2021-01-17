@@ -9,85 +9,83 @@ class LocationsMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<GeneralController>(
       init: GeneralController(),
-      builder: (controller) => controller.loading.value
-          ? CircularProgressIndicator()
-          : Column(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: Center(
-                    child: DropdownButton<Location>(
-                      iconDisabledColor: Colors.grey,
-                      isExpanded: true,
-                      iconSize: 40,
-                      onChanged: (Location locationModel) {
-                        controller.setLocation(locationModel);
-                      },
-                      value: controller.selectedLocation,
-                      hint: Center(
-                        child: CustomText(
-                          text: 'governorate'.tr,
-                          color: Colors.grey.shade500,
-                          fontSize: 16,
-                          alignment: AlignmentDirectional.center,
-                        ),
-                      ),
-                      items: controller.locationsResponse.locations
-                          .map<DropdownMenuItem<Location>>(
-                            (model) => DropdownMenuItem<Location>(
-                              value: model,
-                              child: Center(
-                                child: Text(
-                                  model.displayName,
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                    ),
+      builder: (controller) => Column(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width * 0.7,
+            child: Center(
+              child: DropdownButton<Location>(
+                iconDisabledColor: Colors.grey,
+                isExpanded: true,
+                iconSize: 40,
+                onChanged: (Location locationModel) {
+                  controller.setLocation(locationModel);
+                },
+                value: controller.selectedLocation,
+                hint: Center(
+                  child: CustomText(
+                    text: 'governorate'.tr,
+                    color: Colors.grey.shade500,
+                    fontSize: 16,
+                    alignment: AlignmentDirectional.center,
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: Center(
-                    child: DropdownButton<City>(
-                      iconDisabledColor: Colors.grey,
-                      isExpanded: true,
-                      iconSize: 40,
-                      onChanged: (City cityModel) {
-                        controller.setCity(cityModel);
-                      },
-                      value: controller.selectedCity,
-                      hint: Center(
-                        child: CustomText(
-                          text: 'city'.tr,
-                          color: Colors.grey.shade500,
-                          fontSize: 16,
-                          alignment: AlignmentDirectional.center,
+                items: controller.locationsResponse.locations
+                    .map<DropdownMenuItem<Location>>(
+                      (model) => DropdownMenuItem<Location>(
+                        value: model,
+                        child: Center(
+                          child: Text(
+                            model.displayName,
+                            style: TextStyle(fontSize: 20),
+                          ),
                         ),
                       ),
-                      items: controller.cities
-                          .map<DropdownMenuItem<City>>(
-                            (model) => DropdownMenuItem<City>(
-                              value: model,
-                              child: Center(
-                                child: Text(
-                                  model.displayName,
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
-                ),
-              ],
+                    )
+                    .toList(),
+              ),
             ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.7,
+            child: Center(
+              child: DropdownButton<City>(
+                iconDisabledColor: Colors.grey,
+                isExpanded: true,
+                iconSize: 40,
+                onChanged: (City cityModel) {
+                  controller.setCity(cityModel);
+                },
+                value: controller.selectedCity,
+                hint: Center(
+                  child: CustomText(
+                    text: 'city'.tr,
+                    color: Colors.grey.shade500,
+                    fontSize: 16,
+                    alignment: AlignmentDirectional.center,
+                  ),
+                ),
+                items: controller.cities
+                    .map<DropdownMenuItem<City>>(
+                      (model) => DropdownMenuItem<City>(
+                        value: model,
+                        child: Center(
+                          child: Text(
+                            model.displayName,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

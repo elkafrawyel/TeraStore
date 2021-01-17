@@ -1,6 +1,7 @@
 import 'package:tera/a_repositories/product_repo.dart';
 import 'package:tera/controllers/main_controller.dart';
-import 'file:///F:/Apps/My%20Flutter%20Apps/TeraStore/lib/data/models/product_model.dart';
+import 'package:tera/data/models/product_model.dart';
+import 'package:tera/helper/data_resource.dart';
 
 class FavouriteController extends MainController {
   ProductModel productModel;
@@ -12,21 +13,20 @@ class FavouriteController extends MainController {
     loading.value = true;
     update();
     _products.clear();
-
-    loading.value = false;
-    if (_products.isEmpty) {
-      empty.value = true;
-    } else {
-      empty.value = false;
-    }
-    update();
-  }
-
-  removeFromFavourites(ProductModel productModel) async {
-    await ProductRepo().removeFromFavourites(productModel.id.toString());
-    _products.remove(productModel);
-
-    empty.value = _products.isEmpty;
-    update();
+    ProductRepo().getFavouriteProducts(
+      state: (dataResource) {
+        if (dataResource is Success) {
+          _products.addAll(dataResource.data as List<ProductModel>);
+          loading.value = false;
+          empty.value = _products.isEmpty;
+          update();
+        } else if (dataResource is Failure) {
+          print(dataResource.errorMessage);
+          error.value = true;
+          loading.value = false;
+          update();
+        }
+      },
+    );
   }
 }

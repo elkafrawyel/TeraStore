@@ -234,6 +234,7 @@ class LoginScreen extends StatelessWidget {
 
       if (!GetUtils.isEmail(emailController.text)) {
         CommonMethods().showMessage('errorTitle'.tr, 'enterValidEmail'.tr);
+        return;
       }
 
       _formKey.currentState.save();

@@ -279,7 +279,7 @@ class UserRepo {
 
   localLogOut() {
     LocalStorage().clear();
-    Get.find<CartController>().products.clear();
+    Get.find<CartController>().cart.cartItems.clear();
     Get.find<MainController>().user = null;
     Get.offAll(LoginScreen());
   }

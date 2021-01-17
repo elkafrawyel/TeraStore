@@ -7,8 +7,6 @@ import 'package:tera/helper/Constant.dart';
 import 'package:tera/screens/custom_widgets/custom_appbar.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
-import 'home_screen/home_screen.dart';
-
 class SettingsScreen extends StatefulWidget {
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -116,7 +114,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Navigator.of(context).pop();
                 Get.find<MainController>().changeAppColor(pickedColor);
                 setState(() {});
-                Get.offAll(HomeScreen());
               },
             ),
           ],

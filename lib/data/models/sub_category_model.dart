@@ -31,7 +31,9 @@ class SubCategoryModel {
     };
   }
 
-  String get displayName => LocalStorage().isArabicLanguage() ? nameAr : nameEn;
+  String get displayName => LocalStorage().isArabicLanguage()
+      ? (nameAr == null ? '' : nameAr)
+      : (nameEn == null ? '' : nameEn);
 
   @override
   String toString() {

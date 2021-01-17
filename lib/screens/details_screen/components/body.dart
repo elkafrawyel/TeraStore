@@ -9,6 +9,7 @@ import 'package:tera/helper/Constant.dart';
 import 'package:tera/screens/custom_widgets/button/custom_cart_button.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 import 'product_poster.dart';
 import 'tabs/info_tab.dart';
@@ -118,7 +119,7 @@ class Body extends StatelessWidget {
   }
 
   void _addToCart(ProductModel productModel) async {
-    await Get.find<CartController>().addToCart(productModel);
+    await Get.find<CartController>().addRemoveCart(productModel.id.toString());
     CommonMethods()
         .showMessage('cart'.tr, productModel.name + ' ' + 'addedToCart'.tr);
   }
@@ -149,112 +150,144 @@ class Body extends StatelessWidget {
   }
 
   _buildTabs() {
-    return Container(
-      height: 60,
-      alignment: AlignmentDirectional.center,
-      decoration: BoxDecoration(
-        color: Colors.white,
+    return Center(
+      child: ToggleSwitch(
+        minWidth: 90.0,
+        minHeight: 90.0,
+        fontSize: 16.0,
+        initialLabelIndex: 1,
+        activeBgColor: LocalStorage().primaryColor(),
+        activeFgColor: Colors.white,
+        inactiveBgColor: Colors.grey,
+        inactiveFgColor: Colors.grey[900],
+        labels: [
+          'details'.tr,
+          'similarProducts'.tr,
+          'reviews'.tr,
+        ],
+        onToggle: (index) {
+          switch (index) {
+            case 0:
+              controller.updateSelectedTab(0);
+              break;
+            case 1:
+              controller.updateSelectedTab(1);
+              break;
+            case 2:
+              controller.updateSelectedTab(2);
+              break;
+          }
+        },
       ),
-      child: Padding(
-          padding: const EdgeInsets.all(kDefaultPadding / 2),
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  controller.updateSelectedTab(0);
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(
-                    left: kDefaultPadding / 4,
-                    right: kDefaultPadding / 4,
-                  ),
-                  padding: EdgeInsetsDirectional.only(
-                      top: kDefaultPadding / 4,
-                      bottom: kDefaultPadding / 4,
-                      end: kDefaultPadding,
-                      start: kDefaultPadding),
-                  decoration: BoxDecoration(
-                    color: controller.selectedTab == 0
-                        ? LocalStorage().primaryColor()
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: CustomText(
-                    text: 'details'.tr,
-                    alignment: AlignmentDirectional.center,
-                    color: controller.selectedTab == 0
-                        ? Colors.white
-                        : Colors.black,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  controller.updateSelectedTab(1);
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(
-                    left: kDefaultPadding / 4,
-                    right: kDefaultPadding / 4,
-                  ),
-                  padding: EdgeInsetsDirectional.only(
-                      top: kDefaultPadding / 4,
-                      bottom: kDefaultPadding / 4,
-                      end: kDefaultPadding,
-                      start: kDefaultPadding),
-                  decoration: BoxDecoration(
-                    color: controller.selectedTab == 1
-                        ? LocalStorage().primaryColor()
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: CustomText(
-                    text: 'similarProducts'.tr,
-                    alignment: AlignmentDirectional.center,
-                    color: controller.selectedTab == 1
-                        ? Colors.white
-                        : Colors.black,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  controller.updateSelectedTab(2);
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(
-                    left: kDefaultPadding / 4,
-                    right: kDefaultPadding / 4,
-                  ),
-                  padding: EdgeInsetsDirectional.only(
-                      top: kDefaultPadding / 4,
-                      bottom: kDefaultPadding / 4,
-                      end: kDefaultPadding,
-                      start: kDefaultPadding),
-                  decoration: BoxDecoration(
-                    color: controller.selectedTab == 2
-                        ? LocalStorage().primaryColor()
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: CustomText(
-                    text: 'reviews'.tr,
-                    alignment: AlignmentDirectional.center,
-                    color: controller.selectedTab == 2
-                        ? Colors.white
-                        : Colors.black,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ],
-          )),
     );
   }
+// _buildTabs() {
+//   return Container(
+//     height: 60,
+//     alignment: AlignmentDirectional.center,
+//     decoration: BoxDecoration(
+//       color: Colors.white,
+//     ),
+//     child: Padding(
+//         padding: const EdgeInsets.all(kDefaultPadding / 2),
+//         child: ListView(
+//           scrollDirection: Axis.horizontal,
+//           children: [
+//             GestureDetector(
+//               onTap: () {
+//                 controller.updateSelectedTab(0);
+//               },
+//               child: Container(
+//                 alignment: Alignment.center,
+//                 margin: EdgeInsets.only(
+//                   left: kDefaultPadding / 4,
+//                   right: kDefaultPadding / 4,
+//                 ),
+//                 padding: EdgeInsetsDirectional.only(
+//                     top: kDefaultPadding / 4,
+//                     bottom: kDefaultPadding / 4,
+//                     end: kDefaultPadding,
+//                     start: kDefaultPadding),
+//                 decoration: BoxDecoration(
+//                   color: controller.selectedTab == 0
+//                       ? LocalStorage().primaryColor()
+//                       : Colors.transparent,
+//                   borderRadius: BorderRadius.circular(6),
+//                 ),
+//                 child: CustomText(
+//                   text: 'details'.tr,
+//                   alignment: AlignmentDirectional.center,
+//                   color: controller.selectedTab == 0
+//                       ? Colors.white
+//                       : Colors.black,
+//                   fontSize: 16,
+//                 ),
+//               ),
+//             ),
+//             GestureDetector(
+//               onTap: () {
+//                 controller.updateSelectedTab(1);
+//               },
+//               child: Container(
+//                 alignment: Alignment.center,
+//                 margin: EdgeInsets.only(
+//                   left: kDefaultPadding / 4,
+//                   right: kDefaultPadding / 4,
+//                 ),
+//                 padding: EdgeInsetsDirectional.only(
+//                     top: kDefaultPadding / 4,
+//                     bottom: kDefaultPadding / 4,
+//                     end: kDefaultPadding,
+//                     start: kDefaultPadding),
+//                 decoration: BoxDecoration(
+//                   color: controller.selectedTab == 1
+//                       ? LocalStorage().primaryColor()
+//                       : Colors.transparent,
+//                   borderRadius: BorderRadius.circular(6),
+//                 ),
+//                 child: CustomText(
+//                   text: 'similarProducts'.tr,
+//                   alignment: AlignmentDirectional.center,
+//                   color: controller.selectedTab == 1
+//                       ? Colors.white
+//                       : Colors.black,
+//                   fontSize: 16,
+//                 ),
+//               ),
+//             ),
+//             GestureDetector(
+//               onTap: () {
+//                 controller.updateSelectedTab(2);
+//               },
+//               child: Container(
+//                 alignment: Alignment.center,
+//                 margin: EdgeInsets.only(
+//                   left: kDefaultPadding / 4,
+//                   right: kDefaultPadding / 4,
+//                 ),
+//                 padding: EdgeInsetsDirectional.only(
+//                     top: kDefaultPadding / 4,
+//                     bottom: kDefaultPadding / 4,
+//                     end: kDefaultPadding,
+//                     start: kDefaultPadding),
+//                 decoration: BoxDecoration(
+//                   color: controller.selectedTab == 2
+//                       ? LocalStorage().primaryColor()
+//                       : Colors.transparent,
+//                   borderRadius: BorderRadius.circular(6),
+//                 ),
+//                 child: CustomText(
+//                   text: 'reviews'.tr,
+//                   alignment: AlignmentDirectional.center,
+//                   color: controller.selectedTab == 2
+//                       ? Colors.white
+//                       : Colors.black,
+//                   fontSize: 16,
+//                 ),
+//               ),
+//             ),
+//           ],
+//         )),
+//   );
+// }
 }

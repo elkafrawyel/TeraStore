@@ -1,13 +1,13 @@
 import 'package:tera/data/models/product_model.dart';
 
-class ProductFilterResponse {
+class ProductsResponse {
   bool status;
   String message;
   List<ProductModel> data;
 
-  ProductFilterResponse({this.status, this.message, this.data});
+  ProductsResponse({this.status, this.message, this.data});
 
-  ProductFilterResponse.fromJson(Map<String, dynamic> json) {
+  ProductsResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {

@@ -5,7 +5,7 @@ import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/error_view.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/loading_view.dart';
 import 'package:tera/screens/details_screen/details_screen.dart';
-import 'package:tera/screens/home_screen/components/product_card.dart';
+import 'package:tera/screens/products_screen/components/products_in_category_card.dart';
 
 class ProductsList extends StatelessWidget {
   @override
@@ -30,7 +30,7 @@ class ProductsList extends StatelessWidget {
                         child: ListView.builder(
                           itemCount: controller.products.length,
                           itemBuilder: (context, index) {
-                            return ProductCard(
+                            return ProductsInCategoryCard(
                               itemIndex: index,
                               product: controller.products[index],
                               press: () {

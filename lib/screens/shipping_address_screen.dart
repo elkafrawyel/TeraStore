@@ -71,7 +71,27 @@ class ShippingAddresses extends StatelessWidget {
 
   Widget _addressCard(int index, AddressModel addressModel) {
     return Dismissible(
-      key: Key(addressModel.id.toString()),
+      confirmDismiss: (direction) async {
+        return await showDialog(
+          context: Get.context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("confirm".tr),
+              content: Text('deleteMessage'.tr),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: Text('delete'.tr)),
+                FlatButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: Text('cancel'.tr),
+                ),
+              ],
+            );
+          },
+        );
+      },
+      key: UniqueKey(),
       direction: DismissDirection.startToEnd,
       onDismissed: (direction) {
         controller.deleteAddress(index);

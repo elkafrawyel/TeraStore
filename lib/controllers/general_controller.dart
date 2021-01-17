@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:tera/a_repositories/general_repo.dart';
 import 'package:tera/controllers/main_controller.dart';
 import 'package:tera/data/models/address_model.dart';
@@ -40,6 +39,7 @@ class GeneralController extends MainController {
           if (callState is Success) {
             locationsResponse = callState.data as LocationsResponse;
             loading.value = false;
+            CommonMethods().showSnackBar('Swipe to delete address');
             update();
           } else if (callState is Failure) {
             print(callState.errorMessage);
@@ -78,7 +78,8 @@ class GeneralController extends MainController {
     );
   }
 
-  addAddress(AddAddressRequest addressRequest) async {
+  addAddress(AddAddressRequest addressRequest,
+      {Function(DataResource dataResource) dataSource}) async {
     if (selectedLocation == null) {
       CommonMethods().showSnackBar('Choose from the list');
       return;
@@ -89,21 +90,27 @@ class GeneralController extends MainController {
     }
     addressRequest.governorate = selectedLocation.nameEn;
     addressRequest.city = selectedCity.nameEn;
+    loading.value = true;
+    update();
     await GeneralRepo().addAddress(
       addressRequest,
       state: (callState) {
         if (callState is Success) {
-          CommonMethods().hideKeyboard();
-          Get.back();
+          dataSource(Success(data: callState.data));
+          loading.value = false;
+          update();
           getAddressList();
         } else if (callState is Failure) {
-          CommonMethods().showSnackBar(callState.errorMessage);
+          loading.value = false;
+          update();
+          dataSource(Failure(errorMessage: callState.errorMessage));
         }
       },
     );
   }
 
   void deleteAddress(int index) {
+    update();
     GeneralRepo().deleteUserAdress(
       addressList[index].id.toString(),
       state: (callState) {

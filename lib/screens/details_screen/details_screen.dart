@@ -18,7 +18,7 @@ class DetailsScreen extends StatelessWidget {
   final controller = Get.find<ProductDetailsController>();
 
   _loadDetails() async {
-    controller.selectedTab = 0;
+    // controller.selectedTab = 0;
     await controller.getProductById(productId);
   }
 

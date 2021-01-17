@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/controllers/FavouriteController.dart';
 import 'package:tera/controllers/cart_controller.dart';
 import 'package:tera/controllers/home_controller.dart';
 import 'package:tera/data/models/product_model.dart';
@@ -10,8 +11,8 @@ import 'package:tera/helper/Constant.dart';
 import 'package:tera/helper/data_resource.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
-class ProductCard extends StatelessWidget {
-  const ProductCard({
+class FavouriteCard extends StatelessWidget {
+  const FavouriteCard({
     Key key,
     this.itemIndex,
     this.product,
@@ -269,15 +270,18 @@ class ProductCard extends StatelessWidget {
   }
 
   void _addRemoveFavourite() {
-    var controller = Get.find<HomeController>();
-    controller.addRemoveFavourites(
+    var controller = Get.find<FavouriteController>();
+    Get.find<HomeController>().addRemoveFavourites(
       product.id.toString(),
       state: (dataResource) {
         if (dataResource is Success) {
-          var myProduct = controller
-              .filteredProducts[controller.filteredProducts.indexOf(product)];
+          var myProduct =
+              controller.products[controller.products.indexOf(product)];
           myProduct.isFav = !myProduct.isFav;
           controller.update();
+          //apply change in filter list
+          Get.find<HomeController>()
+              .changeFavouriteState(product.id.toString());
         } else if (dataResource is Failure) {
           CommonMethods().showSnackBar('error'.tr, iconData: Icons.error);
         }
@@ -286,15 +290,17 @@ class ProductCard extends StatelessWidget {
   }
 
   void _addRemoveCart() {
-    var controller = Get.find<HomeController>();
+    var controller = Get.find<FavouriteController>();
     Get.find<CartController>().addRemoveCart(
       product.id.toString(),
       state: (dataResource) {
         if (dataResource is Success) {
-          var myProduct = controller
-              .filteredProducts[controller.filteredProducts.indexOf(product)];
+          var myProduct =
+              controller.products[controller.products.indexOf(product)];
           myProduct.inCart = !myProduct.inCart;
           controller.update();
+          //apply change in filter list
+          Get.find<HomeController>().changeInCartState(product.id.toString());
         } else if (dataResource is Failure) {
           CommonMethods().showSnackBar('error'.tr, iconData: Icons.error);
         }

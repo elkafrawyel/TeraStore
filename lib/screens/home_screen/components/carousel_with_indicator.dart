@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tera/data/models/product_model.dart';
+import 'package:tera/helper/Constant.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 import 'package:tera/screens/details_screen/details_screen.dart';
 
@@ -96,9 +97,10 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                             ),
                           );
                         },
-                        child: Image.network(
-                            item.image == null ? '' : item.image,
+                        child: FadeInImage.assetNetwork(
+                            image: item.image == null ? '' : item.image,
                             fit: BoxFit.contain,
+                            placeholder: placeholder,
                             width: 1000.0),
                       ),
                       Positioned(

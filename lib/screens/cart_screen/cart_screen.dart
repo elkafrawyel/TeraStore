@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/controllers/cart_controller.dart';
+import 'package:tera/controllers/home_controller.dart';
+import 'package:tera/data/models/cart_model.dart';
+import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
-import 'package:tera/model/cart_model.dart';
+import 'package:tera/helper/data_resource.dart';
 import 'package:tera/screens/cart_screen/check_out_screen.dart';
 import 'package:tera/screens/custom_widgets/custom_appbar.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
@@ -13,6 +16,8 @@ import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 import '../details_screen/details_screen.dart';
 
 class CartScreen extends StatelessWidget {
+  final controller = Get.find<CartController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +27,7 @@ class CartScreen extends StatelessWidget {
       ),
       body: GetBuilder<CartController>(
         builder: (controller) => Container(
-          color: LocalStorage().primaryColor(),
+          color: Colors.white,
           child: Column(
             children: [
               SizedBox(
@@ -39,10 +44,10 @@ class CartScreen extends StatelessWidget {
                               emptyViews: EmptyViews.Magnifier,
                             )
                           : ListView.builder(
-                              itemCount: controller.products.length,
+                              itemCount: controller.cart.cartItems.length,
                               itemBuilder: (context, index) {
-                                return _cartItem(
-                                    context, controller.products[index], index);
+                                return _cartItem(context,
+                                    controller.cart.cartItems[index], index);
                               },
                             ),
                 ),
@@ -70,27 +75,35 @@ class CartScreen extends StatelessWidget {
                             bottom: kDefaultPadding,
                             end: kDefaultPadding),
                         child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
+                          height: 50,
+                          child: RaisedButton.icon(
+                            icon: Icon(
+                              Icons.check,
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
+                              size: 30,
                             ),
-                            padding: EdgeInsets.all(1),
-                            child: RaisedButton(
-                              child: Text('checkOut'.tr),
-                              color: LocalStorage().primaryColor(),
-                              elevation: 1,
-                              disabledTextColor: Colors.black,
-                              disabledColor: Colors.grey,
-                              textColor: Colors.white,
-                              onPressed: controller.products.length == 0
-                                  ? null
-                                  : () async {
-                                      Get.to(CheckOutScreen());
-                                      // Get.find<GeneralController>()
-                                      //     .selectedAddress = null;
-                                    },
-                            )),
+                            label: CustomText(
+                              text: 'confirmOrder'.tr,
+                              fontSize: 20,
+                              alignment: AlignmentDirectional.center,
+                              color: Colors.white,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            color: LocalStorage().primaryColor(),
+                            elevation: 1,
+                            disabledTextColor: Colors.black,
+                            disabledColor: Colors.grey,
+                            textColor: Colors.white,
+                            onPressed: controller.cart == null
+                                ? null
+                                : () async {
+                                    //confirm
+                                    Get.to(CheckOutScreen());
+                                  },
+                          ),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsetsDirectional.only(end: 20),
@@ -106,10 +119,9 @@ class CartScreen extends StatelessWidget {
                               height: 10,
                             ),
                             CustomText(
-                              text: controller.products.length == 0
+                              text: controller.cart == null
                                   ? '0\$'
-                                  : calculateTotalPrice(controller.products)
-                                          .toString() +
+                                  : controller.cart.cartTotalPrice.toString() +
                                       '\$',
                               alignment: AlignmentDirectional.center,
                               fontSize: 22,
@@ -129,18 +141,45 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _cartItem(BuildContext context, Cart cart, int index) {
+  final cardHeight = 180.0;
+
+  Widget _cartItem(BuildContext context, CartItem cartItem, int index) {
     return GestureDetector(
       onTap: () {
-        Get.to(DetailsScreen(productId: cart.id));
+        Get.to(DetailsScreen(productId: cartItem.id.toString()));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
         child: Dismissible(
-          key: Key(cart.id),
+          confirmDismiss: (direction) async {
+            return await showDialog(
+              context: Get.context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text("confirm".tr),
+                  content: Text('deleteMessage'.tr),
+                  actions: <Widget>[
+                    FlatButton(
+                        onPressed: () => Navigator.of(context).pop(true),
+                        child: Text('delete'.tr)),
+                    FlatButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: Text('cancel'.tr),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          key: UniqueKey(),
           direction: DismissDirection.startToEnd,
           background: Container(
-            color: Colors.red,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+              ),
+              color: Colors.red,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -156,110 +195,153 @@ class CartScreen extends StatelessWidget {
             ),
           ),
           onDismissed: (direction) {
-            Get.find<CartController>()
-                .removeItem(cart.id, index: index, showLoading: true);
+            controller.addRemoveCart(
+              cartItem.itemId.toString(),
+              state: (dataResource) {
+                if (dataResource is Success) {
+                  //apply change in filter list
+                  Get.find<HomeController>()
+                      .changeInCartState(cartItem.itemId.toString());
+                } else if (dataResource is Failure) {
+                  CommonMethods()
+                      .showSnackBar('error'.tr, iconData: Icons.error);
+                }
+              },
+            );
           },
           child: Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(20.0),
             ),
+            color: kCardColor,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  width: 140,
-                  height: 140,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.network(
-                        cart.productModel.image,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
+                  height: cardHeight,
+                  width: 180,
+                  child: LocalStorage().isArabicLanguage()
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(0),
+                            topRight: Radius.circular(22),
+                            bottomRight: Radius.circular(22),
+                            bottomLeft: Radius.circular(0),
+                          ),
+                          child: FadeInImage.assetNetwork(
+                            image: cartItem.itemImage,
+                            placeholder: placeholder,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(22),
+                            topRight: Radius.circular(0),
+                            bottomLeft: Radius.circular(22),
+                            bottomRight: Radius.circular(0),
+                          ),
+                          child: FadeInImage.assetNetwork(
+                            image: cartItem.itemImage,
+                            placeholder: placeholder,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 Expanded(
-                  child: Column(
-                    children: [
-                      CustomText(
-                        text: cart.productModel.name,
-                        maxLines: 2,
-                        fontSize: 16,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.only(start: 10),
-                        child: CustomText(
-                          text:
-                              cart.productModel.discountPrice.toString() + '\$',
-                          fontSize: 16,
-                          color: LocalStorage().primaryColor(),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional.bottomEnd,
-                        child: Container(
-                          width: 150,
-                          child: Card(
-                            color: LocalStorage().primaryColor(),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                  child: Container(
+                    height: cardHeight,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 20,
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    add(cart, index);
-                                  },
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(
-                                          kDefaultPadding / 2),
-                                      child: Icon(
-                                        Icons.add,
-                                        size: 25,
-                                        color: Colors.white,
-                                      )),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.all(kDefaultPadding / 4),
-                                  child: CustomText(
-                                    text: cart.quantity.toString(),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    remove(cart, index);
-                                  },
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(
-                                          kDefaultPadding / 2),
-                                      child: Icon(
-                                        Icons.remove,
-                                        size: 25,
-                                        color: Colors.white,
-                                      )),
-                                ),
-                              ],
+                            CustomText(
+                              text: cartItem.itemName,
+                              maxLines: 2,
+                              alignment: AlignmentDirectional.topStart,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
                             ),
-                          ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.only(start: 10),
+                              child: CustomText(
+                                alignment: AlignmentDirectional.topStart,
+                                text: cartItem.itemPriceAfterDis.toString() +
+                                    '\$',
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
                         ),
-                      )
-                    ],
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              width: 120,
+                              child: Card(
+                                color: LocalStorage().primaryColor(),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadiusDirectional.only(
+                                      bottomEnd: Radius.circular(20),
+                                      topStart: Radius.circular(20)),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        add(cartItem, index);
+                                      },
+                                      child: Padding(
+                                          padding: const EdgeInsets.all(
+                                              kDefaultPadding / 2),
+                                          child: Icon(
+                                            Icons.add,
+                                            size: 25,
+                                            color: Colors.white,
+                                          )),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(
+                                          kDefaultPadding / 4),
+                                      child: CustomText(
+                                        text: cartItem.cartItemCount.toString(),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        remove(cartItem, index);
+                                      },
+                                      child: Padding(
+                                          padding: const EdgeInsets.all(
+                                              kDefaultPadding / 2),
+                                          child: Icon(
+                                            Icons.remove,
+                                            size: 25,
+                                            color: Colors.white,
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -270,26 +352,18 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  int calculateTotalPrice(List<Cart> cartItems) {
-    int total = 0;
-    for (Cart cart in cartItems) {
-      total = total + (cart.quantity * cart.productModel.discountPrice);
-    }
-    return total;
+  void remove(CartItem cartItem, int index) {
+    // if (cart.quantity == 1) {
+    //   Get.find<CartController>()
+    //       .removeItem(cart.id, index: index, showLoading: true);
+    // } else {
+    //   Get.find<CartController>()
+    //       .addRemoveCart(cart.id, index: index, showLoading: true);
+    // }
   }
 
-  void remove(Cart cart, int index) {
-    if (cart.quantity == 1) {
-      Get.find<CartController>()
-          .removeItem(cart.id, index: index, showLoading: true);
-    } else {
-      Get.find<CartController>()
-          .deleteFromCart(cart.id, index: index, showLoading: true);
-    }
-  }
-
-  void add(Cart cart, int index) {
-    Get.find<CartController>()
-        .addToCart(cart.productModel, index: index, showLoading: true);
+  void add(CartItem cartItem, int index) {
+    // Get.find<CartController>()
+    //     .addRemoveCart(cart.productModel, index: index, showLoading: true);
   }
 }

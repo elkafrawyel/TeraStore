@@ -35,17 +35,19 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        child: Scaffold(
-          appBar: _buildAppBar(),
-          drawer: _buildDrawer(),
-          floatingActionButton: _buildFloatingButton(),
-          backgroundColor: LocalStorage().primaryColor(),
-          body: Body(),
+        child: GetBuilder<MainController>(
+          builder: (controller) => Scaffold(
+            appBar: _buildAppBar(controller),
+            drawer: _buildDrawer(),
+            floatingActionButton: _buildFloatingButton(),
+            backgroundColor: controller.primaryColor,
+            body: Body(),
+          ),
         ),
         onWillPop: _willPopCallback);
   }
 
-  _buildAppBar() {
+  _buildAppBar(controller) {
     return AppBar(
       elevation: 0,
       centerTitle: false,
@@ -54,7 +56,7 @@ class HomeScreen extends StatelessWidget {
         'home'.tr,
         style: TextStyle(color: Colors.white, fontSize: 16),
       ),
-      backgroundColor: LocalStorage().primaryColor(),
+      backgroundColor: controller.primaryColor,
       actions: <Widget>[
         IconButton(
           icon: Icon(

@@ -9,24 +9,23 @@ import 'package:tera/helper/Constant.dart';
 import 'package:tera/helper/data_resource.dart';
 
 class HomeController extends MainController {
+  //============================= Filter ===========================
   ProductFilters filter = ProductFilters.Latest;
 
-  List<ProductModel> _filteredProducts = [];
-
-  List<ProductModel> get products => _filteredProducts;
+  List<ProductModel> filteredProducts = [];
 
   Future<void> filterProducts() async {
     loading.value = true;
     update();
-    _filteredProducts.clear();
+    filteredProducts.clear();
     ProductRepo().getFilteredProducts(
       filter,
       state: (dataResource) {
         if (dataResource is Success) {
-          _filteredProducts.addAll(dataResource.data as List<ProductModel>);
-          print('Best Selling  => ${_filteredProducts.length} items');
+          filteredProducts.addAll(dataResource.data as List<ProductModel>);
+          print('Best Selling  => ${filteredProducts.length} items');
           loading.value = false;
-          empty.value = _filteredProducts.isEmpty;
+          empty.value = filteredProducts.isEmpty;
           update();
         } else if (dataResource is Failure) {
           print(dataResource.errorMessage);
@@ -38,11 +37,8 @@ class HomeController extends MainController {
     );
   }
 
-  // categories and Sub categories to be shared in app screens
-  // and to get them into menus right away
-
+  //=========================== Categories and Sliders ======================
   int selectedCategoryIndex = 0;
-
   CategoryModel categoryModel;
   SubCategoryModel subCategoryModel;
 
@@ -92,5 +88,34 @@ class HomeController extends MainController {
   setSubCategoryModel(SubCategoryModel model) {
     subCategoryModel = model;
     update();
+  }
+
+  //========================= favorite Products =============================
+  List<ProductModel> favouriteProducts = [];
+
+  addRemoveFavourites(String productId,
+      {Function(DataResource dataResource) state}) {
+    ProductRepo().addRemoveFavourites(productId, state: state);
+  }
+
+  changeFavouriteState(String productId) {
+    filteredProducts.forEach((element) {
+      if (productId == element.id.toString()) {
+        element.isFav = !element.isFav;
+        update();
+        return;
+      }
+    });
+  }
+
+  // apply item removing from cart to products in home
+  changeInCartState(String productId) {
+    filteredProducts.forEach((element) {
+      if (productId == element.id.toString()) {
+        element.inCart = false;
+        update();
+        return;
+      }
+    });
   }
 }

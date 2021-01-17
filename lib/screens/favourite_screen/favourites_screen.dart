@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:tera/controllers/FavouriteController.dart';
 import 'package:tera/screens/custom_widgets/custom_appbar.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
+import 'package:tera/screens/custom_widgets/data_state_views/error_view.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/loading_view.dart';
 import 'package:tera/screens/details_screen/details_screen.dart';
-import 'package:tera/screens/favourite_screen/components/my_favourite_card.dart';
+import 'package:tera/screens/favourite_screen/components/favourite_card.dart';
 
 class FavouritesScreen extends StatelessWidget {
   final controller = Get.find<FavouriteController>();
@@ -35,21 +36,24 @@ class FavouritesScreen extends StatelessWidget {
                             textColor: Colors.black,
                           ),
                         )
-                      : ListView.builder(
-                          itemCount: controller.products.length,
-                          itemBuilder: (context, index) {
-                            return MyFavouriteCard(
-                              itemIndex: index,
-                              press: () {
-                                Get.to(
-                                  DetailsScreen(
-                                      productId: controller.products[index].id
-                                          .toString()),
+                      : controller.error.value
+                          ? ErrorView()
+                          : ListView.builder(
+                              itemCount: controller.products.length,
+                              itemBuilder: (context, index) {
+                                return FavouriteCard(
+                                  itemIndex: index,
+                                  press: () {
+                                    Get.to(
+                                      DetailsScreen(
+                                          productId: controller
+                                              .products[index].id
+                                              .toString()),
+                                    );
+                                  },
+                                  product: controller.products[index],
                                 );
-                              },
-                              product: controller.products[index],
-                            );
-                          }),
+                              }),
             ),
           )),
     );

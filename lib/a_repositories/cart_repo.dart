@@ -58,6 +58,59 @@ class CartRepo {
     );
   }
 
-  //remove a product from cart the all amount
-  removeProductFromCart(String productId) async {}
+  cartItemPlusMinus(String productId, String action,
+      {Function(DataResource dataResource) state}) async {
+    ProductsService service = ProductsService.create();
+    NetworkMethods().handleResponse(
+      call: service.cartItemPlusMinus(productId, action),
+      failed: (message) {
+        state(Failure(errorMessage: message));
+      },
+      whenSuccess: (response) {
+        try {
+          InfoResponse infoResponse = InfoResponse.fromJson(response.body);
+          if (infoResponse.status) {
+            Get.find<CartController>().getCartItems();
+            // CommonMethods().showSnackBar(infoResponse.message);
+            state(Success());
+          } else {
+            CommonMethods().showSnackBar(infoResponse.message);
+            state(Failure(
+                errorMessage: 'Failed to add or remove quantity from Cart'));
+          }
+        } catch (e) {
+          print(e);
+          state(Failure(
+              errorMessage: 'Failed to add or remove quantity from Cart'));
+        }
+      },
+    );
+  }
+
+  confirmOrder(String orderId,
+      {Function(DataResource dataResource) state}) async {
+    ProductsService service = ProductsService.create();
+    NetworkMethods().handleResponse(
+      call: service.confirmOrder(orderId),
+      failed: (message) {
+        state(Failure(errorMessage: message));
+      },
+      whenSuccess: (response) {
+        try {
+          InfoResponse infoResponse = InfoResponse.fromJson(response.body);
+          if (infoResponse.status) {
+            Get.find<CartController>().getCartItems();
+            CommonMethods().showSnackBar(infoResponse.message);
+            state(Success());
+          } else {
+            CommonMethods().showSnackBar(infoResponse.message);
+            state(Failure(errorMessage: 'Failed to confirm Order'));
+          }
+        } catch (e) {
+          print(e);
+          state(Failure(errorMessage: 'Failed to confirm Order'));
+        }
+      },
+    );
+  }
 }

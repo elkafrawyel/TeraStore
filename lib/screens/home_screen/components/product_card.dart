@@ -156,11 +156,11 @@ class ProductCard extends StatelessWidget {
                                           onPressed: () {
                                             _addRemoveFavourite();
                                           }),
-                                  product.inCart
+                                  !product.inCart
                                       ? IconButton(
                                           icon: Icon(
-                                            Icons.shopping_cart_outlined,
-                                            color: Colors.black,
+                                            Icons.add_shopping_cart_rounded,
+                                            color: Colors.grey,
                                             size: 30,
                                           ),
                                           onPressed: () {
@@ -169,7 +169,7 @@ class ProductCard extends StatelessWidget {
                                       : IconButton(
                                           icon: Icon(
                                             Icons.shopping_cart_outlined,
-                                            color: Colors.grey,
+                                            color: Colors.green,
                                             size: 30,
                                           ),
                                           onPressed: () {

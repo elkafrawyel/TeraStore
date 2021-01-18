@@ -19,6 +19,39 @@ class CartController extends MainController {
     opRunning = false;
   }
 
+  Future<void> cartItemPlusMinus(String productId, String action) async {
+    if (opRunning) return;
+    opRunning = true;
+    CartRepo().cartItemPlusMinus(
+      productId,
+      action,
+      state: (dataResource) {
+        if (dataResource is Success) {
+          print('quantity changed');
+        } else if (dataResource is Failure) {
+          print(dataResource.errorMessage);
+        }
+      },
+    );
+    opRunning = false;
+  }
+
+  Future<void> confirmOrder() async {
+    if (opRunning) return;
+    opRunning = true;
+    CartRepo().confirmOrder(
+      cart.id.toString(),
+      state: (dataResource) {
+        if (dataResource is Success) {
+          print('Order Confirmed');
+        } else if (dataResource is Failure) {
+          print(dataResource.errorMessage);
+        }
+      },
+    );
+    opRunning = false;
+  }
+
   Future<void> getCartItems({bool showLoading = false}) async {
     loading.value = showLoading;
     update();

@@ -4,6 +4,7 @@ import 'package:tera/a_storage/network/products/products_service.dart';
 import 'package:tera/data/models/product_model.dart';
 import 'package:tera/data/responses/categories_with_sliders_response.dart';
 import 'package:tera/data/responses/info_response.dart';
+import 'package:tera/data/responses/product_details_response.dart';
 import 'package:tera/data/responses/product_filter_response.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
@@ -131,6 +132,31 @@ class ProductRepo {
           print(e);
           state(
               Failure(errorMessage: 'Failed to add or remove from favourite'));
+        }
+      },
+    );
+  }
+
+  getSingleProduct(String productId,
+      {Function(DataResource dataResource) state}) async {
+    ProductsService service = ProductsService.create();
+    NetworkMethods().handleResponse(
+      call: service.singleProduct(productId),
+      failed: (message) {
+        state(Failure(errorMessage: message));
+      },
+      whenSuccess: (response) {
+        try {
+          ProductDetailsResponse productDetailsResponse =
+              ProductDetailsResponse.fromJson(response.body);
+          if (productDetailsResponse.status) {
+            state(Success(data: productDetailsResponse));
+          } else {
+            state(Failure(errorMessage: 'Failed to get Product details'));
+          }
+        } catch (e) {
+          print(e);
+          state(Failure(errorMessage: 'Failed to get Product details'));
         }
       },
     );

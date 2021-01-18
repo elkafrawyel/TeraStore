@@ -64,4 +64,25 @@ class _$ProductsService extends ProductsService {
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> cartItemPlusMinus(String productId, String action) {
+    final $url = '/cartItemPlusMinus/$productId/$action';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> confirmOrder(String orderId) {
+    final $url = '/confirmOrder/$orderId';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> singleProduct(String productId) {
+    final $url = '/singleItem/$productId';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
 }

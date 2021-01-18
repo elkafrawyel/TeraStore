@@ -1,11 +1,15 @@
 import 'package:get/get.dart';
+import 'package:tera/a_repositories/product_repo.dart';
 import 'package:tera/a_repositories/review_repo.dart';
 import 'package:tera/controllers/main_controller.dart';
 import 'package:tera/data/models/product_model.dart';
+import 'package:tera/data/responses/product_details_response.dart';
+import 'package:tera/helper/CommonMethods.dart';
+import 'package:tera/helper/data_resource.dart';
 import 'package:tera/model/review_model.dart';
 
 class ProductDetailsController extends MainController {
-  ProductModel productModel;
+  ProductDetailsResponse productDetailsResponse;
   int selectedTab = 0;
 
   List<ProductModel> similarProducts = [];
@@ -16,51 +20,40 @@ class ProductDetailsController extends MainController {
     update();
   }
 
+  updatePropertySelection(ItemProperity main, ItemPropPlus sub) {
+    main.itemPropPlus[main.itemPropPlus.indexOf(sub)].isSelected =
+        !main.itemPropPlus[main.itemPropPlus.indexOf(sub)].isSelected;
+    for (ItemPropPlus subProperity in main.itemPropPlus) {
+      if (subProperity != sub) subProperity.isSelected = false;
+    }
+    update();
+  }
+
   Future<void> getProductById(String productId) async {
     loading.value = true;
     update();
-
-    loading.value = false;
-    update();
-    // getSimilarProducts(productModel.subCategoryId, productModel.id.toString());
-    // getReviewsList(productId);
-  }
-
-  Future<void> checkIfFavourite(String productId) async {
-    // await ProductRepo().checkIfFavourite(productId, (isFave) {
-    //   productModel.isFav = isFave;
-    // });
-  }
-
-  addToFavourites(String productId) async {
-    // await ProductRepo().addToFavourites(productId);
-    // productModel.isFav = true;
-    // CommonMethods().showMessage(productModel.name, 'addedToFavourite'.tr);
-    // update();
-  }
-
-  removeFromFavourites(String productId) async {
-    // await ProductRepo().removeFromFavourites(productId);
-    // productModel.isFav = false;
-    // CommonMethods().showMessage(productModel.name, 'removedFromFavourite'.tr);
-    // update();
-  }
-
-  getSimilarProducts(String subCategoryId, String productId) async {
-    similarProducts.clear();
-
-    if (similarProducts.isEmpty) {
-      empty.value = true;
-    } else {
-      empty.value = false;
-    }
-    print('Products Size => ${similarProducts.length}');
-    update();
+    ProductRepo().getSingleProduct(
+      productId,
+      state: (dataResource) {
+        if (dataResource is Success) {
+          loading.value = false;
+          update();
+          productDetailsResponse = dataResource.data as ProductDetailsResponse;
+          similarProducts.addAll(productDetailsResponse.similarItems);
+          getReviewsList(productId);
+        } else if (dataResource is Failure) {
+          loading.value = false;
+          update();
+          CommonMethods().showSnackBar('error'.tr);
+        }
+      },
+    );
   }
 
   getReviewsList(String productId) async {
-    List<Review> list = await ReviewRepo().getReviewsList(productId);
     reviews.clear();
+
+    List<Review> list = await ReviewRepo().getReviewsList(productId);
     reviews.addAll(list);
     if (reviews.isEmpty) {
       empty.value = true;

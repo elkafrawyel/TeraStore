@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tera/a_storage/local_storage.dart';
 
 class CustomDescription extends StatefulWidget {
   final String text;
@@ -20,7 +19,7 @@ class _CustomDescriptionState extends State<CustomDescription> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(widget.text,
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, color: Colors.black),
               maxLines: isSeeMore ? 20 : 4,
               textAlign: TextAlign.start),
           GestureDetector(
@@ -30,7 +29,7 @@ class _CustomDescriptionState extends State<CustomDescription> {
               });
             },
             child: Padding(
-              padding: const EdgeInsetsDirectional.only(top: 10),
+              padding: const EdgeInsets.all(10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
@@ -38,14 +37,20 @@ class _CustomDescriptionState extends State<CustomDescription> {
                       ? Text(
                           "Show Less",
                           style: TextStyle(
-                            color: LocalStorage().primaryColor(),
+                            color: Colors.black,
                             fontSize: 14,
                           ),
                         )
-                      : Text("Show More",
+                      : Text(
+                          "Show More",
                           style: TextStyle(
-                              color: LocalStorage().primaryColor(),
-                              fontSize: 14))
+                            color: Colors.black,
+                            fontSize: 14,
+                          ),
+                        ),
+                  SizedBox(
+                    height: 20,
+                  ),
                 ],
               ),
             ),

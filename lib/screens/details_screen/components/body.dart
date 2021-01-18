@@ -2,101 +2,162 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/controllers/cart_controller.dart';
+import 'package:tera/controllers/home_controller.dart';
 import 'package:tera/controllers/product_details_controller.dart';
-import 'package:tera/data/models/product_model.dart';
+import 'package:tera/data/responses/product_details_response.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
-import 'package:tera/screens/custom_widgets/button/custom_cart_button.dart';
+import 'package:tera/helper/data_resource.dart';
+import 'package:tera/screens/custom_widgets/button/custom_add_to_cart_button.dart';
+import 'package:tera/screens/custom_widgets/button/custom_remove_from_cart.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
+import 'package:tera/screens/details_screen/components/product_images_slider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-import 'product_poster.dart';
 import 'tabs/info_tab.dart';
 import 'tabs/reviews_tab.dart';
 import 'tabs/similar_products.dart';
 
 class Body extends StatelessWidget {
-  final ProductModel product;
+  final SingleItem product;
   final controller = Get.find<ProductDetailsController>();
 
   Body({Key key, this.product});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return CustomScrollView(
       slivers: [
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              Padding(
-                padding: const EdgeInsetsDirectional.only(
-                    top: kDefaultPadding,
-                    end: kDefaultPadding,
-                    start: kDefaultPadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Center(
-                      child: ProductPoster(
-                        image: product.image,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Stack(
+                    children: [
+                      ProductImageSlider(
+                        singleItemImages: product.images,
                       ),
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: kDefaultPadding,
-                            vertical: kDefaultPadding),
-                        child: CustomText(
-                          text: product.name,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        )),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              '\$${product.price}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                decoration: TextDecoration.lineThrough,
-                                color: Colors.black,
+                      // product discount value
+                      PositionedDirectional(
+                        end: 10,
+                        bottom: 0,
+                        child: Visibility(
+                          visible: product.discountType == 'percent',
+                          child: Align(
+                            alignment: AlignmentDirectional.topStart,
+                            child: Container(
+                              height: 40,
+                              width: 90,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadiusDirectional.only(
+                                    topStart: Radius.circular(22),
+                                    topEnd: Radius.circular(0),
+                                    bottomStart: Radius.circular(0),
+                                    bottomEnd: Radius.circular(10),
+                                  ),
+                                  color: Colors.red),
+                              child: Center(
+                                child: CustomText(
+                                  text: 'saveMoney'.tr +
+                                      ' ${product.discountValue.toString()}%',
+                                  fontSize: 18,
+                                  alignment: AlignmentDirectional.center,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: kDefaultPadding / 2,
-                            ),
-                            Text(
-                              '\$${product.discountPrice}',
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: kSecondaryColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: size.width / 2.5,
-                          // padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                          child: Center(
-                            child: CustomCartButton(
-                              onPressed: () {
-                                _addToCart(product);
-                              },
                             ),
                           ),
                         ),
-                      ],
+                      ),
+                      PositionedDirectional(
+                        bottom: 0,
+                        start: 0,
+                        child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              children: [
+                                _favIcon(),
+                                SizedBox(
+                                  height: kDefaultPadding / 2,
+                                ),
+                                !controller.productDetailsResponse.singleItem
+                                        .inCart
+                                    ? CustomRemoveFromCartButton(
+                                        onPressed: () {
+                                          _addRemoveCart();
+                                        },
+                                      )
+                                    : CustomAddToCartButton(
+                                        onPressed: () {
+                                          _addRemoveCart();
+                                        },
+                                      ),
+                              ],
+                            )),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Divider(
+                      height: 1,
+                      color: Colors.white,
                     ),
-                    SizedBox(
-                      height: kDefaultPadding,
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: kDefaultPadding,
+                          vertical: kDefaultPadding / 2),
+                      child: CustomText(
+                        text: product.itemName,
+                        fontSize: 30,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                        start: kDefaultPadding),
+                    child: CustomText(
+                      text: '\$${product.itemPriceAfterDis}',
+                      fontSize: 22,
+                      alignment: AlignmentDirectional.centerStart,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.amber,
                     ),
-                    _buildTabs(),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: kDefaultPadding / 2,
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                        start: kDefaultPadding),
+                    child: Container(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                        '\$${product.itemPrice}',
+                        style: TextStyle(
+                          fontSize: 18,
+                          decoration: TextDecoration.lineThrough,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: kDefaultPadding,
+                  ),
+                ],
+              ),
+              _buildProperties(),
+              SizedBox(
+                height: 20,
+              ),
+              _buildTabs(),
+              SizedBox(
+                height: kDefaultPadding,
               ),
             ],
           ),
@@ -107,7 +168,7 @@ class Body extends StatelessWidget {
               GetBuilder<ProductDetailsController>(
                 init: ProductDetailsController(),
                 builder: (controller) => Container(
-                  color: Colors.white,
+                  // color: Colors.white,
                   child: _getTabView(),
                 ),
               ),
@@ -118,176 +179,249 @@ class Body extends StatelessWidget {
     );
   }
 
-  void _addToCart(ProductModel productModel) async {
-    await Get.find<CartController>().addRemoveCart(productModel.id.toString());
-    CommonMethods()
-        .showMessage('cart'.tr, productModel.name + ' ' + 'addedToCart'.tr);
+  _favIcon() {
+    return controller.productDetailsResponse.singleItem.isFav
+        ? GestureDetector(
+            onTap: () {
+              _addRemoveFavourite();
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.white,
+                border: Border.all(width: 0.5, color: Colors.grey),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.favorite_outlined,
+                  color: Colors.red,
+                  size: 30,
+                ),
+              ),
+            ),
+          )
+        : GestureDetector(
+            onTap: () {
+              _addRemoveFavourite();
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.white.withOpacity(0.8),
+                border: Border.all(width: 0.5, color: Colors.grey),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.favorite,
+                  color: Colors.grey,
+                  size: 30,
+                ),
+              ),
+            ),
+          );
+  }
+
+  void _addRemoveFavourite() {
+    var controller = Get.find<ProductDetailsController>();
+    Get.find<HomeController>().addRemoveFavourites(
+      product.id.toString(),
+      state: (dataResource) {
+        if (dataResource is Success) {
+          controller.productDetailsResponse.singleItem.isFav =
+              !controller.productDetailsResponse.singleItem.isFav;
+          controller.update();
+          //apply change in filter list
+          Get.find<HomeController>().changeFavouriteState(
+            product.id.toString(),
+          );
+        } else if (dataResource is Failure) {
+          CommonMethods().showSnackBar('error'.tr, iconData: Icons.error);
+        }
+      },
+    );
+  }
+
+  void _addRemoveCart() {
+    var controller = Get.find<ProductDetailsController>();
+    Get.find<CartController>().addRemoveCart(
+      product.id.toString(),
+      state: (dataResource) {
+        if (dataResource is Success) {
+          controller.productDetailsResponse.singleItem.inCart =
+              !controller.productDetailsResponse.singleItem.inCart;
+          controller.update();
+          //apply change in filter list
+          Get.find<HomeController>().changeInCartState(product.id.toString());
+        } else if (dataResource is Failure) {
+          CommonMethods().showSnackBar('error'.tr, iconData: Icons.error);
+        }
+      },
+    );
   }
 
   Widget _getTabView() {
     switch (controller.selectedTab) {
       case 0:
         return InfoTab(
-          product: controller.productModel,
+          product: controller.productDetailsResponse.singleItem,
         );
-      case 1:
-        return controller.empty.value
+      case 2:
+        return controller.similarProducts.isEmpty
             ? EmptyView(
-                textColor: Colors.black,
+                textColor: Colors.white,
                 message: 'noSimilarProducts'.tr,
               )
             : SimilarProducts(
                 products: controller.similarProducts,
               );
-      case 2:
+      case 1:
         return ReviewsTab(
-          product: controller.productModel,
+          product: controller.productDetailsResponse.singleItem,
         );
     }
     return InfoTab(
-      product: controller.productModel,
+      product: controller.productDetailsResponse.singleItem,
     );
   }
 
   _buildTabs() {
-    return Center(
-      child: ToggleSwitch(
-        minWidth: 90.0,
-        minHeight: 90.0,
-        fontSize: 16.0,
-        initialLabelIndex: 1,
-        activeBgColor: LocalStorage().primaryColor(),
-        activeFgColor: Colors.white,
-        inactiveBgColor: Colors.grey,
-        inactiveFgColor: Colors.grey[900],
-        labels: [
-          'details'.tr,
-          'similarProducts'.tr,
-          'reviews'.tr,
-        ],
-        onToggle: (index) {
-          switch (index) {
-            case 0:
-              controller.updateSelectedTab(0);
-              break;
-            case 1:
-              controller.updateSelectedTab(1);
-              break;
-            case 2:
-              controller.updateSelectedTab(2);
-              break;
-          }
-        },
+    return Container(
+      width: 1000.0,
+      child: Center(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: ToggleSwitch(
+            minWidth: 90.0,
+            minHeight: 45.0,
+            fontSize: 16.0,
+            initialLabelIndex: controller.selectedTab,
+            cornerRadius: 20.0,
+            activeBgColor: LocalStorage().primaryColor().withOpacity(0.8),
+            activeFgColor: Colors.white,
+            inactiveBgColor: Colors.white,
+            inactiveFgColor: Colors.grey[600],
+            labels: [
+              'details'.tr,
+              'reviews'.tr,
+              'similarProducts'.tr,
+            ],
+            // icons: [
+            //   Icons.info_outlined,
+            //   Icons.list,
+            //   Icons.star_border,
+            // ],
+            iconSize: 25,
+            onToggle: (index) {
+              switch (index) {
+                case 0:
+                  controller.updateSelectedTab(0);
+                  break;
+                case 1:
+                  controller.updateSelectedTab(1);
+                  break;
+                case 2:
+                  controller.updateSelectedTab(2);
+                  break;
+              }
+            },
+          ),
+        ),
       ),
     );
   }
-// _buildTabs() {
-//   return Container(
-//     height: 60,
-//     alignment: AlignmentDirectional.center,
-//     decoration: BoxDecoration(
-//       color: Colors.white,
-//     ),
-//     child: Padding(
-//         padding: const EdgeInsets.all(kDefaultPadding / 2),
-//         child: ListView(
-//           scrollDirection: Axis.horizontal,
-//           children: [
-//             GestureDetector(
-//               onTap: () {
-//                 controller.updateSelectedTab(0);
-//               },
-//               child: Container(
-//                 alignment: Alignment.center,
-//                 margin: EdgeInsets.only(
-//                   left: kDefaultPadding / 4,
-//                   right: kDefaultPadding / 4,
-//                 ),
-//                 padding: EdgeInsetsDirectional.only(
-//                     top: kDefaultPadding / 4,
-//                     bottom: kDefaultPadding / 4,
-//                     end: kDefaultPadding,
-//                     start: kDefaultPadding),
-//                 decoration: BoxDecoration(
-//                   color: controller.selectedTab == 0
-//                       ? LocalStorage().primaryColor()
-//                       : Colors.transparent,
-//                   borderRadius: BorderRadius.circular(6),
-//                 ),
-//                 child: CustomText(
-//                   text: 'details'.tr,
-//                   alignment: AlignmentDirectional.center,
-//                   color: controller.selectedTab == 0
-//                       ? Colors.white
-//                       : Colors.black,
-//                   fontSize: 16,
-//                 ),
-//               ),
-//             ),
-//             GestureDetector(
-//               onTap: () {
-//                 controller.updateSelectedTab(1);
-//               },
-//               child: Container(
-//                 alignment: Alignment.center,
-//                 margin: EdgeInsets.only(
-//                   left: kDefaultPadding / 4,
-//                   right: kDefaultPadding / 4,
-//                 ),
-//                 padding: EdgeInsetsDirectional.only(
-//                     top: kDefaultPadding / 4,
-//                     bottom: kDefaultPadding / 4,
-//                     end: kDefaultPadding,
-//                     start: kDefaultPadding),
-//                 decoration: BoxDecoration(
-//                   color: controller.selectedTab == 1
-//                       ? LocalStorage().primaryColor()
-//                       : Colors.transparent,
-//                   borderRadius: BorderRadius.circular(6),
-//                 ),
-//                 child: CustomText(
-//                   text: 'similarProducts'.tr,
-//                   alignment: AlignmentDirectional.center,
-//                   color: controller.selectedTab == 1
-//                       ? Colors.white
-//                       : Colors.black,
-//                   fontSize: 16,
-//                 ),
-//               ),
-//             ),
-//             GestureDetector(
-//               onTap: () {
-//                 controller.updateSelectedTab(2);
-//               },
-//               child: Container(
-//                 alignment: Alignment.center,
-//                 margin: EdgeInsets.only(
-//                   left: kDefaultPadding / 4,
-//                   right: kDefaultPadding / 4,
-//                 ),
-//                 padding: EdgeInsetsDirectional.only(
-//                     top: kDefaultPadding / 4,
-//                     bottom: kDefaultPadding / 4,
-//                     end: kDefaultPadding,
-//                     start: kDefaultPadding),
-//                 decoration: BoxDecoration(
-//                   color: controller.selectedTab == 2
-//                       ? LocalStorage().primaryColor()
-//                       : Colors.transparent,
-//                   borderRadius: BorderRadius.circular(6),
-//                 ),
-//                 child: CustomText(
-//                   text: 'reviews'.tr,
-//                   alignment: AlignmentDirectional.center,
-//                   color: controller.selectedTab == 2
-//                       ? Colors.white
-//                       : Colors.black,
-//                   fontSize: 16,
-//                 ),
-//               ),
-//             ),
-//           ],
-//         )),
-//   );
-// }
+
+  _buildProperties() {
+    List<Widget> columnWidgets = [];
+    if (product.properities.isNotEmpty)
+      for (ItemProperity properity in product.properities) {
+        columnWidgets.add(
+          Padding(
+            padding: const EdgeInsetsDirectional.only(start: kDefaultPadding),
+            child: CustomText(
+                text: properity.itemPropertyName,
+                fontSize: 18,
+                color: Colors.white),
+          ),
+        );
+        // List<Widget> rowWidgets = [];
+        // for (ItemPropPlus propPlus in properity.itemPropPlus) {
+        //   rowWidgets.add(value);
+        // }
+
+        var listView = Container(
+          height: 40,
+          child: GetBuilder<ProductDetailsController>(
+            builder: (controller) => ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: properity.itemPropPlus.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding:
+                      const EdgeInsetsDirectional.only(start: kDefaultPadding),
+                  child: properity.itemPropPlus[index].isSelected
+                      ? RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              side: BorderSide(color: Colors.white)),
+                          color: Colors.green,
+                          child: CustomText(
+                              text: properity.itemPropPlus[index].propertyValue,
+                              fontSize: 18,
+                              alignment: AlignmentDirectional.center,
+                              color: Colors.white),
+                          onPressed: () {
+                            // properity.itemPropPlus[index].propertyPrice
+                            // properity.itemPropPlus[index].id
+                            controller.updatePropertySelection(
+                                properity, properity.itemPropPlus[index]);
+                          },
+                        )
+                      : RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              side: BorderSide(color: Colors.white)),
+                          color: LocalStorage().primaryColor().withOpacity(0.7),
+                          child: CustomText(
+                              text: properity.itemPropPlus[index].propertyValue,
+                              fontSize: 18,
+                              alignment: AlignmentDirectional.center,
+                              color: Colors.white),
+                          onPressed: () {
+                            // properity.itemPropPlus[index].propertyPrice
+                            // properity.itemPropPlus[index].id
+                            controller.updatePropertySelection(
+                                properity, properity.itemPropPlus[index]);
+                          },
+                        ),
+                );
+              },
+            ),
+          ),
+        );
+
+        columnWidgets.add(
+          SizedBox(
+            height: kDefaultPadding / 2,
+          ),
+        );
+
+        columnWidgets.add(listView);
+
+        columnWidgets.add(
+          Padding(
+            padding: const EdgeInsets.all(kDefaultPadding),
+            child: Divider(
+              height: 1,
+              color: Colors.white,
+            ),
+          ),
+        );
+      }
+
+    return Column(
+      children: columnWidgets,
+    );
+  }
 }

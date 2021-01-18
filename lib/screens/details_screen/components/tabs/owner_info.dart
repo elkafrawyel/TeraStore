@@ -1,43 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tera/data/models/user_model.dart';
 import 'package:tera/helper/CommonMethods.dart';
+import 'package:tera/helper/Constant.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'file:///F:/Apps/My%20Flutter%20Apps/TeraStore/lib/data/models/product_model.dart';
-
 class OwnerInfo extends StatelessWidget {
-  final ProductModel productModel;
+  final UserModel user;
 
-  OwnerInfo({this.productModel});
+  OwnerInfo({this.user});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0), color: Colors.white),
-      child: Padding(
-        padding: EdgeInsetsDirectional.only(start: 10, top: 10, bottom: 10),
+    return Padding(
+      padding: const EdgeInsets.all(kDefaultPadding / 4),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+          color: Colors.white,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
               child: Padding(
-                padding: EdgeInsetsDirectional.only(top: 10, end: 10),
+                padding: EdgeInsets.symmetric(
+                    horizontal: kDefaultPadding, vertical: kDefaultPadding / 2),
                 child: Row(
                   children: [
                     Expanded(
                       child: Column(
                         children: [
                           CustomText(
-                            text: 'productModel.owner.name',
+                            text: 'sellerInfo'.tr,
                             color: Colors.black,
                             alignment: AlignmentDirectional.topStart,
                             fontSize: 18,
                           ),
+                          SizedBox(
+                            height: 20,
+                          ),
                           CustomText(
-                            text: 'owner.email',
-                            color: Colors.grey.shade500,
+                            text: user == null
+                                ? 'productModel.owner.name'
+                                : user.name,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            alignment: AlignmentDirectional.topStart,
+                            fontSize: 16,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomText(
+                            text: user == null
+                                ? 'productModel.owner.name'
+                                : user.email,
+                            color: Colors.grey.shade700,
                             alignment: AlignmentDirectional.topStart,
                             fontSize: 16,
                           ),
@@ -51,14 +71,14 @@ class OwnerInfo extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            // var phone = productModel.owner.phone;
-                            // _launchCaller(phone);
+                            var phone = user == null ? null : user.phone;
+                            _launchCaller(phone);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Icon(
                               Icons.call,
-                              color: Colors.black,
+                              color: Colors.green,
                               size: 30,
                             ),
                           ),
@@ -72,7 +92,7 @@ class OwnerInfo extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: Icon(
                               Icons.message,
-                              color: Colors.black,
+                              color: Colors.green,
                               size: 30,
                             ),
                           ),

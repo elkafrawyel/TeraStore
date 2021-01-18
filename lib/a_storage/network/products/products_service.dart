@@ -29,6 +29,16 @@ abstract class ProductsService extends ChopperService {
   @Get(path: '/getCartItems')
   Future<Response> getCartItems();
 
+  @Get(path: '/cartItemPlusMinus/{productId}/{action}')
+  Future<Response> cartItemPlusMinus(
+      @Path() String productId, @Path() String action);
+
+  @Get(path: '/confirmOrder/{orderId}')
+  Future<Response> confirmOrder(@Path() String orderId);
+
+  @Get(path: '/singleItem/{productId}')
+  Future<Response> singleProduct(@Path() String productId);
+
   static ProductsService create() {
     String apiToken = LocalStorage().getString(LocalStorage.token);
     String language = LocalStorage().getLanguage();

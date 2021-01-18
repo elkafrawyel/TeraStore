@@ -7,7 +7,6 @@ import 'package:tera/data/models/cart_model.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
 import 'package:tera/helper/data_resource.dart';
-import 'package:tera/screens/cart_screen/check_out_screen.dart';
 import 'package:tera/screens/custom_widgets/custom_appbar.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/please_wait_loading.dart';
@@ -100,7 +99,7 @@ class CartScreen extends StatelessWidget {
                                 ? null
                                 : () async {
                                     //confirm
-                                    Get.to(CheckOutScreen());
+                                    controller.confirmOrder();
                                   },
                           ),
                         ),
@@ -146,7 +145,7 @@ class CartScreen extends StatelessWidget {
   Widget _cartItem(BuildContext context, CartItem cartItem, int index) {
     return GestureDetector(
       onTap: () {
-        Get.to(DetailsScreen(productId: cartItem.id.toString()));
+        Get.to(DetailsScreen(productId: cartItem.itemId.toString()));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -353,17 +352,10 @@ class CartScreen extends StatelessWidget {
   }
 
   void remove(CartItem cartItem, int index) {
-    // if (cart.quantity == 1) {
-    //   Get.find<CartController>()
-    //       .removeItem(cart.id, index: index, showLoading: true);
-    // } else {
-    //   Get.find<CartController>()
-    //       .addRemoveCart(cart.id, index: index, showLoading: true);
-    // }
+    controller.cartItemPlusMinus(cartItem.itemId.toString(), 'min');
   }
 
   void add(CartItem cartItem, int index) {
-    // Get.find<CartController>()
-    //     .addRemoveCart(cart.productModel, index: index, showLoading: true);
+    controller.cartItemPlusMinus(cartItem.itemId.toString(), 'plus');
   }
 }

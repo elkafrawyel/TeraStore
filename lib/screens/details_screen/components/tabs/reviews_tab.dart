@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/controllers/product_details_controller.dart';
-import 'package:tera/data/models/product_model.dart';
+import 'package:tera/data/responses/product_details_response.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
 import 'package:tera/model/review_model.dart';
@@ -14,7 +14,7 @@ import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 class ReviewsTab extends StatelessWidget {
-  final ProductModel product;
+  final SingleItem product;
   final controller = Get.find<ProductDetailsController>();
 
   ReviewsTab({this.product}) {
@@ -148,9 +148,9 @@ class ReviewsTab extends StatelessWidget {
             ),
             CustomText(
               text: '(${controller.reviews.length})',
-              fontSize: 16,
+              fontSize: 18,
               alignment: AlignmentDirectional.center,
-              color: Colors.grey.shade600,
+              color: Colors.white,
             )
           ],
         ),
@@ -166,7 +166,7 @@ class ReviewsTab extends StatelessWidget {
     List<Widget> widgets = [];
     widgets.add(
       SizedBox(
-        height: kDefaultPadding,
+        height: kDefaultPadding / 2,
       ),
     );
     widgets.add(
@@ -178,20 +178,26 @@ class ReviewsTab extends StatelessWidget {
           children: [
             _ratingView(),
             Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: LocalStorage().primaryColor(),
-              ),
-              alignment: AlignmentDirectional.center,
-              child: IconButton(
+              height: 40,
+              child: RaisedButton.icon(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    side: BorderSide(color: Colors.white)),
+                color: LocalStorage().primaryColor().withOpacity(0.7),
+                onPressed: () {
+                  _buildRatingDialog();
+                },
+                icon: Icon(
+                  Icons.add_comment,
+                  color: Colors.white,
+                ),
+                label: CustomText(
+                  text: 'addReview'.tr,
+                  color: Colors.white,
                   alignment: AlignmentDirectional.center,
-                  icon: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    _buildRatingDialog();
-                  }),
+                  fontSize: 16,
+                ),
+              ),
             ),
           ],
         ),
@@ -199,13 +205,13 @@ class ReviewsTab extends StatelessWidget {
     );
     widgets.add(
       SizedBox(
-        height: kDefaultPadding,
+        height: kDefaultPadding / 2,
       ),
     );
     controller.reviews.length == 0
         ? widgets.add(
             EmptyView(
-              textColor: Colors.black,
+              textColor: Colors.white,
               message: 'noReviews'.tr,
             ),
           )

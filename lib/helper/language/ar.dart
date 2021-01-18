@@ -66,7 +66,7 @@ Map<String, String> ar = {
   'removedFromFavourite': 'تمت ازالته من المفضلة',
   'addedToFavourite': 'تمت اضافته الي المفضلة',
   'reviews': 'تعليقات',
-  'addToCart': 'السلة',
+  'addToCart': 'أضافة الي السلة',
   'about': 'عن التطبيق',
   'privacy': 'سياسة الخصوصية',
   'checkOut': 'الدفع',
@@ -98,7 +98,7 @@ Map<String, String> ar = {
   'filter': 'الترتيب',
   'noFilteredProducts': 'لا توجد نتائج لهذا البحث',
   'details': 'التفاصيل',
-  'similarProducts': 'منتجات مشابهة',
+  'similarProducts': 'مشابهة',
   'noSimilarProducts': 'لا يوجد منتجات مشابهة',
   'edit': 'تعديل',
   'delete': 'حذف',
@@ -138,4 +138,7 @@ Map<String, String> ar = {
   'city': 'المدينة',
   'confirm': 'تأكيد',
   'confirmOrder': 'تأكيد الطلب',
+  'removeFromCart': 'حذف من السلة',
+  'saveMoney': 'وفر',
+  'sellerInfo': 'البائع'
 };

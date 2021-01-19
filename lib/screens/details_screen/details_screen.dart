@@ -20,8 +20,10 @@ class DetailsScreen extends StatelessWidget {
 
   _loadDetails() async {
     controller.selectedTab = 0;
-    // await controller.getProductById('27');
-    await controller.getProductById(productId);
+    controller.price = 0;
+    controller.disCountPrice = 0;
+    await controller.getProductById('27');
+    // await controller.getProductById(productId);
   }
 
   @override

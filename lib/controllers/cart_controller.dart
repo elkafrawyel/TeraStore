@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:tera/a_repositories/cart_repo.dart';
+import 'package:tera/controllers/home_controller.dart';
 import 'package:tera/controllers/main_controller.dart';
 import 'package:tera/data/responses/cart_response.dart';
 import 'package:tera/helper/CommonMethods.dart';
@@ -36,14 +37,19 @@ class CartController extends MainController {
     opRunning = false;
   }
 
-  Future<void> confirmOrder() async {
+  Future<void> confirmOrder(String address) async {
     if (opRunning) return;
     opRunning = true;
     CartRepo().confirmOrder(
+      address,
       cart.id.toString(),
       state: (dataResource) {
         if (dataResource is Success) {
           print('Order Confirmed');
+          Get.find<HomeController>().filteredProducts.forEach((element) {
+            element.inCart = false;
+          });
+          Get.find<HomeController>().update();
         } else if (dataResource is Failure) {
           print(dataResource.errorMessage);
         }

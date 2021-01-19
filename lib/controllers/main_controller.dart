@@ -11,10 +11,16 @@ import 'package:tera/helper/language/language_model.dart';
 
 class MainController extends GetxController {
   Color primaryColor = LocalStorage().primaryColor();
+  bool isGrid = true;
 
   ValueNotifier<bool> loading = ValueNotifier(false);
   ValueNotifier<bool> error = ValueNotifier(false);
   ValueNotifier<bool> empty = ValueNotifier(false);
+
+  changeMode() {
+    isGrid = !isGrid;
+    update();
+  }
 
   UserModel user;
   PickedFile selectedImage;

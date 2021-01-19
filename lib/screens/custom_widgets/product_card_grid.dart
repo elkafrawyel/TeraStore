@@ -1,28 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:tera/a_storage/local_storage.dart';
-import 'package:tera/controllers/cart_controller.dart';
-import 'package:tera/controllers/home_controller.dart';
-import 'package:tera/controllers/products_controller.dart';
 import 'package:tera/data/models/product_model.dart';
-import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
-import 'package:tera/helper/data_resource.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
-class ProductsInCategoryCard extends StatelessWidget {
-  const ProductsInCategoryCard({
+class ProductCardGrid extends StatelessWidget {
+  const ProductCardGrid({
     Key key,
     this.itemIndex,
     this.product,
     this.press,
     this.showActions = false,
+    this.onFavouriteClicked,
+    this.onCartClicked,
   }) : super(key: key);
 
   final int itemIndex;
   final ProductModel product;
   final Function press;
+  final Function onFavouriteClicked;
+  final Function onCartClicked;
   final bool showActions;
 
   @override
@@ -34,21 +32,19 @@ class ProductsInCategoryCard extends StatelessWidget {
         vertical: kDefaultPadding / 2,
       ),
       // color: Colors.blueAccent,
-      height: 250,
       child: GestureDetector(
         onTap: press,
         child: Stack(
           children: <Widget>[
             // Those are our background
             Container(
-              height: 250,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(22),
                 color: itemIndex.isEven ? kBlueColor : kSecondaryColor,
                 boxShadow: [kDefaultShadow],
               ),
               child: Container(
-                margin: EdgeInsetsDirectional.only(start: 10),
+                margin: EdgeInsetsDirectional.only(bottom: 10),
                 decoration: BoxDecoration(
                   color: kCardColor,
                   borderRadius: BorderRadius.circular(22),
@@ -58,20 +54,17 @@ class ProductsInCategoryCard extends StatelessWidget {
             // our product image
             Align(
               alignment: AlignmentDirectional.topStart,
-              child: Row(
+              child: Column(
                 children: [
-                  SizedBox(
-                    width: kDefaultPadding / 2,
-                  ),
                   Container(
-                    height: 250,
-                    width: 180,
+                    height: 150,
+                    width: 300,
                     child: LocalStorage().isArabicLanguage()
                         ? ClipRRect(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(0),
                               topRight: Radius.circular(22),
-                              bottomRight: Radius.circular(22),
+                              bottomRight: Radius.circular(0),
                               bottomLeft: Radius.circular(0),
                             ),
                             child: FadeInImage.assetNetwork(
@@ -84,7 +77,7 @@ class ProductsInCategoryCard extends StatelessWidget {
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(22),
                               topRight: Radius.circular(0),
-                              bottomLeft: Radius.circular(22),
+                              bottomLeft: Radius.circular(0),
                               bottomRight: Radius.circular(0),
                             ),
                             child: FadeInImage.assetNetwork(
@@ -97,48 +90,76 @@ class ProductsInCategoryCard extends StatelessWidget {
                   Expanded(
                     child: Padding(
                       padding: EdgeInsetsDirectional.only(
-                          top: kDefaultPadding,
+                          // top: kDefaultPadding / 2,
                           end: kDefaultPadding / 2,
-                          bottom: kDefaultPadding * 2,
+                          // bottom: kDefaultPadding * 2,
                           start: kDefaultPadding / 2),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           CustomText(
                             text: product.name,
-                            fontSize: 20,
+                            fontSize: 18,
                             maxLines: 2,
                             fontWeight: FontWeight.bold,
-                            alignment: AlignmentDirectional.topEnd,
+                            alignment: AlignmentDirectional.centerStart,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Visibility(
+                                visible: product.discountType == 'percent',
+                                child: Text(
+                                  '\$${product.price}',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    decoration: TextDecoration.lineThrough,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                              Visibility(
+                                visible: product.discountType == 'percent',
+                                child: SizedBox(
+                                  width: kDefaultPadding / 2,
+                                ),
+                              ),
+                              Text(
+                                '\$${product.discountPrice}',
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: itemIndex.isEven
+                                      ? kBlueColor
+                                      : kSecondaryColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              RatingBar.readOnly(
+                                initialRating:
+                                    double.parse(product.rate.toString()),
+                                isHalfAllowed: true,
+                                size: 20,
+                                halfFilledColor: Colors.amber,
+                                maxRating: 5,
+                                filledColor: Colors.amber,
+                                halfFilledIcon: Icons.star_half,
+                                filledIcon: Icons.star,
+                                emptyIcon: Icons.star_border,
+                              ),
+                              CustomText(
+                                text: '(${product.commentCount.toString()})',
+                              )
+                            ],
                           ),
                           Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  RatingBar.readOnly(
-                                    initialRating:
-                                        double.parse(product.rate.toString()),
-                                    isHalfAllowed: true,
-                                    size: 20,
-                                    halfFilledColor: Colors.amber,
-                                    maxRating: 5,
-                                    filledColor: Colors.amber,
-                                    halfFilledIcon: Icons.star_half,
-                                    filledIcon: Icons.star,
-                                    emptyIcon: Icons.star_border,
-                                  ),
-                                  CustomText(
-                                    text:
-                                        '(${product.commentCount.toString()})',
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: kDefaultPadding / 2,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   product.isFav
                                       ? IconButton(
@@ -148,7 +169,7 @@ class ProductsInCategoryCard extends StatelessWidget {
                                             size: 30,
                                           ),
                                           onPressed: () {
-                                            // _addRemoveFavourite();
+                                            onFavouriteClicked.call();
                                           })
                                       : IconButton(
                                           icon: Icon(
@@ -157,7 +178,7 @@ class ProductsInCategoryCard extends StatelessWidget {
                                             size: 30,
                                           ),
                                           onPressed: () {
-                                            // _addRemoveFavourite();
+                                            onFavouriteClicked.call();
                                           }),
                                   !product.inCart
                                       ? IconButton(
@@ -167,7 +188,7 @@ class ProductsInCategoryCard extends StatelessWidget {
                                             size: 30,
                                           ),
                                           onPressed: () {
-                                            // _addRemoveCart();
+                                            onCartClicked.call();
                                           })
                                       : IconButton(
                                           icon: Icon(
@@ -176,10 +197,10 @@ class ProductsInCategoryCard extends StatelessWidget {
                                             size: 30,
                                           ),
                                           onPressed: () {
-                                            // _addRemoveCart();
-                                          }),
+                                            onCartClicked.call();
+                                          })
                                 ],
-                              )
+                              ),
                             ],
                           )
                         ],
@@ -196,7 +217,7 @@ class ProductsInCategoryCard extends StatelessWidget {
                 alignment: AlignmentDirectional.topStart,
                 child: Container(
                   height: 40,
-                  width: 60,
+                  width: 50,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadiusDirectional.only(
                         topStart: Radius.circular(22),
@@ -216,97 +237,9 @@ class ProductsInCategoryCard extends StatelessWidget {
                 ),
               ),
             ),
-            // our price
-            Align(
-              alignment: AlignmentDirectional.bottomEnd,
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: kDefaultPadding, // 30 padding
-                  vertical: kDefaultPadding / 4, // 5 top and bottom
-                ),
-                decoration: BoxDecoration(
-                  color: product.discountType == 'percent'
-                      ? kSecondaryColor
-                      : kBlueColor,
-                  borderRadius: BorderRadiusDirectional.only(
-                    bottomEnd: Radius.circular(22),
-                    topStart: Radius.circular(22),
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Visibility(
-                      visible: product.discountType == 'percent',
-                      child: Text(
-                        '\$${product.price}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          decoration: TextDecoration.lineThrough,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: product.discountType == 'percent',
-                      child: SizedBox(
-                        width: kDefaultPadding / 2,
-                      ),
-                    ),
-                    Text(
-                      '\$${product.discountPrice}',
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ],
         ),
       ),
-    );
-  }
-
-  void _addRemoveFavourite() {
-    var controller = Get.find<ProductsController>();
-    Get.find<HomeController>().addRemoveFavourites(
-      product.id.toString(),
-      state: (dataResource) {
-        if (dataResource is Success) {
-          var myProduct =
-              controller.products[controller.products.indexOf(product)];
-          myProduct.isFav = !myProduct.isFav;
-          controller.update();
-          //apply change in filter list
-          Get.find<HomeController>()
-              .changeFavouriteState(product.id.toString());
-        } else if (dataResource is Failure) {
-          CommonMethods().showSnackBar('error'.tr, iconData: Icons.error);
-        }
-      },
-    );
-  }
-
-  void _addRemoveCart() {
-    var controller = Get.find<ProductsController>();
-    Get.find<CartController>().addRemoveCart(
-      product.id.toString(),
-      state: (dataResource) {
-        if (dataResource is Success) {
-          var myProduct =
-              controller.products[controller.products.indexOf(product)];
-          myProduct.inCart = !myProduct.inCart;
-          controller.update();
-          //apply change in filter list
-          Get.find<HomeController>().changeInCartState(product.id.toString());
-        } else if (dataResource is Failure) {
-          CommonMethods().showSnackBar('error'.tr, iconData: Icons.error);
-        }
-      },
     );
   }
 }

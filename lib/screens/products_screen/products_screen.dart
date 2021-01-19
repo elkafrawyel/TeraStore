@@ -20,6 +20,31 @@ class ProductsScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         text: categoryModel.displayName,
+        actions: [
+          GetBuilder<ProductsController>(
+            builder: (controller) => controller.isGrid
+                ? IconButton(
+                    onPressed: () {
+                      controller.changeMode();
+                    },
+                    color: Colors.white,
+                    icon: Icon(
+                      Icons.list,
+                      size: 30,
+                    ),
+                  )
+                : IconButton(
+                    onPressed: () {
+                      controller.changeMode();
+                    },
+                    color: Colors.white,
+                    icon: Icon(
+                      Icons.view_module,
+                      size: 30,
+                    ),
+                  ),
+          )
+        ],
       ),
       body: Body(),
     );

@@ -10,6 +10,7 @@ import 'package:tera/helper/data_resource.dart';
 
 class HomeController extends MainController {
   //============================= Filter ===========================
+
   ProductFilters filter = ProductFilters.Latest;
   double lowerValue = 0;
   double upperValue = 1000;

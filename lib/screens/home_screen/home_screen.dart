@@ -173,13 +173,13 @@ class HomeScreen extends StatelessWidget {
                   duration: Duration(milliseconds: 500),
                 );
               }),
+
               SizedBox(
                 height: 20,
               ),
-
-              _buildRow('shippingAddresses'.tr, Icons.location_on, () {
+              _buildRow('myOrders'.tr, Icons.timer, () {
                 Get.to(
-                  ShippingAddresses(),
+                  OrdersScreen(),
                   transition: Transition.rightToLeftWithFade,
                   duration: Duration(milliseconds: 500),
                 );
@@ -187,9 +187,10 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              _buildRow('myOrders'.tr, Icons.timer, () {
+
+              _buildRow('shippingAddresses'.tr, Icons.location_on, () {
                 Get.to(
-                  OrdersScreen(),
+                  ShippingAddresses(),
                   transition: Transition.rightToLeftWithFade,
                   duration: Duration(milliseconds: 500),
                 );

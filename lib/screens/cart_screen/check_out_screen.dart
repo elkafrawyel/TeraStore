@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/controllers/cart_controller.dart';
 import 'package:tera/controllers/general_controller.dart';
-import 'package:tera/controllers/main_controller.dart';
 import 'package:tera/data/models/address_model.dart';
+import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
 import 'package:tera/screens/cart_screen/payment_screen.dart';
 import 'package:tera/screens/custom_widgets/button/custom_button.dart';
@@ -15,17 +16,15 @@ import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 import '../add_address_screen/add_address_screen.dart';
 
 class CheckOutScreen extends StatelessWidget {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
   final TextEditingController detailsController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final homeController = Get.find<MainController>();
   final controller = Get.find<GeneralController>();
 
   CheckOutScreen() {
     controller.getAddressList();
-    nameController.text = homeController.user.name;
-    phoneController.text = homeController.user.phone;
+    controller.selectedAddress = null;
+    controller.selectedCity = null;
+    controller.selectedLocation = null;
   }
 
   @override
@@ -43,24 +42,6 @@ class CheckOutScreen extends StatelessWidget {
               children: [
                 SizedBox(
                   height: kDefaultPadding,
-                ),
-                CustomOutlinedTextFormField(
-                  hintText: 'name'.tr,
-                  labelText: 'name'.tr,
-                  controller: nameController,
-                  validateEmptyText: 'requiredField'.tr,
-                  keyboardType: TextInputType.text,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                CustomOutlinedTextFormField(
-                  hintText: 'phone'.tr,
-                  labelText: 'phone'.tr,
-                  controller: phoneController,
-                  validateEmptyText: 'requiredField'.tr,
-                  keyboardType: TextInputType.text,
-                  required: true,
                 ),
                 SizedBox(
                   height: 20,
@@ -85,12 +66,17 @@ class CheckOutScreen extends StatelessWidget {
                   padding: EdgeInsetsDirectional.only(bottom: kDefaultPadding),
                   width: MediaQuery.of(context).size.width,
                   child: CustomButton(
-                    text: 'nextToPayment'.tr,
+                    text: 'confirm'.tr,
                     colorText: Colors.white,
                     colorBackground: LocalStorage().primaryColor(),
                     fontSize: 20,
                     onPressed: () {
-                      _nextToPayment();
+                      String address =
+                          '${controller.selectedAddress.title}\n${controller.selectedAddress.completeAdress}\n${controller.selectedAddress.governorate} - ${controller.selectedAddress.city}';
+                      // print(address);
+                      Get.find<CartController>().confirmOrder(address);
+                      CommonMethods().hideKeyboard();
+                      Get.back();
                     },
                   ),
                 )

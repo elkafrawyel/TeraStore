@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/controllers/cart_controller.dart';
 import 'package:tera/controllers/home_controller.dart';
 import 'package:tera/data/models/product_model.dart';
+import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
+import 'package:tera/helper/data_resource.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/error_view.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/loading_view.dart';
+import 'package:tera/screens/custom_widgets/product_card_grid.dart';
 import 'package:tera/screens/details_screen/details_screen.dart';
 
 import 'carousel_with_indicator.dart';
 import 'category_list.dart';
-import 'product_card.dart';
 
 class Body extends StatelessWidget {
   final controller = Get.find<HomeController>();
@@ -51,19 +54,71 @@ class Body extends StatelessWidget {
                               : CategoryList(),
                         ]),
                       ),
-                      SliverList(
+                      SliverGrid(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, childAspectRatio: 0.55),
                         delegate: SliverChildListDelegate(
                           //take a list of cards
-                          controller.empty.value
+                          controller.loading.value
                               ? [
-                                  EmptyView(
-                                    message: 'noFilteredProducts'.tr,
-                                    textColor: Colors.white,
+                                  Center(
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  ),
+                                  Center(
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  ),
+                                  Center(
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  ),
+                                  Center(
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  ),
+                                  Center(
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  ),
+                                  Center(
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  ),
+                                  Center(
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  ),
+                                  Center(
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    ),
                                   )
                                 ]
-                              : _buildProductsList(controller.filteredProducts),
+                              : controller.empty.value
+                                  ? [
+                                      EmptyView(
+                                        message: 'noFilteredProducts'.tr,
+                                        textColor: Colors.white,
+                                      )
+                                    ]
+                                  : _buildProductsList(
+                                      controller.filteredProducts),
                         ),
                       ),
+                      SliverList(
+                          delegate: SliverChildListDelegate([
+                        SizedBox(
+                          height: 60,
+                        )
+                      ]))
                     ],
                   ),
       ),
@@ -72,19 +127,57 @@ class Body extends StatelessWidget {
 
   List<Widget> _buildProductsList(List<ProductModel> products) {
     List<Widget> widgets = [];
+
     products.forEach((element) {
-      widgets.add(ProductCard(
+      widgets.add(ProductCardGrid(
         itemIndex: products.indexOf(element),
         product: products[products.indexOf(element)],
         press: () {
           Get.to(DetailsScreen(
               productId: products[products.indexOf(element)].id.toString()));
         },
+        onFavouriteClicked: () {
+          _addRemoveFavourite(products[products.indexOf(element)]);
+        },
+        onCartClicked: () {
+          _addRemoveCart(products[products.indexOf(element)]);
+        },
       ));
     });
-    widgets.add(SizedBox(
-      height: 80,
-    ));
     return widgets;
+  }
+
+  void _addRemoveFavourite(ProductModel product) {
+    var controller = Get.find<HomeController>();
+    controller.addRemoveFavourites(
+      product.id.toString(),
+      state: (dataResource) {
+        if (dataResource is Success) {
+          var myProduct = controller
+              .filteredProducts[controller.filteredProducts.indexOf(product)];
+          myProduct.isFav = !myProduct.isFav;
+          controller.update();
+        } else if (dataResource is Failure) {
+          CommonMethods().showSnackBar('error'.tr, iconData: Icons.error);
+        }
+      },
+    );
+  }
+
+  void _addRemoveCart(ProductModel product) {
+    var controller = Get.find<HomeController>();
+    Get.find<CartController>().addRemoveCart(
+      product.id.toString(),
+      state: (dataResource) {
+        if (dataResource is Success) {
+          var myProduct = controller
+              .filteredProducts[controller.filteredProducts.indexOf(product)];
+          myProduct.inCart = !myProduct.inCart;
+          controller.update();
+        } else if (dataResource is Failure) {
+          CommonMethods().showSnackBar('error'.tr, iconData: Icons.error);
+        }
+      },
+    );
   }
 }

@@ -39,7 +39,7 @@ class GeneralController extends MainController {
           if (callState is Success) {
             locationsResponse = callState.data as LocationsResponse;
             loading.value = false;
-            CommonMethods().showSnackBar('Swipe to delete address');
+            // CommonMethods().showSnackBar('Swipe to delete address');
             update();
           } else if (callState is Failure) {
             print(callState.errorMessage);

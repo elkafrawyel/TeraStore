@@ -6,14 +6,15 @@ import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/data_resource.dart';
 
 class OrdersController extends MainController {
-  List<Order> orders;
+  List<Order> orders = [];
 
-  Future<void> getOrders() async {
+  getOrders() async {
     loading.value = true;
     update();
     CartRepo().getMyOrders(
       state: (dataResource) {
         if (dataResource is Success) {
+          orders.clear();
           orders = dataResource.data as List<Order>;
           if (orders != null) {
             print('order count => ${orders.length}');
@@ -25,6 +26,23 @@ class OrdersController extends MainController {
             empty.value = true;
             update();
           }
+        } else if (dataResource is Failure) {
+          CommonMethods().showSnackBar('error'.tr);
+          loading.value = false;
+          update();
+        }
+      },
+    );
+  }
+
+  deleteOrder(String orderId) async {
+    loading.value = true;
+    update();
+    CartRepo().deleteOrder(
+      orderId,
+      state: (dataResource) {
+        if (dataResource is Success) {
+          getOrders();
         } else if (dataResource is Failure) {
           CommonMethods().showSnackBar('error'.tr);
           loading.value = false;

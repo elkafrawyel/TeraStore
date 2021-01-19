@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:tera/a_storage/local_storage.dart';
-import 'package:tera/controllers/cart_controller.dart';
-import 'package:tera/controllers/home_controller.dart';
 import 'package:tera/data/models/product_model.dart';
-import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
-import 'package:tera/helper/data_resource.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 class ProductCard extends StatelessWidget {
@@ -17,11 +12,15 @@ class ProductCard extends StatelessWidget {
     this.product,
     this.press,
     this.showActions = false,
+    this.onFavouriteClicked,
+    this.onCartClicked,
   }) : super(key: key);
 
   final int itemIndex;
   final ProductModel product;
   final Function press;
+  final Function onFavouriteClicked;
+  final Function onCartClicked;
   final bool showActions;
 
   @override
@@ -147,7 +146,7 @@ class ProductCard extends StatelessWidget {
                                             size: 30,
                                           ),
                                           onPressed: () {
-                                            _addRemoveFavourite();
+                                            onFavouriteClicked.call();
                                           })
                                       : IconButton(
                                           icon: Icon(
@@ -156,7 +155,7 @@ class ProductCard extends StatelessWidget {
                                             size: 30,
                                           ),
                                           onPressed: () {
-                                            _addRemoveFavourite();
+                                            onFavouriteClicked.call();
                                           }),
                                   !product.inCart
                                       ? IconButton(
@@ -166,7 +165,7 @@ class ProductCard extends StatelessWidget {
                                             size: 30,
                                           ),
                                           onPressed: () {
-                                            _addRemoveCart();
+                                            onCartClicked.call();
                                           })
                                       : IconButton(
                                           icon: Icon(
@@ -175,7 +174,7 @@ class ProductCard extends StatelessWidget {
                                             size: 30,
                                           ),
                                           onPressed: () {
-                                            _addRemoveCart();
+                                            onCartClicked.call();
                                           }),
                                 ],
                               )
@@ -267,40 +266,6 @@ class ProductCard extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  void _addRemoveFavourite() {
-    var controller = Get.find<HomeController>();
-    controller.addRemoveFavourites(
-      product.id.toString(),
-      state: (dataResource) {
-        if (dataResource is Success) {
-          var myProduct = controller
-              .filteredProducts[controller.filteredProducts.indexOf(product)];
-          myProduct.isFav = !myProduct.isFav;
-          controller.update();
-        } else if (dataResource is Failure) {
-          CommonMethods().showSnackBar('error'.tr, iconData: Icons.error);
-        }
-      },
-    );
-  }
-
-  void _addRemoveCart() {
-    var controller = Get.find<HomeController>();
-    Get.find<CartController>().addRemoveCart(
-      product.id.toString(),
-      state: (dataResource) {
-        if (dataResource is Success) {
-          var myProduct = controller
-              .filteredProducts[controller.filteredProducts.indexOf(product)];
-          myProduct.inCart = !myProduct.inCart;
-          controller.update();
-        } else if (dataResource is Failure) {
-          CommonMethods().showSnackBar('error'.tr, iconData: Icons.error);
-        }
-      },
     );
   }
 }

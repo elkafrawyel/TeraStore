@@ -30,6 +30,7 @@ class OrderResponse {
 class Order {
   int id;
   String cartOrderStatus;
+  String shippingAdress;
   int cartTotalPrice;
   int userId;
   List<CartItem> cartItems;
@@ -37,6 +38,7 @@ class Order {
   Order(
       {this.id,
       this.cartOrderStatus,
+      this.shippingAdress,
       this.cartTotalPrice,
       this.userId,
       this.cartItems});
@@ -47,6 +49,7 @@ class Order {
     }
     id = json['id'];
     cartOrderStatus = json['cartOrderStatus'];
+    shippingAdress = json['shippingAdress'];
     cartTotalPrice = json['cartTotalPrice'];
     userId = json['user_id'];
     if (json['cart_items'] != null) {
@@ -62,6 +65,7 @@ class Order {
     data['id'] = this.id;
     data['cartOrderStatus'] = this.cartOrderStatus;
     data['cartTotalPrice'] = this.cartTotalPrice;
+    data['shippingAdress'] = this.shippingAdress;
     data['user_id'] = this.userId;
     if (this.cartItems != null) {
       data['cart_items'] = this.cartItems.map((v) => v.toJson()).toList();

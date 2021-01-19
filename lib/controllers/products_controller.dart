@@ -14,6 +14,11 @@ class ProductsController extends MainController {
 
   List<ProductModel> products = [];
 
+  changeMode() {
+    isGrid = !isGrid;
+    update();
+  }
+
   changeSubCategory(int index) {
     selectedSubCategoryIndex = index;
     empty.value = categoryModel.subCategories.isEmpty;

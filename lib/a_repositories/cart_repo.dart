@@ -55,6 +55,30 @@ class CartRepo {
     );
   }
 
+  deleteOrder(String orderId,
+      {Function(DataResource dataResource) state}) async {
+    ProductsService service = ProductsService.create();
+    NetworkMethods().handleResponse(
+      call: service.deleteOrder(orderId),
+      failed: (message) {
+        state(Failure(errorMessage: message));
+      },
+      whenSuccess: (response) {
+        try {
+          InfoResponse infoResponse = InfoResponse.fromJson(response.body);
+          if (infoResponse.status) {
+            state(Success());
+          } else {
+            state(Failure(errorMessage: 'Failed to get My Orders'));
+          }
+        } catch (e) {
+          print(e);
+          state(Failure(errorMessage: 'Failed to get My Orders'));
+        }
+      },
+    );
+  }
+
   addRemoveCart(String productId,
       {Function(DataResource dataResource) state}) async {
     ProductsService service = ProductsService.create();
@@ -111,11 +135,11 @@ class CartRepo {
     );
   }
 
-  confirmOrder(String orderId,
+  confirmOrder(String address, String orderId,
       {Function(DataResource dataResource) state}) async {
     ProductsService service = ProductsService.create();
     NetworkMethods().handleResponse(
-      call: service.confirmOrder(orderId),
+      call: service.confirmOrder(orderId, address),
       failed: (message) {
         state(Failure(errorMessage: message));
       },
@@ -123,8 +147,8 @@ class CartRepo {
         try {
           InfoResponse infoResponse = InfoResponse.fromJson(response.body);
           if (infoResponse.status) {
-            Get.find<CartController>().getCartItems();
             CommonMethods().showSnackBar(infoResponse.message);
+            Get.find<CartController>().getCartItems();
             state(Success());
           } else {
             CommonMethods().showSnackBar(infoResponse.message);

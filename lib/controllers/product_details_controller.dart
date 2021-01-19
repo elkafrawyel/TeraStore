@@ -12,6 +12,8 @@ import 'package:tera/helper/data_resource.dart';
 class ProductDetailsController extends MainController {
   ProductDetailsResponse productDetailsResponse;
   int selectedTab = 0;
+  double price = 0;
+  double disCountPrice = 0;
 
   List<ProductModel> similarProducts = [];
   ReviewsResponse reviewsResponse;
@@ -23,11 +25,30 @@ class ProductDetailsController extends MainController {
   }
 
   updatePropertySelection(ItemProperity main, ItemPropPlus sub) {
-    main.itemPropPlus[main.itemPropPlus.indexOf(sub)].isSelected =
-        !main.itemPropPlus[main.itemPropPlus.indexOf(sub)].isSelected;
+    ItemPropPlus itemPropPlus =
+        main.itemPropPlus[main.itemPropPlus.indexOf(sub)];
+    itemPropPlus.isSelected = !itemPropPlus.isSelected;
+
     for (ItemPropPlus subProperity in main.itemPropPlus) {
       if (subProperity != sub) subProperity.isSelected = false;
     }
+
+    price = 0;
+    disCountPrice = 0;
+    for (ItemProperity itemProp
+        in productDetailsResponse.singleItem.properities) {
+      itemProp.itemPropPlus.forEach((element) {
+        if (element.isSelected) {
+          price += double.parse(element.propertyPrice);
+          disCountPrice += double.parse(element.propertyPrice);
+        }
+      });
+    }
+
+    price += double.parse(productDetailsResponse.singleItem.itemPrice);
+    disCountPrice += double.parse(
+        productDetailsResponse.singleItem.itemPriceAfterDis.toString());
+
     update();
   }
 

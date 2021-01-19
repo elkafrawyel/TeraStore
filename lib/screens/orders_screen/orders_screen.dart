@@ -187,30 +187,76 @@ class OrdersScreen extends StatelessWidget {
   _hearView(int index) {
     return Padding(
       padding: const EdgeInsets.all(kDefaultPadding),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          CustomText(
-            text: controller.orders[index].getOrderStatus(),
-            fontSize: 20,
-          ),
-          RaisedButton.icon(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              side: BorderSide(color: Colors.red, width: 1),
+      child: Container(
+        height: 150,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CustomText(
+                  text: controller.orders[index].getOrderStatus(),
+                  fontSize: 20,
+                  color: _getColor(index),
+                ),
+                CustomText(
+                  text: controller.orders[index].shippingAdress,
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+              ],
             ),
-            color: Colors.white,
-            onPressed: () {},
-            icon: Icon(
-              Icons.delete,
-              color: Colors.red,
+            Visibility(
+              visible: controller.orders[index].cartOrderStatus ==
+                  'primaryUserApprove',
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  RaisedButton.icon(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: Colors.red, width: 1),
+                    ),
+                    color: Colors.white,
+                    onPressed: () {
+                      showDialog(
+                          context: Get.context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("confirm".tr),
+                              content: Text('deleteMessage'.tr),
+                              actions: <Widget>[
+                                FlatButton(
+                                    onPressed: () {
+                                      Get.back();
+                                      controller.deleteOrder(controller
+                                          .orders[index].id
+                                          .toString());
+                                    },
+                                    child: Text('delete'.tr)),
+                                FlatButton(
+                                  onPressed: () => Get.back(),
+                                  child: Text('cancel'.tr),
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    label: CustomText(
+                      text: 'Delete',
+                      color: Colors.red,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            label: CustomText(
-              text: 'Delete',
-              color: Colors.red,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -230,5 +276,24 @@ class OrdersScreen extends StatelessWidget {
     );
 
     return Column(children: widget);
+  }
+
+  _getColor(int index) {
+    switch (controller.orders[index].cartOrderStatus) {
+      case 'primaryUserApprove':
+        return Colors.green;
+      case 'acceptShipping':
+        return Colors.blue;
+      case 'operationDone':
+        return Colors.green;
+      case 'inShipping':
+        return Colors.black;
+      case 'delayed':
+        return Colors.yellow;
+      case 'canceled':
+        return Colors.red;
+      case 'delivered':
+        return Colors.green;
+    }
   }
 }

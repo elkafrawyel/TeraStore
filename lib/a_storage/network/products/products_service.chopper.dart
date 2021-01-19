@@ -75,8 +75,8 @@ class _$ProductsService extends ProductsService {
   }
 
   @override
-  Future<Response<dynamic>> confirmOrder(String orderId) {
-    final $url = '/confirmOrder/$orderId';
+  Future<Response<dynamic>> confirmOrder(String orderId, String address) {
+    final $url = '/confirmOrder/$orderId/$address';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
@@ -98,6 +98,13 @@ class _$ProductsService extends ProductsService {
   @override
   Future<Response<dynamic>> getProductReviews(String productId) {
     final $url = '/getItemRateComment/$productId';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> deleteOrder(String orderId) {
+    final $url = '/deleteOrder/$orderId';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }

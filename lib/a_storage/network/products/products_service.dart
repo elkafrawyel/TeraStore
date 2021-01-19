@@ -35,8 +35,8 @@ abstract class ProductsService extends ChopperService {
   Future<Response> cartItemPlusMinus(
       @Path() String productId, @Path() String action);
 
-  @Get(path: '/confirmOrder/{orderId}')
-  Future<Response> confirmOrder(@Path() String orderId);
+  @Get(path: '/confirmOrder/{orderId}/{address}')
+  Future<Response> confirmOrder(@Path() String orderId, @Path() String address);
 
   @Get(path: '/singleItem/{productId}')
   Future<Response> singleProduct(@Path() String productId);
@@ -46,6 +46,9 @@ abstract class ProductsService extends ChopperService {
 
   @Get(path: '/getItemRateComment/{productId}')
   Future<Response> getProductReviews(@Path() String productId);
+
+  @Get(path: '/deleteOrder/{orderId}')
+  Future<Response> deleteOrder(@Path() String orderId);
 
   @Post(path: '/userCreateRateComment')
   Future<Response> addReview(@Body() AddReviewRequest addReviewRequest);

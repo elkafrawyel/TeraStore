@@ -7,6 +7,7 @@ import 'package:tera/data/models/cart_model.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
 import 'package:tera/helper/data_resource.dart';
+import 'package:tera/screens/cart_screen/check_out_screen.dart';
 import 'package:tera/screens/custom_widgets/custom_appbar.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
@@ -94,8 +95,9 @@ class CartScreen extends StatelessWidget {
                             onPressed: controller.cart == null
                                 ? null
                                 : () async {
-                                    //confirm
-                                    controller.confirmOrder();
+                                    Get.to(
+                                      CheckOutScreen(),
+                                    );
                                   },
                           ),
                         ),

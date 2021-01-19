@@ -121,7 +121,8 @@ class Body extends StatelessWidget {
                     padding: const EdgeInsetsDirectional.only(
                         start: kDefaultPadding),
                     child: CustomText(
-                      text: '\$${product.itemPriceAfterDis}',
+                      text:
+                          '\$${controller.disCountPrice == 0 ? product.itemPriceAfterDis : controller.disCountPrice}',
                       fontSize: 22,
                       alignment: AlignmentDirectional.centerStart,
                       fontWeight: FontWeight.bold,
@@ -137,7 +138,7 @@ class Body extends StatelessWidget {
                     child: Container(
                       alignment: AlignmentDirectional.centerStart,
                       child: Text(
-                        '\$${product.itemPrice}',
+                        '\$${controller.price == 0 ? product.itemPrice : controller.price}',
                         style: TextStyle(
                           fontSize: 18,
                           decoration: TextDecoration.lineThrough,
@@ -316,11 +317,6 @@ class Body extends StatelessWidget {
               'reviews'.tr,
               'similarProducts'.tr,
             ],
-            // icons: [
-            //   Icons.info_outlined,
-            //   Icons.list,
-            //   Icons.star_border,
-            // ],
             iconSize: 25,
             onToggle: (index) {
               switch (index) {
@@ -354,13 +350,9 @@ class Body extends StatelessWidget {
                 color: Colors.white),
           ),
         );
-        // List<Widget> rowWidgets = [];
-        // for (ItemPropPlus propPlus in properity.itemPropPlus) {
-        //   rowWidgets.add(value);
-        // }
 
         var listView = Container(
-          height: 40,
+          height: 70,
           child: GetBuilder<ProductDetailsController>(
             builder: (controller) => ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -375,11 +367,26 @@ class Body extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10.0),
                               side: BorderSide(color: Colors.white)),
                           color: Colors.green,
-                          child: CustomText(
-                              text: properity.itemPropPlus[index].propertyValue,
-                              fontSize: 18,
-                              alignment: AlignmentDirectional.center,
-                              color: Colors.white),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CustomText(
+                                    text:
+                                        '${properity.itemPropPlus[index].propertyValue}',
+                                    fontSize: 20,
+                                    alignment: AlignmentDirectional.center,
+                                    color: Colors.white),
+                                CustomText(
+                                    text:
+                                        '+ ${properity.itemPropPlus[index].propertyPrice} EGP',
+                                    fontSize: 16,
+                                    alignment: AlignmentDirectional.center,
+                                    color: Colors.white),
+                              ],
+                            ),
+                          ),
                           onPressed: () {
                             // properity.itemPropPlus[index].propertyPrice
                             // properity.itemPropPlus[index].id
@@ -392,14 +399,27 @@ class Body extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10.0),
                               side: BorderSide(color: Colors.white)),
                           color: LocalStorage().primaryColor().withOpacity(0.7),
-                          child: CustomText(
-                              text: properity.itemPropPlus[index].propertyValue,
-                              fontSize: 18,
-                              alignment: AlignmentDirectional.center,
-                              color: Colors.white),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CustomText(
+                                    text:
+                                        '${properity.itemPropPlus[index].propertyValue}',
+                                    fontSize: 20,
+                                    alignment: AlignmentDirectional.center,
+                                    color: Colors.white),
+                                CustomText(
+                                    text:
+                                        '+ ${properity.itemPropPlus[index].propertyPrice} EGP',
+                                    fontSize: 16,
+                                    alignment: AlignmentDirectional.center,
+                                    color: Colors.white),
+                              ],
+                            ),
+                          ),
                           onPressed: () {
-                            // properity.itemPropPlus[index].propertyPrice
-                            // properity.itemPropPlus[index].id
                             controller.updatePropertySelection(
                                 properity, properity.itemPropPlus[index]);
                           },

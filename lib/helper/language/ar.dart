@@ -42,7 +42,7 @@ Map<String, String> ar = {
   'cards': 'بطاقات الائتمان',
   'editProfile': 'تعديل الملف الشخصي',
   'notifications': 'الأشعارات',
-  'orderHistory': 'تاريخ الطلبات',
+  'myOrders': 'طلباتي',
   'shippingAddresses': 'عناوين الشحن',
   'cancel': 'ألغاء',
   'logOutMessage': 'هل انت متأكد من تسجيل الخروج',
@@ -140,5 +140,7 @@ Map<String, String> ar = {
   'confirmOrder': 'تأكيد الطلب',
   'removeFromCart': 'حذف من السلة',
   'saveMoney': 'وفر',
-  'sellerInfo': 'البائع'
+  'sellerInfo': 'البائع',
+  'noOrders': 'لا يوجد لديك طلبات سابقة',
+  'quantity': 'الكمية',
 };

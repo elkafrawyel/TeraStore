@@ -8,8 +8,10 @@ class ProductModel {
   var userId;
   var discountType;
   var discountValue;
+  var rate;
   bool isFav;
-  bool inCart = false;
+  bool inCart;
+  int commentCount;
 
   ProductModel(
       {this.id,
@@ -22,6 +24,8 @@ class ProductModel {
       this.discountType,
       this.discountValue,
       this.isFav,
+      this.rate,
+      this.commentCount,
       this.inCart});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
@@ -36,6 +40,8 @@ class ProductModel {
     discountValue = json['discountValue'];
     isFav = json['isFav'];
     inCart = json['inCart'];
+    rate = json['rate'];
+    commentCount = json['commentCount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +57,8 @@ class ProductModel {
     data['discountValue'] = this.discountValue;
     data['isFav'] = this.isFav;
     data['inCart'] = this.inCart;
+    data['rate'] = this.rate;
+    data['commentCount'] = this.commentCount;
     return data;
   }
 }

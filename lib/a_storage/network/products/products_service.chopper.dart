@@ -24,9 +24,11 @@ class _$ProductsService extends ProductsService {
   }
 
   @override
-  Future<Response<dynamic>> productsFilter(String filterKey) {
+  Future<Response<dynamic>> productsFilter(
+      String filterKey, String min, String max) {
     final $url = '/productFliter/$filterKey';
-    final $request = Request('GET', $url, client.baseUrl);
+    final $params = <String, dynamic>{'min': min, 'max': max};
+    final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client.send<dynamic, dynamic>($request);
   }
 
@@ -83,6 +85,28 @@ class _$ProductsService extends ProductsService {
   Future<Response<dynamic>> singleProduct(String productId) {
     final $url = '/singleItem/$productId';
     final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getOrders() {
+    final $url = '/getOrders';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getProductReviews(String productId) {
+    final $url = '/getItemRateComment/$productId';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> addReview(AddReviewRequest addReviewRequest) {
+    final $url = '/userCreateRateComment';
+    final $body = addReviewRequest;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<dynamic, dynamic>($request);
   }
 }

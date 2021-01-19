@@ -47,10 +47,11 @@ class Constants {
 }
 
 enum ProductFilters {
+  Latest,
   HighPrice,
   LowPrice,
-  Latest,
-  // LowRate
+  HighRate,
+  Range,
 }
 
 extension ProductFiltersExtension on ProductFilters {
@@ -62,8 +63,10 @@ extension ProductFiltersExtension on ProductFilters {
         return 'lowPrice';
       case ProductFilters.Latest:
         return 'latest';
-      // case ProductFilters.LowRate:
-      //   return 'lowRate';
+      case ProductFilters.HighRate:
+        return 'highRate';
+      case ProductFilters.Range:
+        return 'range';
     }
     return 'highPrice';
   }
@@ -78,8 +81,13 @@ extension ProductFiltersExtension on ProductFilters {
         return LocalStorage().isArabicLanguage()
             ? 'احدث المنتجات'
             : 'Latest Arrived';
-      // case ProductFilters.LowRate:
-      //   return LocalStorage().isArabicLanguage() ? 'الاقل تقييما' : 'Low Rate';
+      case ProductFilters.HighRate:
+        return LocalStorage().isArabicLanguage()
+            ? 'الاعلي تقييما'
+            : 'High Rate';
+      case ProductFilters.Range:
+        return LocalStorage().isArabicLanguage() ? 'السعر' : 'Price';
+        break;
     }
     return LocalStorage().isArabicLanguage() ? 'الاعلي سعرا' : 'High Price';
   }

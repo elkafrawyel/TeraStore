@@ -3,6 +3,7 @@ import 'package:tera/a_storage/network/products/products_service.dart';
 import 'package:tera/controllers/cart_controller.dart';
 import 'package:tera/data/responses/cart_response.dart';
 import 'package:tera/data/responses/info_response.dart';
+import 'package:tera/data/responses/order_response.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/data_resource.dart';
 import 'package:tera/helper/network_methods.dart';
@@ -26,6 +27,29 @@ class CartRepo {
         } catch (e) {
           print(e);
           state(Failure(errorMessage: 'Failed to get Cart Products'));
+        }
+      },
+    );
+  }
+
+  getMyOrders({Function(DataResource dataResource) state}) async {
+    ProductsService service = ProductsService.create();
+    NetworkMethods().handleResponse(
+      call: service.getOrders(),
+      failed: (message) {
+        state(Failure(errorMessage: message));
+      },
+      whenSuccess: (response) {
+        try {
+          OrderResponse orderResponse = OrderResponse.fromJson(response.body);
+          if (orderResponse.status) {
+            state(Success(data: orderResponse.orders));
+          } else {
+            state(Failure(errorMessage: 'Failed to get My Orders'));
+          }
+        } catch (e) {
+          print(e);
+          state(Failure(errorMessage: 'Failed to get My Orders'));
         }
       },
     );

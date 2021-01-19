@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:tera/a_storage/local_storage.dart';
-import 'package:tera/controllers/FavouriteController.dart';
 import 'package:tera/controllers/cart_controller.dart';
 import 'package:tera/controllers/home_controller.dart';
+import 'package:tera/controllers/search_controller.dart';
 import 'package:tera/data/models/product_model.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
 import 'package:tera/helper/data_resource.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
-class FavouriteCard extends StatelessWidget {
-  const FavouriteCard({
+class SearchProductCard extends StatelessWidget {
+  const SearchProductCard({
     Key key,
     this.itemIndex,
     this.product,
@@ -177,8 +177,7 @@ class FavouriteCard extends StatelessWidget {
                                           ),
                                           onPressed: () {
                                             _addRemoveCart();
-                                          },
-                                        ),
+                                          }),
                                 ],
                               )
                             ],
@@ -273,13 +272,13 @@ class FavouriteCard extends StatelessWidget {
   }
 
   void _addRemoveFavourite() {
-    var controller = Get.find<FavouriteController>();
+    var controller = Get.find<SearchController>();
     Get.find<HomeController>().addRemoveFavourites(
       product.id.toString(),
       state: (dataResource) {
         if (dataResource is Success) {
-          var myProduct =
-              controller.products[controller.products.indexOf(product)];
+          var myProduct = controller
+              .searchProducts[controller.searchProducts.indexOf(product)];
           myProduct.isFav = !myProduct.isFav;
           controller.update();
           //apply change in filter list
@@ -293,13 +292,13 @@ class FavouriteCard extends StatelessWidget {
   }
 
   void _addRemoveCart() {
-    var controller = Get.find<FavouriteController>();
+    var controller = Get.find<SearchController>();
     Get.find<CartController>().addRemoveCart(
       product.id.toString(),
       state: (dataResource) {
         if (dataResource is Success) {
-          var myProduct =
-              controller.products[controller.products.indexOf(product)];
+          var myProduct = controller
+              .searchProducts[controller.searchProducts.indexOf(product)];
           myProduct.inCart = !myProduct.inCart;
           controller.update();
           //apply change in filter list

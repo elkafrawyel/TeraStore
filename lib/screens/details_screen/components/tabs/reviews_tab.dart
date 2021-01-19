@@ -7,9 +7,9 @@ import 'package:rating_bar/rating_bar.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/controllers/product_details_controller.dart';
 import 'package:tera/data/responses/product_details_response.dart';
+import 'package:tera/data/responses/reviews_response.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
-import 'package:tera/model/review_model.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
@@ -135,13 +135,16 @@ class ReviewsTab extends StatelessWidget {
         Column(
           children: [
             RatingBar.readOnly(
-              initialRating: _calculateRating(),
+              initialRating: double.parse(
+                  controller.reviewsResponse.productRate.toString()),
               isHalfAllowed: true,
               size: 25,
               filledColor: Colors.amber,
               halfFilledIcon: Icons.star_half,
               filledIcon: Icons.star,
               emptyIcon: Icons.star_border,
+              halfFilledColor: Colors.white,
+              emptyColor: Colors.white,
             ),
             SizedBox(
               height: kDefaultPadding / 2,
@@ -158,11 +161,7 @@ class ReviewsTab extends StatelessWidget {
     );
   }
 
-  _reviewsList() {
-    return _reviews();
-  }
-
-  List<Widget> _reviews() {
+  List<Widget> _reviewsList() {
     List<Widget> widgets = [];
     widgets.add(
       SizedBox(
@@ -204,8 +203,12 @@ class ReviewsTab extends StatelessWidget {
       ),
     );
     widgets.add(
-      SizedBox(
-        height: kDefaultPadding / 2,
+      Padding(
+        padding: const EdgeInsets.all(kDefaultPadding),
+        child: Divider(
+          height: 1,
+          color: Colors.white,
+        ),
       ),
     );
     controller.reviews.length == 0
@@ -229,9 +232,8 @@ class ReviewsTab extends StatelessWidget {
                     height: 70,
                     child: CircleAvatar(
                       backgroundColor: Colors.transparent,
-                      backgroundImage: NetworkImage(controller
-                          .reviews[controller.reviews.indexOf(element)]
-                          .userImage),
+                      backgroundImage: NetworkImage(
+                          element.user.image == null ? '' : element.user.image),
                       radius: 50,
                     ),
                   ),
@@ -246,10 +248,9 @@ class ReviewsTab extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: CustomText(
                             alignment: AlignmentDirectional.centerStart,
-                            text: controller
-                                .reviews[controller.reviews.indexOf(element)]
-                                .message,
+                            text: element.comment,
                             fontSize: 18,
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -257,15 +258,16 @@ class ReviewsTab extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             RatingBar.readOnly(
-                              initialRating: controller
-                                  .reviews[controller.reviews.indexOf(element)]
-                                  .rate,
+                              initialRating:
+                                  double.parse(element.rate.toString()),
                               isHalfAllowed: true,
                               size: 25,
                               filledColor: Colors.amber,
                               halfFilledIcon: Icons.star_half,
                               filledIcon: Icons.star,
                               emptyIcon: Icons.star_border,
+                              halfFilledColor: Colors.white,
+                              emptyColor: Colors.white,
                             ),
                           ],
                         ),
@@ -278,10 +280,9 @@ class ReviewsTab extends StatelessWidget {
                             Expanded(
                               child: CustomText(
                                 alignment: AlignmentDirectional.topStart,
-                                text: _buildText(
-                                    controller.reviews.indexOf(element)),
+                                text: _buildText(element),
                                 fontSize: 14,
-                                color: Colors.grey.shade700,
+                                color: Colors.white,
                               ),
                             ),
                           ],
@@ -301,9 +302,9 @@ class ReviewsTab extends StatelessWidget {
     return widgets;
   }
 
-  _buildText(int index) {
-    String name = controller.reviews[index].userName;
-    int time = controller.reviews[index].time;
+  _buildText(ReviewModel element) {
+    String name = element.user.name;
+    int time = element.unixTime;
     return '${'by'.tr} $name \n${'on'.tr} ${_getDateString(time)}';
   }
 
@@ -324,33 +325,33 @@ class ReviewsTab extends StatelessWidget {
     }
   }
 
-  double _calculateRating() {
-    int oneStar = 0;
-    int twoStar = 0;
-    int threeStar = 0;
-    int fourStar = 0;
-    int fiveStar = 0;
-    if (controller.reviews.isEmpty) return 0;
-    for (Review review in controller.reviews) {
-      if (review.rate == 5) {
-        fiveStar++;
-      } else if (review.rate == 4) {
-        fourStar++;
-      } else if (review.rate == 3) {
-        threeStar++;
-      } else if (review.rate == 2) {
-        twoStar++;
-      } else {
-        oneStar++;
-      }
-    }
-    double rate = (5 * fiveStar +
-            4 * fourStar +
-            3 * threeStar +
-            2 * twoStar +
-            1 * oneStar) /
-        (fiveStar + fourStar + threeStar + twoStar + oneStar);
-
-    return rate;
-  }
+// double _calculateRating() {
+//   int oneStar = 0;
+//   int twoStar = 0;
+//   int threeStar = 0;
+//   int fourStar = 0;
+//   int fiveStar = 0;
+//   if (controller.reviews.isEmpty) return 0;
+//   for (ReviewModel review in controller.reviews) {
+//     if (review.rate == 5) {
+//       fiveStar++;
+//     } else if (review.rate == 4) {
+//       fourStar++;
+//     } else if (review.rate == 3) {
+//       threeStar++;
+//     } else if (review.rate == 2) {
+//       twoStar++;
+//     } else {
+//       oneStar++;
+//     }
+//   }
+//   double rate = (5 * fiveStar +
+//           4 * fourStar +
+//           3 * threeStar +
+//           2 * twoStar +
+//           1 * oneStar) /
+//       (fiveStar + fourStar + threeStar + twoStar + oneStar);
+//
+//   return rate;
+// }
 }

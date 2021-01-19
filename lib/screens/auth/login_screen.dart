@@ -233,7 +233,7 @@ class LoginScreen extends StatelessWidget {
       FocusScope.of(Get.context).unfocus();
 
       if (!GetUtils.isEmail(emailController.text)) {
-        CommonMethods().showMessage('errorTitle'.tr, 'enterValidEmail'.tr);
+        CommonMethods().showSnackBar('enterValidEmail'.tr);
         return;
       }
 

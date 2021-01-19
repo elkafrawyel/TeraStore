@@ -7,7 +7,6 @@ import 'package:tera/data/responses/info_response.dart';
 import 'package:tera/data/responses/product_details_response.dart';
 import 'package:tera/data/responses/product_filter_response.dart';
 import 'package:tera/helper/CommonMethods.dart';
-import 'package:tera/helper/Constant.dart';
 import 'package:tera/helper/data_resource.dart';
 import 'package:tera/helper/network_methods.dart';
 
@@ -35,11 +34,15 @@ class ProductRepo {
     );
   }
 
-  getFilteredProducts(ProductFilters filter,
-      {Function(DataResource dataResource) state}) async {
+  getFilteredProducts(
+    String value, {
+    double min,
+    double max,
+    Function(DataResource dataResource) state,
+  }) async {
     ProductsService service = ProductsService.create();
     NetworkMethods().handleResponse(
-      call: service.productsFilter(filter.value),
+      call: service.productsFilter(value, min.toString(), max.toString()),
       failed: (message) {
         state(Failure(errorMessage: message));
       },

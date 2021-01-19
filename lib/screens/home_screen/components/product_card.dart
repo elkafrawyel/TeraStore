@@ -116,7 +116,8 @@ class ProductCard extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   RatingBar.readOnly(
-                                    initialRating: 3,
+                                    initialRating:
+                                        double.parse(product.rate.toString()),
                                     isHalfAllowed: true,
                                     size: 20,
                                     halfFilledColor: Colors.amber,
@@ -127,7 +128,8 @@ class ProductCard extends StatelessWidget {
                                     emptyIcon: Icons.star_border,
                                   ),
                                   CustomText(
-                                    text: '(210)',
+                                    text:
+                                        '(${product.commentCount.toString()})',
                                   )
                                 ],
                               ),

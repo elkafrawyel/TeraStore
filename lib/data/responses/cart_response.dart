@@ -8,7 +8,7 @@ class CartResponse {
 
   CartResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    data = json['data'] != null ? new Cart.fromJson(json['data']) : null;
+    data = json['data'] != null ? Cart.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -36,6 +36,9 @@ class Cart {
       this.cartItems});
 
   Cart.fromJson(Map<String, dynamic> json) {
+    if (json == null) {
+      return;
+    }
     id = json['id'];
     cartOrderStatus = json['cartOrderStatus'];
     cartTotalPrice = json['cartTotalPrice'];

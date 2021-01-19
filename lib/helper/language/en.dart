@@ -40,7 +40,7 @@ Map<String, String> en = {
   'cards': 'Cards',
   'editProfile': 'Edit Profile',
   'notifications': 'Notifications',
-  'orderHistory': 'Order History',
+  'myOrders': 'My Orders',
   'shippingAddresses': 'Shipping Addresses',
   'cancel': 'Cancel',
   'logOutMessage': 'Are you sure to logout ?',
@@ -141,5 +141,7 @@ Map<String, String> en = {
   'confirmOrder': 'Confirm Order',
   'removeFromCart': 'Remove From Cart',
   'saveMoney': 'Save',
-  'sellerInfo': 'Seller'
+  'sellerInfo': 'Seller',
+  'noOrders': 'You Have no previous orders',
+  'quantity': 'Quantity',
 };

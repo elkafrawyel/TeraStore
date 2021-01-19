@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/data/requests/add_review_request.dart';
 
 part 'products_service.chopper.dart';
 
@@ -12,7 +13,8 @@ abstract class ProductsService extends ChopperService {
   Future<Response> getCategoriesWithSliders();
 
   @Get(path: '/productFliter/{filterKey}')
-  Future<Response> productsFilter(@Path() String filterKey);
+  Future<Response> productsFilter(@Path() String filterKey,
+      @Query('min') String min, @Query('max') String max);
 
   @Get(path: '/products/{subCategoryId}')
   Future<Response> getProductsByInCategory(@Path() String subCategoryId);
@@ -38,6 +40,15 @@ abstract class ProductsService extends ChopperService {
 
   @Get(path: '/singleItem/{productId}')
   Future<Response> singleProduct(@Path() String productId);
+
+  @Get(path: '/getOrders')
+  Future<Response> getOrders();
+
+  @Get(path: '/getItemRateComment/{productId}')
+  Future<Response> getProductReviews(@Path() String productId);
+
+  @Post(path: '/userCreateRateComment')
+  Future<Response> addReview(@Body() AddReviewRequest addReviewRequest);
 
   static ProductsService create() {
     String apiToken = LocalStorage().getString(LocalStorage.token);

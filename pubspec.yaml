@@ -39,6 +39,8 @@ dependencies:
   flutter_ringtone_player:
   data_connection_checker:
   toggle_switch:
+  flutter_xlider:
+  expandable:
 
 dev_dependencies:
   flutter_test:

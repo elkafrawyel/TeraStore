@@ -268,14 +268,23 @@ class Body extends StatelessWidget {
           product: controller.productDetailsResponse.singleItem,
         );
       case 2:
-        return controller.similarProducts.isEmpty
-            ? EmptyView(
-                textColor: Colors.white,
-                message: 'noSimilarProducts'.tr,
+        return controller.loading.value
+            ? Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.white,
+                  ),
+                ),
               )
-            : SimilarProducts(
-                products: controller.similarProducts,
-              );
+            : controller.similarProducts.isEmpty
+                ? EmptyView(
+                    textColor: Colors.white,
+                    message: 'noSimilarProducts'.tr,
+                  )
+                : SimilarProducts(
+                    products: controller.similarProducts,
+                  );
       case 1:
         return ReviewsTab(
           product: controller.productDetailsResponse.singleItem,

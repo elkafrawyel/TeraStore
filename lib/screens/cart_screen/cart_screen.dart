@@ -9,7 +9,6 @@ import 'package:tera/helper/Constant.dart';
 import 'package:tera/helper/data_resource.dart';
 import 'package:tera/screens/custom_widgets/custom_appbar.dart';
 import 'package:tera/screens/custom_widgets/data_state_views/empty_view.dart';
-import 'package:tera/screens/custom_widgets/data_state_views/please_wait_loading.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 import '../details_screen/details_screen.dart';
@@ -35,44 +34,39 @@ class CartScreen extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: controller.loading.value
-                      ? PleaseWaitView()
-                      : controller.empty.value
-                          ? EmptyView(
-                              message: 'emptyCart'.tr,
-                              emptyViews: EmptyViews.Magnifier,
-                            )
-                          : ListView.builder(
-                              itemCount: controller.cart.cartItems.length,
-                              itemBuilder: (context, index) {
-                                return _cartItem(context,
-                                    controller.cart.cartItems[index], index);
-                              },
-                            ),
+                  child: controller.empty.value
+                      ? EmptyView(
+                          message: 'emptyCart'.tr,
+                          emptyViews: EmptyViews.Magnifier,
+                        )
+                      : ListView.builder(
+                          itemCount: controller.cart.cartItems.length,
+                          itemBuilder: (context, index) {
+                            return _cartItem(context,
+                                controller.cart.cartItems[index], index);
+                          },
+                        ),
                 ),
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: LocalStorage().primaryColor(),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20)),
                 ),
                 child: Padding(
                   padding: const EdgeInsetsDirectional.only(
-                      top: kDefaultPadding,
+                      top: kDefaultPadding / 2,
                       start: kDefaultPadding / 2,
-                      bottom: kDefaultPadding,
+                      bottom: kDefaultPadding / 2,
                       end: kDefaultPadding / 2),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                        padding: const EdgeInsetsDirectional.only(
-                            start: kDefaultPadding,
-                            bottom: kDefaultPadding,
-                            end: kDefaultPadding),
+                        padding: const EdgeInsets.all(kDefaultPadding),
                         child: Container(
                           height: 50,
                           child: RaisedButton.icon(
@@ -89,8 +83,10 @@ class CartScreen extends StatelessWidget {
                             ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
+                              side: BorderSide(color: Colors.white, width: 1),
                             ),
-                            color: LocalStorage().primaryColor(),
+                            color:
+                                LocalStorage().primaryColor().withOpacity(0.6),
                             elevation: 1,
                             disabledTextColor: Colors.black,
                             disabledColor: Colors.grey,
@@ -111,7 +107,7 @@ class CartScreen extends StatelessWidget {
                             CustomText(
                               text: 'total'.tr,
                               fontSize: 18,
-                              color: Colors.black,
+                              color: Colors.white,
                               alignment: AlignmentDirectional.center,
                             ),
                             SizedBox(
@@ -124,7 +120,7 @@ class CartScreen extends StatelessWidget {
                                       '\$',
                               alignment: AlignmentDirectional.center,
                               fontSize: 22,
-                              color: LocalStorage().primaryColor(),
+                              color: Colors.white,
                             ),
                           ],
                         ),

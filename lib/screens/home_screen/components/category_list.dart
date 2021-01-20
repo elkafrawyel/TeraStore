@@ -14,8 +14,11 @@ class _CategoryListState extends State<CategoryList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
-      height: 50,
+      margin: EdgeInsets.symmetric(
+          vertical: kDefaultPadding / 2, horizontal: kDefaultPadding),
+      padding: EdgeInsets.symmetric(
+          vertical: kDefaultPadding / 2, horizontal: kDefaultPadding),
+      height: 70,
       child: GetBuilder<HomeController>(
         init: HomeController(),
         builder: (controller) => ListView.builder(
@@ -33,30 +36,34 @@ class _CategoryListState extends State<CategoryList> {
             },
             child: Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.only(
-                left: kDefaultPadding / 3,
-                right: kDefaultPadding / 2,
+              margin: EdgeInsetsDirectional.only(
+                start: kDefaultPadding / 4,
+                end: kDefaultPadding / 4,
               ),
-              padding: EdgeInsets.symmetric(
-                  horizontal: kDefaultPadding, vertical: kDefaultPadding / 2),
+              padding: EdgeInsetsDirectional.only(
+                start: kDefaultPadding,
+                end: kDefaultPadding,
+              ),
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.4),
-                borderRadius: BorderRadius.circular(6),
+                borderRadius: BorderRadius.circular(5),
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Icon(
                     Icons.category,
                     color: Colors.white,
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  CustomText(
-                    text: controller.categories[index].displayName,
-                    alignment: AlignmentDirectional.center,
-                    color: Colors.white,
-                    fontSize: 16,
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                        start: kDefaultPadding / 2),
+                    child: CustomText(
+                      text: controller.categories[index].displayName,
+                      alignment: AlignmentDirectional.center,
+                      color: Colors.white,
+                      fontSize: fontSizeSmall_16,
+                    ),
                   ),
                 ],
               ),

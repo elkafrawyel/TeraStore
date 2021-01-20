@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/data/models/product_model.dart';
 import 'package:tera/helper/Constant.dart';
-import 'file:///F:/Apps/My%20Flutter%20Apps/TeraStore/lib/data/models/product_model.dart';
 import 'package:tera/screens/details_screen/details_screen.dart';
 
 import '../text/custom_text.dart';

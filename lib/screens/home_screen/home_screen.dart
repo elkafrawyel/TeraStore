@@ -59,7 +59,7 @@ class HomeScreen extends StatelessWidget {
       iconTheme: IconThemeData(color: Colors.white),
       title: Text(
         'home'.tr,
-        style: TextStyle(color: Colors.white, fontSize: 16),
+        style: TextStyle(color: Colors.white, fontSize: fontSizeSmall_16),
       ),
       backgroundColor: controller.primaryColor,
       actions: <Widget>[
@@ -150,12 +150,12 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 CustomText(
                                   text: controller.user.name,
-                                  fontSize: 18,
+                                  fontSize: fontSizeBig_18,
                                   alignment: AlignmentDirectional.center,
                                   color: Colors.white,
                                 ),
                                 SizedBox(
-                                  height: 10,
+                                  height: kDefaultPadding / 2,
                                 ),
                               ],
                             ),
@@ -164,7 +164,7 @@ class HomeScreen extends StatelessWidget {
                       ),
               ),
               SizedBox(
-                height: 20,
+                height: kDefaultPadding,
               ),
               _buildRow('favorite'.tr, Icons.favorite, () {
                 Get.to(
@@ -175,7 +175,7 @@ class HomeScreen extends StatelessWidget {
               }),
 
               SizedBox(
-                height: 20,
+                height: kDefaultPadding,
               ),
               _buildRow('myOrders'.tr, Icons.timer, () {
                 Get.to(
@@ -185,7 +185,7 @@ class HomeScreen extends StatelessWidget {
                 );
               }),
               SizedBox(
-                height: 20,
+                height: kDefaultPadding,
               ),
 
               _buildRow('shippingAddresses'.tr, Icons.location_on, () {
@@ -196,7 +196,7 @@ class HomeScreen extends StatelessWidget {
                 );
               }),
               SizedBox(
-                height: 20,
+                height: kDefaultPadding,
               ),
               _buildRow('notifications'.tr, Icons.notifications_active, () {
                 Get.to(
@@ -206,7 +206,7 @@ class HomeScreen extends StatelessWidget {
                 );
               }),
               SizedBox(
-                height: 20,
+                height: kDefaultPadding / 2,
               ),
               _buildRow('settings'.tr, Icons.settings, () {
                 Get.to(
@@ -216,7 +216,7 @@ class HomeScreen extends StatelessWidget {
                 );
               }),
               SizedBox(
-                height: 10,
+                height: kDefaultPadding / 2,
               ),
               Padding(
                 padding: const EdgeInsetsDirectional.only(start: 20, end: 20),
@@ -225,7 +225,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: kDefaultPadding / 2,
               ),
               _buildRow('about'.tr, Icons.info_outlined, () {
                 Get.to(
@@ -235,24 +235,24 @@ class HomeScreen extends StatelessWidget {
                 );
               }),
               SizedBox(
-                height: 20,
+                height: kDefaultPadding,
               ),
               _buildRow('privacy'.tr, Icons.mark_chat_read_outlined, () {}),
               SizedBox(
-                height: 20,
+                height: kDefaultPadding,
               ),
               _buildRow('howToUse'.tr, Icons.question_answer, () {}),
               SizedBox(
-                height: 20,
+                height: kDefaultPadding,
               ),
               _buildRow('contactUs'.tr, Icons.contact_support, () {}),
               SizedBox(
-                height: 20,
+                height: kDefaultPadding,
               ),
               Row(
                 children: [
                   SizedBox(
-                    width: 10,
+                    width: kDefaultPadding / 2,
                   ),
                   GetBuilder<MainController>(
                     builder: (controller) => Icon(
@@ -262,13 +262,13 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 20,
+                    width: kDefaultPadding,
                   ),
                   CustomLanguageMenu(),
                 ],
               ),
               SizedBox(
-                height: 20,
+                height: kDefaultPadding,
               ),
               GestureDetector(
                 onTap: () {
@@ -282,7 +282,7 @@ class HomeScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       SizedBox(
-                        width: 10,
+                        width: kDefaultPadding / 2,
                       ),
                       GetBuilder<MainController>(
                         builder: (controller) => Icon(
@@ -296,7 +296,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       CustomText(
                         text: 'logOut'.tr,
-                        fontSize: 16,
+                        fontSize: fontSizeSmall_16,
                       )
                     ],
                   ),
@@ -335,7 +335,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 CustomText(
                   text: text,
-                  fontSize: 16,
+                  fontSize: fontSizeSmall_16,
                 ),
               ],
             ),
@@ -388,11 +388,11 @@ class HomeScreen extends StatelessWidget {
                     CustomText(
                       text: 'sortBy'.tr,
                       alignment: AlignmentDirectional.center,
-                      fontSize: 16,
+                      fontSize: fontSizeSmall_16,
                       fontWeight: FontWeight.bold,
                     ),
                     SizedBox(
-                      height: 10,
+                      height: kDefaultPadding / 2,
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.only(
@@ -416,7 +416,7 @@ class HomeScreen extends StatelessWidget {
                               },
                             ),
                             Text(ProductFilters.Latest.text,
-                                style: TextStyle(fontSize: 16)),
+                                style: TextStyle(fontSize: fontSizeSmall_16)),
                           ],
                         ),
 
@@ -432,7 +432,7 @@ class HomeScreen extends StatelessWidget {
                               },
                             ),
                             Text(ProductFilters.HighPrice.text,
-                                style: TextStyle(fontSize: 16)),
+                                style: TextStyle(fontSize: fontSizeSmall_16)),
                           ],
                         ),
 
@@ -448,7 +448,7 @@ class HomeScreen extends StatelessWidget {
                               },
                             ),
                             Text(ProductFilters.LowPrice.text,
-                                style: TextStyle(fontSize: 16)),
+                                style: TextStyle(fontSize: fontSizeSmall_16)),
                           ],
                         ),
 
@@ -464,7 +464,7 @@ class HomeScreen extends StatelessWidget {
                               },
                             ),
                             Text(ProductFilters.HighRate.text,
-                                style: TextStyle(fontSize: 16)),
+                                style: TextStyle(fontSize: fontSizeSmall_16)),
                           ],
                         ),
                         //Price Radio
@@ -481,11 +481,12 @@ class HomeScreen extends StatelessWidget {
                                   },
                                 ),
                                 Text(ProductFilters.Range.text,
-                                    style: TextStyle(fontSize: 16)),
+                                    style:
+                                        TextStyle(fontSize: fontSizeSmall_16)),
                               ],
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(20),
+                              padding: const EdgeInsets.all(kDefaultPadding),
                               child: Column(
                                 children: [
                                   Row(
@@ -494,11 +495,11 @@ class HomeScreen extends StatelessWidget {
                                     children: [
                                       CustomText(
                                         text: controller.lowerValue.toString(),
-                                        fontSize: 16,
+                                        fontSize: fontSizeSmall_16,
                                       ),
                                       CustomText(
                                         text: controller.upperValue.toString(),
-                                        fontSize: 16,
+                                        fontSize: fontSizeSmall_16,
                                       )
                                     ],
                                   ),
@@ -527,7 +528,7 @@ class HomeScreen extends StatelessWidget {
                                     rangeSlider: true,
                                     tooltip: FlutterSliderTooltip(
                                       textStyle: TextStyle(
-                                          fontSize: 22,
+                                          fontSize: fontSizeLarge_20,
                                           color: LocalStorage().primaryColor()),
                                     ),
                                     handlerAnimation:
@@ -561,7 +562,8 @@ class HomeScreen extends StatelessWidget {
                             '${'sortBy'.tr} ${controller.filter.text}');
                       },
                       child: Container(
-                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                        padding: EdgeInsets.only(
+                            top: kDefaultPadding, bottom: kDefaultPadding),
                         decoration: BoxDecoration(
                           color: LocalStorage().primaryColor(),
                           borderRadius: BorderRadius.only(

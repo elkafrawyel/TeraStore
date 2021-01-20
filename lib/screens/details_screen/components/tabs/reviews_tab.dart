@@ -47,14 +47,14 @@ class ReviewsTab extends StatelessWidget {
             contentPadding: EdgeInsets.only(top: 10.0),
             content: SingleChildScrollView(
               child: Container(
-                width: 300.0,
+                width: 1000.0,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     SizedBox(
-                      height: 20,
+                      height: kDefaultPadding,
                     ),
                     RatingBar(
                       onRatingChanged: (rating) {
@@ -88,7 +88,7 @@ class ReviewsTab extends StatelessWidget {
                           hintStyle: TextStyle(fontSize: 18),
                           border: InputBorder.none,
                         ),
-                        maxLines: 8,
+                        maxLines: 6,
                       ),
                     ),
                     GestureDetector(
@@ -138,7 +138,7 @@ class ReviewsTab extends StatelessWidget {
               initialRating: double.parse(
                   controller.reviewsResponse.productRate.toString()),
               isHalfAllowed: true,
-              size: 25,
+              size: 20,
               filledColor: Colors.amber,
               halfFilledIcon: Icons.star_half,
               filledIcon: Icons.star,
@@ -151,7 +151,7 @@ class ReviewsTab extends StatelessWidget {
             ),
             CustomText(
               text: '(${controller.reviews.length})',
-              fontSize: 18,
+              fontSize: fontSizeSmall_16,
               alignment: AlignmentDirectional.center,
               color: Colors.white,
             )
@@ -194,7 +194,7 @@ class ReviewsTab extends StatelessWidget {
                   text: 'addReview'.tr,
                   color: Colors.white,
                   alignment: AlignmentDirectional.center,
-                  fontSize: 16,
+                  fontSize: fontSizeSmall_16 - 2,
                 ),
               ),
             ),
@@ -249,7 +249,7 @@ class ReviewsTab extends StatelessWidget {
                           child: CustomText(
                             alignment: AlignmentDirectional.centerStart,
                             text: element.comment,
-                            fontSize: 18,
+                            fontSize: fontSizeSmall_16,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
@@ -261,7 +261,7 @@ class ReviewsTab extends StatelessWidget {
                               initialRating:
                                   double.parse(element.rate.toString()),
                               isHalfAllowed: true,
-                              size: 25,
+                              size: 20,
                               filledColor: Colors.amber,
                               halfFilledIcon: Icons.star_half,
                               filledIcon: Icons.star,
@@ -281,8 +281,9 @@ class ReviewsTab extends StatelessWidget {
                               child: CustomText(
                                 alignment: AlignmentDirectional.topStart,
                                 text: _buildText(element),
-                                fontSize: 14,
+                                fontSize: fontSizeSmall_16 - 2,
                                 color: Colors.white,
+                                maxLines: 3,
                               ),
                             ),
                           ],

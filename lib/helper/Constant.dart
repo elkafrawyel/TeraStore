@@ -3,8 +3,10 @@ import 'package:tera/a_storage/local_storage.dart';
 
 // ================ values =========================
 const kDefaultPadding = 20.0;
-const textSizeSmall = 16;
-const textSizeBig = 18;
+const fontSizeSmall_16 = 16.0;
+const fontSizeBig_18 = 18.0;
+const fontSizeLarge_20 = 20.0;
+const iconSize = 30;
 // list of colors that we use in our app
 const kBackgroundColor = Color(0xFFF1EFF1);
 const kPrimaryColor = Color(0xFF035AA6);

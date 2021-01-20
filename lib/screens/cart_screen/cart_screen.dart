@@ -77,8 +77,8 @@ class CartScreen extends StatelessWidget {
                               size: 30,
                             ),
                             label: CustomText(
-                              text: 'confirmOrder'.tr,
-                              fontSize: 20,
+                              text: 'confirm'.tr,
+                              fontSize: fontSizeSmall_16,
                               alignment: AlignmentDirectional.center,
                               color: Colors.white,
                             ),
@@ -108,7 +108,7 @@ class CartScreen extends StatelessWidget {
                           children: [
                             CustomText(
                               text: 'total'.tr,
-                              fontSize: 18,
+                              fontSize: fontSizeSmall_16,
                               color: Colors.white,
                               alignment: AlignmentDirectional.center,
                             ),
@@ -121,7 +121,7 @@ class CartScreen extends StatelessWidget {
                                   : controller.cart.cartTotalPrice.toString() +
                                       '\$',
                               alignment: AlignmentDirectional.center,
-                              fontSize: 22,
+                              fontSize: fontSizeSmall_16,
                               color: Colors.white,
                             ),
                           ],
@@ -263,11 +263,11 @@ class CartScreen extends StatelessWidget {
                               text: cartItem.itemName,
                               maxLines: 2,
                               alignment: AlignmentDirectional.topStart,
-                              fontSize: 18,
+                              fontSize: fontSizeSmall_16,
                               fontWeight: FontWeight.bold,
                             ),
                             SizedBox(
-                              height: 20,
+                              height: kDefaultPadding,
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.only(start: 10),
@@ -275,7 +275,7 @@ class CartScreen extends StatelessWidget {
                                 alignment: AlignmentDirectional.topStart,
                                 text: cartItem.itemPriceAfterDis.toString() +
                                     '\$',
-                                fontSize: 18,
+                                fontSize: fontSizeSmall_16,
                               ),
                             ),
                           ],
@@ -283,56 +283,53 @@ class CartScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Container(
-                              width: 120,
-                              child: Card(
-                                color: LocalStorage().primaryColor(),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadiusDirectional.only(
-                                      bottomEnd: Radius.circular(20),
-                                      topStart: Radius.circular(20)),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        add(cartItem, index);
-                                      },
-                                      child: Padding(
-                                          padding: const EdgeInsets.all(
-                                              kDefaultPadding / 2),
-                                          child: Icon(
-                                            Icons.add,
-                                            size: 25,
-                                            color: Colors.white,
-                                          )),
+                            Card(
+                              color: LocalStorage().primaryColor(),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadiusDirectional.only(
+                                    bottomEnd: Radius.circular(20),
+                                    topStart: Radius.circular(20)),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      add(cartItem, index);
+                                    },
+                                    child: Padding(
+                                        padding: const EdgeInsets.all(
+                                            kDefaultPadding / 2),
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 30,
+                                          color: Colors.white,
+                                        )),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(
+                                        kDefaultPadding / 4),
+                                    child: CustomText(
+                                      text: cartItem.cartItemCount.toString(),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: fontSizeSmall_16,
+                                      color: Colors.white,
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(
-                                          kDefaultPadding / 4),
-                                      child: CustomText(
-                                        text: cartItem.cartItemCount.toString(),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        remove(cartItem, index);
-                                      },
-                                      child: Padding(
-                                          padding: const EdgeInsets.all(
-                                              kDefaultPadding / 2),
-                                          child: Icon(
-                                            Icons.remove,
-                                            size: 25,
-                                            color: Colors.white,
-                                          )),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      remove(cartItem, index);
+                                    },
+                                    child: Padding(
+                                        padding: const EdgeInsets.all(
+                                            kDefaultPadding / 2),
+                                        child: Icon(
+                                          Icons.remove,
+                                          size: 30,
+                                          color: Colors.white,
+                                        )),
+                                  ),
+                                ],
                               ),
                             ),
                           ],

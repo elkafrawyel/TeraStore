@@ -33,7 +33,7 @@ class InfoTab extends StatelessWidget {
                         vertical: kDefaultPadding / 2),
                     child: CustomText(
                       text: 'description'.tr,
-                      fontSize: 18,
+                      fontSize: fontSizeSmall_16,
                       // color: Colors.white,
                       alignment: AlignmentDirectional.centerStart,
                     ),

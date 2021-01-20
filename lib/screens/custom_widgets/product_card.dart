@@ -32,7 +32,7 @@ class ProductCard extends StatelessWidget {
         vertical: kDefaultPadding / 2,
       ),
       // color: Colors.blueAccent,
-      height: 250,
+      height: 200,
       child: GestureDetector(
         onTap: press,
         child: Stack(
@@ -62,8 +62,8 @@ class ProductCard extends StatelessWidget {
                     width: kDefaultPadding / 2,
                   ),
                   Container(
-                    height: 250,
-                    width: 180,
+                    height: 200,
+                    width: 150,
                     child: LocalStorage().isArabicLanguage()
                         ? ClipRRect(
                             borderRadius: BorderRadius.only(
@@ -104,8 +104,8 @@ class ProductCard extends StatelessWidget {
                         children: [
                           CustomText(
                             text: product.name,
-                            fontSize: 20,
-                            maxLines: 2,
+                            fontSize: fontSizeBig_18,
+                            maxLines: 1,
                             fontWeight: FontWeight.bold,
                             alignment: AlignmentDirectional.topEnd,
                           ),
@@ -118,7 +118,7 @@ class ProductCard extends StatelessWidget {
                                     initialRating:
                                         double.parse(product.rate.toString()),
                                     isHalfAllowed: true,
-                                    size: 20,
+                                    size: 16,
                                     halfFilledColor: Colors.amber,
                                     maxRating: 5,
                                     filledColor: Colors.amber,
@@ -129,6 +129,7 @@ class ProductCard extends StatelessWidget {
                                   CustomText(
                                     text:
                                         '(${product.commentCount.toString()})',
+                                    fontSize: fontSizeSmall_16 - 4,
                                   )
                                 ],
                               ),
@@ -194,7 +195,7 @@ class ProductCard extends StatelessWidget {
                 alignment: AlignmentDirectional.topStart,
                 child: Container(
                   height: 40,
-                  width: 60,
+                  width: 50,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadiusDirectional.only(
                         topStart: Radius.circular(22),
@@ -206,7 +207,7 @@ class ProductCard extends StatelessWidget {
                   child: Center(
                     child: CustomText(
                       text: '${product.discountValue}%',
-                      fontSize: 20,
+                      fontSize: fontSizeSmall_16 - 2,
                       alignment: AlignmentDirectional.center,
                       color: Colors.white,
                     ),
@@ -239,7 +240,7 @@ class ProductCard extends StatelessWidget {
                       child: Text(
                         '\$${product.price}',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: fontSizeSmall_16 - 2,
                           decoration: TextDecoration.lineThrough,
                           color: Colors.black,
                         ),
@@ -254,7 +255,7 @@ class ProductCard extends StatelessWidget {
                     Text(
                       '\$${product.discountPrice}',
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: fontSizeSmall_16,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),

@@ -111,8 +111,8 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                Color.fromARGB(100, 255, 255, 255),
-                                Color.fromARGB(0, 255, 255, 255)
+                                Color.fromARGB(70, 0, 0, 0),
+                                Color.fromARGB(70, 0, 0, 0)
                               ],
                               begin: Alignment.bottomCenter,
                               end: Alignment.topCenter,

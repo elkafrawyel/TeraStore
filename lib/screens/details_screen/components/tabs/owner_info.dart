@@ -36,10 +36,10 @@ class OwnerInfo extends StatelessWidget {
                             text: 'sellerInfo'.tr,
                             color: Colors.black,
                             alignment: AlignmentDirectional.topStart,
-                            fontSize: 18,
+                            fontSize: fontSizeSmall_16,
                           ),
                           SizedBox(
-                            height: 20,
+                            height: kDefaultPadding,
                           ),
                           CustomText(
                             text: user == null
@@ -48,10 +48,10 @@ class OwnerInfo extends StatelessWidget {
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                             alignment: AlignmentDirectional.topStart,
-                            fontSize: 16,
+                            fontSize: fontSizeSmall_16 - 2,
                           ),
                           SizedBox(
-                            height: 10,
+                            height: kDefaultPadding / 2,
                           ),
                           CustomText(
                             text: user == null
@@ -59,13 +59,13 @@ class OwnerInfo extends StatelessWidget {
                                 : user.email,
                             color: Colors.grey.shade700,
                             alignment: AlignmentDirectional.topStart,
-                            fontSize: 16,
+                            fontSize: fontSizeSmall_16 - 2,
                           ),
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: kDefaultPadding / 2,
                     ),
                     Column(
                       children: [
@@ -84,7 +84,7 @@ class OwnerInfo extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: kDefaultPadding / 2,
                         ),
                         GestureDetector(
                           onTap: () {},

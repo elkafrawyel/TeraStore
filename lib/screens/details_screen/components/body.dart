@@ -50,7 +50,7 @@ class Body extends StatelessWidget {
                             alignment: AlignmentDirectional.topStart,
                             child: Container(
                               height: 40,
-                              width: 90,
+                              width: 100,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadiusDirectional.only(
                                     topStart: Radius.circular(22),
@@ -63,7 +63,7 @@ class Body extends StatelessWidget {
                                 child: CustomText(
                                   text: 'saveMoney'.tr +
                                       ' ${product.discountValue.toString()}%',
-                                  fontSize: 18,
+                                  fontSize: fontSizeSmall_16 - 2,
                                   alignment: AlignmentDirectional.center,
                                   color: Colors.white,
                                 ),
@@ -123,7 +123,7 @@ class Body extends StatelessWidget {
                     child: CustomText(
                       text:
                           '\$${controller.disCountPrice == 0 ? product.itemPriceAfterDis : controller.disCountPrice}',
-                      fontSize: 22,
+                      fontSize: fontSizeSmall_16,
                       alignment: AlignmentDirectional.centerStart,
                       fontWeight: FontWeight.bold,
                       color: Colors.amber,
@@ -140,7 +140,7 @@ class Body extends StatelessWidget {
                       child: Text(
                         '\$${controller.price == 0 ? product.itemPrice : controller.price}',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: fontSizeSmall_16 - 2,
                           decoration: TextDecoration.lineThrough,
                           color: Colors.white,
                         ),
@@ -154,7 +154,7 @@ class Body extends StatelessWidget {
               ),
               _buildProperties(),
               SizedBox(
-                height: 20,
+                height: kDefaultPadding,
               ),
               _buildTabs(),
               SizedBox(
@@ -303,9 +303,9 @@ class Body extends StatelessWidget {
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: ToggleSwitch(
-            minWidth: 90.0,
+            minWidth: 150.0,
             minHeight: 45.0,
-            fontSize: 16.0,
+            fontSize: fontSizeSmall_16 - 2,
             initialLabelIndex: controller.selectedTab,
             cornerRadius: 20.0,
             activeBgColor: LocalStorage().primaryColor().withOpacity(0.8),
@@ -346,13 +346,13 @@ class Body extends StatelessWidget {
             padding: const EdgeInsetsDirectional.only(start: kDefaultPadding),
             child: CustomText(
                 text: properity.itemPropertyName,
-                fontSize: 18,
+                fontSize: fontSizeBig_18,
                 color: Colors.white),
           ),
         );
 
         var listView = Container(
-          height: 70,
+          height: 80,
           child: GetBuilder<ProductDetailsController>(
             builder: (controller) => ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -370,26 +370,24 @@ class Body extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomText(
                                     text:
                                         '${properity.itemPropPlus[index].propertyValue}',
-                                    fontSize: 20,
+                                    fontSize: fontSizeSmall_16 - 2,
                                     alignment: AlignmentDirectional.center,
                                     color: Colors.white),
                                 CustomText(
                                     text:
                                         '+ ${properity.itemPropPlus[index].propertyPrice} EGP',
-                                    fontSize: 16,
+                                    fontSize: fontSizeSmall_16 - 4,
                                     alignment: AlignmentDirectional.center,
                                     color: Colors.white),
                               ],
                             ),
                           ),
                           onPressed: () {
-                            // properity.itemPropPlus[index].propertyPrice
-                            // properity.itemPropPlus[index].id
                             controller.updatePropertySelection(
                                 properity, properity.itemPropPlus[index]);
                           },
@@ -402,18 +400,18 @@ class Body extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomText(
                                     text:
                                         '${properity.itemPropPlus[index].propertyValue}',
-                                    fontSize: 20,
+                                    fontSize: fontSizeSmall_16 - 2,
                                     alignment: AlignmentDirectional.center,
                                     color: Colors.white),
                                 CustomText(
                                     text:
                                         '+ ${properity.itemPropPlus[index].propertyPrice} EGP',
-                                    fontSize: 16,
+                                    fontSize: fontSizeSmall_16 - 4,
                                     alignment: AlignmentDirectional.center,
                                     color: Colors.white),
                               ],

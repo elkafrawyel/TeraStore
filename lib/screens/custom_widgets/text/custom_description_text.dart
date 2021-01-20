@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tera/helper/Constant.dart';
 
 class CustomDescription extends StatefulWidget {
   final String text;
@@ -19,7 +20,7 @@ class _CustomDescriptionState extends State<CustomDescription> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(widget.text,
-              style: TextStyle(fontSize: 16, color: Colors.black),
+              style: TextStyle(fontSize: fontSizeSmall_16, color: Colors.black),
               maxLines: isSeeMore ? 20 : 4,
               textAlign: TextAlign.start),
           GestureDetector(
@@ -49,7 +50,7 @@ class _CustomDescriptionState extends State<CustomDescription> {
                           ),
                         ),
                   SizedBox(
-                    height: 20,
+                    height: kDefaultPadding,
                   ),
                 ],
               ),

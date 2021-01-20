@@ -53,7 +53,7 @@ class Body extends StatelessWidget {
                         text: user != null ? user.name : '',
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: fontSizeBig_18,
                       ),
                       SizedBox(
                         height: kDefaultPadding / 2,
@@ -64,7 +64,7 @@ class Body extends StatelessWidget {
                           CustomText(
                             alignment: AlignmentDirectional.center,
                             text: user.phone,
-                            fontSize: 18,
+                            fontSize: fontSizeSmall_16 - 2,
                             color: Colors.white,
                           ),
                           SizedBox(
@@ -83,7 +83,8 @@ class Body extends StatelessWidget {
                       CustomText(
                         alignment: AlignmentDirectional.center,
                         text: user != null ? user.email : '',
-                        fontSize: 16,
+                        fontSize: fontSizeSmall_16 - 2,
+                        maxLines: 2,
                         color: Colors.white,
                       ),
                       SizedBox(

@@ -44,7 +44,7 @@ class ProductCardGrid extends StatelessWidget {
                 boxShadow: [kDefaultShadow],
               ),
               child: Container(
-                margin: EdgeInsetsDirectional.only(bottom: 10),
+                margin: EdgeInsetsDirectional.only(bottom: kDefaultPadding / 2),
                 decoration: BoxDecoration(
                   color: kCardColor,
                   borderRadius: BorderRadius.circular(22),
@@ -99,8 +99,8 @@ class ProductCardGrid extends StatelessWidget {
                         children: [
                           CustomText(
                             text: product.name,
-                            fontSize: 18,
-                            maxLines: 2,
+                            fontSize: fontSizeBig_18,
+                            maxLines: 1,
                             fontWeight: FontWeight.bold,
                             alignment: AlignmentDirectional.centerStart,
                           ),
@@ -112,7 +112,7 @@ class ProductCardGrid extends StatelessWidget {
                                 child: Text(
                                   '\$${product.price}',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: fontSizeSmall_16 - 2,
                                     decoration: TextDecoration.lineThrough,
                                     color: Colors.grey,
                                   ),
@@ -127,7 +127,7 @@ class ProductCardGrid extends StatelessWidget {
                               Text(
                                 '\$${product.discountPrice}',
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: fontSizeSmall_16,
                                   fontWeight: FontWeight.bold,
                                   color: itemIndex.isEven
                                       ? kBlueColor
@@ -143,7 +143,7 @@ class ProductCardGrid extends StatelessWidget {
                                 initialRating:
                                     double.parse(product.rate.toString()),
                                 isHalfAllowed: true,
-                                size: 20,
+                                size: 18,
                                 halfFilledColor: Colors.amber,
                                 maxRating: 5,
                                 filledColor: Colors.amber,
@@ -153,6 +153,8 @@ class ProductCardGrid extends StatelessWidget {
                               ),
                               CustomText(
                                 text: '(${product.commentCount.toString()})',
+                                fontSize: fontSizeSmall_16 - 2,
+                                color: Colors.grey,
                               )
                             ],
                           ),
@@ -229,7 +231,7 @@ class ProductCardGrid extends StatelessWidget {
                   child: Center(
                     child: CustomText(
                       text: '${product.discountValue}%',
-                      fontSize: 20,
+                      fontSize: fontSizeSmall_16 - 2,
                       alignment: AlignmentDirectional.center,
                       color: Colors.white,
                     ),

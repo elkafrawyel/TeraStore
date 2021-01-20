@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
       locale: Locale('en'),
       fallbackLocale: Locale('en'),
       theme: ThemeData(
-        // fontFamily: 'Crimson',
+        fontFamily: 'MyFont',
         primaryColor: LocalStorage().primaryColor(),
         accentColor: LocalStorage().primaryColor(),
       ),

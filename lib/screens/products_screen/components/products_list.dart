@@ -30,7 +30,7 @@ class ProductsList extends StatelessWidget {
               : controller.error.value
                   ? ErrorView()
                   : Container(
-                      color: Colors.white,
+                      // color: Colors.white,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: controller.isGrid

@@ -11,7 +11,7 @@ class SubCategoriesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: LocalStorage().primaryColor(),
-      height: 40,
+      height: 50,
       child: GetBuilder<ProductsController>(
         init: ProductsController(),
         builder: (controller) => controller.loadingSubCategories.value
@@ -20,7 +20,7 @@ class SubCategoriesList extends StatelessWidget {
                 ? CustomText(
                     text: 'noSubCategories'.tr,
                     alignment: AlignmentDirectional.center,
-                    fontSize: 18,
+                    fontSize: fontSizeSmall_16,
                     color: Colors.white,
                   )
                 : ListView.builder(
@@ -35,16 +35,11 @@ class SubCategoriesList extends StatelessWidget {
                       child: Container(
                         alignment: Alignment.center,
                         margin: EdgeInsetsDirectional.only(
-                          end: index ==
-                                  controller
-                                          .categoryModel.subCategories.length -
-                                      1
-                              ? kDefaultPadding
-                              : 0,
-                          start: kDefaultPadding,
+                          // end: kDefaultPadding / 2,
+                          start: kDefaultPadding / 2,
                         ),
                         padding: EdgeInsets.symmetric(
-                            horizontal: kDefaultPadding,
+                            horizontal: kDefaultPadding / 2,
                             vertical: kDefaultPadding / 4),
                         decoration: BoxDecoration(
                           color: index == controller.selectedSubCategoryIndex
@@ -55,14 +50,14 @@ class SubCategoriesList extends StatelessWidget {
                         child: Row(
                           children: [
                             Icon(
-                              Icons.category,
+                              Icons.storage,
                               color: Colors.white,
                             ),
                             SizedBox(
-                              width: 10,
+                              width: kDefaultPadding / 2,
                             ),
                             CustomText(
-                              fontSize: 18,
+                              fontSize: fontSizeSmall_16,
                               text: controller.categoryModel
                                   .subCategories[index].displayName,
                               alignment: AlignmentDirectional.center,

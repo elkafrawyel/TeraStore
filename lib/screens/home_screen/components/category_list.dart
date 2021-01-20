@@ -15,9 +15,9 @@ class _CategoryListState extends State<CategoryList> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(
-          vertical: kDefaultPadding / 2, horizontal: kDefaultPadding),
+          vertical: kDefaultPadding / 2, horizontal: kDefaultPadding / 2),
       padding: EdgeInsets.symmetric(
-          vertical: kDefaultPadding / 2, horizontal: kDefaultPadding),
+          vertical: kDefaultPadding / 2, horizontal: kDefaultPadding / 2),
       height: 70,
       child: GetBuilder<HomeController>(
         init: HomeController(),
@@ -52,7 +52,7 @@ class _CategoryListState extends State<CategoryList> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Icon(
-                    Icons.category,
+                    Icons.storage,
                     color: Colors.white,
                   ),
                   Padding(

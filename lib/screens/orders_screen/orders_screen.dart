@@ -55,9 +55,6 @@ class OrdersScreen extends StatelessWidget {
         return ExpandablePanel(
           header: _hearView(index),
           expanded: _buildSubItems(index),
-          tapHeaderToExpand: true,
-          tapBodyToCollapse: true,
-          hasIcon: true,
         );
       },
     );

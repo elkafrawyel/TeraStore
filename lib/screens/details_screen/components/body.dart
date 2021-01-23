@@ -4,6 +4,7 @@ import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/controllers/cart_controller.dart';
 import 'package:tera/controllers/home_controller.dart';
 import 'package:tera/controllers/product_details_controller.dart';
+import 'package:tera/data/requests/add_product_to_cart_request.dart';
 import 'package:tera/data/responses/product_details_response.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
@@ -76,27 +77,28 @@ class Body extends StatelessWidget {
                         bottom: 0,
                         start: 0,
                         child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              children: [
-                                _favIcon(),
-                                SizedBox(
-                                  height: kDefaultPadding / 2,
-                                ),
-                                !controller.productDetailsResponse.singleItem
-                                        .inCart
-                                    ? CustomRemoveFromCartButton(
-                                        onPressed: () {
-                                          _addRemoveCart();
-                                        },
-                                      )
-                                    : CustomAddToCartButton(
-                                        onPressed: () {
-                                          _addRemoveCart();
-                                        },
-                                      ),
-                              ],
-                            )),
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            children: [
+                              _favIcon(),
+                              SizedBox(
+                                height: kDefaultPadding / 2,
+                              ),
+                              controller
+                                      .productDetailsResponse.singleItem.inCart
+                                  ? CustomRemoveFromCartButton(
+                                      onPressed: () {
+                                        _addRemoveCart();
+                                      },
+                                    )
+                                  : CustomAddToCartButton(
+                                      onPressed: () {
+                                        _addRemoveCart();
+                                      },
+                                    ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -113,7 +115,7 @@ class Body extends StatelessWidget {
                           vertical: kDefaultPadding / 2),
                       child: CustomText(
                         text: product.itemName,
-                        fontSize: 30,
+                        fontSize: fontSizeLarge_20,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       )),
@@ -122,7 +124,7 @@ class Body extends StatelessWidget {
                         start: kDefaultPadding),
                     child: CustomText(
                       text:
-                          '\$${controller.disCountPrice == 0 ? product.itemPriceAfterDis : controller.disCountPrice}',
+                          '${controller.disCountPrice == 0 ? product.itemPriceAfterDis : controller.disCountPrice} $currency',
                       fontSize: fontSizeSmall_16,
                       alignment: AlignmentDirectional.centerStart,
                       fontWeight: FontWeight.bold,
@@ -138,7 +140,7 @@ class Body extends StatelessWidget {
                     child: Container(
                       alignment: AlignmentDirectional.centerStart,
                       child: Text(
-                        '\$${controller.price == 0 ? product.itemPrice : controller.price}',
+                        '${controller.price == 0 ? product.itemPrice : controller.price} $currency',
                         style: TextStyle(
                           fontSize: fontSizeSmall_16 - 2,
                           decoration: TextDecoration.lineThrough,
@@ -153,6 +155,43 @@ class Body extends StatelessWidget {
                 ],
               ),
               _buildProperties(),
+              SizedBox(
+                height: kDefaultPadding,
+              ),
+              Visibility(
+                visible: controller.selectedItems.isNotEmpty,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width / 2,
+                      height: 50,
+                      child: RaisedButton.icon(
+                        color: LocalStorage().primaryColor(),
+                        icon: Icon(
+                          Icons.shopping_cart,
+                          color: Colors.green,
+                          size: 30,
+                        ),
+                        onPressed: () {
+                          _addRemoveCartWithProperities();
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          side: BorderSide(color: Colors.white, width: 1),
+                        ),
+                        label: CustomText(
+                          text: 'addToCart'.tr,
+                          alignment: AlignmentDirectional.center,
+                          fontSize: fontSizeBig_18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(
                 height: kDefaultPadding,
               ),
@@ -246,12 +285,44 @@ class Body extends StatelessWidget {
 
   void _addRemoveCart() {
     var controller = Get.find<ProductDetailsController>();
+
     Get.find<CartController>().addRemoveCart(
       product.id.toString(),
       state: (dataResource) {
         if (dataResource is Success) {
           controller.productDetailsResponse.singleItem.inCart =
               !controller.productDetailsResponse.singleItem.inCart;
+          controller.update();
+          //apply change in filter list
+          Get.find<HomeController>().changeInCartState(product.id.toString());
+        } else if (dataResource is Failure) {
+          CommonMethods().showSnackBar('error'.tr, iconData: Icons.error);
+        }
+      },
+    );
+  }
+
+  void _addRemoveCartWithProperities() {
+    var controller = Get.find<ProductDetailsController>();
+
+    String desc = '';
+    controller.selectedItems.forEach((element) {
+      desc =
+          '$desc ${element.propertyValue} : ${element.propertyPrice.toString()}\n';
+    });
+
+    print(desc);
+
+    AddProductToCartRequest addProductToCartRequest = AddProductToCartRequest(
+        productId: product.id.toString(),
+        productTotalPrice: controller.disCountPrice.round().toString(),
+        productPropDescription: desc);
+
+    Get.find<CartController>().addRemoveCartWithProperities(
+      addProductToCartRequest,
+      state: (dataResource) {
+        if (dataResource is Success) {
+          controller.productDetailsResponse.singleItem.inCart = true;
           controller.update();
           //apply change in filter list
           Get.find<HomeController>().changeInCartState(product.id.toString());

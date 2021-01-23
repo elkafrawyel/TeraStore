@@ -70,8 +70,10 @@ class LocalStorage {
   clear() {
     String language = getString(LocalStorage.languageKey);
     bool isLanguageChecked = getBool(LocalStorage.isLanguageChecked);
+    int color = getInt(LocalStorage.selectedColorValue);
     GetStorage().erase();
     setString(LocalStorage.languageKey, language);
     setBool(LocalStorage.isLanguageChecked, isLanguageChecked);
+    setInt(LocalStorage.selectedColorValue, color);
   }
 }

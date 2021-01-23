@@ -18,12 +18,11 @@ dependencies:
   get:
   chopper:
   google_sign_in:
-  firebase_core:
   firebase_auth:
+  firebase_core:
   firebase_messaging:
   flutter_facebook_login:
   splash_screen_view:
-  shared_preferences:
   rating_bar:
   lottie:
   badges:

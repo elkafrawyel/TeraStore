@@ -24,6 +24,8 @@ class ProductDetailsController extends MainController {
     update();
   }
 
+  List<ItemPropPlus> selectedItems = [];
+
   updatePropertySelection(ItemProperity main, ItemPropPlus sub) {
     ItemPropPlus itemPropPlus =
         main.itemPropPlus[main.itemPropPlus.indexOf(sub)];
@@ -35,10 +37,12 @@ class ProductDetailsController extends MainController {
 
     price = 0;
     disCountPrice = 0;
+    selectedItems.clear();
     for (ItemProperity itemProp
         in productDetailsResponse.singleItem.properities) {
       itemProp.itemPropPlus.forEach((element) {
         if (element.isSelected) {
+          selectedItems.add(element);
           price += double.parse(element.propertyPrice);
           disCountPrice += double.parse(element.propertyPrice);
         }
@@ -48,6 +52,9 @@ class ProductDetailsController extends MainController {
     price += double.parse(productDetailsResponse.singleItem.itemPrice);
     disCountPrice += double.parse(
         productDetailsResponse.singleItem.itemPriceAfterDis.toString());
+
+    print('selectedItems =>' + selectedItems.length.toString());
+    print('Price =>' + price.toString());
 
     update();
   }

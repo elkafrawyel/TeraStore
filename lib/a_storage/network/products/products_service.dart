@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:tera/a_storage/local_storage.dart';
+import 'package:tera/data/requests/add_product_to_cart_request.dart';
 import 'package:tera/data/requests/add_review_request.dart';
 
 part 'products_service.chopper.dart';
@@ -27,6 +28,10 @@ abstract class ProductsService extends ChopperService {
 
   @Get(path: '/addItemToCart/{productId}')
   Future<Response> addRemoveCart(@Path() String productId);
+
+  @Post(path: '/addItemPropToCart')
+  Future<Response> addRemoveCartWithProperities(
+      @Body() AddProductToCartRequest addProductToCartRequest);
 
   @Get(path: '/getCartItems')
   Future<Response> getCartItems();

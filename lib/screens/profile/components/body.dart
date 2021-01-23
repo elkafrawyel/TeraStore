@@ -58,24 +58,27 @@ class Body extends StatelessWidget {
                       SizedBox(
                         height: kDefaultPadding / 2,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CustomText(
-                            alignment: AlignmentDirectional.center,
-                            text: user.phone,
-                            fontSize: fontSizeSmall_16 - 2,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            width: kDefaultPadding / 2,
-                          ),
-                          Icon(
-                            Icons.verified_user_rounded,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                        ],
+                      Visibility(
+                        visible: user.phone != null,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomText(
+                              alignment: AlignmentDirectional.center,
+                              text: user.phone,
+                              fontSize: fontSizeSmall_16 - 2,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: kDefaultPadding / 2,
+                            ),
+                            Icon(
+                              Icons.verified_user_rounded,
+                              color: Colors.white,
+                              size: 25,
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: kDefaultPadding / 2,

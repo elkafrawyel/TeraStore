@@ -187,19 +187,19 @@ class LoginScreen extends StatelessWidget {
                                 },
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomSocialButton(
-                                imageAsset: twitterImage,
-                                text: 'signInTwitter'.tr,
-                                onPressed: () {
-                                  controller.signInGoogle();
-                                },
-                              ),
-                            ),
+                            // SizedBox(
+                            //   height: 10,
+                            // ),
+                            // Container(
+                            //   width: MediaQuery.of(context).size.width * 0.9,
+                            //   child: CustomSocialButton(
+                            //     imageAsset: twitterImage,
+                            //     text: 'signInTwitter'.tr,
+                            //     onPressed: () {
+                            //       controller.signInGoogle();
+                            //     },
+                            //   ),
+                            // ),
                           ],
                         ),
                       ],

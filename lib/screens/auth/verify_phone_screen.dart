@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_entry_field/pin_entry_field.dart';
@@ -134,33 +133,33 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
   }
 
   verifyPhone(String phone) {
-    FirebaseAuth _auth = FirebaseAuth.instance;
-    // _auth.setLanguageCode("ar");
-    _auth.verifyPhoneNumber(
-        phoneNumber: phone,
-        codeAutoRetrievalTimeout: (verificationId) {},
-        codeSent: (verificationId, [forceResendingToken]) {
-          setState(() {
-            this.verificationId = verificationId;
-            this.codeSent = true;
-          });
-          // CommonMethods().showMessage('message'.tr, 'codeSent'.tr);
-        },
-        timeout: Duration(seconds: 60),
-        verificationCompleted: (phoneAuthCredential) {
-          print('verificationCompleted');
-          Get.back();
-        },
-        verificationFailed: (FirebaseAuthException authException) {
-          CommonMethods().showMessage('errorTitle'.tr, authException.message);
-        },
-        forceResendingToken: 3);
+    // FirebaseAuth _auth = FirebaseAuth.instance;
+    // // _auth.setLanguageCode("ar");
+    // _auth.verifyPhoneNumber(
+    //     phoneNumber: phone,
+    //     codeAutoRetrievalTimeout: (verificationId) {},
+    //     codeSent: (verificationId, [forceResendingToken]) {
+    //       setState(() {
+    //         this.verificationId = verificationId;
+    //         this.codeSent = true;
+    //       });
+    //       // CommonMethods().showMessage('message'.tr, 'codeSent'.tr);
+    //     },
+    //     timeout: Duration(seconds: 60),
+    //     verificationCompleted: (phoneAuthCredential) {
+    //       print('verificationCompleted');
+    //       Get.back();
+    //     },
+    //     verificationFailed: (AuthException authException) {
+    //       CommonMethods().showMessage('errorTitle'.tr, authException.message);
+    //     },
+    //     forceResendingToken: 3);
   }
 
   void loginWithPhone() {
-    FirebaseAuth auth = FirebaseAuth.instance;
+    // FirebaseAuth auth = FirebaseAuth.instance;
 
-    String smsCode = codeController.text.trim();
+    // String smsCode = codeController.text.trim();
 
     // AuthCredential credential = PhoneAuthProvider.getCredential(
     //     verificationId: verificationId, smsCode: smsCode);

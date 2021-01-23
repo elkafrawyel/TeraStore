@@ -3,15 +3,16 @@ import 'package:get/get.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/controllers/cart_controller.dart';
 import 'package:tera/controllers/general_controller.dart';
+import 'package:tera/controllers/main_controller.dart';
 import 'package:tera/data/models/address_model.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
-import 'package:tera/screens/cart_screen/payment_screen.dart';
 import 'package:tera/screens/custom_widgets/button/custom_button.dart';
 import 'package:tera/screens/custom_widgets/button/custom_outlined_button.dart';
 import 'package:tera/screens/custom_widgets/custom_appbar.dart';
 import 'package:tera/screens/custom_widgets/text/custom_outline_text_form_field.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
+import 'package:tera/screens/edit_profile_screen.dart';
 
 import '../add_address_screen/add_address_screen.dart';
 
@@ -43,8 +44,32 @@ class CheckOutScreen extends StatelessWidget {
                 SizedBox(
                   height: kDefaultPadding,
                 ),
+                Visibility(
+                  visible: Get.find<MainController>().user.phone == null,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: CustomText(
+                          maxLines: 2,
+                          fontSize: fontSizeSmall_16,
+                          text:
+                              'You have no mobile phone add one so the delivery company call you on it',
+                        ),
+                      ),
+                      CustomButton(
+                        text: 'Add',
+                        colorBackground: LocalStorage().primaryColor(),
+                        colorText: Colors.white,
+                        onPressed: () {
+                          Get.to(EditProfileScreen());
+                        },
+                      ),
+                    ],
+                  ),
+                ),
                 SizedBox(
-                  height: 20,
+                  height: kDefaultPadding,
                 ),
                 CustomOutlinedTextFormField(
                   required: false,
@@ -184,12 +209,12 @@ class CheckOutScreen extends StatelessWidget {
     );
   }
 
-  void _nextToPayment() {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-      //save data to general
-      //check address
-      Get.to(PaymentScreen());
-    }
-  }
+  // void _nextToPayment() {
+  //   if (_formKey.currentState.validate()) {
+  //     _formKey.currentState.save();
+  //     //save data to general
+  //     //check address
+  //     Get.to(PaymentScreen());
+  //   }
+  // }
 }

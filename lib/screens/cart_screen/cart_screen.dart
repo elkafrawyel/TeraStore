@@ -138,7 +138,7 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  final cardHeight = 180.0;
+  final cardHeight = 220.0;
 
   Widget _cartItem(BuildContext context, CartItem cartItem, int index) {
     return GestureDetector(
@@ -257,7 +257,7 @@ class CartScreen extends StatelessWidget {
                         Column(
                           children: [
                             SizedBox(
-                              height: 20,
+                              height: kDefaultPadding / 2,
                             ),
                             CustomText(
                               text: cartItem.itemName,
@@ -267,6 +267,18 @@ class CartScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                             SizedBox(
+                              height: kDefaultPadding / 2,
+                            ),
+                            Visibility(
+                              visible: cartItem.properitiesDescription != null,
+                              child: CustomText(
+                                text: cartItem.properitiesDescription,
+                                maxLines: 4,
+                                alignment: AlignmentDirectional.topStart,
+                                fontSize: fontSizeSmall_16 - 2,
+                              ),
+                            ),
+                            SizedBox(
                               height: kDefaultPadding,
                             ),
                             Padding(
@@ -274,7 +286,7 @@ class CartScreen extends StatelessWidget {
                               child: CustomText(
                                 alignment: AlignmentDirectional.topStart,
                                 text: cartItem.itemPriceAfterDis.toString() +
-                                    '\$',
+                                    ' $currency',
                                 fontSize: fontSizeSmall_16,
                               ),
                             ),

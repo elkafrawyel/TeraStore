@@ -23,6 +23,7 @@ class DetailsScreen extends StatelessWidget {
     controller.selectedTab = 0;
     controller.price = 0;
     controller.disCountPrice = 0;
+    controller.selectedItems.clear();
     // await controller.getProductById('27');
     await controller.getProductById(productId);
   }

@@ -238,7 +238,7 @@ class ProductCard extends StatelessWidget {
                     Visibility(
                       visible: product.discountType == 'percent',
                       child: Text(
-                        '\$${product.price}',
+                        '${product.price} $currency',
                         style: TextStyle(
                           fontSize: fontSizeSmall_16 - 2,
                           decoration: TextDecoration.lineThrough,
@@ -253,7 +253,7 @@ class ProductCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '\$${product.discountPrice}',
+                      '${product.discountPrice} $currency',
                       style: TextStyle(
                         fontSize: fontSizeSmall_16,
                         fontWeight: FontWeight.bold,

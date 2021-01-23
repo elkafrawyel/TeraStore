@@ -10,6 +10,7 @@ class CartItem {
   int itemPriceAfterDis;
   String itemCount;
   String withProp;
+  String properitiesDescription;
 
   CartItem(
       {this.id,
@@ -22,7 +23,8 @@ class CartItem {
       this.itemPrice,
       this.itemPriceAfterDis,
       this.itemCount,
-      this.withProp});
+      this.withProp,
+      this.properitiesDescription});
 
   CartItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -36,6 +38,7 @@ class CartItem {
     itemPriceAfterDis = json['itemPriceAfterDis'];
     itemCount = json['itemCount'];
     withProp = json['withProp'];
+    properitiesDescription = json['obj_prop'];
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +54,7 @@ class CartItem {
     data['itemPriceAfterDis'] = this.itemPriceAfterDis;
     data['itemCount'] = this.itemCount;
     data['withProp'] = this.withProp;
+    data['obj_prop'] = this.properitiesDescription;
     return data;
   }
 }

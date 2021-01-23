@@ -34,6 +34,8 @@ android {
 
     lintOptions {
         disable 'InvalidPackage'
+        abortOnError false
+        checkReleaseBuilds false //Insert this line
     }
 
     defaultConfig {
@@ -67,6 +69,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.google.firebase:firebase-messaging:21.0.1'
-
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
 apply plugin: 'com.google.gms.google-services'

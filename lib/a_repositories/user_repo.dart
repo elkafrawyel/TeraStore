@@ -18,12 +18,9 @@ import 'package:tera/helper/data_resource.dart';
 import 'package:tera/helper/network_methods.dart';
 import 'package:tera/screens/auth/login_screen.dart';
 import 'package:tera/screens/auth/verify_phone_screen.dart';
-import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 import 'package:tera/screens/home_screen/home_screen.dart';
 
 class UserRepo {
-  //login , register, edit, verify, logOut,
-
   Future<void> register(RegisterRequest registerRequest) async {
     UserService service = UserService.create(NetworkBaseUrlType.MainUrl);
     NetworkMethods().handleResponse(
@@ -98,37 +95,39 @@ class UserRepo {
           if (userResponse.status && userResponse.data.apiToken != null) {
             UserModel userModel = userResponse.data;
             saveUser(userModel);
-            if (userModel.phone == null) {
-              String phone = await _showGetPhoneDialog();
-              if (phone == null) {
-                CommonMethods().showMessage('message'.tr, 'enterPhone'.tr);
-              } else {
-                userModel.phone = phone;
-                await editProfile(
-                  EditProfileRequest(
-                      name: userModel.name,
-                      email: userModel.email,
-                      phone: userModel.phone),
-                );
-                if (userModel.approved == 'yes') {
-                  Get.offAll(HomeScreen());
-                } else {
-                  Get.offAll(VerifyPhoneScreen());
-                }
-              }
-            } else {
-              if (userModel.approved == 'yes') {
-                Get.offAll(HomeScreen());
-              } else {
-                Get.offAll(VerifyPhoneScreen());
-              }
-            }
+            // if (userModel.phone == null) {
+            //   String phone = await _showGetPhoneDialog();
+            //   if (phone == null) {
+            //     CommonMethods().showMessage('message'.tr, 'enterPhone'.tr);
+            //   } else {
+            //     userModel.phone = phone;
+            //     await editProfile(
+            //       EditProfileRequest(
+            //           name: userModel.name,
+            //           email: userModel.email,
+            //           phone: userModel.phone),
+            //     );
+            //     if (userModel.approved == 'yes') {
+            //       Get.offAll(HomeScreen());
+            //     } else {
+            //       Get.offAll(VerifyPhoneScreen());
+            //     }
+            //   }
+            // } else {
+            //   if (userModel.approved == 'yes') {
+            Get.offAll(HomeScreen());
+            // } else {
+            //   Get.offAll(VerifyPhoneScreen());
+            // }
+            // }
 
-            CommonMethods().showMessage('message'.tr, userResponse.message);
+            CommonMethods().showSnackBar(userResponse.message);
           } else {
-            if (userResponse.message.isNotEmpty) {
+            if (userResponse.message != null &&
+                userResponse.message != "" &&
+                userResponse.message.isNotEmpty) {
               CommonMethods()
-                  .showMessage('errorTitle'.tr, userResponse.message);
+                  .showSnackBar(userResponse.message, iconData: Icons.error);
             } else {
               VErrors errors = userResponse.vErrors;
               errors.printErrors();
@@ -155,8 +154,7 @@ class UserRepo {
               saveUser(userModel);
             } else {
               if (userResponse.message.isNotEmpty) {
-                CommonMethods()
-                    .showMessage('errorTitle'.tr, userResponse.message);
+                CommonMethods().showSnackBar(userResponse.message);
               } else {
                 VErrors errors = userResponse.vErrors;
                 errors.printErrors();
@@ -174,8 +172,7 @@ class UserRepo {
               saveUser(userModel);
             } else {
               if (userResponse.message.isNotEmpty) {
-                CommonMethods()
-                    .showMessage('errorTitle'.tr, userResponse.message);
+                CommonMethods().showSnackBar(userResponse.message);
               } else {
                 VErrors errors = userResponse.vErrors;
                 errors.printErrors();
@@ -279,57 +276,57 @@ class UserRepo {
 
   localLogOut() {
     LocalStorage().clear();
-    Get.find<CartController>().cart.cartItems.clear();
+    Get.find<CartController>().cart?.cartItems?.clear();
     Get.find<MainController>().user = null;
     Get.offAll(LoginScreen());
   }
 
-  Future<String> _showGetPhoneDialog() async {
-    TextEditingController controller = TextEditingController();
-    String phone;
-    await showDialog<String>(
-      barrierDismissible: true,
-      context: Get.context,
-      builder: (context) {
-        return AlertDialog(
-          title: CustomText(
-            text: 'enterPhone'.tr,
-          ),
-          contentPadding: const EdgeInsets.all(16.0),
-          content: Row(
-            children: <Widget>[
-              Expanded(
-                child: new TextField(
-                  controller: controller,
-                  keyboardType: TextInputType.phone,
-                  autofocus: true,
-                  decoration: new InputDecoration(
-                      hintText: 'phone'.tr, suffixText: '+2'),
-                ),
-              ),
-            ],
-          ),
-          actions: <Widget>[
-            FlatButton(
-                child: Text('ok'.tr),
-                onPressed: () {
-                  if (controller.text.isNotEmpty) {
-                    if (GetUtils.isPhoneNumber(controller.text)) {
-                      phone = controller.text;
-                      Navigator.pop(context);
-                    } else {
-                      CommonMethods()
-                          .showMessage('message'.tr, 'enterValidPhone'.tr);
-                    }
-                  } else {
-                    CommonMethods()
-                        .showMessage('message'.tr, 'Enter your phone number');
-                  }
-                }),
-          ],
-        );
-      },
-    );
-    return phone;
-  }
+// Future<String> _showGetPhoneDialog() async {
+//   TextEditingController controller = TextEditingController();
+//   String phone;
+//   await showDialog<String>(
+//     barrierDismissible: true,
+//     context: Get.context,
+//     builder: (context) {
+//       return AlertDialog(
+//         title: CustomText(
+//           text: 'enterPhone'.tr,
+//         ),
+//         contentPadding: const EdgeInsets.all(16.0),
+//         content: Row(
+//           children: <Widget>[
+//             Expanded(
+//               child: new TextField(
+//                 controller: controller,
+//                 keyboardType: TextInputType.phone,
+//                 autofocus: true,
+//                 decoration: new InputDecoration(
+//                     hintText: 'phone'.tr, suffixText: '+2'),
+//               ),
+//             ),
+//           ],
+//         ),
+//         actions: <Widget>[
+//           FlatButton(
+//               child: Text('ok'.tr),
+//               onPressed: () {
+//                 if (controller.text.isNotEmpty) {
+//                   if (GetUtils.isPhoneNumber(controller.text)) {
+//                     phone = controller.text;
+//                     Navigator.pop(context);
+//                   } else {
+//                     CommonMethods()
+//                         .showMessage('message'.tr, 'enterValidPhone'.tr);
+//                   }
+//                 } else {
+//                   CommonMethods()
+//                       .showMessage('message'.tr, 'Enter your phone number');
+//                 }
+//               }),
+//         ],
+//       );
+//     },
+//   );
+//   return phone;
+// }
 }

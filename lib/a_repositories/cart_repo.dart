@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:tera/a_storage/network/products/products_service.dart';
 import 'package:tera/controllers/cart_controller.dart';
+import 'package:tera/data/requests/add_product_to_cart_request.dart';
 import 'package:tera/data/responses/cart_response.dart';
 import 'package:tera/data/responses/info_response.dart';
 import 'package:tera/data/responses/order_response.dart';
@@ -84,6 +85,33 @@ class CartRepo {
     ProductsService service = ProductsService.create();
     NetworkMethods().handleResponse(
       call: service.addRemoveCart(productId),
+      failed: (message) {
+        state(Failure(errorMessage: message));
+      },
+      whenSuccess: (response) {
+        try {
+          InfoResponse infoResponse = InfoResponse.fromJson(response.body);
+          if (infoResponse.status) {
+            Get.find<CartController>().getCartItems();
+            CommonMethods().showSnackBar(infoResponse.message);
+            state(Success());
+          } else {
+            CommonMethods().showSnackBar(infoResponse.message);
+            state(Failure(errorMessage: 'Failed to add or remove from Cart'));
+          }
+        } catch (e) {
+          print(e);
+          state(Failure(errorMessage: 'Failed to add or remove from Cart'));
+        }
+      },
+    );
+  }
+
+  addRemoveCartWithProperities(AddProductToCartRequest addProductToCartRequest,
+      {Function(DataResource dataResource) state}) async {
+    ProductsService service = ProductsService.create();
+    NetworkMethods().handleResponse(
+      call: service.addRemoveCartWithProperities(addProductToCartRequest),
       failed: (message) {
         state(Failure(errorMessage: message));
       },

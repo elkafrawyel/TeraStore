@@ -194,7 +194,7 @@ class RegisterScreen extends StatelessWidget {
       }
 
       _formKey.currentState.save();
-      await controller.register(nameController.text, emailController.text,
+      controller.register(nameController.text, emailController.text,
           phoneController.text, passwordController.text);
     }
   }

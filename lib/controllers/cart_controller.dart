@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:tera/a_repositories/cart_repo.dart';
 import 'package:tera/controllers/home_controller.dart';
 import 'package:tera/controllers/main_controller.dart';
+import 'package:tera/data/requests/add_product_to_cart_request.dart';
 import 'package:tera/data/responses/cart_response.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/data_resource.dart';
@@ -17,6 +18,16 @@ class CartController extends MainController {
     if (opRunning) return;
     opRunning = true;
     CartRepo().addRemoveCart(productId, state: state);
+    opRunning = false;
+  }
+
+  Future<void> addRemoveCartWithProperities(
+      AddProductToCartRequest addProductToCartRequest,
+      {Function(DataResource dataResource) state}) async {
+    if (opRunning) return;
+    opRunning = true;
+    CartRepo()
+        .addRemoveCartWithProperities(addProductToCartRequest, state: state);
     opRunning = false;
   }
 

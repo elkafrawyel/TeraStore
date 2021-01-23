@@ -71,19 +71,14 @@ class VErrors {
     String message;
     if (name != null) {
       message = name[0];
-      return;
     } else if (email != null) {
       message = email[0];
-      return;
     } else if (phone != null) {
       message = phone[0];
-      return;
     } else if (password != null) {
       message = password[0];
-      return;
     } else if (socialType != null) {
       message = socialType[0];
-      return;
     }
     CommonMethods().showSnackBar(
       message,

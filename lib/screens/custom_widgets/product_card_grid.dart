@@ -104,34 +104,44 @@ class ProductCardGrid extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             alignment: AlignmentDirectional.centerStart,
                           ),
-                          Row(
+                          Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Visibility(
-                                visible: product.discountType == 'percent',
-                                child: Text(
-                                  '\$${product.price}',
-                                  style: TextStyle(
-                                    fontSize: fontSizeSmall_16 - 2,
-                                    decoration: TextDecoration.lineThrough,
-                                    color: Colors.grey,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${product.discountPrice} $currency',
+                                    style: TextStyle(
+                                      fontSize: fontSizeSmall_16,
+                                      fontWeight: FontWeight.bold,
+                                      color: itemIndex.isEven
+                                          ? kBlueColor
+                                          : kSecondaryColor,
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
                               Visibility(
                                 visible: product.discountType == 'percent',
                                 child: SizedBox(
-                                  width: kDefaultPadding / 2,
+                                  height: kDefaultPadding / 4,
                                 ),
                               ),
-                              Text(
-                                '\$${product.discountPrice}',
-                                style: TextStyle(
-                                  fontSize: fontSizeSmall_16,
-                                  fontWeight: FontWeight.bold,
-                                  color: itemIndex.isEven
-                                      ? kBlueColor
-                                      : kSecondaryColor,
+                              Visibility(
+                                visible: product.discountType == 'percent',
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${product.price} $currency',
+                                      style: TextStyle(
+                                        fontSize: fontSizeSmall_16 - 2,
+                                        decoration: TextDecoration.lineThrough,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],

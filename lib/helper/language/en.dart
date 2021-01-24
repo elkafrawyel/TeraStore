@@ -144,4 +144,8 @@ Map<String, String> en = {
   'sellerInfo': 'Seller',
   'noOrders': 'You Have no previous orders',
   'quantity': 'Quantity',
+  'mainProp': 'Main Properities',
+  'subProp': 'Sub Properities',
+  'image': 'Image',
+  'mainImage': 'Main Product Image',
 };

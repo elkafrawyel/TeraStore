@@ -10,7 +10,6 @@ import 'package:tera/controllers/search_controller.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
 import 'package:tera/screens/about_screen.dart';
-import 'package:tera/screens/add_product_screen.dart';
 import 'package:tera/screens/cart_screen/cart_screen.dart';
 import 'package:tera/screens/custom_widgets/budget_cart_icon.dart';
 import 'package:tera/screens/custom_widgets/menus/custom_language_menu.dart';
@@ -22,6 +21,8 @@ import 'package:tera/screens/profile/profile_screen.dart';
 import 'package:tera/screens/search_screen/search_screen.dart';
 import 'package:tera/screens/settings_screen.dart';
 import 'package:tera/screens/shipping_address_screen.dart';
+
+import 'file:///F:/Apps/My%20Flutter%20Apps/TeraStore/lib/screens/add_product_screen/add_product_screen.dart';
 
 import 'components/body.dart';
 

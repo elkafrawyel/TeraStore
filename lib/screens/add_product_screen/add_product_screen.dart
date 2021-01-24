@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/controllers/add_product_controller.dart';
 import 'package:tera/controllers/home_controller.dart';
+import 'package:tera/data/models/sub_properity_model.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/Constant.dart';
 import 'package:tera/screens/custom_widgets/button/custom_button.dart';
@@ -13,7 +14,7 @@ import 'package:tera/screens/custom_widgets/custom_appbar.dart';
 import 'package:tera/screens/custom_widgets/menus/categories_drop_down_menu.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
-import 'custom_widgets/text/custom_outline_text_form_field.dart';
+import '../custom_widgets/text/custom_outline_text_form_field.dart';
 
 // ignore: must_be_immutable
 class AddProductScreen extends StatelessWidget {
@@ -32,6 +33,7 @@ class AddProductScreen extends StatelessWidget {
     homeController.categoryModel = null;
     homeController.subCategoryModel = null;
     controller.productImages.clear();
+    controller.properities.clear();
   }
 
   @override
@@ -169,7 +171,7 @@ class AddProductScreen extends StatelessWidget {
                     height: kDefaultPadding / 2,
                   ),
                   CustomText(
-                    text: 'Main Image',
+                    text: 'mainImage'.tr,
                     alignment: AlignmentDirectional.center,
                     fontSize: fontSizeBig_18,
                     color: Colors.grey.shade700,
@@ -243,7 +245,7 @@ class AddProductScreen extends StatelessWidget {
                       height: kDefaultPadding / 2,
                     ),
                     CustomText(
-                      text: 'Image $imageIndex',
+                      text: 'image'.tr + ' $imageIndex',
                       alignment: AlignmentDirectional.center,
                       fontSize: fontSizeBig_18,
                       color: Colors.grey.shade700,
@@ -363,9 +365,43 @@ class AddProductScreen extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 20,
+              height: kDefaultPadding,
             ),
             CategoriesDropDownMenu(),
+            SizedBox(
+              height: kDefaultPadding,
+            ),
+            Container(
+              height: 50,
+              child: RaisedButton.icon(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                onPressed: () async {
+                  String name = await _showMainProperityDialog();
+                  if (name != null) {
+                    controller.addMainProperity(name);
+                  }
+
+                  print(controller.properities.toString());
+                },
+                icon: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                label: CustomText(
+                  text: 'mainProp'.tr,
+                  color: Colors.white,
+                  alignment: AlignmentDirectional.center,
+                  fontSize: fontSizeBig_18,
+                ),
+                color: LocalStorage().primaryColor(),
+                textColor: Colors.white,
+              ),
+            ),
+            Visibility(
+              child: _properitiesView(),
+              visible: controller.properities.isNotEmpty,
+            ),
             SizedBox(
               height: 40,
             ),
@@ -388,18 +424,248 @@ class AddProductScreen extends StatelessWidget {
   }
 
   void _addProduct() {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    // controller.textEditingController.forEach((element) {
+    //   print(element.text + '\n');
+    // });
 
-      controller.addProduct(
-        nameController.text,
-        descController.text,
-        priceController.text,
-        discountPriceController.text.isEmpty
-            ? '0'
-            : discountPriceController.text,
-        countController.text,
+    // if (_formKey.currentState.validate()) {
+    //   _formKey.currentState.save();
+    //
+    //   controller.addProduct(
+    //     nameController.text,
+    //     descController.text,
+    //     priceController.text,
+    //     discountPriceController.text.isEmpty
+    //         ? '0'
+    //         : discountPriceController.text,
+    //     countController.text,
+    //   );
+    // }
+  }
+
+  Widget _properitiesView() {
+    List<Widget> widgets = [];
+    controller.properities.forEach((key, value) {
+      //Main Properity
+      widgets.add(_mainProperityView(key, value));
+    });
+    return Column(
+      children: widgets,
+    );
+  }
+
+  Widget _mainProperityView(String key, List<SubProperityModel> elements) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.only(
+          top: kDefaultPadding / 2,
+          start: kDefaultPadding / 2,
+          end: kDefaultPadding / 2),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(kDefaultPadding / 2),
+          color: Colors.white,
+        ),
+        width: MediaQuery.of(Get.context).size.width,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsetsDirectional.only(start: kDefaultPadding),
+                  child: CustomText(
+                    text: key,
+                    fontSize: fontSizeBig_18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.add,
+                        color: Colors.black,
+                      ),
+                      onPressed: () async {
+                        SubProperityModel subProperity =
+                            await _showSubProperityDialog();
+                        if (subProperity != null) {
+                          controller.addSubProperity(key, subProperity);
+                        }
+                        print(controller.properities.toString());
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.remove_circle,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        controller.removeMainProperity(key);
+                      },
+                    ),
+                  ],
+                )
+              ],
+            ),
+            _subProperityView(key, elements),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _subProperityView(String key, List<SubProperityModel> elements) {
+    List<Widget> widgets = [];
+
+    elements.forEach((element) {
+      widgets.add(
+        Padding(
+          padding: const EdgeInsetsDirectional.only(
+              top: kDefaultPadding / 2,
+              start: kDefaultPadding / 2,
+              end: kDefaultPadding / 2),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(kDefaultPadding / 2),
+              color: Colors.white,
+            ),
+            width: MediaQuery.of(Get.context).size.width,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(
+                          start: kDefaultPadding),
+                      child: CustomText(
+                        text: 'name'.tr +
+                            ' : ${element.name}\n' +
+                            'price'.tr +
+                            ' : ${element.price}',
+                        fontSize: fontSizeSmall_16,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.remove_circle,
+                            color: Colors.red,
+                          ),
+                          onPressed: () {
+                            controller.removeSubProperity(key, element);
+                          },
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
       );
-    }
+    });
+
+    return Column(
+      children: widgets,
+    );
+  }
+
+  Future<String> _showMainProperityDialog() async {
+    TextEditingController controller = TextEditingController();
+    String name;
+    await showDialog<String>(
+      barrierDismissible: true,
+      context: Get.context,
+      builder: (context) {
+        return AlertDialog(
+          title: CustomText(
+            text: 'mainProp'.tr,
+          ),
+          contentPadding: const EdgeInsets.all(16.0),
+          content: Row(
+            children: <Widget>[
+              Expanded(
+                child: new TextField(
+                  controller: controller,
+                  keyboardType: TextInputType.text,
+                  autofocus: true,
+                  decoration: new InputDecoration(
+                    hintText: 'name'.tr,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            FlatButton(
+                child: Text('ok'.tr),
+                onPressed: () {
+                  name = controller.text;
+                  Get.back();
+                }),
+          ],
+        );
+      },
+    );
+    return name;
+  }
+
+  Future<SubProperityModel> _showSubProperityDialog() async {
+    TextEditingController nameController = TextEditingController();
+    TextEditingController priceController = TextEditingController();
+    String name;
+    String price;
+    await showDialog<SubProperityModel>(
+      barrierDismissible: true,
+      context: Get.context,
+      builder: (context) {
+        return AlertDialog(
+          title: CustomText(
+            text: 'subProp'.tr,
+          ),
+          contentPadding: const EdgeInsets.all(16.0),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                controller: nameController,
+                keyboardType: TextInputType.text,
+                autofocus: true,
+                decoration: new InputDecoration(
+                  hintText: 'name'.tr,
+                ),
+              ),
+              SizedBox(
+                height: kDefaultPadding / 2,
+              ),
+              TextField(
+                controller: priceController,
+                keyboardType: TextInputType.number,
+                autofocus: true,
+                decoration: new InputDecoration(
+                  hintText: 'price'.tr,
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            FlatButton(
+                child: Text('ok'.tr),
+                onPressed: () {
+                  name = nameController.text;
+                  price = priceController.text;
+                  Get.back();
+                }),
+          ],
+        );
+      },
+    );
+    return SubProperityModel(name: name, price: price);
   }
 }

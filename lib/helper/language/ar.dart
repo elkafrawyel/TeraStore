@@ -143,4 +143,8 @@ Map<String, String> ar = {
   'sellerInfo': 'البائع',
   'noOrders': 'لا يوجد لديك طلبات سابقة',
   'quantity': 'الكمية',
+  'mainProp': 'الخصائص الرئيسية',
+  'subProp': 'الخصائص الفرعية',
+  'image': 'صورة',
+  'mainImage': 'الصورة الرئيسية للمنتج',
 };

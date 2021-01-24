@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:tera/a_repositories/product_repo.dart';
+import 'package:tera/data/models/sub_properity_model.dart';
 import 'package:tera/data/requests/add_product_request.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/data_resource.dart';
@@ -11,6 +12,33 @@ import 'home_controller.dart';
 import 'main_controller.dart';
 
 class AddProductController extends MainController {
+  Map<String, List<SubProperityModel>> properities = {};
+
+  addMainProperity(String name) {
+    properities.addAll({name: []});
+    update();
+  }
+
+  removeMainProperity(String name) {
+    properities.remove(name);
+    update();
+  }
+
+  void addSubProperity(String key, SubProperityModel subProperityModel) {
+    List<SubProperityModel> list = properities[key];
+    if (!list.contains(subProperityModel)) list.add(subProperityModel);
+    properities.addAll({key: list});
+
+    update();
+  }
+
+  void removeSubProperity(String key, SubProperityModel element) {
+    List<SubProperityModel> list = properities[key];
+    if (list.contains(element)) list.remove(element);
+    properities.addAll({key: list});
+    update();
+  }
+
   List<File> productImages = [];
   var controller = Get.find<HomeController>();
 

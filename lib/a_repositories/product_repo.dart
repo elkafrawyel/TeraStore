@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:tera/a_storage/network/products/products_service.dart';
 import 'package:tera/data/models/product_model.dart';
+import 'package:tera/data/requests/add_product_request.dart';
 import 'package:tera/data/responses/categories_with_sliders_response.dart';
 import 'package:tera/data/responses/info_response.dart';
 import 'package:tera/data/responses/product_details_response.dart';
@@ -165,19 +166,42 @@ class ProductRepo {
     );
   }
 
-  // //get products in same subCategory
-  // Future<List<DocumentSnapshot>> searchProducts(String searchText) async {
-  //   return [];
-  // }
-  //
-  // //get products in same subCategory
-  // Future<List<DocumentSnapshot>> getSimilarProducts(
-  //     String subCategoryId, String productId) async {
-  //   return [];
-  // }
-
-  addProduct(
-      ProductModel productModel, File image, Function(bool finish) callback) {}
+  addProduct(AddProductRequest addProductRequest, List<File> images,
+      {Function(DataResource dataResource) state}) {
+    ProductsService service = ProductsService.create();
+    NetworkMethods().handleResponse(
+      call: service.addProduct(
+        addProductRequest.subCategoryId,
+        addProductRequest.itemName,
+        addProductRequest.itemDescribe,
+        addProductRequest.itemPrice,
+        addProductRequest.discountValue,
+        addProductRequest.itemCount,
+        images[0].path,
+        images[1].path,
+        images[2].path,
+        images[3].path,
+        images[4].path,
+      ),
+      failed: (message) {
+        state(Failure(errorMessage: message));
+      },
+      whenSuccess: (response) {
+        try {
+          ProductDetailsResponse productDetailsResponse =
+              ProductDetailsResponse.fromJson(response.body);
+          if (productDetailsResponse.status) {
+            state(Success(data: productDetailsResponse));
+          } else {
+            state(Failure(errorMessage: 'Failed to Add Product'));
+          }
+        } catch (e) {
+          print(e);
+          state(Failure(errorMessage: 'Failed to Add Product'));
+        }
+      },
+    );
+  }
 
   editProduct(
       ProductModel productModel, File image, Function(bool finish) callback) {}

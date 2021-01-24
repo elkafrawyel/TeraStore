@@ -7,9 +7,11 @@ import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/controllers/add_product_controller.dart';
 import 'package:tera/controllers/home_controller.dart';
 import 'package:tera/helper/CommonMethods.dart';
+import 'package:tera/helper/Constant.dart';
 import 'package:tera/screens/custom_widgets/button/custom_button.dart';
 import 'package:tera/screens/custom_widgets/custom_appbar.dart';
 import 'package:tera/screens/custom_widgets/menus/categories_drop_down_menu.dart';
+import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 import 'custom_widgets/text/custom_outline_text_form_field.dart';
 
@@ -21,6 +23,7 @@ class AddProductScreen extends StatelessWidget {
   final TextEditingController descController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController discountPriceController = TextEditingController();
+  final TextEditingController countController = TextEditingController();
 
   final controller = Get.find<AddProductController>();
   final homeController = Get.find<HomeController>();
@@ -28,7 +31,7 @@ class AddProductScreen extends StatelessWidget {
   AddProductScreen() {
     homeController.categoryModel = null;
     homeController.subCategoryModel = null;
-    controller.productImage = null;
+    controller.productImages.clear();
   }
 
   @override
@@ -37,6 +40,7 @@ class AddProductScreen extends StatelessWidget {
       appBar: CustomAppBar(
         text: 'addProduct'.tr,
       ),
+      backgroundColor: Constants.backgroundColor,
       body: SingleChildScrollView(
         child: GetBuilder<AddProductController>(
           init: AddProductController(),
@@ -47,7 +51,7 @@ class AddProductScreen extends StatelessWidget {
                 child: Center(
                   child: Column(
                     children: [
-                      _productImage(controller),
+                      _buildImagesView(),
                       SizedBox(
                         height: 20,
                       ),
@@ -73,6 +77,10 @@ class AddProductScreen extends StatelessWidget {
   }
 
   void _showPicker() {
+    if (controller.productImages.length == 5) {
+      CommonMethods().showSnackBar('You can\'t add more than 5 images');
+      return;
+    }
     showModalBottomSheet(
         context: Get.context,
         builder: (BuildContext bc) {
@@ -113,33 +121,174 @@ class AddProductScreen extends StatelessWidget {
     controller.setProductImage(File(image.path));
   }
 
-  Widget _productImage(AddProductController controller) {
-    return GestureDetector(
-      onTap: () {
-        _showPicker();
-      },
-      child: controller.productImage == null
-          ? Container(
+  _buildImagesView() {
+    return Column(
+      children: [
+        _buildMainImage(),
+        SizedBox(
+          height: kDefaultPadding / 2,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildSingleImage(imageIndex: 1),
+            _buildSingleImage(imageIndex: 2),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildSingleImage(imageIndex: 3),
+            _buildSingleImage(imageIndex: 4),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _buildMainImage() {
+    return controller.productImages.isEmpty
+        ? GestureDetector(
+            onTap: () {
+              _showPicker();
+            },
+            child: Container(
+              alignment: AlignmentDirectional.center,
               decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(10)),
-              width: 200,
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              width: MediaQuery.of(Get.context).size.width / 2,
               height: 150,
-              child: Icon(
-                Icons.camera_alt,
-                color: Colors.grey[800],
-              ),
-            )
-          :
-          //Image
-          ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.file(
-                File(controller.productImage.path),
-                fit: BoxFit.contain,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.add_a_photo,
+                    color: Colors.grey.shade700,
+                  ),
+                  SizedBox(
+                    height: kDefaultPadding / 2,
+                  ),
+                  CustomText(
+                    text: 'Main Image',
+                    alignment: AlignmentDirectional.center,
+                    fontSize: fontSizeBig_18,
+                    color: Colors.grey.shade700,
+                  )
+                ],
               ),
             ),
-    );
+          )
+        : Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(kDefaultPadding / 2),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(kDefaultPadding / 2),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.file(
+                      File(controller.productImages[0].path),
+                      fit: BoxFit.contain,
+                      height: 200,
+                      width: MediaQuery.of(Get.context).size.width / 2,
+                    ),
+                  ),
+                ),
+              ),
+              PositionedDirectional(
+                child: IconButton(
+                  icon: Icon(
+                    Icons.remove_circle,
+                    color: Colors.red,
+                    size: 30,
+                  ),
+                  onPressed: () {
+                    controller.productImages.removeAt(0);
+                    controller.update();
+                  },
+                ),
+                end: 0,
+                top: 0,
+              )
+            ],
+          );
+  }
+
+  Widget _buildSingleImage({int imageIndex}) {
+    return controller.productImages.length <= imageIndex
+        ? GestureDetector(
+            onTap: () {
+              _showPicker();
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(kDefaultPadding / 4),
+              child: Container(
+                alignment: AlignmentDirectional.center,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(kDefaultPadding / 2),
+                ),
+                width: MediaQuery.of(Get.context).size.width / 2.5,
+                height: 150,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.add_a_photo,
+                      color: Colors.grey.shade700,
+                    ),
+                    SizedBox(
+                      height: kDefaultPadding / 2,
+                    ),
+                    CustomText(
+                      text: 'Image $imageIndex',
+                      alignment: AlignmentDirectional.center,
+                      fontSize: fontSizeBig_18,
+                      color: Colors.grey.shade700,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
+        : Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(kDefaultPadding / 2),
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(kDefaultPadding / 2)),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.file(
+                      File(controller.productImages[imageIndex].path),
+                      fit: BoxFit.contain,
+                      height: 150,
+                      width: MediaQuery.of(Get.context).size.width / 3,
+                    ),
+                  ),
+                ),
+              ),
+              PositionedDirectional(
+                child: IconButton(
+                  icon: Icon(
+                    Icons.remove_circle,
+                    color: Colors.red,
+                    size: 30,
+                  ),
+                  onPressed: () {
+                    controller.productImages.removeAt(imageIndex);
+                    controller.update();
+                  },
+                ),
+                end: 0,
+                top: 0,
+              )
+            ],
+          );
   }
 
   Widget _productDetailsForm() {
@@ -167,7 +316,18 @@ class AddProductScreen extends StatelessWidget {
               maxLines: 4,
               validateEmptyText: 'emptyDesc'.tr,
               keyboardType: TextInputType.text,
-              labelText: 'Description',
+              labelText: 'description'.tr,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomOutlinedTextFormField(
+              text: 'quantity'.tr,
+              hintText: 'quantity'.tr,
+              controller: countController,
+              validateEmptyText: 'emptyDesc'.tr,
+              keyboardType: TextInputType.text,
+              labelText: 'quantity'.tr,
             ),
             SizedBox(
               height: 20,
@@ -179,7 +339,7 @@ class AddProductScreen extends StatelessWidget {
                   width: MediaQuery.of(Get.context).size.width * 0.4,
                   child: CustomOutlinedTextFormField(
                     text: 'price'.tr,
-                    suffixText: '\$',
+                    suffixText: currency,
                     hintText: '0',
                     validateEmptyText: 'emptyPrice'.tr,
                     controller: priceController,
@@ -193,7 +353,8 @@ class AddProductScreen extends StatelessWidget {
                     text: 'discountPrice'.tr,
                     hintText: '0',
                     validateEmptyText: 'emptyPrice'.tr,
-                    suffixText: '\$',
+                    suffixText: currency,
+                    required: false,
                     controller: discountPriceController,
                     keyboardType: TextInputType.numberWithOptions(signed: true),
                     labelText: 'discountPrice'.tr,
@@ -230,14 +391,15 @@ class AddProductScreen extends StatelessWidget {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
 
-      try {
-        int price = int.parse(priceController.text);
-        int discountPrice = int.parse(discountPriceController.text);
-        controller.addProduct(
-            nameController.text, descController.text, price, discountPrice);
-      } catch (_) {
-        CommonMethods().showMessage('addProduct'.tr, 'invalidPrice'.tr);
-      }
+      controller.addProduct(
+        nameController.text,
+        descController.text,
+        priceController.text,
+        discountPriceController.text.isEmpty
+            ? '0'
+            : discountPriceController.text,
+        countController.text,
+      );
     }
   }
 }

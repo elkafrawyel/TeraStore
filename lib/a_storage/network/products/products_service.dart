@@ -58,14 +58,30 @@ abstract class ProductsService extends ChopperService {
   @Post(path: '/userCreateRateComment')
   Future<Response> addReview(@Body() AddReviewRequest addReviewRequest);
 
+  @Post(path: '/createItem')
+  @multipart
+  Future<Response> addProduct(
+    @Part('sub_cat_id') String subCategoryId,
+    @Part('itemName') String itemName,
+    @Part('itemDescribe') String itemDescribe,
+    @Part('itemPrice') String itemPrice,
+    @Part('discountValue') String discountValue,
+    @Part('itemCount') String itemCount,
+    @PartFile("itemImage") String itemImage,
+    @PartFile("image1") String image1,
+    @PartFile("image2") String image2,
+    @PartFile("image3") String image3,
+    @PartFile("image4") String image4,
+  );
+
   static ProductsService create() {
     String apiToken = LocalStorage().getString(LocalStorage.token);
     String language = LocalStorage().getLanguage();
     final client = ChopperClient(
       baseUrl: baseUrl,
       services: [_$ProductsService()],
-      converter: JsonConverter(),
       errorConverter: JsonConverter(),
+      converter: JsonConverter(),
       interceptors: [
         HttpLoggingInterceptor(),
         HeadersInterceptor(

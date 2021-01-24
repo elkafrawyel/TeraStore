@@ -125,4 +125,36 @@ class _$ProductsService extends ProductsService {
     final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> addProduct(
+      String subCategoryId,
+      String itemName,
+      String itemDescribe,
+      String itemPrice,
+      String discountValue,
+      String itemCount,
+      String itemImage,
+      String image1,
+      String image2,
+      String image3,
+      String image4) {
+    final $url = '/createItem';
+    final $parts = <PartValue>[
+      PartValue<String>('sub_cat_id', subCategoryId),
+      PartValue<String>('itemName', itemName),
+      PartValue<String>('itemDescribe', itemDescribe),
+      PartValue<String>('itemPrice', itemPrice),
+      PartValue<String>('discountValue', discountValue),
+      PartValue<String>('itemCount', itemCount),
+      PartValueFile<String>('itemImage', itemImage),
+      PartValueFile<String>('image1', image1),
+      PartValueFile<String>('image2', image2),
+      PartValueFile<String>('image3', image3),
+      PartValueFile<String>('image4', image4)
+    ];
+    final $request =
+        Request('POST', $url, client.baseUrl, parts: $parts, multipart: true);
+    return client.send<dynamic, dynamic>($request);
+  }
 }

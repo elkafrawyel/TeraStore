@@ -86,6 +86,8 @@ class HomeController extends MainController {
 
   setCategoryModel(CategoryModel model, {String subCategoryIdToSelect}) async {
     categoryModel = model;
+    subCategories = categoryModel.subCategories;
+    subCategoryModel = null;
     update();
   }
 

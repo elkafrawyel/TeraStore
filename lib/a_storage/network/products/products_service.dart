@@ -68,10 +68,7 @@ abstract class ProductsService extends ChopperService {
     @Part('discountValue') String discountValue,
     @Part('itemCount') String itemCount,
     @PartFile("itemImage") String itemImage,
-    @PartFile("image1") String image1,
-    @PartFile("image2") String image2,
-    @PartFile("image3") String image3,
-    @PartFile("image4") String image4,
+    @PartFile("otherItemImages[]") String otherItemImages,
   );
 
   static ProductsService create() {

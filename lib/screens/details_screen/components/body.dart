@@ -316,7 +316,7 @@ class Body extends StatelessWidget {
     AddProductToCartRequest addProductToCartRequest = AddProductToCartRequest(
         productId: product.id.toString(),
         productTotalPrice: controller.disCountPrice.round().toString(),
-        productPropDescription: desc);
+        productPropDescription: desc.trim());
 
     Get.find<CartController>().addRemoveCartWithProperities(
       addProductToCartRequest,

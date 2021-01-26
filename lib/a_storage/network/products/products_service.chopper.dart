@@ -135,10 +135,7 @@ class _$ProductsService extends ProductsService {
       String discountValue,
       String itemCount,
       String itemImage,
-      String image1,
-      String image2,
-      String image3,
-      String image4) {
+      String otherItemImages) {
     final $url = '/createItem';
     final $parts = <PartValue>[
       PartValue<String>('sub_cat_id', subCategoryId),
@@ -148,10 +145,7 @@ class _$ProductsService extends ProductsService {
       PartValue<String>('discountValue', discountValue),
       PartValue<String>('itemCount', itemCount),
       PartValueFile<String>('itemImage', itemImage),
-      PartValueFile<String>('image1', image1),
-      PartValueFile<String>('image2', image2),
-      PartValueFile<String>('image3', image3),
-      PartValueFile<String>('image4', image4)
+      PartValueFile<String>('otherItemImages[]', otherItemImages)
     ];
     final $request =
         Request('POST', $url, client.baseUrl, parts: $parts, multipart: true);

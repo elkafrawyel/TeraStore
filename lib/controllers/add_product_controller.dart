@@ -54,7 +54,7 @@ class AddProductController extends MainController {
     String discountPrice,
     String quantity,
   ) {
-    if (productImages.isEmpty) {
+    if (productImages.length < 2) {
       CommonMethods().showSnackBar('selectImage'.tr);
       return;
     }
@@ -84,15 +84,18 @@ class AddProductController extends MainController {
           itemName: name,
           itemPrice: price),
       productImages,
+      properities,
       state: (dataResource) {
         if (dataResource is Success) {
           loading.value = false;
           update();
           Get.offAll(HomeScreen());
-          controller.filterProducts();
-          CommonMethods().showSnackBar(name + 'created'.tr);
+          CommonMethods().showSnackBar('$name ' + 'created'.tr);
         } else if (dataResource is Failure) {
+          loading.value = false;
+          update();
           print(dataResource.errorMessage);
+          CommonMethods().showSnackBar('error'.tr);
         }
       },
     );

@@ -17,6 +17,7 @@ dependencies:
   cupertino_icons:
   get:
   chopper:
+  dio:
   google_sign_in:
   firebase_auth:
   firebase_core:

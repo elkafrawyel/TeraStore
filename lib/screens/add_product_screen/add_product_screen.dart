@@ -23,7 +23,7 @@ class AddProductScreen extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
-  final TextEditingController discountPriceController = TextEditingController();
+  final TextEditingController discountValueController = TextEditingController();
   final TextEditingController countController = TextEditingController();
 
   final controller = Get.find<AddProductController>();
@@ -328,7 +328,7 @@ class AddProductScreen extends StatelessWidget {
               hintText: 'quantity'.tr,
               controller: countController,
               validateEmptyText: 'emptyDesc'.tr,
-              keyboardType: TextInputType.text,
+              keyboardType: TextInputType.number,
               labelText: 'quantity'.tr,
             ),
             SizedBox(
@@ -352,12 +352,10 @@ class AddProductScreen extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(Get.context).size.width * 0.4,
                   child: CustomOutlinedTextFormField(
-                    text: 'discountPrice'.tr,
+                    text: 'discountValue'.tr,
                     hintText: '0',
-                    validateEmptyText: 'emptyPrice'.tr,
-                    suffixText: currency,
                     required: false,
-                    controller: discountPriceController,
+                    controller: discountValueController,
                     keyboardType: TextInputType.numberWithOptions(signed: true),
                     labelText: 'discountPrice'.tr,
                   ),
@@ -424,23 +422,30 @@ class AddProductScreen extends StatelessWidget {
   }
 
   void _addProduct() {
-    // controller.textEditingController.forEach((element) {
-    //   print(element.text + '\n');
-    // });
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      try {
+        String discountValue;
+        if (discountValueController.text.isEmpty) {
+          discountValue = '0';
+        } else {
+          int value = int.parse(discountValueController.text);
+          value >= 100
+              ? CommonMethods().showSnackBar('discountBelow100'.tr)
+              : discountValue = value.toString();
+        }
 
-    // if (_formKey.currentState.validate()) {
-    //   _formKey.currentState.save();
-    //
-    //   controller.addProduct(
-    //     nameController.text,
-    //     descController.text,
-    //     priceController.text,
-    //     discountPriceController.text.isEmpty
-    //         ? '0'
-    //         : discountPriceController.text,
-    //     countController.text,
-    //   );
-    // }
+        controller.addProduct(
+          nameController.text,
+          descController.text,
+          priceController.text,
+          discountValue,
+          countController.text,
+        );
+      } catch (_) {
+        CommonMethods().showSnackBar('invalidNumber'.tr);
+      }
+    }
   }
 
   Widget _properitiesView() {

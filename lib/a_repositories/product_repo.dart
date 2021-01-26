@@ -1,7 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart' as dioService;
+import 'package:dio/dio.dart';
+import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/a_storage/network/products/products_service.dart';
 import 'package:tera/data/models/product_model.dart';
+import 'package:tera/data/models/sub_properity_model.dart';
 import 'package:tera/data/requests/add_product_request.dart';
 import 'package:tera/data/responses/categories_with_sliders_response.dart';
 import 'package:tera/data/responses/info_response.dart';
@@ -167,40 +172,81 @@ class ProductRepo {
   }
 
   addProduct(AddProductRequest addProductRequest, List<File> images,
-      {Function(DataResource dataResource) state}) {
-    ProductsService service = ProductsService.create();
-    NetworkMethods().handleResponse(
-      call: service.addProduct(
-        addProductRequest.subCategoryId,
-        addProductRequest.itemName,
-        addProductRequest.itemDescribe,
-        addProductRequest.itemPrice,
-        addProductRequest.discountValue,
-        addProductRequest.itemCount,
-        images[0].path,
-        images[1].path,
-        images[2].path,
-        images[3].path,
-        images[4].path,
-      ),
-      failed: (message) {
-        state(Failure(errorMessage: message));
-      },
-      whenSuccess: (response) {
-        try {
-          ProductDetailsResponse productDetailsResponse =
-              ProductDetailsResponse.fromJson(response.body);
-          if (productDetailsResponse.status) {
-            state(Success(data: productDetailsResponse));
-          } else {
-            state(Failure(errorMessage: 'Failed to Add Product'));
-          }
-        } catch (e) {
-          print(e);
+      Map<String, List<SubProperityModel>> properities,
+      {Function(DataResource dataResource) state}) async {
+    dioService.Dio dio = dioService.Dio();
+
+    List<dioService.MultipartFile> files = [];
+    for (int i = 0; i < images.length; i++) {
+      files.add(
+        await dioService.MultipartFile.fromFile(images[i].path),
+      );
+    }
+
+    String properitiesString;
+    try {
+      print(properities.toString());
+      properitiesString = jsonEncode(properities);
+      print(properitiesString);
+    } catch (e) {
+      print(e);
+    }
+
+    dioService.FormData formData = dioService.FormData.fromMap({
+      "sub_cat_id": addProductRequest.subCategoryId,
+      "itemName": addProductRequest.itemName,
+      "itemDescribe": addProductRequest.itemDescribe,
+      "itemPrice": addProductRequest.itemPrice,
+      "properities": properitiesString,
+      "discountValue": addProductRequest.discountValue,
+      "itemCount": addProductRequest.itemCount,
+      "itemImage": await dioService.MultipartFile.fromFile(images[0].path),
+      "otherItemImages": files
+    });
+
+    String apiToken = LocalStorage().getString(LocalStorage.token);
+    String language = LocalStorage().getLanguage();
+
+    dio.interceptors
+        .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
+      options.baseUrl = 'https://xx.hmaserv.online/pshop/api';
+      options.headers = {
+        HttpHeaders.acceptHeader: 'application/json',
+        HttpHeaders.cacheControlHeader: 'no-Cache',
+        HttpHeaders.acceptLanguageHeader: language,
+        HttpHeaders.authorizationHeader: 'Bearer $apiToken'
+      };
+      options.responseType = ResponseType.json;
+      options.contentType = 'application/json';
+      return options;
+    }, onResponse: (Response response) async {
+      print('Dio Response ${response.data.toString()}');
+      return response;
+    }, onError: (DioError e) async {
+      print('Error $e');
+      return e;
+    }));
+
+    dioService.Response response = await dio.post(
+      "/createItem",
+      data: formData,
+    );
+
+    if (response.statusCode == 200) {
+      try {
+        InfoResponse infoResponse = InfoResponse.fromJson(response.data);
+        if (infoResponse.status) {
+          state(Success());
+        } else {
           state(Failure(errorMessage: 'Failed to Add Product'));
         }
-      },
-    );
+      } catch (e) {
+        print(e);
+        state(Failure(errorMessage: 'Failed to Add Product'));
+      }
+    } else {
+      state(Failure(errorMessage: 'Failed to Add Product'));
+    }
   }
 
   editProduct(

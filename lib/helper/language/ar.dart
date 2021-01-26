@@ -147,4 +147,7 @@ Map<String, String> ar = {
   'subProp': 'الخصائص الفرعية',
   'image': 'صورة',
   'mainImage': 'الصورة الرئيسية للمنتج',
+  'discountValue': 'نسبة الخصم',
+  'invalidNumber': 'رقم غير صحيح',
+  'discountBelow100': 'نسبة الخصم يجب ان تكون اقل من 100',
 };

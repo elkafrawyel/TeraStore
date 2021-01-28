@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/data/models/product_model.dart';
@@ -111,7 +112,7 @@ class ProductCardGrid extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '${product.discountPrice} $currency',
+                                    '${product.discountPrice} ' + 'currency'.tr,
                                     style: TextStyle(
                                       fontSize: fontSizeSmall_16,
                                       fontWeight: FontWeight.bold,
@@ -134,7 +135,7 @@ class ProductCardGrid extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '${product.price} $currency',
+                                      '${product.price} ' + 'currency'.tr,
                                       style: TextStyle(
                                         fontSize: fontSizeSmall_16 - 2,
                                         decoration: TextDecoration.lineThrough,

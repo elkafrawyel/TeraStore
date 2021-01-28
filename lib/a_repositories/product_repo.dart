@@ -12,6 +12,7 @@ import 'package:tera/data/responses/categories_with_sliders_response.dart';
 import 'package:tera/data/responses/info_response.dart';
 import 'package:tera/data/responses/product_details_response.dart';
 import 'package:tera/data/responses/product_filter_response.dart';
+import 'package:tera/data/responses/seller_info_response.dart';
 import 'package:tera/helper/CommonMethods.dart';
 import 'package:tera/helper/data_resource.dart';
 import 'package:tera/helper/network_methods.dart';
@@ -35,6 +36,30 @@ class ProductRepo {
         } catch (e) {
           print(e);
           state(Failure(errorMessage: 'Failed to get categories and sliders'));
+        }
+      },
+    );
+  }
+
+  deleteProduct(String productId,
+      {Function(DataResource dataResource) state}) async {
+    ProductsService service = ProductsService.create();
+    NetworkMethods().handleResponse(
+      call: service.deleteProduct(productId),
+      failed: (message) {
+        state(Failure(errorMessage: message));
+      },
+      whenSuccess: (response) {
+        try {
+          InfoResponse infoResponse = InfoResponse.fromJson(response.body);
+          if (infoResponse.status) {
+            state(Success());
+          } else {
+            state(Failure(errorMessage: 'Failed to delete products'));
+          }
+        } catch (e) {
+          print(e);
+          state(Failure(errorMessage: 'Failed to delete products'));
         }
       },
     );
@@ -64,6 +89,86 @@ class ProductRepo {
         } catch (e) {
           print(e);
           state(Failure(errorMessage: 'Failed to Filter Products'));
+        }
+      },
+    );
+  }
+
+  getMyProducts({
+    Function(DataResource dataResource) state,
+  }) async {
+    ProductsService service = ProductsService.create();
+    NetworkMethods().handleResponse(
+      call: service.myProducts(),
+      failed: (message) {
+        state(Failure(errorMessage: message));
+      },
+      whenSuccess: (response) {
+        try {
+          ProductsResponse myProductResponse =
+              ProductsResponse.fromJson(response.body);
+          if (myProductResponse.status) {
+            state(Success(data: myProductResponse.data));
+          } else {
+            state(Failure(errorMessage: 'Failed to get my  Products'));
+          }
+        } catch (e) {
+          print(e);
+          state(Failure(errorMessage: 'Failed to get my Products'));
+        }
+      },
+    );
+  }
+
+  getSellerProducts({
+    String userId,
+    Function(DataResource dataResource) state,
+  }) async {
+    ProductsService service = ProductsService.create();
+    NetworkMethods().handleResponse(
+      call: service.getSellerProducts(userId),
+      failed: (message) {
+        state(Failure(errorMessage: message));
+      },
+      whenSuccess: (response) {
+        try {
+          ProductsResponse sellerProducts =
+              ProductsResponse.fromJson(response.body);
+          if (sellerProducts.status) {
+            state(Success(data: sellerProducts.data));
+          } else {
+            state(Failure(errorMessage: 'Failed to get seller Products'));
+          }
+        } catch (e) {
+          print(e);
+          state(Failure(errorMessage: 'Failed to get seller Products'));
+        }
+      },
+    );
+  }
+
+  getSellerInformation({
+    String userId,
+    Function(DataResource dataResource) state,
+  }) async {
+    ProductsService service = ProductsService.create();
+    NetworkMethods().handleResponse(
+      call: service.getSellerInformation(userId),
+      failed: (message) {
+        state(Failure(errorMessage: message));
+      },
+      whenSuccess: (response) {
+        try {
+          SellerInfoResponse sellerInfoResponse =
+              SellerInfoResponse.fromJson(response.body);
+          if (sellerInfoResponse.status) {
+            state(Success(data: sellerInfoResponse.information));
+          } else {
+            state(Failure(errorMessage: 'Failed to get seller information'));
+          }
+        } catch (e) {
+          print(e);
+          state(Failure(errorMessage: 'Failed to get seller information'));
         }
       },
     );
@@ -251,6 +356,4 @@ class ProductRepo {
 
   editProduct(
       ProductModel productModel, File image, Function(bool finish) callback) {}
-
-  deleteProduct(String productId) async {}
 }

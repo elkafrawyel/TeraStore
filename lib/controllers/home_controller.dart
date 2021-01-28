@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:tera/a_repositories/product_repo.dart';
 import 'package:tera/controllers/main_controller.dart';
 import 'package:tera/data/models/category_model.dart';
@@ -9,11 +10,12 @@ import 'package:tera/helper/Constant.dart';
 import 'package:tera/helper/data_resource.dart';
 
 class HomeController extends MainController {
+  final drawerController = ZoomDrawerController();
   //============================= Filter ===========================
 
   ProductFilters filter = ProductFilters.Latest;
   double lowerValue = 0;
-  double upperValue = 1000;
+  double upperValue = 20000;
   List<ProductModel> filteredProducts = [];
 
   Future<void> filterProducts() async {

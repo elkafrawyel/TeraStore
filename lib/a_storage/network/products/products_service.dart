@@ -17,6 +17,9 @@ abstract class ProductsService extends ChopperService {
   Future<Response> productsFilter(@Path() String filterKey,
       @Query('min') String min, @Query('max') String max);
 
+  @Get(path: '/myItems')
+  Future<Response> myProducts();
+
   @Get(path: '/products/{subCategoryId}')
   Future<Response> getProductsByInCategory(@Path() String subCategoryId);
 
@@ -55,21 +58,17 @@ abstract class ProductsService extends ChopperService {
   @Get(path: '/deleteOrder/{orderId}')
   Future<Response> deleteOrder(@Path() String orderId);
 
+  @Get(path: '/deleteItem/{productId}')
+  Future<Response> deleteProduct(@Path() String productId);
+
+  @Get(path: '/sellerItems/{userId}')
+  Future<Response> getSellerProducts(@Path() String userId);
+
+  @Get(path: '/personalItemsInfo/{userId}')
+  Future<Response> getSellerInformation(@Path() String userId);
+
   @Post(path: '/userCreateRateComment')
   Future<Response> addReview(@Body() AddReviewRequest addReviewRequest);
-
-  @Post(path: '/createItem')
-  @multipart
-  Future<Response> addProduct(
-    @Part('sub_cat_id') String subCategoryId,
-    @Part('itemName') String itemName,
-    @Part('itemDescribe') String itemDescribe,
-    @Part('itemPrice') String itemPrice,
-    @Part('discountValue') String discountValue,
-    @Part('itemCount') String itemCount,
-    @PartFile("itemImage") String itemImage,
-    @PartFile("otherItemImages[]") String otherItemImages,
-  );
 
   static ProductsService create() {
     String apiToken = LocalStorage().getString(LocalStorage.token);

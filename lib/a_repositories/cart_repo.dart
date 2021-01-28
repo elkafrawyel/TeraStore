@@ -70,11 +70,11 @@ class CartRepo {
           if (infoResponse.status) {
             state(Success());
           } else {
-            state(Failure(errorMessage: 'Failed to get My Orders'));
+            state(Failure(errorMessage: 'Failed to delete Orders'));
           }
         } catch (e) {
           print(e);
-          state(Failure(errorMessage: 'Failed to get My Orders'));
+          state(Failure(errorMessage: 'Failed to delete Orders'));
         }
       },
     );

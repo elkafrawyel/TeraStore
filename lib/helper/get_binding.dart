@@ -12,6 +12,7 @@ import 'package:tera/controllers/product_details_controller.dart';
 import 'package:tera/controllers/products_controller.dart';
 import 'package:tera/controllers/profile_controller.dart';
 import 'package:tera/controllers/search_controller.dart';
+import 'package:tera/controllers/seller_controller.dart';
 
 class GetBinding implements Bindings {
   @override
@@ -38,5 +39,6 @@ class GetBinding implements Bindings {
     Get.lazyPut(() => EditProductController());
     Get.lazyPut(() => ProfileController());
     Get.lazyPut(() => OrdersController());
+    Get.lazyPut(() => SellerController());
   }
 }

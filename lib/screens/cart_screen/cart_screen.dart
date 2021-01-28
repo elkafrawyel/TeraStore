@@ -286,7 +286,7 @@ class CartScreen extends StatelessWidget {
                               child: CustomText(
                                 alignment: AlignmentDirectional.topStart,
                                 text: cartItem.itemPriceAfterDis.toString() +
-                                    ' $currency',
+                                    'currency'.tr,
                                 fontSize: fontSizeSmall_16,
                               ),
                             ),
@@ -314,7 +314,7 @@ class CartScreen extends StatelessWidget {
                                             kDefaultPadding / 2),
                                         child: Icon(
                                           Icons.add,
-                                          size: 30,
+                                          size: 20,
                                           color: Colors.white,
                                         )),
                                   ),
@@ -324,7 +324,7 @@ class CartScreen extends StatelessWidget {
                                     child: CustomText(
                                       text: cartItem.cartItemCount.toString(),
                                       fontWeight: FontWeight.bold,
-                                      fontSize: fontSizeSmall_16,
+                                      fontSize: fontSizeSmall_16 - 2,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -337,7 +337,7 @@ class CartScreen extends StatelessWidget {
                                             kDefaultPadding / 2),
                                         child: Icon(
                                           Icons.remove,
-                                          size: 30,
+                                          size: 20,
                                           color: Colors.white,
                                         )),
                                   ),

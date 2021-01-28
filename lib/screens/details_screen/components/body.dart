@@ -115,7 +115,7 @@ class Body extends StatelessWidget {
                           vertical: kDefaultPadding / 2),
                       child: CustomText(
                         text: product.itemName,
-                        fontSize: fontSizeLarge_20,
+                        fontSize: fontSizeBig_18,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       )),
@@ -124,8 +124,9 @@ class Body extends StatelessWidget {
                         start: kDefaultPadding),
                     child: CustomText(
                       text:
-                          '${controller.disCountPrice == 0 ? product.itemPriceAfterDis : controller.disCountPrice} $currency',
-                      fontSize: fontSizeSmall_16,
+                          '${controller.disCountPrice == 0 ? product.itemPriceAfterDis : controller.disCountPrice} ' +
+                              'currency'.tr,
+                      fontSize: fontSizeSmall_16 - 2,
                       alignment: AlignmentDirectional.centerStart,
                       fontWeight: FontWeight.bold,
                       color: Colors.amber,
@@ -140,9 +141,10 @@ class Body extends StatelessWidget {
                     child: Container(
                       alignment: AlignmentDirectional.centerStart,
                       child: Text(
-                        '${controller.price == 0 ? product.itemPrice : controller.price} $currency',
+                        '${controller.price == 0 ? product.itemPrice : controller.price} ' +
+                            'currency'.tr,
                         style: TextStyle(
-                          fontSize: fontSizeSmall_16 - 2,
+                          fontSize: fontSizeSmall_16 - 4,
                           decoration: TextDecoration.lineThrough,
                           color: Colors.white,
                         ),
@@ -150,7 +152,26 @@ class Body extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: kDefaultPadding,
+                    height: kDefaultPadding / 2,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        alignment: AlignmentDirectional.centerStart,
+                        width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                              start: kDefaultPadding,
+                              end: kDefaultPadding,
+                              bottom: kDefaultPadding),
+                          child: Divider(
+                            thickness: 1,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -165,7 +186,7 @@ class Body extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width / 2,
+                      // width: MediaQuery.of(context).size.width / 2,
                       height: 50,
                       child: RaisedButton.icon(
                         color: LocalStorage().primaryColor(),
@@ -184,7 +205,7 @@ class Body extends StatelessWidget {
                         label: CustomText(
                           text: 'addToCart'.tr,
                           alignment: AlignmentDirectional.center,
-                          fontSize: fontSizeBig_18,
+                          fontSize: fontSizeSmall_16,
                           color: Colors.white,
                         ),
                       ),
@@ -417,7 +438,7 @@ class Body extends StatelessWidget {
             padding: const EdgeInsetsDirectional.only(start: kDefaultPadding),
             child: CustomText(
                 text: properity.itemPropertyName,
-                fontSize: fontSizeBig_18,
+                fontSize: fontSizeSmall_16,
                 color: Colors.white),
           ),
         );

@@ -33,6 +33,13 @@ class _$ProductsService extends ProductsService {
   }
 
   @override
+  Future<Response<dynamic>> myProducts() {
+    final $url = '/myItems';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<dynamic>> getProductsByInCategory(String subCategoryId) {
     final $url = '/products/$subCategoryId';
     final $request = Request('GET', $url, client.baseUrl);
@@ -119,36 +126,31 @@ class _$ProductsService extends ProductsService {
   }
 
   @override
-  Future<Response<dynamic>> addReview(AddReviewRequest addReviewRequest) {
-    final $url = '/userCreateRateComment';
-    final $body = addReviewRequest;
-    final $request = Request('POST', $url, client.baseUrl, body: $body);
+  Future<Response<dynamic>> deleteProduct(String productId) {
+    final $url = '/deleteItem/$productId';
+    final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
-  Future<Response<dynamic>> addProduct(
-      String subCategoryId,
-      String itemName,
-      String itemDescribe,
-      String itemPrice,
-      String discountValue,
-      String itemCount,
-      String itemImage,
-      String otherItemImages) {
-    final $url = '/createItem';
-    final $parts = <PartValue>[
-      PartValue<String>('sub_cat_id', subCategoryId),
-      PartValue<String>('itemName', itemName),
-      PartValue<String>('itemDescribe', itemDescribe),
-      PartValue<String>('itemPrice', itemPrice),
-      PartValue<String>('discountValue', discountValue),
-      PartValue<String>('itemCount', itemCount),
-      PartValueFile<String>('itemImage', itemImage),
-      PartValueFile<String>('otherItemImages[]', otherItemImages)
-    ];
-    final $request =
-        Request('POST', $url, client.baseUrl, parts: $parts, multipart: true);
+  Future<Response<dynamic>> getSellerProducts(String userId) {
+    final $url = '/sellerItems/$userId';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getSellerInformation(String userId) {
+    final $url = '/personalItemsInfo/$userId';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> addReview(AddReviewRequest addReviewRequest) {
+    final $url = '/userCreateRateComment';
+    final $body = addReviewRequest;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<dynamic, dynamic>($request);
   }
 }

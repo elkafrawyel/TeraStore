@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/data/models/product_model.dart';
@@ -238,7 +239,7 @@ class ProductCard extends StatelessWidget {
                     Visibility(
                       visible: product.discountType == 'percent',
                       child: Text(
-                        '${product.price} $currency',
+                        '${product.price} ' + 'currency'.tr,
                         style: TextStyle(
                           fontSize: fontSizeSmall_16 - 2,
                           decoration: TextDecoration.lineThrough,
@@ -253,7 +254,7 @@ class ProductCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${product.discountPrice} $currency',
+                      '${product.discountPrice} ' + 'currency'.tr,
                       style: TextStyle(
                         fontSize: fontSizeSmall_16,
                         fontWeight: FontWeight.bold,

@@ -7,6 +7,8 @@ import 'package:tera/helper/Constant.dart';
 import 'package:tera/screens/custom_widgets/custom_appbar.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
+import 'custom_widgets/menus/custom_language_menu.dart';
+
 class SettingsScreen extends StatefulWidget {
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -28,19 +30,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
   _body() {
     return Container(
       color: Colors.white,
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsetsDirectional.only(
-                top: kDefaultPadding,
-                start: kDefaultPadding,
-                end: kDefaultPadding),
-            child: Row(
+      child: Padding(
+        padding: const EdgeInsets.all(kDefaultPadding / 2),
+        child: Column(
+          children: [
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomText(
                   text: 'notifications'.tr,
-                  fontSize: 20,
+                  fontSize: fontSizeSmall_16,
                 ),
                 Switch(
                   value: LocalStorage().getBool(LocalStorage.notifications),
@@ -53,38 +52,55 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ],
             ),
-          ),
-          SizedBox(
-            height: kDefaultPadding / 2,
-          ),
-          Padding(
-            padding: EdgeInsetsDirectional.only(
-                top: kDefaultPadding,
-                start: kDefaultPadding,
-                end: kDefaultPadding),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomText(
-                  text: 'appColor'.tr,
-                  fontSize: 18,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _pickColorDialog();
-                  },
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Get.find<MainController>().primaryColor),
-                  ),
-                )
-              ],
+            SizedBox(
+              height: kDefaultPadding / 2,
             ),
-          ),
-        ],
+            Padding(
+              padding: EdgeInsetsDirectional.only(
+                top: kDefaultPadding,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomText(
+                    text: 'labelSelectLanguage'.tr,
+                    fontSize: fontSizeSmall_16,
+                  ),
+                  CustomLanguageMenu(),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: kDefaultPadding / 2,
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.only(
+                top: kDefaultPadding,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomText(
+                    text: 'appColor'.tr,
+                    fontSize: fontSizeSmall_16,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _pickColorDialog();
+                    },
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Get.find<MainController>().primaryColor),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

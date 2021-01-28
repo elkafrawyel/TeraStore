@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tera/controllers/main_controller.dart';
 import 'package:tera/helper/language/language_model.dart';
+import 'package:tera/screens/home_screen/home_screen.dart';
 
 class CustomLanguageMenu extends StatelessWidget {
   @override
@@ -13,6 +14,7 @@ class CustomLanguageMenu extends StatelessWidget {
         onChanged: (LanguageData language) {
           controller.changeLanguage(language.languageCode);
           Get.updateLocale(Locale(language.languageCode));
+          Get.offAll(HomeScreen(), transition: Transition.zoom);
         },
         value: controller.getSelectedLanguage(),
         items: controller.languageList

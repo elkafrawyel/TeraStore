@@ -41,13 +41,15 @@ dependencies:
   toggle_switch:
   flutter_xlider:
   expandable:
+  kt_drawer_menu:
+  flutter_zoom_drawer:
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner:
   chopper_generator:
-
 flutter_icons:
   android: true
   ios: true

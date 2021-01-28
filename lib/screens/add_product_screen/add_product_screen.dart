@@ -55,7 +55,7 @@ class AddProductScreen extends StatelessWidget {
                     children: [
                       _buildImagesView(),
                       SizedBox(
-                        height: 20,
+                        height: kDefaultPadding,
                       ),
                       _productDetailsForm()
                     ],
@@ -173,7 +173,7 @@ class AddProductScreen extends StatelessWidget {
                   CustomText(
                     text: 'mainImage'.tr,
                     alignment: AlignmentDirectional.center,
-                    fontSize: fontSizeBig_18,
+                    fontSize: fontSizeSmall_16 - 2,
                     color: Colors.grey.shade700,
                   )
                 ],
@@ -247,7 +247,7 @@ class AddProductScreen extends StatelessWidget {
                     CustomText(
                       text: 'image'.tr + ' $imageIndex',
                       alignment: AlignmentDirectional.center,
-                      fontSize: fontSizeBig_18,
+                      fontSize: fontSizeSmall_16 - 2,
                       color: Colors.grey.shade700,
                     )
                   ],
@@ -341,7 +341,7 @@ class AddProductScreen extends StatelessWidget {
                   width: MediaQuery.of(Get.context).size.width * 0.4,
                   child: CustomOutlinedTextFormField(
                     text: 'price'.tr,
-                    suffixText: currency,
+                    suffixText: 'currency'.tr,
                     hintText: '0',
                     validateEmptyText: 'emptyPrice'.tr,
                     controller: priceController,
@@ -390,7 +390,7 @@ class AddProductScreen extends StatelessWidget {
                   text: 'mainProp'.tr,
                   color: Colors.white,
                   alignment: AlignmentDirectional.center,
-                  fontSize: fontSizeBig_18,
+                  fontSize: fontSizeSmall_16,
                 ),
                 color: LocalStorage().primaryColor(),
                 textColor: Colors.white,
@@ -481,8 +481,7 @@ class AddProductScreen extends StatelessWidget {
                       const EdgeInsetsDirectional.only(start: kDefaultPadding),
                   child: CustomText(
                     text: key,
-                    fontSize: fontSizeBig_18,
-                    fontWeight: FontWeight.bold,
+                    fontSize: fontSizeSmall_16,
                   ),
                 ),
                 Row(

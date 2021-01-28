@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/data/models/product_model.dart';
 import 'package:tera/data/models/user_model.dart';
+import 'package:tera/data/responses/seller_info_response.dart';
 import 'package:tera/helper/Constant.dart';
 import 'package:tera/screens/change_password_screen.dart';
 import 'package:tera/screens/custom_widgets/button/custom_outlined_button.dart';
@@ -14,8 +15,9 @@ import 'package:tera/screens/profile/components/my_product_card.dart';
 class Body extends StatelessWidget {
   final List<ProductModel> products;
   final UserModel user;
+  final SellerInformation myInformation;
 
-  Body({this.products, this.user});
+  Body({this.products, this.user, this.myInformation});
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +109,81 @@ class Body extends StatelessWidget {
                             borderColor: LocalStorage().primaryColor(),
                           ),
                         ),
-                      )
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          CustomText(
+                            alignment: AlignmentDirectional.center,
+                            fontSize: fontSizeSmall_16,
+                            color: Colors.white,
+                            text: 'Products'.tr,
+                          ),
+                          Divider(
+                            height: 50,
+                            thickness: 0.5,
+                            color: Colors.black,
+                          ),
+                          CustomText(
+                            alignment: AlignmentDirectional.center,
+                            fontSize: fontSizeSmall_16,
+                            color: Colors.white,
+                            text: 'Purchase'.tr,
+                          ),
+                          Divider(
+                            height: 50,
+                            thickness: 0.5,
+                            color: Colors.black,
+                          ),
+                          CustomText(
+                            alignment: AlignmentDirectional.center,
+                            fontSize: fontSizeSmall_16,
+                            color: Colors.white,
+                            text: 'Selling'.tr,
+                          )
+                        ],
+                      ),
+                      myInformation == null
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Center(child: CircularProgressIndicator()),
+                              ],
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                CustomText(
+                                  alignment: AlignmentDirectional.center,
+                                  fontSize: fontSizeBig_18,
+                                  color: Colors.white,
+                                  text: myInformation.items.toString(),
+                                ),
+                                Divider(
+                                  height: 20,
+                                  thickness: 0.5,
+                                  color: Colors.black,
+                                ),
+                                CustomText(
+                                  alignment: AlignmentDirectional.center,
+                                  fontSize: fontSizeBig_18,
+                                  color: Colors.white,
+                                  text: myInformation.purchase.toString(),
+                                ),
+                                Divider(
+                                  height: 20,
+                                  thickness: 0.5,
+                                  color: Colors.black,
+                                ),
+                                CustomText(
+                                  alignment: AlignmentDirectional.center,
+                                  fontSize: fontSizeBig_18,
+                                  color: Colors.white,
+                                  text: myInformation.countSoldCartItems
+                                      .toString(),
+                                )
+                              ],
+                            )
                     ],
                   ),
                 ),
@@ -116,7 +192,7 @@ class Body extends StatelessWidget {
           ),
           CustomText(
             text: 'myProducts'.tr,
-            fontSize: 20,
+            fontSize: fontSizeSmall_16,
             alignment: AlignmentDirectional.center,
           ),
         ])),

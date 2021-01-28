@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/helper/Constant.dart';
 import 'package:tera/screens/custom_widgets/button/custom_button.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
@@ -7,7 +8,12 @@ import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 class CommonMethods {
   showSnackBar(String message, {IconData iconData = Icons.info}) {
     Get.showSnackbar(GetBar(
-      message: message,
+      backgroundColor: LocalStorage().primaryColor(),
+      messageText: CustomText(
+        text: message,
+        color: Colors.white,
+        fontSize: fontSizeSmall_16,
+      ),
       icon: Icon(
         iconData,
         color: Colors.white,
@@ -21,12 +27,12 @@ class CommonMethods {
     Get.snackbar(title, body,
         messageText: CustomText(
           text: body,
-          fontSize: 16,
+          fontSize: fontSizeSmall_16 - 2,
         ),
         titleText: CustomText(
           text: title,
           fontWeight: FontWeight.bold,
-          fontSize: 18,
+          fontSize: fontSizeSmall_16,
         ),
         snackStyle: SnackStyle.FLOATING,
         snackPosition: SnackPosition.BOTTOM);
@@ -54,6 +60,7 @@ class CommonMethods {
             },
           ),
           CustomButton(
+            fontSize: fontSizeSmall_16 - 2,
             text: 'cancel'.tr,
             onPressed: () {
               Get.back();
@@ -69,13 +76,13 @@ class CommonMethods {
             ),
             CustomText(
               text: 'logOut'.tr,
-              fontSize: 18,
+              fontSize: fontSizeSmall_16 - 2,
             ),
           ],
         ),
         content: CustomText(
           text: 'logOutMessage'.tr,
-          fontSize: 18,
+          fontSize: fontSizeSmall_16 - 2,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -94,6 +101,7 @@ class CommonMethods {
         actions: [
           CustomButton(
             text: 'ok'.tr,
+            fontSize: fontSizeSmall_16 - 2,
             onPressed: () {
               Get.back();
               action();
@@ -101,6 +109,7 @@ class CommonMethods {
           ),
           CustomButton(
             text: 'cancel'.tr,
+            fontSize: fontSizeSmall_16 - 2,
             onPressed: () {
               Get.back();
             },
@@ -108,11 +117,12 @@ class CommonMethods {
         ],
         title: CustomText(
           text: title,
-          fontSize: 20,
+          fontSize: fontSizeSmall_16,
         ),
         content: CustomText(
           text: message,
-          fontSize: 18,
+          fontSize: fontSizeSmall_16 - 2,
+          maxLines: 2,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),

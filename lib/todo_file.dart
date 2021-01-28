@@ -1,2 +1,2 @@
-// choose address when confirm order
-//text size on mobile
+//fix swipe direction to make sense
+//rtl an ltr fix in drawer

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tera/helper/Constant.dart';
 
 class CustomOutlinedTextFormField extends StatelessWidget {
   final bool isPassword;
@@ -41,7 +42,7 @@ class CustomOutlinedTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: isPassword,
-      style: TextStyle(fontSize: 16, color: textColor),
+      style: TextStyle(fontSize: fontSizeSmall_16 - 2, color: textColor),
       controller: controller,
       keyboardType: keyboardType,
       validator: !required
@@ -57,17 +58,19 @@ class CustomOutlinedTextFormField extends StatelessWidget {
       maxLength: maxLength,
       decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: TextStyle(fontSize: 16, color: hintColor),
+          hintStyle:
+              TextStyle(fontSize: fontSizeSmall_16 - 2, color: hintColor),
           contentPadding: EdgeInsets.all(16),
           alignLabelWithHint: true,
           suffixText: suffixText,
           errorStyle: TextStyle(
             fontFamily: "Cairo",
             color: Colors.red,
-            fontSize: 16,
+            fontSize: fontSizeSmall_16 - 2,
           ),
           labelText: labelText,
-          labelStyle: TextStyle(fontSize: 16, color: labelColor),
+          labelStyle:
+              TextStyle(fontSize: fontSizeSmall_16 - 2, color: labelColor),
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
     );

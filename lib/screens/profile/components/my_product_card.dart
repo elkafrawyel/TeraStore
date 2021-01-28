@@ -27,14 +27,14 @@ class MyProductCard extends StatelessWidget {
         vertical: kDefaultPadding / 2,
       ),
       // color: Colors.blueAccent,
-      height: 200,
+      height: 150,
       child: GestureDetector(
         onTap: press,
         child: Stack(
           children: <Widget>[
             // Those are our background
             Container(
-              height: 200,
+              height: 150,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(22),
                 color: itemIndex.isEven ? kBlueColor : kSecondaryColor,
@@ -54,7 +54,7 @@ class MyProductCard extends StatelessWidget {
               child: Row(
                 children: [
                   SizedBox(
-                    width: kDefaultPadding,
+                    width: kDefaultPadding / 1.5,
                   ),
                   Container(
                     height: 150,
@@ -75,8 +75,8 @@ class MyProductCard extends StatelessWidget {
                           start: kDefaultPadding / 2),
                       child: CustomText(
                         text: product.name,
-                        fontSize: 16,
-                        maxLines: 4,
+                        fontSize: fontSizeSmall_16 - 2,
+                        maxLines: 2,
                         alignment: AlignmentDirectional.topStart,
                       ),
                     ),
@@ -90,8 +90,8 @@ class MyProductCard extends StatelessWidget {
               alignment: AlignmentDirectional.bottomEnd,
               child: Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: kDefaultPadding * 1.5, // 30 padding
-                  vertical: kDefaultPadding / 4, // 5 top and bottom
+                  horizontal: kDefaultPadding,
+                  vertical: kDefaultPadding / 4,
                 ),
                 decoration: BoxDecoration(
                   color: kSecondaryColor,
@@ -103,7 +103,7 @@ class MyProductCard extends StatelessWidget {
                 child: Text(
                   "\$${product.discountPrice}",
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: fontSizeSmall_16,
                     color: Colors.white,
                   ),
                 ),
@@ -118,33 +118,25 @@ class MyProductCard extends StatelessWidget {
   _buildActions() {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsetsDirectional.only(top: kDefaultPadding),
-          child: IconButton(
-            onPressed: () {
-              edit(product);
-            },
-            icon: Icon(
-              Icons.edit,
-              size: 30,
-            ),
-            color: Colors.grey,
+        IconButton(
+          onPressed: () {
+            edit(product);
+          },
+          icon: Icon(
+            Icons.edit,
+            size: 30,
           ),
+          color: Colors.grey,
         ),
-        Padding(
-          padding: const EdgeInsetsDirectional.only(
-            top: kDefaultPadding / 2,
+        IconButton(
+          onPressed: () {
+            delete();
+          },
+          icon: Icon(
+            Icons.delete,
+            size: 30,
           ),
-          child: IconButton(
-            onPressed: () {
-              delete();
-            },
-            icon: Icon(
-              Icons.delete,
-              size: 30,
-            ),
-            color: Colors.red,
-          ),
+          color: Colors.red,
         ),
       ],
     );

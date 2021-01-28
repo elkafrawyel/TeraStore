@@ -27,6 +27,7 @@ class OrdersScreen extends StatelessWidget {
           text: 'myOrders'.tr,
         ),
         body: Container(
+          color: Constants.backgroundColor,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: controller.loading.value
@@ -53,6 +54,13 @@ class OrdersScreen extends StatelessWidget {
       itemCount: controller.orders.length,
       itemBuilder: (context, index) {
         return ExpandablePanel(
+          theme: ExpandableThemeData(
+              iconColor: Colors.black,
+              collapseIcon: Icons.arrow_upward,
+              expandIcon: Icons.arrow_downward,
+              tapBodyToCollapse: true,
+              animationDuration: (Duration(milliseconds: 800)),
+              headerAlignment: ExpandablePanelHeaderAlignment.center),
           header: _hearView(index),
           expanded: _buildSubItems(index),
         );
@@ -60,7 +68,7 @@ class OrdersScreen extends StatelessWidget {
     );
   }
 
-  final cardHeight = 180.0;
+  final cardHeight = 150.0;
 
   Widget _orderItem(CartItem cartItem) {
     return Container(
@@ -69,7 +77,7 @@ class OrdersScreen extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        color: kCardColor,
+        color: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -126,13 +134,15 @@ class OrdersScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                         SizedBox(
-                          height: 20,
+                          height: kDefaultPadding / 2,
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.only(start: 10),
                           child: CustomText(
                             alignment: AlignmentDirectional.topStart,
-                            text: cartItem.itemPriceAfterDis.toString() + '\$',
+                            text: cartItem.itemPriceAfterDis.toString() +
+                                ' ' +
+                                'currency'.tr,
                             fontSize: fontSizeSmall_16,
                           ),
                         ),
@@ -161,8 +171,7 @@ class OrdersScreen extends StatelessWidget {
                                   text: 'quantity'.tr +
                                       ' ' +
                                       cartItem.cartItemCount.toString(),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: fontSizeSmall_16,
+                                  fontSize: fontSizeSmall_16 - 2,
                                   color: Colors.white,
                                 ),
                               ),
@@ -182,74 +191,89 @@ class OrdersScreen extends StatelessWidget {
   }
 
   _hearView(int index) {
-    return Padding(
-      padding: const EdgeInsets.all(kDefaultPadding),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              CustomText(
-                text: controller.orders[index].getOrderStatus(),
-                fontSize: fontSizeSmall_16,
-                color: _getColor(index),
-              ),
-              CustomText(
-                text: controller.orders[index].shippingAdress,
-                fontSize: fontSizeSmall_16,
-                color: Colors.black,
-              ),
-            ],
-          ),
-          Visibility(
-            visible: controller.orders[index].cartOrderStatus ==
-                'primaryUserApprove',
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+    return Card(
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(kDefaultPadding),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                RaisedButton.icon(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    side: BorderSide(color: Colors.red, width: 1),
-                  ),
-                  color: Colors.white,
-                  onPressed: () {
-                    showDialog(
-                        context: Get.context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text("confirm".tr),
-                            content: Text('deleteMessage'.tr),
-                            actions: <Widget>[
-                              FlatButton(
-                                  onPressed: () {
-                                    Get.back();
-                                    controller.deleteOrder(
-                                        controller.orders[index].id.toString());
-                                  },
-                                  child: Text('delete'.tr)),
-                              FlatButton(
-                                onPressed: () => Get.back(),
-                                child: Text('cancel'.tr),
+                CustomText(
+                  text: controller.orders[index].getOrderStatus(),
+                  fontSize: fontSizeSmall_16,
+                  color: _getColor(index),
+                  alignment: AlignmentDirectional.centerStart,
+                ),
+                Visibility(
+                  visible: controller.orders[index].cartOrderStatus ==
+                      'primaryUserApprove',
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: Get.context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text(
+                                "confirm".tr,
+                                style:
+                                    TextStyle(fontSize: fontSizeSmall_16 - 2),
                               ),
-                            ],
-                          );
-                        });
-                  },
-                  icon: Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  ),
-                  label: CustomText(
-                    text: 'Delete',
-                    color: Colors.red,
+                              content: Text('deleteMessage'.tr,
+                                  style: TextStyle(
+                                      fontSize: fontSizeSmall_16 - 2)),
+                              actions: <Widget>[
+                                FlatButton(
+                                    onPressed: () {
+                                      Get.back();
+                                      controller.deleteOrder(controller
+                                          .orders[index].id
+                                          .toString());
+                                    },
+                                    child: Text('delete'.tr,
+                                        style: TextStyle(
+                                            fontSize: fontSizeSmall_16 - 2))),
+                                FlatButton(
+                                  onPressed: () => Get.back(),
+                                  child: Text('cancel'.tr,
+                                      style: TextStyle(
+                                          fontSize: fontSizeSmall_16 - 2)),
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                      size: 30,
+                    ),
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsetsDirectional.only(
+                top: kDefaultPadding / 4,
+                bottom: kDefaultPadding / 2,
+              ),
+              child: Divider(
+                thickness: 0.5,
+                color: Colors.black,
+              ),
+            ),
+            CustomText(
+              text: controller.orders[index].shippingAdress,
+              fontSize: fontSizeSmall_16,
+              color: Colors.black,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -11,6 +11,7 @@ import 'package:tera/screens/cart_screen/cart_screen.dart';
 import 'package:tera/screens/custom_widgets/budget_cart_icon.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 import 'package:tera/screens/home_screen/components/body.dart';
+import 'package:tera/screens/home_screen/components/filter.dart';
 import 'package:tera/screens/search_screen/search_screen.dart';
 
 class Home extends StatelessWidget {
@@ -62,7 +63,8 @@ class Home extends StatelessWidget {
             size: 25,
           ),
           onPressed: () {
-            _buildFilterDialog();
+            // _buildFilterDialog();
+            CommonMethods().showBottomSheet(FilterView());
           },
         ),
         IconButton(

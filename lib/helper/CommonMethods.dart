@@ -38,6 +38,16 @@ class CommonMethods {
         snackPosition: SnackPosition.BOTTOM);
   }
 
+  showBottomSheet(Widget bottomSheet) {
+    Get.bottomSheet(
+      bottomSheet,
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(kDefaultPadding),
+      ),
+    );
+  }
+
   hideKeyboard() {
     FocusScope.of(Get.context).unfocus();
   }

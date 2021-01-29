@@ -12,16 +12,15 @@ import 'package:tera/screens/custom_widgets/data_state_views/loading_view.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 
 class OrdersScreen extends StatelessWidget {
-  final controller = Get.find<OrdersController>();
-
-  OrdersScreen() {
-    controller.getOrders();
-  }
+  final OrdersController controller = Get.put(OrdersController());
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OrdersController>(
       init: OrdersController(),
+      dispose: (state) {
+        print('dispose');
+      },
       builder: (controller) => Scaffold(
         appBar: CustomAppBar(
           text: 'myOrders'.tr,

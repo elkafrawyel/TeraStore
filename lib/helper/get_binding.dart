@@ -1,14 +1,11 @@
 import 'package:get/get.dart';
 import 'package:tera/controllers/FavouriteController.dart';
-import 'package:tera/controllers/add_product_controller.dart';
 import 'package:tera/controllers/auth_controller.dart';
 import 'package:tera/controllers/cart_controller.dart';
 import 'package:tera/controllers/edit_product_controller.dart';
 import 'package:tera/controllers/general_controller.dart';
 import 'package:tera/controllers/home_controller.dart';
 import 'package:tera/controllers/main_controller.dart';
-import 'package:tera/controllers/orders_controller.dart';
-import 'package:tera/controllers/product_details_controller.dart';
 import 'package:tera/controllers/products_controller.dart';
 import 'package:tera/controllers/profile_controller.dart';
 import 'package:tera/controllers/search_controller.dart';
@@ -30,15 +27,15 @@ class GetBinding implements Bindings {
  */
     Get.lazyPut(() => AuthController());
     Get.lazyPut(() => HomeController());
-    Get.lazyPut(() => ProductDetailsController());
-    Get.lazyPut(() => AddProductController());
+    // Get.lazyPut(() => ProductDetailsController());
+    // Get.lazyPut(() => AddProductController());
     Get.lazyPut(() => ProductsController());
     Get.lazyPut(() => SearchController());
     Get.lazyPut(() => FavouriteController());
     Get.lazyPut(() => GeneralController());
     Get.lazyPut(() => EditProductController());
     Get.lazyPut(() => ProfileController());
-    Get.lazyPut(() => OrdersController());
+    // Get.lazyPut(() => OrdersController());
     Get.lazyPut(() => SellerController());
   }
 }

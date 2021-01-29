@@ -233,18 +233,15 @@ class ProductCard extends StatelessWidget {
                     topStart: Radius.circular(22),
                   ),
                 ),
-                child: Row(
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Visibility(
-                      visible: product.discountType == 'percent',
-                      child: Text(
-                        '${product.price} ' + 'currency'.tr,
-                        style: TextStyle(
-                          fontSize: fontSizeSmall_16 - 2,
-                          decoration: TextDecoration.lineThrough,
-                          color: Colors.black,
-                        ),
+                    Text(
+                      '${product.discountPrice} ' + 'currency'.tr,
+                      style: TextStyle(
+                        fontSize: fontSizeSmall_16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                     Visibility(
@@ -253,12 +250,17 @@ class ProductCard extends StatelessWidget {
                         width: kDefaultPadding / 2,
                       ),
                     ),
-                    Text(
-                      '${product.discountPrice} ' + 'currency'.tr,
-                      style: TextStyle(
-                        fontSize: fontSizeSmall_16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                    Visibility(
+                      visible: product.discountType == 'percent',
+                      child: Text(
+                        '${product.price} ' + 'currency'.tr,
+                        style: TextStyle(
+                            fontSize: fontSizeSmall_16 - 2,
+                            decoration: TextDecoration.lineThrough,
+                            color: Colors.black,
+                            decorationColor: Colors.red,
+                            decorationThickness: 30.0,
+                            decorationStyle: TextDecorationStyle.solid),
                       ),
                     ),
                   ],

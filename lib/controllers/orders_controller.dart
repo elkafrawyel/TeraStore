@@ -8,6 +8,12 @@ import 'package:tera/helper/data_resource.dart';
 class OrdersController extends MainController {
   List<Order> orders = [];
 
+  @override
+  void onInit() {
+    getOrders();
+    super.onInit();
+  }
+
   getOrders() async {
     loading.value = true;
     update();
@@ -33,6 +39,12 @@ class OrdersController extends MainController {
         }
       },
     );
+  }
+
+  @override
+  void onClose() {
+    print('close=======>');
+    super.onClose();
   }
 
   deleteOrder(String orderId) async {

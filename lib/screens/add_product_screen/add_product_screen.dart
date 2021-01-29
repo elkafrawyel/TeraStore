@@ -26,15 +26,8 @@ class AddProductScreen extends StatelessWidget {
   final TextEditingController discountValueController = TextEditingController();
   final TextEditingController countController = TextEditingController();
 
-  final controller = Get.find<AddProductController>();
+  final AddProductController controller = Get.put(AddProductController());
   final homeController = Get.find<HomeController>();
-
-  AddProductScreen() {
-    homeController.categoryModel = null;
-    homeController.subCategoryModel = null;
-    controller.productImages.clear();
-    controller.properities.clear();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +39,18 @@ class AddProductScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: GetBuilder<AddProductController>(
           init: AddProductController(),
+          dispose: (state) {
+            homeController.categoryModel = null;
+            homeController.subCategoryModel = null;
+            controller.productImages.clear();
+            controller.properities.clear();
+            nameController.dispose();
+            descController.dispose();
+            priceController.dispose();
+            discountValueController.dispose();
+            countController.dispose();
+            print('add product disposed');
+          },
           builder: (controller) => Stack(
             children: [
               Padding(
@@ -353,11 +358,11 @@ class AddProductScreen extends StatelessWidget {
                   width: MediaQuery.of(Get.context).size.width * 0.4,
                   child: CustomOutlinedTextFormField(
                     text: 'discountValue'.tr,
-                    hintText: '0',
+                    hintText: '0 -- 100',
                     required: false,
                     controller: discountValueController,
                     keyboardType: TextInputType.numberWithOptions(signed: true),
-                    labelText: 'discountPrice'.tr,
+                    labelText: 'discountValue'.tr,
                   ),
                 ),
               ],

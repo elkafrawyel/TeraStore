@@ -17,13 +17,10 @@ class DetailsScreen extends StatelessWidget {
     _loadDetails();
   }
 
-  final controller = Get.find<ProductDetailsController>();
+  final ProductDetailsController controller =
+      Get.put(ProductDetailsController());
 
   _loadDetails() async {
-    controller.selectedTab = 0;
-    controller.price = 0;
-    controller.disCountPrice = 0;
-    controller.selectedItems.clear();
     // await controller.getProductById('27');
     await controller.getProductById(productId);
   }
@@ -35,6 +32,13 @@ class DetailsScreen extends StatelessWidget {
       appBar: buildAppBar(),
       body: GetBuilder<ProductDetailsController>(
         init: ProductDetailsController(),
+        dispose: (state) {
+          controller.selectedTab = 0;
+          controller.price = 0;
+          controller.disCountPrice = 0;
+          controller.selectedItems.clear();
+          print('product details disposed');
+        },
         builder: (controller) => controller.loading.value
             ? LoadingView()
             : Body(

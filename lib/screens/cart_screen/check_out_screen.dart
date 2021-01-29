@@ -19,13 +19,10 @@ import '../add_address_screen/add_address_screen.dart';
 class CheckOutScreen extends StatelessWidget {
   final TextEditingController detailsController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final controller = Get.find<GeneralController>();
+  final GeneralController controller = Get.find<GeneralController>();
 
   CheckOutScreen() {
     controller.getAddressList();
-    controller.selectedAddress = null;
-    controller.selectedCity = null;
-    controller.selectedLocation = null;
   }
 
   @override
@@ -116,6 +113,12 @@ class CheckOutScreen extends StatelessWidget {
   _buildAddressMenu() {
     return GetBuilder<GeneralController>(
       init: GeneralController(),
+      dispose: (state) {
+        controller.selectedAddress = null;
+        controller.selectedCity = null;
+        controller.selectedLocation = null;
+        print('address menu disposed');
+      },
       builder: (controller) => Column(
         children: [
           Visibility(
@@ -209,12 +212,12 @@ class CheckOutScreen extends StatelessWidget {
     );
   }
 
-  // void _nextToPayment() {
-  //   if (_formKey.currentState.validate()) {
-  //     _formKey.currentState.save();
-  //     //save data to general
-  //     //check address
-  //     Get.to(PaymentScreen());
-  //   }
-  // }
+// void _nextToPayment() {
+//   if (_formKey.currentState.validate()) {
+//     _formKey.currentState.save();
+//     //save data to general
+//     //check address
+//     Get.to(PaymentScreen());
+//   }
+// }
 }

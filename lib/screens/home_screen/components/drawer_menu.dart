@@ -11,7 +11,7 @@ import 'package:tera/screens/orders_screen/orders_screen.dart';
 import 'package:tera/screens/profile/profile_screen.dart';
 
 import '../../about_screen.dart';
-import '../../notifications_screen.dart';
+import '../../notifications_screen/notifications_screen.dart';
 import '../../settings_screen.dart';
 import '../../shipping_address_screen.dart';
 
@@ -100,7 +100,7 @@ class DrawerMenu extends StatelessWidget {
                   );
                 }),
 
-                _buildRow('myOrders'.tr, Icons.timer, () {
+                _buildRow('myOrders'.tr, Icons.timer, () async {
                   Get.to(
                     OrdersScreen(),
                     transition: Transition.rightToLeftWithFade,

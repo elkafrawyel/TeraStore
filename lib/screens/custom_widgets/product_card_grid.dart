@@ -100,7 +100,7 @@ class ProductCardGrid extends StatelessWidget {
                         children: [
                           CustomText(
                             text: product.name,
-                            fontSize: fontSizeBig_18,
+                            fontSize: fontSizeSmall_16,
                             maxLines: 1,
                             fontWeight: FontWeight.bold,
                             alignment: AlignmentDirectional.centerStart,
@@ -137,10 +137,14 @@ class ProductCardGrid extends StatelessWidget {
                                     Text(
                                       '${product.price} ' + 'currency'.tr,
                                       style: TextStyle(
-                                        fontSize: fontSizeSmall_16 - 2,
-                                        decoration: TextDecoration.lineThrough,
-                                        color: Colors.grey,
-                                      ),
+                                          fontSize: fontSizeSmall_16 - 2,
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                          color: Colors.grey,
+                                          decorationColor: Colors.red,
+                                          decorationThickness: 30.0,
+                                          decorationStyle:
+                                              TextDecorationStyle.solid),
                                     ),
                                   ],
                                 ),

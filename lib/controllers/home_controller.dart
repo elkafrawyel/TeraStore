@@ -11,6 +11,7 @@ import 'package:tera/helper/data_resource.dart';
 
 class HomeController extends MainController {
   final drawerController = ZoomDrawerController();
+
   //============================= Filter ===========================
 
   ProductFilters filter = ProductFilters.Latest;
@@ -21,13 +22,13 @@ class HomeController extends MainController {
   Future<void> filterProducts() async {
     loading.value = true;
     update();
-    filteredProducts.clear();
     ProductRepo().getFilteredProducts(
       filter.value,
       max: upperValue,
       min: lowerValue,
       state: (dataResource) {
         if (dataResource is Success) {
+          filteredProducts.clear();
           filteredProducts.addAll(dataResource.data as List<ProductModel>);
           print('Best Selling  => ${filteredProducts.length} items');
           loading.value = false;

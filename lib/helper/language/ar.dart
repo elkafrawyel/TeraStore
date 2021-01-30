@@ -147,6 +147,7 @@ Map<String, String> ar = {
   'image': 'صورة',
   'mainImage': 'الصورة الرئيسية للمنتج',
   'discountValue': 'نسبة الخصم',
+  'emailOrPhone': 'الايمل او رقم الهاتف',
   'invalidNumber': 'رقم غير صحيح',
   'discountBelow100': 'نسبة الخصم يجب ان تكون اقل من 100',
   'sellerInfo': 'معلومات البائع',

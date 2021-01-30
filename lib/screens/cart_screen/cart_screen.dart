@@ -246,7 +246,7 @@ class CartScreen extends StatelessWidget {
                         ),
                 ),
                 SizedBox(
-                  width: 10,
+                  width: kDefaultPadding / 2,
                 ),
                 Expanded(
                   child: Container(
@@ -269,25 +269,22 @@ class CartScreen extends StatelessWidget {
                             SizedBox(
                               height: kDefaultPadding / 2,
                             ),
+                            CustomText(
+                              alignment: AlignmentDirectional.topStart,
+                              text: cartItem.itemPriceAfterDis.toString() +
+                                  'currency'.tr,
+                              fontSize: fontSizeSmall_16,
+                            ),
+                            SizedBox(
+                              height: kDefaultPadding / 2,
+                            ),
                             Visibility(
                               visible: cartItem.properitiesDescription != null,
                               child: CustomText(
                                 text: cartItem.properitiesDescription,
-                                maxLines: 4,
+                                maxLines: 5,
                                 alignment: AlignmentDirectional.topStart,
-                                fontSize: fontSizeSmall_16 - 2,
-                              ),
-                            ),
-                            SizedBox(
-                              height: kDefaultPadding,
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.only(start: 10),
-                              child: CustomText(
-                                alignment: AlignmentDirectional.topStart,
-                                text: cartItem.itemPriceAfterDis.toString() +
-                                    'currency'.tr,
-                                fontSize: fontSizeSmall_16,
+                                fontSize: fontSizeSmall_16 - 4,
                               ),
                             ),
                           ],

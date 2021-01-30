@@ -42,6 +42,7 @@ class ProductDetailsController extends MainController {
         in productDetailsResponse.singleItem.properities) {
       itemProp.itemPropPlus.forEach((element) {
         if (element.isSelected) {
+          element.mainProperity = main.itemPropertyName;
           selectedItems.add(element);
           price += double.parse(element.propertyPrice);
           disCountPrice += double.parse(element.propertyPrice);

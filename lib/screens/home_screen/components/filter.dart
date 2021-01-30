@@ -221,19 +221,22 @@ class FilterView extends StatelessWidget {
                   .showSnackBar('${'sortBy'.tr} ${controller.filter.text}');
             },
             child: Container(
-              width: MediaQuery.of(context).size.width / 2,
-              padding: EdgeInsets.only(
-                  top: kDefaultPadding, bottom: kDefaultPadding),
-              decoration: BoxDecoration(
-                color: LocalStorage().primaryColor(),
-                borderRadius: BorderRadius.circular(kDefaultPadding),
-              ),
-              child: Text(
-                "ok".tr,
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-            ),
+                width: MediaQuery.of(context).size.width / 2,
+                padding: EdgeInsets.only(
+                    top: kDefaultPadding, bottom: kDefaultPadding),
+                decoration: BoxDecoration(
+                  color: LocalStorage().primaryColor(),
+                  borderRadius: BorderRadius.circular(kDefaultPadding / 2),
+                ),
+                child: CustomText(
+                  text: "ok".tr,
+                  fontSize: fontSizeBig_18,
+                  color: Colors.white,
+                  alignment: AlignmentDirectional.center,
+                )),
+          ),
+          SizedBox(
+            height: kDefaultPadding,
           ),
         ],
       ),

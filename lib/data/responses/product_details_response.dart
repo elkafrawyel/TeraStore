@@ -172,6 +172,7 @@ class ItemPropPlus {
   String propertyPrice;
   int properityId;
   bool isSelected = false;
+  String mainProperity;
 
   ItemPropPlus(
       {this.id,

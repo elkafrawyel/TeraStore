@@ -4,10 +4,10 @@ import 'package:chopper/chopper.dart';
 import 'package:tera/a_storage/local_storage.dart';
 import 'package:tera/data/requests/add_address_request.dart';
 
-part 'address_service.chopper.dart';
+part 'general_service.chopper.dart';
 
 @ChopperApi()
-abstract class AddressService extends ChopperService {
+abstract class GeneralService extends ChopperService {
   @Get(path: '/getGovernorates')
   Future<Response> getGovernorates();
 
@@ -20,14 +20,22 @@ abstract class AddressService extends ChopperService {
   @Post(path: '/createUserAdress')
   Future<Response> addAddress(@Body() AddAddressRequest addAddressRequest);
 
-  static AddressService create() {
+  @Get(path: '/myNotifi')
+  Future<Response> getNotification();
+
+  @Get(path: '/privacy_policies')
+  Future<Response> getPrivacyPolicies();
+
+  static GeneralService create() {
     String apiToken = LocalStorage().getString(LocalStorage.token);
+    // String apiToken =
+    //     'OfwVu3ohORAadDVBDqEczSacP9W1Cg3zMhvhE4smslurh6kgpfCmeuOSBMb7DS1SCRNysrwcrwrIbtMktNELqs9byNSw0ZymyPP9';
     String language = LocalStorage().getLanguage();
     final client = ChopperClient(
       baseUrl: baseUrl,
-      services: [_$AddressService()],
-      converter: JsonConverter(),
+      services: [_$GeneralService()],
       errorConverter: JsonConverter(),
+      converter: JsonConverter(),
       interceptors: [
         HttpLoggingInterceptor(),
         HeadersInterceptor(
@@ -48,7 +56,7 @@ abstract class AddressService extends ChopperService {
       ],
     );
 
-    return _$AddressService(client);
+    return _$GeneralService(client);
   }
 }
 

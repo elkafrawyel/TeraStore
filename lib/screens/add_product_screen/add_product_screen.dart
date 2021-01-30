@@ -435,9 +435,12 @@ class AddProductScreen extends StatelessWidget {
           discountValue = '0';
         } else {
           int value = int.parse(discountValueController.text);
-          value >= 100
-              ? CommonMethods().showSnackBar('discountBelow100'.tr)
-              : discountValue = value.toString();
+          if (value >= 100) {
+            CommonMethods().showSnackBar('discountBelow100'.tr);
+            return;
+          } else {
+            discountValue = value.toString();
+          }
         }
 
         controller.addProduct(

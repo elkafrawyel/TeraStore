@@ -23,6 +23,7 @@ Map<String, String> en = {
   'profile': 'Account',
   'logOut': 'Log Out',
   'email': 'Email',
+  'emailOrPhone': 'Email or phone number',
   'emailIsEmpty': 'Email is empty',
   'forgetPassword': 'Forget password ?',
   'name': 'Name',

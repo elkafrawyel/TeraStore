@@ -329,7 +329,7 @@ class Body extends StatelessWidget {
     String desc = '';
     controller.selectedItems.forEach((element) {
       desc =
-          '$desc ${element.propertyValue} : ${element.propertyPrice.toString()}\n';
+          '$desc${element.mainProperity} : (${element.propertyValue} - ${element.propertyPrice.toString()})\n';
     });
 
     print(desc);

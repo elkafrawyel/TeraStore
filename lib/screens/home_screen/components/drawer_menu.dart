@@ -8,6 +8,7 @@ import 'package:tera/helper/Constant.dart';
 import 'package:tera/screens/custom_widgets/text/custom_text.dart';
 import 'package:tera/screens/favourite_screen/favourites_screen.dart';
 import 'package:tera/screens/orders_screen/orders_screen.dart';
+import 'package:tera/screens/privacy_policy_screen.dart';
 import 'package:tera/screens/profile/profile_screen.dart';
 
 import '../../about_screen.dart';
@@ -159,7 +160,13 @@ class DrawerMenu extends StatelessWidget {
                   );
                 }),
 
-                _buildRow('privacy'.tr, Icons.mark_chat_read_outlined, () {}),
+                _buildRow('privacy'.tr, Icons.mark_chat_read_outlined, () {
+                  Get.to(
+                    PrivacyPolicyScreen(),
+                    transition: Transition.rightToLeftWithFade,
+                    duration: Duration(milliseconds: 500),
+                  );
+                }),
 
                 _buildRow('howToUse'.tr, Icons.question_answer, () {}),
 
